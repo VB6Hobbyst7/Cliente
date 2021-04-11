@@ -59,11 +59,6 @@ Private Inventory() As Inventory    'User's inventory
 Private WithEvents InventoryWindow As PictureBox    'Placeholder where to render the inventory
 Attribute InventoryWindow.VB_VarHelpID = -1
 
-Private Declare Function SetDIBitsToDevice Lib "gdi32.dll" _
-    (ByVal hdc As Long, ByVal XDest As Long, ByVal YDest As Long, _
-    ByVal dwWidth As Long, ByVal dwHeight As Long, ByVal xSrc As Long, _
-    ByVal ySrc As Long, ByVal uStartScan As Long, ByVal CScanLine As Long, _
-    lpBits As Any, lpbmi As BITMAPINFO, ByVal fuColorUse As Long) As Long
     
 Private Declare Function SelectObject Lib "gdi32.dll" (ByVal hdc As Long, ByVal hObject As Long) As Long
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
@@ -581,7 +576,7 @@ End Sub
 
     EsMain = bEsMain
     If EsMain Then
-        Call SelectObject(FONDO, LoadPictureEx("VentanaPrincipalInv.jpg").Handle)
+        Call SelectObject(FONDO, LoadPictureEx("VentanaPrincipalInv.jpg").handle)
     Else
         Call SelectObject(FONDO, Grafico(1))
         Dim r As pvRECT
@@ -667,20 +662,49 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, Shift As Integer, x As 
 End Sub
 
 Public Function Grafico(ByVal fileIndex As Integer) As Long
-Dim Buffer As Long
+Dim buffer As Long
 Dim bmpInfo As BITMAPINFO
 Dim BufferBMP As Long
 Dim Data() As Byte
 Dim hdc As Long
 If Not Graficos.Exists("G" & fileIndex) Then
     'get Bitmap
+    Dim mRECT As RECT
+    mRECT.Left = 0
+    mRECT.Top = 0
+    mRECT.Bottom = 32
+    mRECT.Right = 32
+    
+    
+    
     Call Get_Bitmap(DirRecursos & "Graphics.AO", CStr(fileIndex) & ".png", bmpInfo, hdc)
+    
+    
+            
+      'hdc = CreateCompatibleDC()
+
+      ' hPrev = SelectObject(hdc, hBitmap)
+   
+
+    BufferBMP = CreateCompatibleDC(InventoryWindow.hdc)
+    'buffer = CreateCompatibleBitmap(InventoryWindow.hdc, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight)
+    
+     'SelectObject(hdc, hBitmap)
+    SelectObject BufferBMP, hdc
+    'Call SetDIBitsToDevice(BufferBMP, 0, 0, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight, 0, 0, 0, bmpInfo.bmiHeader.biHeight, Data(0), bmpInfo, DIB_RGB_COLORS)
+    
+    
+    
+    
+    
+    'hdc = DrawGrhtoHdc2(InventoryWindow.hdc, fileIndex, mRECT, mRECT)
+    'Call Get_Bitmap(DirRecursos & "Graphics.AO", CStr(fileIndex) & ".png", bmpInfo, hdc)
 
     'BufferBMP = CreateCompatibleDC(InventoryWindow.hdc)
     'Buffer = CreateCompatibleBitmap(InventoryWindow.hdc, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight)
     'SelectObject BufferBMP, Buffer
-    Call SetDIBitsToDevice(hdc, 0, 0, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight, 0, 0, 0, bmpInfo.bmiHeader.biHeight, Data(0), bmpInfo, DIB_RGB_COLORS)
-    Graficos.Add "G" & fileIndex, hdc
+    'Call SetDIBitsToDevice(hDC, 0, 0, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight, 0, 0, 0, bmpInfo.bmiHeader.biHeight, Data(0), bmpInfo, DIB_RGB_COLORS)
+    Graficos.Add "G" & fileIndex, BufferBMP
 End If
 Grafico = Graficos("G" & fileIndex)
 End Function

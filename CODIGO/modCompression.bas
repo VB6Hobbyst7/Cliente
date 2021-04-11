@@ -79,6 +79,74 @@ Private Const BI_PNG As Long = 5
 'To get free bytes in drive
 Private Declare Function GetDiskFreeSpace Lib "kernel32" Alias "GetDiskFreeSpaceExA" (ByVal lpRootPathName As String, FreeBytesToCaller As Currency, bytesTotal As Currency, FreeBytesTotal As Currency) As Long
 
+
+
+Private Const GDIP_OK As Long = 0
+
+Private Type GdiplusStartupInput
+    GdiplusVersion As Long
+    DebugEventCallback As Long
+    SuppressBackgroundThread As Long
+    SuppressExternalCodecs As Long
+End Type
+
+Private Declare Function GdiplusStartup Lib "gdiplus" ( _
+    ByRef Token As Long, _
+    ByRef InputBuf As GdiplusStartupInput, _
+    ByVal pOutputBuf As Long) As Long
+
+Private Declare Function GdiplusShutdown Lib "gdiplus" (ByVal Token As Long) As Long
+
+Private Declare Function GdipDisposeImage Lib "gdiplus" (ByVal Image As Long) As Long
+
+Private Declare Function GdipCreateHBITMAPFromBitmap Lib "gdiplus" ( _
+    ByVal bitmap As Long, _
+    ByRef hbmReturn As Long, _
+    ByVal background As Long) As Long
+
+Private Declare Function GdipCreateBitmapFromFile Lib "gdiplus" ( _
+    ByVal pFileName As Long, _
+    ByRef bitmap As Long) As Long
+
+Private Declare Function GdipCreateBitmapFromStream Lib "gdiplus" ( _
+    ByVal Stream As IUnknown, _
+    ByRef bitmap As Long) As Long
+
+Private Declare Function GdipGetImageDimension Lib "gdiplus" ( _
+    ByVal Image As Long, _
+    ByRef Width As Single, _
+    ByRef Height As Single) As Long
+
+Public GdipToken As Long
+Public GdipInitialized As Boolean
+Public GdipClients As Long
+
+Private Declare Function GlobalAlloc Lib "kernel32" ( _
+    ByVal uFlags As Long, _
+    ByVal dwBytes As Long) As Long
+    
+Private Declare Function GlobalFree Lib "kernel32" ( _
+    ByVal hMem As Long) As Long
+    
+Private Declare Function GlobalLock Lib "kernel32" ( _
+    ByVal hMem As Long) As Long
+    
+Private Declare Function GlobalUnlock Lib "kernel32" ( _
+    ByVal hMem As Long) As Long
+    
+    
+    Private Const S_OK As Long = 0
+
+Private Declare Function CreateStreamOnHGlobal Lib "ole32" ( _
+    ByVal hGlobal As Long, _
+    ByVal fDeleteOnRelease As Long, _
+    ByRef Stream As Object) As Long
+
+Private Declare Function OleTranslateColor Lib "oleaut32" ( _
+    ByVal clr As OLE_COLOR, _
+    ByVal hPal As Long, _
+    ByRef colorref As Long) As Long
+
 Private Function General_Drive_Get_Free_Bytes(ByVal DriveName As String) As Currency
 '**************************************************************
 'Author: Juan Martín Sotuyo Dodero
@@ -190,7 +258,7 @@ End Function
 '
 ' @return   True if found.
 
-Private Function Get_InfoHeader(ByRef ResourcePath As String, ByRef FileName As String, ByRef InfoHead As INFOHEADER) As Boolean
+Private Function Get_InfoHeader(ByRef ResourcePath As String, ByRef Filename As String, ByRef InfoHead As INFOHEADER) As Boolean
 '*****************************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modify Date: 08/21/2007
@@ -205,7 +273,7 @@ On Local Error GoTo ErrHandler
     ResourceFilePath = ResourcePath
     
     'Set InfoHeader we are looking for
-    InfoHead.strFileName = UCase$(FileName)
+    InfoHead.strFileName = UCase$(Filename)
     
 
     Call Secure_Info_Header(InfoHead)
@@ -402,7 +470,7 @@ End Function
 '
 ' @remark   Data is desencrypted.
 
-Public Function Get_File_Data(ByRef TIPO As String, ByRef FileName As String, ByRef Data() As Byte) As Boolean
+Public Function Get_File_Data(ByRef TIPO As String, ByRef Filename As String, ByRef Data() As Byte) As Boolean
 '*****************************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modify Date: 08/21/2007
@@ -422,7 +490,7 @@ Public Function Get_File_Data(ByRef TIPO As String, ByRef FileName As String, By
     End If
     
         
-    Open path & "\" & FileName For Binary Access Read Lock Write As ResourceFile
+    Open path & "\" & Filename For Binary Access Read Lock Write As ResourceFile
         'Get the data
         ReDim Data(LOF(ResourceFile) - 1)
         Get ResourceFile, , Data
@@ -433,15 +501,60 @@ Public Function Get_File_Data(ByRef TIPO As String, ByRef FileName As String, By
 
     Dim InfoHead As INFOHEADER
     
-    If Get_InfoHeader(ResourcePath, UCase$(FileName), InfoHead) Then
+    If Get_InfoHeader(ResourcePath, UCase$(Filename), InfoHead) Then
         'Extract!
         Get_File_Data = Extract_File(ResourcePath, InfoHead, Data)
     Else
-        Call MsgBox("No se se encontro el recurso " & FileName)
+        Call MsgBox("No se se encontro el recurso " & Filename)
     End If
 #End If
 End Function
 
+
+
+
+Private Function LoadPictureBytes(ByRef SourceBytes() As Byte, ByRef hBitmap As Long) As Boolean
+    'Returns True upon success.
+    Dim Size As Long
+    Dim hMem  As Long
+    Dim lpMem  As Long
+    Dim Stream As Object
+    Dim GdipSI As GdiplusStartupInput
+    Dim GdipToken As Long
+    Dim GdipBitmap As Long
+    Dim GdipWidth As Single
+    Dim GdipHeight As Single
+    
+    If Not GdipInitialized Then
+        GdipSI.GdiplusVersion = 1
+        GdipInitialized = GdiplusStartup(GdipToken, GdipSI, 0) = GDIP_OK
+    End If
+
+    Size = UBound(SourceBytes) - LBound(SourceBytes) + 1
+    If Size < 1 Then Exit Function
+    
+    hMem = GlobalAlloc(&H2&, Size)
+    If hMem = 0 Then Exit Function
+    
+    lpMem = GlobalLock(hMem)
+    If lpMem = 0 Then GoTo KernelCleanup
+    
+    CopyMemory ByVal lpMem, SourceBytes(LBound(SourceBytes)), Size
+    GlobalUnlock hMem
+    If CreateStreamOnHGlobal(hMem, Not 0, Stream) <> S_OK Then GoTo KernelCleanup
+    
+    If GdipCreateBitmapFromStream(Stream, GdipBitmap) <> GDIP_OK Then GoTo KernelCleanup
+    
+    If GdipGetImageDimension(GdipBitmap, GdipWidth, GdipHeight) = GDIP_OK Then
+        'mWidth = GdipWidth
+        'mHeight = GdipHeight
+        LoadPictureBytes = GdipCreateHBITMAPFromBitmap(GdipBitmap, hBitmap, 0) = GDIP_OK
+    End If
+    GdipDisposeImage GdipBitmap
+
+KernelCleanup:
+    GlobalFree hMem
+End Function
 ''
 ' Retrieves bitmap file data.
 '
@@ -452,7 +565,7 @@ End Function
 '
 ' @return   True if no error occurred.
 
-Public Function Get_Bitmap(ByRef ResourcePath As String, ByRef FileName As String, ByRef bmpInfo As BITMAPINFO, ByRef hdc As Long) As Boolean
+Public Function Get_Bitmap(ByRef ResourcePath As String, ByRef Filename As String, ByRef bmpInfo As BITMAPINFO, ByRef hdc As Long) As Boolean
 '*****************************************************************
 'Author: Nicolas Matias Gonzalez (NIGO)
 'Last Modify Date: 11/30/2007
@@ -473,19 +586,27 @@ Public Function Get_Bitmap(ByRef ResourcePath As String, ByRef FileName As Strin
         Archivo = FreeFile()
     
         
-     '   Open PathGraficos & "\" & Filename For Binary As Archivo
-     '       ReDim rawData(LOF(Archivo))
-     '       Get #Archivo, , rawData
-     '   Close Archivo
+        Open PathGraficos & "\" & Filename For Binary As Archivo
+            ReDim rawData(LOF(Archivo))
+            Get #Archivo, , rawData
+        Close Archivo
         
-     Dim img As IPicture
-     Set img = LoadPictureEX(PathGraficos & "\" & FileName)
+        
+       ' Dim hBitmap As Long
+        
+      Call LoadPictureBytes(rawData, hdc)
+
+    
+     
+     'Set img = LoadPicEx(PathGraficos & "\" & FileName)
+     
+     'Set img = LoadGraphicEX(Filename)
     
     
-    bmpInfo.bmiHeader.biWidth = img.Width
-    bmpInfo.bmiHeader.biHeight = img.Height
+    'bmpInfo.bmiHeader.biWidth = img.Width
+    'bmpInfo.bmiHeader.biHeight = img.Height
     
-    hdc = img.handle
+    'hdc = img.handle
 
     'Call CopyMemory(offBits, rawData(10), 4)
     'Call CopyMemory(bmpInfo.bmiHeader, rawData(14), 40)
@@ -512,7 +633,7 @@ Public Function Get_Bitmap(ByRef ResourcePath As String, ByRef FileName As Strin
     
     Get_Bitmap = True
 #Else
-    If Get_InfoHeader(ResourcePath, FileName, InfoHead) Then
+    If Get_InfoHeader(ResourcePath, Filename, InfoHead) Then
         'Extract the file and create the bitmap data from it.
         If Extract_File(ResourcePath, InfoHead, rawData) Then
             Call CopyMemory(offBits, rawData(10), 4)
@@ -541,7 +662,7 @@ Public Function Get_Bitmap(ByRef ResourcePath As String, ByRef FileName As Strin
             Get_Bitmap = True
         End If
     Else
-        Call MsgBox("No se encontro el recurso " & FileName)
+        Call MsgBox("No se encontro el recurso " & Filename)
     End If
 #End If
 End Function
@@ -632,7 +753,7 @@ On Error Resume Next
     Dim ResourceFile As Integer
     Dim FileHead As FILEHEADER
     Dim InfoHead As INFOHEADER
-    Dim FileName As String
+    Dim Filename As String
     
     ResourceFile = FreeFile
     Open ResourcePath For Binary Access Read Lock Write As ResourceFile
@@ -648,8 +769,8 @@ On Error Resume Next
 
         
        ' Call Get_Bitmap(ResourcePath, InfoHead.strFileName, bmpInfo, Data())
-        FileName = Trim$(InfoHead.strFileName)
-        fileIndex = CLng(Left$(FileName, Len(FileName) - 4))
+        Filename = Trim$(InfoHead.strFileName)
+        fileIndex = CLng(Left$(Filename, Len(Filename) - 4))
         
         GetNext_Bitmap = True
     End If
@@ -669,7 +790,7 @@ On Error Resume Next
     Dim ResourceFile As Integer
     Dim FileHead As FILEHEADER
     Dim InfoHead As INFOHEADER
-    Dim FileName As String
+    Dim Filename As String
     
     ResourceFile = FreeFile
     Open ResourcePath For Binary Access Read Lock Write As ResourceFile
@@ -686,8 +807,8 @@ On Error Resume Next
 
         
         Call Get_File_Data(ResourcePath, InfoHead.strFileName, Data())
-        FileName = Trim$(InfoHead.strFileName)
-        fileIndex = CLng(Left$(FileName, Len(FileName) - 4))
+        Filename = Trim$(InfoHead.strFileName)
+        fileIndex = CLng(Left$(Filename, Len(Filename) - 4))
         
         GetNext_File = True
     End If
