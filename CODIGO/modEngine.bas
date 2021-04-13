@@ -114,11 +114,11 @@ SpriteScaleVector.y = 1
 
 Call setup_ambient
 
-IluRGB.R = 255
+IluRGB.r = 255
 IluRGB.G = 255
 IluRGB.B = 255
 
-Iluminacion = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255)
+Iluminacion = D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, 255)
 ColorTecho = Iluminacion
 
 bAlpha = 255
@@ -156,7 +156,7 @@ End With
 End Sub
 Public Sub CargarFont()
 Dim i As Integer
-Open (App.path & "\Init\Font.ind") For Binary As #1
+Open (PathInit & "\Font.ind") For Binary As #1
     For i = 1 To 255
         Get #1, , Caracteres(i)
     Next i

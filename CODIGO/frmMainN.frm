@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   0  'None
@@ -2145,7 +2145,7 @@ Private Sub Form_Load()
     btnHechizos.Picture = LoadPictureEX("btnHechizos_R.jpg")
     btnInventario.Picture = LoadPictureEX("btnInventario_R.jpg")
     
-    imgMiniMapa.Picture = LoadPicture(App.path & "\Recursos\minimapadefault.bmp")
+    imgMiniMapa.Picture = LoadPicture(PathRecursosCliente & "\Recursos\minimapadefault.bmp")
     MANShp.Picture = LoadPictureEX("barMana.jpg")
     Hpshp.Picture = LoadPictureEX("BarHp.jpg")
     STAShp.Picture = LoadPictureEX("BarSta.jpg")

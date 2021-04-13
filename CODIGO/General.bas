@@ -42,6 +42,7 @@ Public IpServidor As String
 Public PuertoServidor As Long
 
 Public PathGraficos As String
+Public PathRecursosCliente As String
 Public PathWav As String
 Public PathInterface As String
 Public PathInit As String
@@ -83,7 +84,7 @@ End Function
 
 
 Public Function DirRecursos() As String
-    DirRecursos = App.path & "\Recursos\"
+    DirRecursos = PathRecursosCliente & "\Recursos\"
 End Function
 
 Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
@@ -100,7 +101,7 @@ On Error Resume Next
     Dim N As Integer
     Dim MisArmas() As tIndiceArma
     N = FreeFile()
-    Open App.path & "\init\Armas.ind" For Binary Access Read As #N
+    Open PathInit & "\Armas.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -131,7 +132,7 @@ Sub CargarColores()
 On Error Resume Next
     Dim archivoC As String
     
-    archivoC = App.path & "\init\colores.dat"
+    archivoC = PathInit & "\colores.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
 'TODO : Si hay que reinstalar, porque no cierra???
@@ -159,7 +160,7 @@ Sub CargarZonas()
 On Error Resume Next
     Dim archivoC As String
     
-    archivoC = App.path & "\Init\zonas.dat"
+    archivoC = PathInit & "\zonas.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
 'TODO : Si hay que reinstalar, porque no cierra???
@@ -243,7 +244,7 @@ On Error Resume Next
     Dim MisEscudos() As tIndiceArma
 
     N = FreeFile()
-    Open App.path & "\init\Escudos.ind" For Binary Access Read As #N
+    Open PathInit & "\Escudos.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -801,15 +802,17 @@ End Function
 
 Sub Main()
 
-    'Load config file
-    If FileExist(App.path & "\init\Inicio.con", vbNormal) Then
-        Config_Inicio = LeerGameIni()
-    End If
+  
         
     If FileExist(App.path & "\Init\Config.ini", vbNormal) Then
         Call ReadConfig
     Else
         Call mOpciones_Default
+    End If
+    
+      'Load config file
+    If FileExist(PathInit & "\Inicio.con", vbNormal) Then
+        Config_Inicio = LeerGameIni()
     End If
     
     WAIT_ACTION = 0
@@ -822,12 +825,12 @@ Sub Main()
     Set curProyectil = New clsAniCursor
     Set curProyectilPequena = New clsAniCursor
     
-    Set picMouseIcon = LoadPicture(App.path & "\Recursos\MouseIcons\Baston.ico")
-    curGeneral.AniFile = App.path & "\Recursos\MouseIcons\General.ani"
-    curGeneralCrimi.AniFile = App.path & "\Recursos\MouseIcons\GeneralCrimi.ani"
-    curGeneralCiuda.AniFile = App.path & "\Recursos\MouseIcons\GeneralCiuda.ani"
-    curProyectil.AniFile = App.path & "\Recursos\MouseIcons\Mira.ani"
-    curProyectilPequena.AniFile = App.path & "\Recursos\MouseIcons\MiraPequena.ani"
+    Set picMouseIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Baston.ico")
+    curGeneral.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\General.ani"
+    curGeneralCrimi.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\GeneralCrimi.ani"
+    curGeneralCiuda.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\GeneralCiuda.ani"
+    curProyectil.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\Mira.ani"
+    curProyectilPequena.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\MiraPequena.ani"
  
     curGeneral.CursorOn frmMain.hwnd
     curGeneral.CursorOn frmMain.pRender.hwnd
@@ -838,20 +841,20 @@ Sub Main()
     frmMain.btnInventario.MouseIcon = picMouseIcon
     
     Dim picMousePointIcon As Picture
-    Set picMousePointIcon = LoadPicture(App.path & "\Recursos\MouseIcons\Point.ico")
+    Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Point.ico")
     frmMain.Image1(0).MouseIcon = picMousePointIcon 'Opciones
     frmMain.Image1(1).MouseIcon = picMousePointIcon 'Stats
     frmMain.Image1(2).MouseIcon = picMousePointIcon 'Clanes
     frmMain.Image1(3).MouseIcon = picMousePointIcon 'Quests
     'frmMain.Image1(4).MouseIcon = picMousePointIcon 'Party
-    'Set picMousePointIcon = LoadPicture(App.path & "\Recursos\MouseIcons\Espada.ico")
+    'Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Espada.ico")
     'frmMain.btnInventario.MouseIcon = picMousePointIcon
     
 
     Call InitDebug
 
     'Load ao.dat config file
-    If FileExist(App.path & "\init\ao.dat", vbArchive) Then
+    If FileExist(PathInit & "\ao.dat", vbArchive) Then
         Call LoadClientSetup
         If ClientSetup.bDinamic Then
             Set SurfaceDB = New clsSurfaceManDyn
@@ -1284,7 +1287,7 @@ Private Sub LoadClientSetup()
     Dim fHandle As Integer
     
     fHandle = FreeFile
-    Open App.path & "\init\ao.dat" For Binary Access Read Lock Write As fHandle
+    Open PathInit & "\ao.dat" For Binary Access Read Lock Write As fHandle
         Get fHandle, , ClientSetup
     Close fHandle
     
@@ -1311,7 +1314,7 @@ Private Sub SaveClientSetup()
     'ClientSetup.bGldMsgConsole = Not DialogosClanes.Activo
     'ClientSetup.bCantMsgs = DialogosClanes.CantidadDialogos
     
-    'Open App.path & "\Init\AO.dat" For Binary As fHandle
+    'Open PathInit & "\AO.dat" For Binary As fHandle
         'Put fHandle, , ClientSetup
     'Close fHandle
 End Sub

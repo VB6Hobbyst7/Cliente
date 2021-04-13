@@ -86,7 +86,7 @@ Public Function LeerGameIni() As tGameIni
     Dim N As Integer
     Dim GameIni As tGameIni
     N = FreeFile
-    Open App.path & "\init\Inicio.con" For Binary As #N
+    Open PathInit & "\Inicio.con" For Binary As #N
     Get #N, , MiCabecera
     
     Get #N, , GameIni
@@ -100,7 +100,7 @@ On Local Error Resume Next
 
 Dim N As Integer
 N = FreeFile
-Open App.path & "\init\Inicio.con" For Binary As #N
+Open PathInit & "\Inicio.con" For Binary As #N
 Put #N, , MiCabecera
 Put #N, , GameIniConfiguration
 Close #N
@@ -197,6 +197,7 @@ Public Sub ReadConfig()
         
         #If Debugging Then
             PathGraficos = Lector.GetValue("PATH", "PathGraficos")
+            PathRecursosCliente = Lector.GetValue("PATH", "PathRecursosCliente")
             PathWav = Lector.GetValue("PATH", "PathWav")
             PathInterface = Lector.GetValue("PATH", "PathInterface")
             PathInit = Lector.GetValue("PATH", "PathInit")

@@ -494,7 +494,7 @@ On Error GoTo ErrHandler
         .FileName = FileName
         .looping = (looping = LoopStyle.Enabled)
         
-        Set .buffer = DirectSound.CreateSoundBufferFromFile(App.Path & "\Recursos\WAV\" & FileName & ".wav", bufferDesc)
+        Set .buffer = DirectSound.CreateSoundBufferFromFile(PathRecursosCliente & "\Recursos\WAV\" & FileName & ".wav", bufferDesc)
         'Set .Buffer = DirectSound.CreateSoundBuffer(udtBufferDesc)
         'Call CreateBufferFromFile_Ex(FileName, i)
     End With

@@ -205,7 +205,7 @@ Public Type MapInformation
     MapVersion As Integer
     Width As Integer
     Height As Integer
-    Offset As Integer
+    offset As Integer
     Date As String
     
 End Type
@@ -386,7 +386,7 @@ Sub CargarCabezas()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open App.path & "\init\Cabezas.ind" For Binary Access Read As #N
+    Open PathInit & "\Cabezas.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -420,7 +420,7 @@ Sub CargarCascos()
     Dim Miscabezas() As tIndiceCabeza
     
     N = FreeFile()
-    Open App.path & "\init\Cascos.ind" For Binary Access Read As #N
+    Open PathInit & "\Cascos.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -453,7 +453,7 @@ Sub CargarCuerpos()
     Dim MisCuerpos() As tIndiceCuerpo
     
     N = FreeFile()
-    Open App.path & "\init\Personajes.ind" For Binary Access Read As #N
+    Open PathInit & "\Personajes.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -488,7 +488,7 @@ Sub CargarFxs()
     Dim NumFxs As Integer
     
     N = FreeFile()
-    Open App.path & "\init\Fxs.ind" For Binary Access Read As #N
+    Open PathInit & "\Fxs.ind" For Binary Access Read As #N
     
     'cabecera
     Get #N, , MiCabecera
@@ -1528,7 +1528,7 @@ Dim tmpInt As Integer
 
 Dim Pos As Long
 
-Pos = MapInfo.Offset + (x - 1) * 10 + (y - 1) * MapInfo.Width * 10
+Pos = MapInfo.offset + (x - 1) * 10 + (y - 1) * MapInfo.Width * 10
 
 ByFlags = DataMap(Pos)
 ByFlags = ByFlags Xor ((x Mod 200) + 55)
@@ -2482,7 +2482,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, ByVal setMainVi
 'Creates all DX objects and configures the engine to start running.
 '***************************************************
     
-    IniPath = App.path & "\Init\"
+    IniPath = PathInit & "\"
     
     'Fill startup variables
     MainViewTop = setMainViewTop

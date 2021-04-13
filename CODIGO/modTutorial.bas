@@ -14,7 +14,7 @@ Public Sub CargarTutorial()
 On Error Resume Next
     Dim archivoC As String
     
-    archivoC = App.path & "\Init\tutorial.dat"
+    archivoC = PathInit & "\tutorial.dat"
     
     If Not FileExist(archivoC, vbArchive) Then
 'TODO : Si hay que reinstalar, porque no cierra???
@@ -66,7 +66,7 @@ D3DDevice.BeginScene
         color = D3DColorRGBA(255, 255, 255, 210)
     
         Call Engine_Render_Rectangle(256 + 5, 256 + 5, 56, 56, 56, 0, 56, 56, , , , 14687, color, color, color, color)
-        Call Engine_Render_Rectangle(256 + 18, 256 + 19, 32, 32, Grh.sX, Grh.sY, Grh.pixelWidth, Grh.pixelHeight, , , , Grh.FileNum, color, color, color, color)
+        Call Engine_Render_Rectangle(256 + 18, 256 + 19, 32, 32, Grh.sX, Grh.sY, Grh.PixelWidth, Grh.PixelHeight, , , , Grh.FileNum, color, color, color, color)
     End If
     
 D3DDevice.EndScene
