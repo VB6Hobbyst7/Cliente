@@ -58,7 +58,7 @@ Private Const ERROR_NO_KEY_FILE As Long = vbObjectError + 16
 
 ''
 'The relative path from the application's location where the key config file is.
-Private Const KEY_CONFIG_FILE As String = "\init\BindKeys.bin"
+Private Const KEY_CONFIG_FILE As String = "\BindKeys.bin"
 
 ''
 'Array of mapped keys
@@ -260,8 +260,8 @@ Public Sub LoadCustomKeys()
     
     'Inits keyboard config with default configurations
     Call LoadDefaults
-    If Dir(App.path & KEY_CONFIG_FILE) <> "" Then
-    Open App.path & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
+    If Dir(PathInit & KEY_CONFIG_FILE) <> "" Then
+    Open PathInit & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
     
     For i = 1 To NUM_CUSTOM_KEYS
         If Not EOF(FileNum) Then
@@ -291,7 +291,7 @@ Public Sub SaveCustomKeys()
     Dim i As Long
     FileNum = FreeFile()
     
-    Open App.path & KEY_CONFIG_FILE For Binary Access Write As FileNum
+    Open PathInit & KEY_CONFIG_FILE For Binary Access Write As FileNum
     
     For i = 1 To NUM_CUSTOM_KEYS
         Put FileNum, , mappedKeys(i)
@@ -435,16 +435,16 @@ Public Function KeyAssigned(ByVal KeyCode As Integer) As Boolean
 'Last Modification: 08/04/07
 '
 '***************************************************
-    Dim Counter As Long
+    Dim counter As Long
     
     KeyAssigned = False
     
-    For Counter = 1 To NUM_CUSTOM_KEYS
-        If mappedKeys(Counter) = KeyCode Then
+    For counter = 1 To NUM_CUSTOM_KEYS
+        If mappedKeys(counter) = KeyCode Then
             KeyAssigned = True
             Exit For
         End If
-    Next Counter
+    Next counter
 End Function
 
 ''

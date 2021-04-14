@@ -439,7 +439,7 @@ Dim J As Integer
 End Sub
 
 Private Sub Form_Load()
-    Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMin.bmp")
+    'Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMin.bmp")
     Modo = MINUSCULA
 End Sub
 
@@ -465,14 +465,14 @@ End Sub
 
 Private Sub imgMay_Click()
     Call Audio.PlayWave(SND_CLICK)
-    Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMay.bmp")
+    'Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMay.bmp")
     Modo = MAYUSCULA
     Me.txtPassword.SetFocus
 End Sub
 
 Private Sub imgMin_Click()
     Call Audio.PlayWave(SND_CLICK)
-    Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMin.bmp")
+    'Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMin.bmp")
     Modo = MINUSCULA
     Me.txtPassword.SetFocus
 End Sub
