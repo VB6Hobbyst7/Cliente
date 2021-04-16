@@ -99,91 +99,99 @@ Option Explicit
 
 Private Const MAX_PROPOSAL_LENGTH As Integer = 520
 
-Private cBotonEnviar As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
+Private cBotonEnviar              As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Private cBotonCerrar              As clsGraphicalButton
 
-Public Nombre As String
+Public LastPressed                As clsGraphicalButton
 
-Public T As TIPO
+Public nombre                     As String
+
+Public T                          As TIPO
 
 Public Enum TIPO
+
     ALIANZA = 1
     PAZ = 2
     RECHAZOPJ = 3
+
 End Enum
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     Call LoadBackGround
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonEnviar = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonEnviar.Initialize(imgEnviar, "BotonEnviarSolicitud.jpg", _
-                                    "BotonEnviarRolloverSolicitud.jpg", _
-                                    "BotonEnviarClickSolicitud.jpg", Me)
+    Call cBotonEnviar.Initialize(imgEnviar, "BotonEnviarSolicitud.jpg", "BotonEnviarRolloverSolicitud.jpg", "BotonEnviarClickSolicitud.jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarSolicitud.jpg", _
-                                    "BotonCerrarRolloverSolicitud.jpg", _
-                                    "BotonCerrarClickSolicitud.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarSolicitud.jpg", "BotonCerrarRolloverSolicitud.jpg", "BotonCerrarClickSolicitud.jpg", Me)
+
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgEnviar_Click()
 
     If Text1 = "" Then
         If T = PAZ Or T = ALIANZA Then
-            MessageBox "Debes redactar un mensaje solicitando la paz o alianza al líder de " & Nombre
+            MessageBox "Debes redactar un mensaje solicitando la paz o alianza al líder de " & nombre
         Else
-            MessageBox "Debes indicar el motivo por el cual rechazas la membresía de " & Nombre
+            MessageBox "Debes indicar el motivo por el cual rechazas la membresía de " & nombre
+
         End If
         
         Exit Sub
+
     End If
     
     If T = PAZ Then
-        Call WriteGuildOfferPeace(Nombre, Replace(Text1, vbCrLf, "º"))
+        Call WriteGuildOfferPeace(nombre, Replace(Text1, vbCrLf, "º"))
         
     ElseIf T = ALIANZA Then
-        Call WriteGuildOfferAlliance(Nombre, Replace(Text1, vbCrLf, "º"))
+        Call WriteGuildOfferAlliance(nombre, Replace(Text1, vbCrLf, "º"))
         
     ElseIf T = RECHAZOPJ Then
-        Call WriteGuildRejectNewMember(Nombre, Replace(Replace(Text1.Text, ",", " "), vbCrLf, " "))
+        Call WriteGuildRejectNewMember(nombre, Replace(Replace(Text1.Text, ",", " "), vbCrLf, " "))
+
         'Sacamos el char de la lista de aspirantes
         Dim i As Long
         
         For i = 0 To frmGuildLeader.solicitudes.ListCount - 1
-            If frmGuildLeader.solicitudes.List(i) = Nombre Then
+
+            If frmGuildLeader.solicitudes.List(i) = nombre Then
                 frmGuildLeader.solicitudes.RemoveItem i
                 Exit For
+
             End If
+
         Next i
         
         Me.Hide
         Unload frmCharInfo
+
     End If
     
     Unload Me
@@ -191,13 +199,15 @@ Private Sub imgEnviar_Click()
 End Sub
 
 Private Sub Text1_Change()
-    If Len(Text1.Text) > MAX_PROPOSAL_LENGTH Then _
-        Text1.Text = Left$(Text1.Text, MAX_PROPOSAL_LENGTH)
+
+    If Len(Text1.Text) > MAX_PROPOSAL_LENGTH Then Text1.Text = Left$(Text1.Text, MAX_PROPOSAL_LENGTH)
+
 End Sub
 
 Private Sub LoadBackGround()
 
     Select Case T
+
         Case TIPO.ALIANZA
             Me.Picture = LoadPicture(DirGraficos & "Interface\VentanaPropuestaAlianza.jpg")
             
@@ -211,6 +221,7 @@ Private Sub LoadBackGround()
     
 End Sub
 
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub

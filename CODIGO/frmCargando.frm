@@ -88,6 +88,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Form_Load()
-Me.Picture = LoadPictureEX("cargando.jpg")
+    Me.Picture = LoadPictureEX("cargando.jpg")
+
 End Sub
 

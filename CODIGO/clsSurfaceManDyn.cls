@@ -46,107 +46,138 @@ Option Explicit
 'Inherit from the surface manager
 Implements clsSurfaceManager
 
-Private Const BYTES_PER_MB As Long = 1048576                        '1Mb = 1024 Kb = 1024 * 1024 bytes = 1048576 bytes
-Private Const MIN_MEMORY_TO_USE As Long = 4 * BYTES_PER_MB          '4 Mb
+Private Const BYTES_PER_MB          As Long = 1048576                        '1Mb = 1024 Kb = 1024 * 1024 bytes = 1048576 bytes
+
+Private Const MIN_MEMORY_TO_USE     As Long = 4 * BYTES_PER_MB          '4 Mb
+
 Private Const DEFAULT_MEMORY_TO_USE As Long = 16 * BYTES_PER_MB     '16 Mb
 
 'Number of buckets in our hash table. Must be a nice prime number.
-Const HASH_TABLE_SIZE As Long = 337
+Const HASH_TABLE_SIZE               As Long = 337
 
 Private Type SURFACE_ENTRY_DYN
+
     fileIndex As Long
     lastAccess As Long
     Size As Long
     Surface As Direct3DTexture8
+
 End Type
 
 Private Type HashNode
+
     surfaceCount As Integer
     SurfaceEntry() As SURFACE_ENTRY_DYN
+
 End Type
 
 Private surfaceList(HASH_TABLE_SIZE - 1) As HashNode
 
-Private DeviceD3D As Direct3DDevice8
-Private DirectD3X As D3DX8
+Private DeviceD3D                        As Direct3DDevice8
 
-Private maxBytesToUse As Long
-Private usedBytes As Long
+Private DirectD3X                        As D3DX8
 
-Private useVideoMemory As Boolean
+Private maxBytesToUse                    As Long
 
-Private ResourcePath As String
+Private usedBytes                        As Long
+
+Private useVideoMemory                   As Boolean
+
+Private ResourcePath                     As String
 
 Private Declare Function GetTickCount Lib "kernel32" () As Long
 
 Private Const DIB_PAL_COLORS As Long = 1
+
 Private Const DIB_RGB_COLORS As Long = 0
 
-
 Private Sub Class_Initialize()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    '
+    '**************************************************************
     usedBytes = 0
     maxBytesToUse = MIN_MEMORY_TO_USE
+
 End Sub
 
 Private Sub Class_Terminate()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Clean up
-'**************************************************************
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    'Clean up
+    '**************************************************************
     Dim i As Long
+
     Dim J As Long
     
     'Destroy every surface in memory
     For i = 0 To HASH_TABLE_SIZE - 1
+
         With surfaceList(i)
+
             For J = 1 To .surfaceCount
                 Set .SurfaceEntry(J).Surface = Nothing
                 .SurfaceEntry(J).fileIndex = 0
                 .SurfaceEntry(J).lastAccess = 0
                 .SurfaceEntry(J).Size = 0
             Next J
+
             surfaceList(i).surfaceCount = 0
             'Destroy the arrays
             Erase .SurfaceEntry
+
         End With
+
     Next i
+
 End Sub
+
 Private Sub clsSurfaceManager_Limpiar()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Clean up
-'**************************************************************
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    'Clean up
+    '**************************************************************
     Dim i As Long
+
     Dim J As Long
     
     'Destroy every surface in memory
     For i = 0 To HASH_TABLE_SIZE - 1
+
         With surfaceList(i)
+
             For J = 1 To .surfaceCount
                 Set .SurfaceEntry(J).Surface = Nothing
                 .SurfaceEntry(J).fileIndex = 0
                 .SurfaceEntry(J).lastAccess = 0
                 .SurfaceEntry(J).Size = 0
             Next J
+
             surfaceList(i).surfaceCount = 0
             'Destroy the arrays
             Erase .SurfaceEntry
+
         End With
+
     Next i
+
 End Sub
-Private Sub clsSurfaceManager_Initialize(ByRef D3DD As Direct3DDevice8, ByRef D3DX As D3DX8, ByVal videoMemory As Boolean, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1)
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Initializes the manager
-'**************************************************************
+
+Private Sub clsSurfaceManager_Initialize(ByRef D3DD As Direct3DDevice8, _
+                                         ByRef D3DX As D3DX8, _
+                                         ByVal videoMemory As Boolean, _
+                                         ByVal graphicPath As String, _
+                                         Optional ByVal maxMemoryUsageInMb As Long = -1)
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    'Initializes the manager
+    '**************************************************************
     Set DeviceD3D = D3DD
     Set DirectD3X = D3DX
     
@@ -160,45 +191,57 @@ Private Sub clsSurfaceManager_Initialize(ByRef D3DD As Direct3DDevice8, ByRef D3
         maxBytesToUse = MIN_MEMORY_TO_USE       ' 4 Mb is the minimum allowed
     Else
         maxBytesToUse = maxMemoryUsageInMb * BYTES_PER_MB
+
     End If
+
 End Sub
 
 Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direct3DTexture8
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Retrieves the requested texture
-'**************************************************************
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    'Retrieves the requested texture
+    '**************************************************************
     Dim i As Long
     
     ' Search the index on the list
     With surfaceList(fileIndex Mod HASH_TABLE_SIZE)
+
         For i = 1 To .surfaceCount
+
             If .SurfaceEntry(i).fileIndex = fileIndex Then
                 .SurfaceEntry(i).lastAccess = (GetTickCount() And &H7FFFFFFF)
                 Set clsSurfaceManager_Surface = .SurfaceEntry(i).Surface
                 Exit Property
+
             End If
+
         Next i
+
     End With
     
     'Not in memory, load it!
     Set clsSurfaceManager_Surface = LoadSurface(fileIndex)
+
 End Property
 
 Private Function LoadSurface(ByVal fileIndex As Long) As Direct3DTexture8
-'**************************************************************
-'Author: Nicolas Matias Gonzalez (NIGO)
-'Last Modify Date: 05/11/2009
-'Loads the surface named fileIndex + ".bmp" and inserts it to the
-'surface list in the listIndex position
-'**************************************************************
-On Error GoTo ErrHandler
+
+    '**************************************************************
+    'Author: Nicolas Matias Gonzalez (NIGO)
+    'Last Modify Date: 05/11/2009
+    'Loads the surface named fileIndex + ".bmp" and inserts it to the
+    'surface list in the listIndex position
+    '**************************************************************
+    On Error GoTo ErrHandler
 
     Dim newSurface As SURFACE_ENTRY_DYN
 
-    Dim Data() As Byte
+    Dim Data()     As Byte
+
     Dim Tamaño As Long
+
     Dim pDesc As D3DSURFACE_DESC
 
     'get Bitmap
@@ -208,7 +251,6 @@ On Error GoTo ErrHandler
     'ddsd.lWidth = bmpInfo.bmiHeader.biWidth
     'ddsd.lHeight = bmpInfo.bmiHeader.biHeight
     Tamaño = UBound(Data) + 1
-        
         
     With newSurface
         .fileIndex = fileIndex
@@ -221,6 +263,7 @@ On Error GoTo ErrHandler
         .Surface.GetLevelDesc 0, pDesc
         SurfaceSize(fileIndex).x = pDesc.Width
         SurfaceSize(fileIndex).y = pDesc.Height
+
     End With
     
     'Insert surface to the list
@@ -232,6 +275,7 @@ On Error GoTo ErrHandler
         .SurfaceEntry(.surfaceCount) = newSurface
         
         Set LoadSurface = newSurface.Surface
+
     End With
     
     'Update used bytes
@@ -239,56 +283,76 @@ On Error GoTo ErrHandler
     
     'Check if we have exceeded our allowed share of memory usage
     Do While usedBytes > maxBytesToUse
+
         'Remove a file. If no file could be removed we continue, if the file was previous to our surface we update the index
         If Not RemoveLRU() Then
             Exit Do
+
         End If
+
     Loop
-Exit Function
+    Exit Function
 
 ErrHandler:
+
     If Err.Number = 1 Then
+
         'Remove a surface and try again
         If RemoveLRU() Then
             Resume
         Else
             MessageBox "No hay memoria disponible! El programa abortará. Cierra algunos programas e intenta de nuevo"
             End
+
         End If
+
     Else
-        MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & _
-                "El código de error es " & CStr(Err.Number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
-                vbOKOnly Or vbCritical Or vbExclamation, "Error"
+        MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & "El código de error es " & CStr(Err.Number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", vbOKOnly Or vbCritical Or vbExclamation, "Error"
         End
+
     End If
+
 End Function
 
 Private Function RemoveLRU() As Boolean
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Removes the Least Recently Used surface to make some room for new ones
-'**************************************************************
-    Dim LRUi As Long
-    Dim LRUj As Long
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    'Removes the Least Recently Used surface to make some room for new ones
+    '**************************************************************
+    Dim LRUi    As Long
+
+    Dim LRUj    As Long
+
     Dim LRUtime As Long
-    Dim i As Long
-    Dim J As Long
-    Dim Size As Long
+
+    Dim i       As Long
+
+    Dim J       As Long
+
+    Dim Size    As Long
     
     LRUtime = (GetTickCount() And &H7FFFFFFF)
     
     'Check out through the whole list for the least recently used
     For i = 0 To HASH_TABLE_SIZE - 1
+
         With surfaceList(i)
+
             For J = 1 To .surfaceCount
+
                 If LRUtime > .SurfaceEntry(J).lastAccess Then
                     LRUi = i
                     LRUj = J
                     LRUtime = .SurfaceEntry(J).lastAccess
+
                 End If
+
             Next J
+
         End With
+
     Next i
     
     If LRUj Then
@@ -299,21 +363,28 @@ Private Function RemoveLRU() As Boolean
         Set surfaceList(LRUi).SurfaceEntry(LRUj).Surface = Nothing
         surfaceList(LRUi).SurfaceEntry(LRUj).fileIndex = 0
         Size = surfaceList(LRUi).SurfaceEntry(LRUj).Size
+
         'Move back the list (if necessary)
         With surfaceList(LRUi)
+
             For J = LRUj To .surfaceCount - 1
                 .SurfaceEntry(J) = .SurfaceEntry(J + 1)
             Next J
             
             .surfaceCount = .surfaceCount - 1
+
             If .surfaceCount Then
                 ReDim Preserve .SurfaceEntry(1 To .surfaceCount) As SURFACE_ENTRY_DYN
             Else
                 Erase .SurfaceEntry
+
             End If
+
         End With
         
         'Update the used bytes
         usedBytes = usedBytes - Size
+
     End If
+
 End Function

@@ -31,17 +31,18 @@ Attribute VB_Name = "GameIni"
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
-
-
 Option Explicit
 
 Public Type tCabecera 'Cabecera de los con
+
     Desc As String * 255
     CRC As Long
     MagicWord As Long
+
 End Type
 
 Public Type tGameIni
+
     Puerto As Long
     Musica As Byte
     fX As Byte
@@ -54,9 +55,11 @@ Public Type tGameIni
     DirMapas As String
     NumeroDeBMPs As Long
     NumeroMapas As Integer
+
 End Type
 
 Public Type tSetupMods
+
     bDinamic    As Boolean
     byMemory    As Byte
     bUseVideo   As Boolean
@@ -67,24 +70,30 @@ Public Type tSetupMods
     sGraficos   As String * 13
     bFPS As Boolean
     WinSock As Boolean
+
 End Type
 
-Public ClientSetup As tSetupMods
+Public ClientSetup   As tSetupMods
 
-Public MiCabecera As tCabecera
+Public MiCabecera    As tCabecera
+
 Public Config_Inicio As tGameIni
 
-Private Lector As clsIniManager
+Private Lector       As clsIniManager
 
 Public Sub IniciarCabecera(ByRef Cabecera As tCabecera)
     Cabecera.Desc = "Argentum Online by Noland Studios. Copyright Noland-Studios 2001, pablomarquez@noland-studios.com.ar"
     Cabecera.CRC = Rnd * 100
     Cabecera.MagicWord = Rnd * 10
+
 End Sub
 
 Public Function LeerGameIni() As tGameIni
-    Dim N As Integer
+
+    Dim N       As Integer
+
     Dim GameIni As tGameIni
+
     N = FreeFile
     Open PathInit & "\Inicio.con" For Binary As #N
     Get #N, , MiCabecera
@@ -93,19 +102,21 @@ Public Function LeerGameIni() As tGameIni
     
     Close #N
     LeerGameIni = GameIni
+
 End Function
 
 Public Sub EscribirGameIni(ByRef GameIniConfiguration As tGameIni)
-On Local Error Resume Next
+    On Local Error Resume Next
 
-Dim N As Integer
-N = FreeFile
-Open PathInit & "\Inicio.con" For Binary As #N
-Put #N, , MiCabecera
-Put #N, , GameIniConfiguration
-Close #N
+    Dim N As Integer
+
+    N = FreeFile
+    Open PathInit & "\Inicio.con" For Binary As #N
+    Put #N, , MiCabecera
+    Put #N, , GameIniConfiguration
+    Close #N
+
 End Sub
-
 
 Public Sub SaveConfig()
     On Local Error GoTo fileErr:
@@ -153,7 +164,9 @@ fileErr:
 
     If Err.Number <> 0 Then
         MsgBox ("Ha ocurrido un error al guardar la configuracion del cliente. Error " & Err.Number & " : " & Err.Description)
+
     End If
+
 End Sub
 
 Public Sub ReadConfig()
@@ -208,7 +221,6 @@ Public Sub ReadConfig()
             PuertoServidor = 7222
         #End If
         
-        
     End With
     
     Call Lector.DumpFile(App.path & "/INIT/Config.ini")
@@ -217,6 +229,7 @@ fileErr:
     If Err.Number <> 0 Then
         Call mOpciones_Default
         MsgBox ("ERROR - Config.ini cargado por defecto." & Err.Description)
+
     End If
     
 End Sub

@@ -103,25 +103,31 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub Command1_Click()
+
     If Text2.Text <> Text3.Text Then
         Call MsgBox("Las contraseñas no coinciden", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Cambiar Contraseña")
         Exit Sub
+
     End If
+
     If Len(Text2.Text) < 6 Then
         Call MsgBox("La contraseña debe contener al menos 6 caracteres.", vbCritical Or vbOKOnly Or vbApplicationModal Or vbDefaultButton1, "Cambiar Contraseña")
         Exit Sub
+
     End If
     
     Call WriteChangePassword(Text1.Text, Text2.Text)
     Unload Me
+
 End Sub
 
 Private Sub Command2_Click()
-Unload Me
+    Unload Me
+
 End Sub
 
 Private Sub Form_Load()
     Me.Picture = LoadPictureEX("VENTANACAMBIARPASS.jpg")
-End Sub
 
+End Sub
 

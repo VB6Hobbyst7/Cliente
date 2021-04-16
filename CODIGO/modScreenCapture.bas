@@ -40,159 +40,202 @@ Option Explicit
 ' IJL Declares:
 
 Private Enum IJLERR
-  '// The following "error" values indicate an "OK" condition.
-  IJL_OK = 0
-  IJL_INTERRUPT_OK = 1
-  IJL_ROI_OK = 2
 
-  '// The following "error" values indicate an error has occurred.
-  IJL_EXCEPTION_DETECTED = -1
-  IJL_INVALID_ENCODER = -2
-  IJL_UNSUPPORTED_SUBSAMPLING = -3
-  IJL_UNSUPPORTED_BYTES_PER_PIXEL = -4
-  IJL_MEMORY_ERROR = -5
-  IJL_BAD_HUFFMAN_TABLE = -6
-  IJL_BAD_QUANT_TABLE = -7
-  IJL_INVALID_JPEG_PROPERTIES = -8
-  IJL_ERR_FILECLOSE = -9
-  IJL_INVALID_FILENAME = -10
-  IJL_ERROR_EOF = -11
-  IJL_PROG_NOT_SUPPORTED = -12
-  IJL_ERR_NOT_JPEG = -13
-  IJL_ERR_COMP = -14
-  IJL_ERR_SOF = -15
-  IJL_ERR_DNL = -16
-  IJL_ERR_NO_HUF = -17
-  IJL_ERR_NO_QUAN = -18
-  IJL_ERR_NO_FRAME = -19
-  IJL_ERR_MULT_FRAME = -20
-  IJL_ERR_DATA = -21
-  IJL_ERR_NO_IMAGE = -22
-  IJL_FILE_ERROR = -23
-  IJL_INTERNAL_ERROR = -24
-  IJL_BAD_RST_MARKER = -25
-  IJL_THUMBNAIL_DIB_TOO_SMALL = -26
-  IJL_THUMBNAIL_DIB_WRONG_COLOR = -27
-  IJL_RESERVED = -99
+    '// The following "error" values indicate an "OK" condition.
+    IJL_OK = 0
+    IJL_INTERRUPT_OK = 1
+    IJL_ROI_OK = 2
+
+    '// The following "error" values indicate an error has occurred.
+    IJL_EXCEPTION_DETECTED = -1
+    IJL_INVALID_ENCODER = -2
+    IJL_UNSUPPORTED_SUBSAMPLING = -3
+    IJL_UNSUPPORTED_BYTES_PER_PIXEL = -4
+    IJL_MEMORY_ERROR = -5
+    IJL_BAD_HUFFMAN_TABLE = -6
+    IJL_BAD_QUANT_TABLE = -7
+    IJL_INVALID_JPEG_PROPERTIES = -8
+    IJL_ERR_FILECLOSE = -9
+    IJL_INVALID_FILENAME = -10
+    IJL_ERROR_EOF = -11
+    IJL_PROG_NOT_SUPPORTED = -12
+    IJL_ERR_NOT_JPEG = -13
+    IJL_ERR_COMP = -14
+    IJL_ERR_SOF = -15
+    IJL_ERR_DNL = -16
+    IJL_ERR_NO_HUF = -17
+    IJL_ERR_NO_QUAN = -18
+    IJL_ERR_NO_FRAME = -19
+    IJL_ERR_MULT_FRAME = -20
+    IJL_ERR_DATA = -21
+    IJL_ERR_NO_IMAGE = -22
+    IJL_FILE_ERROR = -23
+    IJL_INTERNAL_ERROR = -24
+    IJL_BAD_RST_MARKER = -25
+    IJL_THUMBNAIL_DIB_TOO_SMALL = -26
+    IJL_THUMBNAIL_DIB_WRONG_COLOR = -27
+    IJL_RESERVED = -99
 
 End Enum
 
 Private Enum IJLIOTYPE
-  IJL_SETUP = -1&
-  ''// Read JPEG parameters (i.e., height, width, channels,
-  ''// sampling, etc.) from a JPEG bit stream.
-  IJL_JFILE_READPARAMS = 0&
-  IJL_JBUFF_READPARAMS = 1&
-  ''// Read a JPEG Interchange Format image.
-  IJL_JFILE_READWHOLEIMAGE = 2&
-  IJL_JBUFF_READWHOLEIMAGE = 3&
-  ''// Read JPEG tables from a JPEG Abbreviated Format bit stream.
-  IJL_JFILE_READHEADER = 4&
-  IJL_JBUFF_READHEADER = 5&
-  ''// Read image info from a JPEG Abbreviated Format bit stream.
-  IJL_JFILE_READENTROPY = 6&
-  IJL_JBUFF_READENTROPY = 7&
-  ''// Write an entire JFIF bit stream.
-  IJL_JFILE_WRITEWHOLEIMAGE = 8&
-  IJL_JBUFF_WRITEWHOLEIMAGE = 9&
-  ''// Write a JPEG Abbreviated Format bit stream.
-  IJL_JFILE_WRITEHEADER = 10&
-  IJL_JBUFF_WRITEHEADER = 11&
-  ''// Write image info to a JPEG Abbreviated Format bit stream.
-  IJL_JFILE_WRITEENTROPY = 12&
-  IJL_JBUFF_WRITEENTROPY = 13&
-  ''// Scaled Decoding Options:
-  ''// Reads a JPEG image scaled to 1/2 size.
-  IJL_JFILE_READONEHALF = 14&
-  IJL_JBUFF_READONEHALF = 15&
-  ''// Reads a JPEG image scaled to 1/4 size.
-  IJL_JFILE_READONEQUARTER = 16&
-  IJL_JBUFF_READONEQUARTER = 17&
-  ''// Reads a JPEG image scaled to 1/8 size.
-  IJL_JFILE_READONEEIGHTH = 18&
-  IJL_JBUFF_READONEEIGHTH = 19&
-  ''// Reads an embedded thumbnail from a JFIF bit stream.
-  IJL_JFILE_READTHUMBNAIL = 20&
-  IJL_JBUFF_READTHUMBNAIL = 21&
+
+    IJL_SETUP = -1&
+    ''// Read JPEG parameters (i.e., height, width, channels,
+    ''// sampling, etc.) from a JPEG bit stream.
+    IJL_JFILE_READPARAMS = 0&
+    IJL_JBUFF_READPARAMS = 1&
+    ''// Read a JPEG Interchange Format image.
+    IJL_JFILE_READWHOLEIMAGE = 2&
+    IJL_JBUFF_READWHOLEIMAGE = 3&
+    ''// Read JPEG tables from a JPEG Abbreviated Format bit stream.
+    IJL_JFILE_READHEADER = 4&
+    IJL_JBUFF_READHEADER = 5&
+    ''// Read image info from a JPEG Abbreviated Format bit stream.
+    IJL_JFILE_READENTROPY = 6&
+    IJL_JBUFF_READENTROPY = 7&
+    ''// Write an entire JFIF bit stream.
+    IJL_JFILE_WRITEWHOLEIMAGE = 8&
+    IJL_JBUFF_WRITEWHOLEIMAGE = 9&
+    ''// Write a JPEG Abbreviated Format bit stream.
+    IJL_JFILE_WRITEHEADER = 10&
+    IJL_JBUFF_WRITEHEADER = 11&
+    ''// Write image info to a JPEG Abbreviated Format bit stream.
+    IJL_JFILE_WRITEENTROPY = 12&
+    IJL_JBUFF_WRITEENTROPY = 13&
+    ''// Scaled Decoding Options:
+    ''// Reads a JPEG image scaled to 1/2 size.
+    IJL_JFILE_READONEHALF = 14&
+    IJL_JBUFF_READONEHALF = 15&
+    ''// Reads a JPEG image scaled to 1/4 size.
+    IJL_JFILE_READONEQUARTER = 16&
+    IJL_JBUFF_READONEQUARTER = 17&
+    ''// Reads a JPEG image scaled to 1/8 size.
+    IJL_JFILE_READONEEIGHTH = 18&
+    IJL_JBUFF_READONEEIGHTH = 19&
+    ''// Reads an embedded thumbnail from a JFIF bit stream.
+    IJL_JFILE_READTHUMBNAIL = 20&
+    IJL_JBUFF_READTHUMBNAIL = 21&
 
 End Enum
 
 Private Type JPEG_CORE_PROPERTIES_VB ' Sadly, due to a limitation in VB (UDT variable count)
-                                     ' we can't encode the full JPEG_CORE_PROPERTIES structure
-  UseJPEGPROPERTIES As Long                      '// default = 0
 
-  '// DIB specific I/O data specifiers.
-  DIBBytes As Long ';                  '// default = NULL 4
-  DIBWidth As Long ';                  '// default = 0 8
-  DIBHeight As Long ';                 '// default = 0 12
-  DIBPadBytes As Long ';               '// default = 0 16
-  DIBChannels As Long ';               '// default = 3 20
-  DIBColor As Long ';                  '// default = IJL_BGR 24
-  DIBSubsampling As Long  ';            '// default = IJL_NONE 28
+    ' we can't encode the full JPEG_CORE_PROPERTIES structure
+    UseJPEGPROPERTIES As Long                      '// default = 0
 
-  '// JPEG specific I/O data specifiers.
-  JPGFile As Long 'LPTSTR              JPGFile;                32   '// default = NULL
-  JPGBytes As Long ';                  '// default = NULL 36
-  JPGSizeBytes As Long ';              '// default = 0 40
-  JPGWidth As Long ';                  '// default = 0 44
-  JPGHeight As Long ';                 '// default = 0 48
-  JPGChannels As Long ';               '// default = 3
-  JPGColor As Long           ';                  '// default = IJL_YCBCR
-  JPGSubsampling As Long  ';            '// default = IJL_411
-  JPGThumbWidth As Long ' ;             '// default = 0
-  JPGThumbHeight As Long ';            '// default = 0
+    '// DIB specific I/O data specifiers.
+    DIBBytes As Long ';                  '// default = NULL 4
+    DIBWidth As Long ';                  '// default = 0 8
+    DIBHeight As Long ';                 '// default = 0 12
+    DIBPadBytes As Long ';               '// default = 0 16
+    DIBChannels As Long ';               '// default = 3 20
+    DIBColor As Long ';                  '// default = IJL_BGR 24
+    DIBSubsampling As Long  ';            '// default = IJL_NONE 28
 
-  '// JPEG conversion properties.
-  cconversion_reqd As Long ';          '// default = TRUE
-  upsampling_reqd As Long ';           '// default = TRUE
-  jquality As Long ';                  '// default = 75.  100 is my preferred quality setting.
+    '// JPEG specific I/O data specifiers.
+    JPGFile As Long 'LPTSTR              JPGFile;                32   '// default = NULL
+    JPGBytes As Long ';                  '// default = NULL 36
+    JPGSizeBytes As Long ';              '// default = 0 40
+    JPGWidth As Long ';                  '// default = 0 44
+    JPGHeight As Long ';                 '// default = 0 48
+    JPGChannels As Long ';               '// default = 3
+    JPGColor As Long           ';                  '// default = IJL_YCBCR
+    JPGSubsampling As Long  ';            '// default = IJL_411
+    JPGThumbWidth As Long ' ;             '// default = 0
+    JPGThumbHeight As Long ';            '// default = 0
 
-  '// Low-level properties - 20,000 bytes.  If the whole structure
-  ' is written out then VB fails with an obscure error message
-  ' "Too Many Local Variables" !
-  '
-  ' These all default if they are not otherwise specified so there
-  ' is no trouble to just assign a sufficient buffer in memory:
-  jprops(0 To 19999) As Byte
+    '// JPEG conversion properties.
+    cconversion_reqd As Long ';          '// default = TRUE
+    upsampling_reqd As Long ';           '// default = TRUE
+    jquality As Long ';                  '// default = 75.  100 is my preferred quality setting.
+
+    '// Low-level properties - 20,000 bytes.  If the whole structure
+    ' is written out then VB fails with an obscure error message
+    ' "Too Many Local Variables" !
+    '
+    ' These all default if they are not otherwise specified so there
+    ' is no trouble to just assign a sufficient buffer in memory:
+    jprops(0 To 19999) As Byte
 
 End Type
 
 Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long
-Private Declare Function ReleaseDC Lib "user32" (ByVal hwnd As Long, ByVal hdc As Long) As Long
-Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef dest As Any, ByRef Source As Any, ByVal ByteCount As Long)
+
+Private Declare Function ReleaseDC _
+                Lib "user32" (ByVal hwnd As Long, _
+                              ByVal hdc As Long) As Long
+
+Private Declare Sub CopyMemory _
+                Lib "kernel32" _
+                Alias "RtlMoveMemory" (ByRef dest As Any, _
+                                       ByRef Source As Any, _
+                                       ByVal ByteCount As Long)
 
 Private Declare Function ijlInit Lib "ijl11.dll" (jcprops As Any) As Long
+
 Private Declare Function ijlFree Lib "ijl11.dll" (jcprops As Any) As Long
-Private Declare Function ijlRead Lib "ijl11.dll" (jcprops As Any, ByVal ioType As Long) As Long
-Private Declare Function ijlWrite Lib "ijl11.dll" (jcprops As Any, ByVal ioType As Long) As Long
+
+Private Declare Function ijlRead _
+                Lib "ijl11.dll" (jcprops As Any, _
+                                 ByVal ioType As Long) As Long
+
+Private Declare Function ijlWrite _
+                Lib "ijl11.dll" (jcprops As Any, _
+                                 ByVal ioType As Long) As Long
 
 ' Stuff for replacing a file when you have to Kill the original:
 Private Const MAX_PATH = 260
 
 Private Type FILETIME
-   dwLowDateTime As Long
-   dwHighDateTime As Long
+
+    dwLowDateTime As Long
+    dwHighDateTime As Long
+
 End Type
 
 Private Type WIN32_FIND_DATA
-   dwFileAttributes As Long
-   ftCreationTime As FILETIME
-   ftLastAccessTime As FILETIME
-   ftLastWriteTime As FILETIME
-   nFileSizeHigh As Long
-   nFileSizeLow As Long
-   dwReserved0 As Long
-   dwReserved1 As Long
-   cFileName As String * MAX_PATH
-   cAlternate As String * 14
+
+    dwFileAttributes As Long
+    ftCreationTime As FILETIME
+    ftLastAccessTime As FILETIME
+    ftLastWriteTime As FILETIME
+    nFileSizeHigh As Long
+    nFileSizeLow As Long
+    dwReserved0 As Long
+    dwReserved1 As Long
+    cFileName As String * MAX_PATH
+    cAlternate As String * 14
+
 End Type
 
-Private Declare Function FindFirstFile Lib "kernel32" Alias "FindFirstFileA" (ByVal lpFileName As String, lpFindFileData As WIN32_FIND_DATA) As Long
-Private Declare Function lopen Lib "kernel32" Alias "_lopen" (ByVal lpPathName As String, ByVal iReadWrite As Long) As Long
-Private Declare Function lclose Lib "kernel32" Alias "_lclose" (ByVal hFile As Long) As Long
-Private Declare Function SetFileTime Lib "kernel32" (ByVal hFile As Long, lpCreationTime As FILETIME, lpLastAccessTime As FILETIME, lpLastWriteTime As FILETIME) As Long
-Private Declare Function SetFileAttributes Lib "kernel32" Alias "SetFileAttributesA" (ByVal lpFileName As String, ByVal dwFileAttributes As Long) As Long
+Private Declare Function FindFirstFile _
+                Lib "kernel32" _
+                Alias "FindFirstFileA" (ByVal lpFileName As String, _
+                                        lpFindFileData As WIN32_FIND_DATA) As Long
+
+Private Declare Function lopen _
+                Lib "kernel32" _
+                Alias "_lopen" (ByVal lpPathName As String, _
+                                ByVal iReadWrite As Long) As Long
+
+Private Declare Function lclose _
+                Lib "kernel32" _
+                Alias "_lclose" (ByVal hFile As Long) As Long
+
+Private Declare Function SetFileTime _
+                Lib "kernel32" (ByVal hFile As Long, _
+                                lpCreationTime As FILETIME, _
+                                lpLastAccessTime As FILETIME, _
+                                lpLastWriteTime As FILETIME) As Long
+
+Private Declare Function SetFileAttributes _
+                Lib "kernel32" _
+                Alias "SetFileAttributesA" (ByVal lpFileName As String, _
+                                            ByVal dwFileAttributes As Long) As Long
+
 Private Const OF_WRITE = &H1
+
 Private Const OF_SHARE_DENY_WRITE = &H20
 
 Private Const INVALID_HANDLE As Long = -1
@@ -201,14 +244,27 @@ Private Const INVALID_HANDLE As Long = -1
 Private Const SRCCOPY = &HCC0020 ' (DWORD) dest = source
 
 'Good old bitblt
-Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+Private Declare Function BitBlt _
+                Lib "gdi32" (ByVal hDestDC As Long, _
+                             ByVal x As Long, _
+                             ByVal y As Long, _
+                             ByVal nWidth As Long, _
+                             ByVal nHeight As Long, _
+                             ByVal hSrcDC As Long, _
+                             ByVal xSrc As Long, _
+                             ByVal ySrc As Long, _
+                             ByVal dwRop As Long) As Long
 
 Public Function LoadJPG(ByRef cDib As cDIBSection, ByVal sFile As String) As Boolean
 
     Dim tJ        As JPEG_CORE_PROPERTIES_VB
+
     Dim bFile()   As Byte
+
     Dim lR        As Long
+
     Dim lPtr      As Long
+
     Dim lJPGWidth As Long, lJPGHeight As Long
 
     lR = ijlInit(tJ)
@@ -297,10 +353,14 @@ Public Function LoadJPG(ByRef cDib As cDIBSection, ByVal sFile As String) As Boo
    
 End Function
 
-Public Function LoadJPGFromPtr(ByRef cDib As cDIBSection, ByVal lPtr As Long, ByVal lSize As Long) As Boolean
+Public Function LoadJPGFromPtr(ByRef cDib As cDIBSection, _
+                               ByVal lPtr As Long, _
+                               ByVal lSize As Long) As Boolean
 
     Dim tJ        As JPEG_CORE_PROPERTIES_VB
+
     Dim lR        As Long
+
     Dim lJPGWidth As Long, lJPGHeight As Long
 
     lR = ijlInit(tJ)
@@ -381,15 +441,24 @@ Public Function LoadJPGFromPtr(ByRef cDib As cDIBSection, ByVal lPtr As Long, By
    
 End Function
 
-Public Function SaveJPG(ByRef cDib As cDIBSection, ByVal sFile As String, Optional ByVal lQuality As Long = 90) As Boolean
+Public Function SaveJPG(ByRef cDib As cDIBSection, _
+                        ByVal sFile As String, _
+                        Optional ByVal lQuality As Long = 90) As Boolean
 
     Dim tJ           As JPEG_CORE_PROPERTIES_VB
+
     Dim bFile()      As Byte
+
     Dim lPtr         As Long
+
     Dim lR           As Long
+
     Dim tFnd         As WIN32_FIND_DATA
+
     Dim hFile        As Long
+
     Dim bFileExisted As Boolean
+
     Dim lFileSize    As Long
    
     hFile = -1
@@ -407,7 +476,7 @@ Public Function SaveJPG(ByRef cDib As cDIBSection, ByVal sFile As String, Option
 
         End If
       
-    ' Set up the DIB information:
+        ' Set up the DIB information:
         
         ' Store DIBWidth:
         tJ.DIBWidth = cDib.Width
@@ -422,7 +491,7 @@ Public Function SaveJPG(ByRef cDib As cDIBSection, ByVal sFile As String, Option
         ' are on each DIB scan line to pad to 32 bit boundaries:
         tJ.DIBPadBytes = cDib.BytesPerScanLine - cDib.Width * 3
       
-    ' Set up the JPEG information:
+        ' Set up the JPEG information:
       
         ' Store JPGFile:
         bFile = StrConv(sFile, vbFromUnicode)
@@ -471,7 +540,6 @@ Public Function SaveJPG(ByRef cDib As cDIBSection, ByVal sFile As String, Option
         Else
             ' Throw error
             'Call Err.Raise(26001, JsonLanguage.item("ERROR_GUARDAR_SCREENSHOT").item("TEXTO") & lR, vbExclamation)
-            
 
         End If
       
@@ -485,10 +553,15 @@ Public Function SaveJPG(ByRef cDib As cDIBSection, ByVal sFile As String, Option
 
 End Function
 
-Public Function SaveJPGToPtr(ByRef cDib As cDIBSection, ByVal lPtr As Long, ByRef lBufSize As Long, Optional ByVal lQuality As Long = 90) As Boolean
+Public Function SaveJPGToPtr(ByRef cDib As cDIBSection, _
+                             ByVal lPtr As Long, _
+                             ByRef lBufSize As Long, _
+                             Optional ByVal lQuality As Long = 90) As Boolean
 
     Dim tJ    As JPEG_CORE_PROPERTIES_VB
+
     Dim lR    As Long
+
     Dim hFile As Long
    
     hFile = -1
@@ -497,7 +570,7 @@ Public Function SaveJPGToPtr(ByRef cDib As cDIBSection, ByVal lPtr As Long, ByRe
 
     If lR = IJL_OK Then
       
-    ' Set up the DIB information:
+        ' Set up the DIB information:
         ' Store DIBWidth:
         tJ.DIBWidth = cDib.Width
         
@@ -558,15 +631,20 @@ Public Sub ScreenCapture(Optional ByVal AutoScreenShooter As Boolean = False)
     On Error GoTo Err:
 
     Dim File As String
+
     Dim c    As cDIBSection
+
     Set c = New cDIBSection
+
     Dim hdcc    As Long
+
     Dim dirFile As String
     
     hdcc = GetDC(frmMain.hwnd)
 
     Dim FileName As String
-        FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
+
+    FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
     
     With frmScreenshots.Picture1
         
@@ -585,7 +663,9 @@ Public Sub ScreenCapture(Optional ByVal AutoScreenShooter As Boolean = False)
         
         If AutoScreenShooter Then
             dirFile = dirFile & "\ScreenShooter"
+
             If Not FileExist(dirFile, vbDirectory) Then Call MkDir(dirFile)
+
         End If
         
         File = dirFile & "\" & FileName
@@ -596,13 +676,13 @@ Public Sub ScreenCapture(Optional ByVal AutoScreenShooter As Boolean = False)
         Call c.CreateFromPicture(.Picture)
     
         Call SaveJPG(c, File)
-    
         
         'AddtoRichPicture "¡Pantalla Capturada! [ " & File & " ]", 200, 200, 200, False, False, False
         If AutoScreenShooter Then
             AddtoRichPicture "[NUEVA SCREENSHOT] [Screenshots/ScreenShooter/" & FileName & "]", 200, 200, 200, False, False, False
         Else
             AddtoRichPicture "[NUEVA SCREENSHOT] [Screenshots/" & FileName & "]", 200, 200, 200, False, False, False
+
         End If
         
         Exit Sub
@@ -622,9 +702,11 @@ Public Function FullScreenCapture(ByVal File As String) As Boolean
     'Medio desprolijo donde pongo la pic, pero es lo que hay por ahora
     
     Dim c As cDIBSection
+
     Set c = New cDIBSection
 
     Dim hdcc   As Long
+
     Dim handle As Long
     
     hdcc = GetDC(handle)
@@ -664,8 +746,6 @@ Public Function FullScreenCapture(ByVal File As String) As Boolean
     End With
     
 End Function
-
-
 
 'Option Explicit
 '

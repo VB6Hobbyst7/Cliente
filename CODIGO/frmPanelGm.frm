@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPanelGm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Panel GM"
@@ -1600,79 +1600,84 @@ Option Explicit
 
 Private Sub cboListaUsus_Validate(Cancel As Boolean)
     Cancel = True
+
 End Sub
 
 Private Sub cmdACEPTCONSE_Click()
+
     '/ACEPTCONSE
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea aceptar a " & Nick & " como consejero real?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteAcceptRoyalCouncilMember(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea aceptar a " & Nick & " como consejero real?", vbYesNo, "Atencion!") = vbYes Then Call WriteAcceptRoyalCouncilMember(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdACEPTCONSECAOS_Click()
+
     '/ACEPTCONSECAOS
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea aceptar a " & Nick & " como consejero del caos?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteAcceptChaosCouncilMember(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea aceptar a " & Nick & " como consejero del caos?", vbYesNo, "Atencion!") = vbYes Then Call WriteAcceptChaosCouncilMember(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdAddFollow_Click()
-'Dim i As Long
-'
-'    For i = 0 To lstUsers.ListCount
-'        If UCase$(lstUsers.List(i)) = UCase$(txtNuevoUsuario.Text) Then
-'            Call MsgBox("El usuario ya esta en la lista!", vbOKOnly + vbExclamation)
-'            Exit Sub
-'        End If
-'    Next i
-'
-'    If LenB(txtNuevoUsuario.Text) = 0 Then
-'        Call MsgBox("Escribe el nombre de un usuario!", vbOKOnly + vbExclamation)
-'        Exit Sub
-'    End If
-'
-'    If LenB(txtNuevaDescrip.Text) = 0 Then
-'        Call MsgBox("Escribe el motivo del seguimiento!", vbOKOnly + vbExclamation)
-'        Exit Sub
-'    End If
-'
-'    Call WriteRecordAdd(txtNuevoUsuario.Text, txtNuevaDescrip.Text)
-'
-'    txtNuevoUsuario.Text = vbNullString
-'    txtNuevaDescrip.Text = vbNullString
+
+    'Dim i As Long
+    '
+    '    For i = 0 To lstUsers.ListCount
+    '        If UCase$(lstUsers.List(i)) = UCase$(txtNuevoUsuario.Text) Then
+    '            Call MsgBox("El usuario ya esta en la lista!", vbOKOnly + vbExclamation)
+    '            Exit Sub
+    '        End If
+    '    Next i
+    '
+    '    If LenB(txtNuevoUsuario.Text) = 0 Then
+    '        Call MsgBox("Escribe el nombre de un usuario!", vbOKOnly + vbExclamation)
+    '        Exit Sub
+    '    End If
+    '
+    '    If LenB(txtNuevaDescrip.Text) = 0 Then
+    '        Call MsgBox("Escribe el motivo del seguimiento!", vbOKOnly + vbExclamation)
+    '        Exit Sub
+    '    End If
+    '
+    '    Call WriteRecordAdd(txtNuevoUsuario.Text, txtNuevaDescrip.Text)
+    '
+    '    txtNuevoUsuario.Text = vbNullString
+    '    txtNuevaDescrip.Text = vbNullString
 End Sub
 
 Private Sub cmdAddObs_Click()
-'Dim Obs As String
-'
-'    Obs = InputBox("Ingrese la observacion", "Nueva Observacion")
-'
-'    If LenB(Obs) = 0 Then
-'        Call MsgBox("Escribe una observacion!", vbOKOnly + vbExclamation)
-'        Exit Sub
-'    End If
-'
-'    If lstUsers.ListIndex = -1 Then
-'        Call MsgBox("Seleccione un seguimiento!", vbOKOnly + vbExclamation)
-'        Exit Sub
-'    End If
-'
-'    Call WriteRecordAddObs(lstUsers.ListIndex + 1, Obs)
+
+    'Dim Obs As String
+    '
+    '    Obs = InputBox("Ingrese la observacion", "Nueva Observacion")
+    '
+    '    If LenB(Obs) = 0 Then
+    '        Call MsgBox("Escribe una observacion!", vbOKOnly + vbExclamation)
+    '        Exit Sub
+    '    End If
+    '
+    '    If lstUsers.ListIndex = -1 Then
+    '        Call MsgBox("Seleccione un seguimiento!", vbOKOnly + vbExclamation)
+    '        Exit Sub
+    '    End If
+    '
+    '    Call WriteRecordAddObs(lstUsers.ListIndex + 1, Obs)
 End Sub
 
 Private Sub cmdADVERTENCIA_Click()
+
     '/ADVERTENCIA
     Dim tStr As String
+
     Dim Nick As String
 
     Nick = cboListaUsus.Text
@@ -1683,39 +1688,47 @@ Private Sub cmdADVERTENCIA_Click()
         If LenB(tStr) <> 0 Then
             'We use the Parser to control the command format
             Call ParseUserCommand("/ADVERTENCIA " & Nick & "@" & tStr)
+
         End If
+
     End If
+
     frmMain.Show
+
 End Sub
 
 Private Sub cmdBackUPNo_Click()
+
     '/BACKUP NO Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa NO tenga Backup hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO BACKUP 0") 'We use the Parser to control the command format
+    If MsgBox("Seguro desea hacer que el Mapa NO tenga Backup hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO BACKUP 0") 'We use the Parser to control the command format
 
 End Sub
 
 Private Sub cmdBacup_Click()
+
     '/BACKUP SI Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa tenga Backup hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO BACKUP 1") 'We use the Parser to control the command format
+    If MsgBox("Seguro desea hacer que el Mapa tenga Backup hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO BACKUP 1") 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub cmdBAL_Click()
+
     '/BAL
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteRequestCharGold(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteRequestCharGold(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdBAN_Click()
+
     '/BAN
     Dim tStr As String
+
     Dim Nick As String
 
     Nick = cboListaUsus.Text
@@ -1723,97 +1736,112 @@ Private Sub cmdBAN_Click()
     If LenB(Nick) <> 0 Then
         tStr = InputBox("Escriba el motivo del ban.", "BAN a " & Nick)
                 
-        If LenB(tStr) <> 0 Then _
-            If MsgBox("Seguro desea banear a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then _
-                Call WriteBanChar(Nick, tStr)
+        If LenB(tStr) <> 0 Then If MsgBox("Seguro desea banear a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteBanChar(Nick, tStr)
+
     End If
+
     frmMain.Show
+
 End Sub
 
 Private Sub cmdBANCLAN_Click()
+
     '/BANCLAN
     Dim tStr As String
     
     tStr = InputBox("Escriba el nombre del clan.", "Banear clan")
-    If LenB(tStr) <> 0 Then _
-        If MsgBox("Seguro desea banear al clan " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteGuildBan(tStr)
-            frmMain.Show
+
+    If LenB(tStr) <> 0 Then If MsgBox("Seguro desea banear al clan " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteGuildBan(tStr)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdBANIP_Click()
+
     '/BANIP
-    Dim tStr As String
+    Dim tStr   As String
+
     Dim reason As String
     
     tStr = InputBox("Escriba el ip o el nick del PJ.", "Banear IP")
     
     reason = InputBox("Escriba el motivo del ban.", "Banear IP")
     
-    If LenB(tStr) <> 0 Then _
-        If MsgBox("Seguro desea banear la ip " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/BANIP " & tStr & " " & reason) 'We use the Parser to control the command format
-            frmMain.Show
+    If LenB(tStr) <> 0 Then If MsgBox("Seguro desea banear la ip " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/BANIP " & tStr & " " & reason) 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdBANIPLIST_Click()
     '/BANIPLIST
     Call WriteBannedIPList
     frmMain.Show
+
 End Sub
 
 Private Sub cmdBANIPRELOAD_Click()
     '/BANIPRELOAD
     Call WriteBannedIPReload
     frmMain.Show
+
 End Sub
 
 Private Sub cmdBORRAR_SOS_Click()
+
     '/BORRAR SOS
-    If MsgBox("Seguro desea borrar el SOS?", vbYesNo, "Atencion!") = vbYes Then _
-        Call WriteCleanSOS
-        frmMain.Show
+    If MsgBox("Seguro desea borrar el SOS?", vbYesNo, "Atencion!") = vbYes Then Call WriteCleanSOS
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdBORRARPENA_Click()
+
     '/BORRARPENA
     Dim tStr As String
+
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then
         tStr = InputBox("Indique el numero de la pena a borrar.", "Borrar pena")
-        If LenB(tStr) <> 0 Then _
-            If MsgBox("Seguro desea borrar la pena " & tStr & " a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then _
-                Call ParseUserCommand("/BORRARPENA " & Nick & "@" & tStr) 'We use the Parser to control the command format
+
+        If LenB(tStr) <> 0 Then If MsgBox("Seguro desea borrar la pena " & tStr & " a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/BORRARPENA " & Nick & "@" & tStr) 'We use the Parser to control the command format
+
     End If
+
     frmMain.Show
+
 End Sub
 
 Private Sub cmdBOV_Click()
+
     '/BOV
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteRequestCharBank(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteRequestCharBank(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdCAOSMSG_Click()
+
     '/CAOSMSG
     Dim tStr As String
     
     tStr = InputBox("Ingrese el TEXTO", "Mensaje por consola LegionOscura")
-    If LenB(tStr) <> 0 Then _
-        Call WriteChaosLegionMessage(tStr)
+
+    If LenB(tStr) <> 0 Then Call WriteChaosLegionMessage(tStr)
+
 End Sub
 
 Private Sub cmdCARCEL_Click()
+
     '/CARCEL
     Dim tStr As String
+
     Dim Nick As String
 
     Nick = cboListaUsus.Text
@@ -1825,949 +1853,1066 @@ Private Sub cmdCARCEL_Click()
             tStr = tStr & "@" & InputBox("Indique el tiempo de condena (entre 0 y 60 minutos).", "Carcel a " & Nick)
             'We use the Parser to control the command format
             Call ParseUserCommand("/CARCEL " & Nick & "@" & tStr)
+
         End If
+
     End If
+
     frmMain.Show
+
 End Sub
 
 Private Sub cmdCC_Click()
     '/CC
     Call WriteSpawnListRequest
     frmMain.Show
+
 End Sub
 
 Private Sub cmdCHATCOLOR_Click()
+
     '/CHATCOLOR
     Dim tStr As String
-        tStr = InputBox("Defina el color (R G B). Deje en blanco para usar el default.", "Cambiar color del chat")
-        Call ParseUserCommand("/CHATCOLOR " & tStr) 'We use the Parser to control the command format
+
+    tStr = InputBox("Defina el color (R G B). Deje en blanco para usar el default.", "Cambiar color del chat")
+    Call ParseUserCommand("/CHATCOLOR " & tStr) 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub cmdCI_Click()
+
     '/CI
     Dim tStr As String
     
     tStr = InputBox("Indique el numero del objeto a crear y la cantidad.", "Crear Objeto")
-    If LenB(tStr) <> 0 Then _
-        If MsgBox("Seguro desea crear el objeto " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/CI " & tStr) 'We use the Parser to control the command format
-            frmMain.Show
+
+    If LenB(tStr) <> 0 Then If MsgBox("Seguro desea crear el objeto " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/CI " & tStr) 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdCIUMSG_Click()
+
     '/CIUMSG
     Dim tStr As String
     
     tStr = InputBox(" Ingrese el TEXTO", "Mensaje por consola Ciudadanos")
-    If LenB(tStr) <> 0 Then _
-        Call WriteCitizenMessage(tStr)
+
+    If LenB(tStr) <> 0 Then Call WriteCitizenMessage(tStr)
+
 End Sub
 
 Private Sub cmdCONDEN_Click()
+
     '/CONDEN
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea volver criminal a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteTurnCriminal(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea volver criminal a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteTurnCriminal(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdConsulta_Click()
-'    WriteConsultation
-'    frmMain.Show
+
+    '    WriteConsultation
+    '    frmMain.Show
 End Sub
 
 Private Sub cmdCT_Click()
+
     '/CT
     Dim tStr As String
     
     tStr = InputBox("Indique la posicion donde lleva el portal (MAPA X Y).", "Crear Portal")
-    If LenB(tStr) <> 0 Then _
-        Call ParseUserCommand("/CT " & tStr) 'We use the Parser to control the command format
+
+    If LenB(tStr) <> 0 Then Call ParseUserCommand("/CT " & tStr) 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub cmdDE_Click()
-''/DE
-'    If MsgBox("Seguro desea destruir el Tile Exit?", vbYesNo, "Atencion!") = vbYes Then _
-'        Call WriteExitDestroy
-'        frmMain.Show
+
+    ''/DE
+    '    If MsgBox("Seguro desea destruir el Tile Exit?", vbYesNo, "Atencion!") = vbYes Then _
+    '        Call WriteExitDestroy
+    '        frmMain.Show
 End Sub
 
 Private Sub cmdDEST_Click()
+
     '/DEST
-    If MsgBox("Seguro desea destruir el objeto sobre el que esta parado?", vbYesNo, "Atencion!") = vbYes Then _
-        Call WriteDestroyItems
-        frmMain.Show
+    If MsgBox("Seguro desea destruir el objeto sobre el que esta parado?", vbYesNo, "Atencion!") = vbYes Then Call WriteDestroyItems
+    frmMain.Show
+
 End Sub
 
 Private Sub cmddestBloq_Click()
-    If MsgBox("Seguro desea el bloqueo en su ubicación ? ", vbYesNo, "Atencion!") = vbYes Then _
-        Call WriteTileBlockedToggle
-        frmMain.Show
+
+    If MsgBox("Seguro desea el bloqueo en su ubicación ? ", vbYesNo, "Atencion!") = vbYes Then Call WriteTileBlockedToggle
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdDONDE_Click()
+
     '/DONDE
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteWhere(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteWhere(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdDT_Click()
-'    'DT
-'    If MsgBox("Seguro desea destruir el portal?", vbYesNo, "Atencion!") = vbYes Then _
-'        Call WriteTeleportDestroy
-'        Call WriteExitDestroy
-'        frmMain.Show
+
+    '    'DT
+    '    If MsgBox("Seguro desea destruir el portal?", vbYesNo, "Atencion!") = vbYes Then _
+    '        Call WriteTeleportDestroy
+    '        Call WriteExitDestroy
+    '        frmMain.Show
 End Sub
 
 Private Sub cmdECHAR_Click()
+
     '/ECHAR
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteKick(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteKick(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdEJECUTAR_Click()
+
     '/EJECUTAR
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea ejecutar a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteExecute(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea ejecutar a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteExecute(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdESTUPIDO_Click()
+
     '/ESTUPIDO
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteMakeDumb(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteMakeDumb(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdGMSG_Click()
+
     '/GMSG
     Dim tStr As String
     
     tStr = InputBox("Escriba el mensaje.", "Mensaje por consola de GM")
-    If LenB(tStr) <> 0 Then _
-        Call WriteGMMessage(tStr)
+
+    If LenB(tStr) <> 0 Then Call WriteGMMessage(tStr)
+
 End Sub
 
 Private Sub cmdHORA_Click()
     '/HORA
     Call Protocol.WriteServerTime
+
 End Sub
 
 Private Sub cmdIGNORADO_Click()
     '/IGNORADO
     Call WriteIgnored
     frmMain.Show
+
 End Sub
 
 Private Sub cmdINFO_Click()
+
     '/INFO
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteRequestCharInfo(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteRequestCharInfo(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdINV_Click()
+
     '/INV
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteRequestCharInventory(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteRequestCharInventory(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdINVISIBLE_Click()
     '/INVISIBLE
     Call WriteInvisible
     frmMain.Show
+
 End Sub
 
 Private Sub cmdInvocaNO_Click()
+
     '/Sin Invocación Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa NO puedan Invocar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO INVOCARSINEFECTO 0") 'We use the Parser to control the command format
+    If MsgBox("Seguro desea hacer que el Mapa NO puedan Invocar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO INVOCARSINEFECTO 0") 'We use the Parser to control the command format
+
 End Sub
 
 Private Sub cmdInvocaSI_Click()
+
     '/Con Invocación Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa puedan Invocar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO INVOCARSINEFECTO 1") 'We use the Parser to control the command format
+    If MsgBox("Seguro desea hacer que el Mapa puedan Invocar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO INVOCARSINEFECTO 1") 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub cmdIP2NICK_Click()
+
     '/IP2NICK
     Dim tStr As String
     
     tStr = InputBox("Escriba la ip.", "IP to Nick")
-    If LenB(tStr) <> 0 Then _
-        Call ParseUserCommand("/IP2NICK " & tStr) 'We use the Parser to control the command format
-        frmMain.Show
+
+    If LenB(tStr) <> 0 Then Call ParseUserCommand("/IP2NICK " & tStr) 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdIRA_Click()
+
     '/IRA
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteGoToChar(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteGoToChar(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdIra1_Click()
     '/Telep yo Isla victoria
 
-        Call ParseUserCommand("/TELEP YO 1 926 627") 'We use the Parser to control the command format
+    Call ParseUserCommand("/TELEP YO 1 926 627") 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub cmdIRCERCA_Click()
+
     '/IRCERCA
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteGoNearby(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteGoNearby(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdKICKCONSE_Click()
+
     'KICKCONSE
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea destituir a " & Nick & " de su cargo de consejero?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteCouncilKick(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea destituir a " & Nick & " de su cargo de consejero?", vbYesNo, "Atencion!") = vbYes Then Call WriteCouncilKick(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdLASTEMAIL_Click()
+
     '/LASTEMAIL
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteRequestCharMail(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteRequestCharMail(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdLASTIP_Click()
+
     '/LASTIP
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteLastIP(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteLastIP(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdLIMPIAR_Click()
-'    '/LIMPIARMUNDO
-'    Call WriteLimpiarMundo
-'    frmMain.Show
+
+    '    '/LIMPIARMUNDO
+    '    Call WriteLimpiarMundo
+    '    frmMain.Show
 End Sub
 
 Private Sub cmdLLUVIA_Click()
     '/LLUVIA
     Call WriteRainToggle
     frmMain.Show
+
 End Sub
 
 Private Sub cmdMagiaNO_Click()
+
     '/Sin Magia Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa NO tenga Magia hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO MAGIASINEFECTO 0") 'We use the Parser to control the command format
-        frmMain.Show
+    If MsgBox("Seguro desea hacer que el Mapa NO tenga Magia hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO MAGIASINEFECTO 0") 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdMagiaSI_Click()
+
     '/Con Magia Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa tenga Magia hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO MAGIASINEFECTO 1") 'We use the Parser to control the command format
+    If MsgBox("Seguro desea hacer que el Mapa tenga Magia hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO MAGIASINEFECTO 1") 'We use the Parser to control the command format
+
 End Sub
 
 Private Sub cmdMASSDEST_Click()
+
     '/MASSDEST
-    If MsgBox("Seguro desea destruir todos los items a la vista?", vbYesNo, "Atencion!") = vbYes Then _
-        Call WriteDestroyAllItemsInArea
-        frmMain.Show
+    If MsgBox("Seguro desea destruir todos los items a la vista?", vbYesNo, "Atencion!") = vbYes Then Call WriteDestroyAllItemsInArea
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdMata_Click()
     Call WriteKillNPCNoRespawn
     frmMain.Show
+
 End Sub
 
 Private Sub cmdMataconRepawn_Click()
     Call WriteKillNPC
     frmMain.Show
+
 End Sub
 
 Private Sub cmdMIEMBROSCLAN_Click()
+
     '/MIEMBROSCLAN
     Dim tStr As String
     
     tStr = InputBox("Escriba el nombre del clan.", "Lista de miembros del clan")
-    If LenB(tStr) <> 0 Then _
-        Call WriteGuildMemberList(tStr)
-        frmMain.Show
+
+    If LenB(tStr) <> 0 Then Call WriteGuildMemberList(tStr)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdMOTDCAMBIA_Click()
     '/MOTDCAMBIA
     Call WriteChangeMOTD
+
 End Sub
 
 Private Sub cmdNAVE_Click()
     '/NAVE
     Call WriteNavigateToggle
     frmMain.Show
+
 End Sub
 
 Private Sub cmdNENE_Click()
-'    '/NENE
-'    Dim tStr As String
-'
-'    tStr = InputBox("Indique el mapa.", "Numero de NPCs enemigos.")
-'    If LenB(tStr) <> 0 Then _
-'        Call ParseUserCommand("/NENE " & tStr) 'We use the Parser to control the command format
-'        frmMain.Show
+
+    '    '/NENE
+    '    Dim tStr As String
+    '
+    '    tStr = InputBox("Indique el mapa.", "Numero de NPCs enemigos.")
+    '    If LenB(tStr) <> 0 Then _
+    '        Call ParseUserCommand("/NENE " & tStr) 'We use the Parser to control the command format
+    '        frmMain.Show
 End Sub
 
 Private Sub cmdNICK2IP_Click()
+
     '/NICK2IP
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteNickToIP(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteNickToIP(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdNOCAOS_Click()
+
     '/NOCAOS
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea expulsar a " & Nick & " de la legion oscura?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteChaosLegionKick(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea expulsar a " & Nick & " de la legion oscura?", vbYesNo, "Atencion!") = vbYes Then Call WriteChaosLegionKick(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdNOESTUPIDO_Click()
+
     '/NOESTUPIDO
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteMakeDumbNoMore(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteMakeDumbNoMore(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdNOREAL_Click()
+
     '/NOREAL
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea expulsar a " & Nick & " de la armada real?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteRoyalArmyKick(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea expulsar a " & Nick & " de la armada real?", vbYesNo, "Atencion!") = vbYes Then Call WriteRoyalArmyKick(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdNPCsConRespawn_Click()
+
     '/RACC
     Dim tStr As String
     
     tStr = InputBox("Indique el numero del NPC a crear.", "Crear NPC con Respawn")
-    If LenB(tStr) <> 0 Then _
-        If MsgBox("Seguro desea crear el NPC " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/RACC " & tStr) 'We use the Parser to control the command format
+
+    If LenB(tStr) <> 0 Then If MsgBox("Seguro desea crear el NPC " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/RACC " & tStr) 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub cmdOCULTANDO_Click()
     '/OCULTANDO
     Call WriteHiding
     frmMain.Show
+
 End Sub
 
 Private Sub cmdONLINECAOS_Click()
     '/ONLINECAOS
     Call WriteOnlineChaosLegion
     frmMain.Show
+
 End Sub
 
 Private Sub cmdONLINEGM_Click()
     '/ONLINEGM
     Call WriteOnlineGM
     frmMain.Show
+
 End Sub
 
 Private Sub cmdONLINEMAP_Click()
-'    '/ONLINEMAP
-'    Call WriteOnlineMap(UserMap)
-'    frmMain.Show
+
+    '    '/ONLINEMAP
+    '    Call WriteOnlineMap(UserMap)
+    '    frmMain.Show
 End Sub
 
 Private Sub cmdONLINEREAL_Click()
     '/ONLINEREAL
     Call WriteOnlineRoyalArmy
     frmMain.Show
+
 End Sub
 
 Private Sub cmdPENAS_Click()
+
     '/PENAS
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WritePunishments(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WritePunishments(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdPERDON_Click()
+
     '/PERDON
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteForgive(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteForgive(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdPISO_Click()
     '/PISO
     Call WriteItemsInTheFloor
     frmMain.Show
+
 End Sub
 
 Private Sub cmdPK0_Click()
+
     '/PK Seguro Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer el Mapa Seguro?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO PK 0") 'We use the Parser to control the command format
-frmMain.Show
+    If MsgBox("Seguro desea hacer el Mapa Seguro?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO PK 0") 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdRAJAR_Click()
+
     '/RAJAR
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea resetear la faccion de " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteResetFactions(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea resetear la faccion de " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteResetFactions(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdRAJARCLAN_Click()
+
     '/RAJARCLAN
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea expulsar a " & Nick & " de su clan?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteRemoveCharFromGuild(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea expulsar a " & Nick & " de su clan?", vbYesNo, "Atencion!") = vbYes Then Call WriteRemoveCharFromGuild(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdREALMSG_Click()
+
     '/REALMSG
     Dim tStr As String
     
     tStr = InputBox("Ingrese el TEXTO", "Mensaje por consola ArmadaReal")
-    If LenB(tStr) <> 0 Then _
-        Call WriteRoyalArmyMessage(tStr)
+
+    If LenB(tStr) <> 0 Then Call WriteRoyalArmyMessage(tStr)
+
 End Sub
 
 Private Sub cmdRefresh_Click()
     Call ClearRecordDetails
+
     'Call WriteRecordListRequest
 End Sub
 
 Private Sub cmdREM_Click()
+
     '/REM
     Dim tStr As String
     
     tStr = InputBox("Escriba el comentario.", "Comentario en el logGM")
-    If LenB(tStr) <> 0 Then _
-        Call WriteComment(tStr)
-        frmMain.Show
+
+    If LenB(tStr) <> 0 Then Call WriteComment(tStr)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdResetInv_Click()
     Call WriteResetNPCInventory
     frmMain.Show
+
 End Sub
 
 Private Sub cmdREVIVIR_Click()
+
     '/REVIVIR
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteReviveChar(Nick)
-        'frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteReviveChar(Nick)
+
+    'frmMain.Show
 End Sub
 
 Private Sub cmdRMSG_Click()
+
     '/RMSG
     Dim tStr As String
     
     tStr = InputBox("Escriba el mensaje.", "Mensaje por consola de RoleMaster")
-    If LenB(tStr) <> 0 Then _
-        Call WriteServerMessage(tStr)
+
+    If LenB(tStr) <> 0 Then Call WriteServerMessage(tStr)
+
 End Sub
 
 Private Sub cmdRoboNO_Click()
+
     '/NO Robor Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa NO puedan Robar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO ROBONPC 0") 'We use the Parser to control the command format
+    If MsgBox("Seguro desea hacer que el Mapa NO puedan Robar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO ROBONPC 0") 'We use the Parser to control the command format
+
 End Sub
 
 Private Sub cmdRoboSi_Click()
+
     '/Con Robo Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa puedan Robar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO ROBONPC 1") 'We use the Parser to control the command format
-        frmMain.Show
+    If MsgBox("Seguro desea hacer que el Mapa puedan Robar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO ROBONPC 1") 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdSETDESC_Click()
+
     '/SETDESC
     Dim tStr As String
     
     tStr = InputBox("Escriba una DESC.", "Set Description")
-    If LenB(tStr) <> 0 Then _
-        Call WriteSetCharDescription(tStr)
-        frmMain.Show
+
+    If LenB(tStr) <> 0 Then Call WriteSetCharDescription(tStr)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdSHOW_SOS_Click()
     '/SHOW SOS
     Call WriteSOSShowList
     frmMain.Show
+
 End Sub
 
 Private Sub cmdSHOWCMSG_Click()
+
     '/SHOWCMSG
     Dim tStr As String
     
     tStr = InputBox("Escriba el nombre del clan que desea escuchar.", "Escuchar los mensajes del clan")
-    If LenB(tStr) <> 0 Then _
-        Call WriteShowGuildMessages(tStr)
-        frmMain.Show
+
+    If LenB(tStr) <> 0 Then Call WriteShowGuildMessages(tStr)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdSHOWNAME_Click()
-'    '/SHOWNAME
-'    Call WriteShowName
-'    frmMain.Show
+
+    '    '/SHOWNAME
+    '    Call WriteShowName
+    '    frmMain.Show
 End Sub
 
 Private Sub cmdSILENCIAR_Click()
+
     '/SILENCIAR
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteSilence(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteSilence(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdSKILLS_Click()
+
     '/SKILLS
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteRequestCharSkills(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteRequestCharSkills(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdSMSG_Click()
+
     '/SMSG
     Dim tStr As String
     
     tStr = InputBox("Escriba el mensaje.", "Mensaje de sistema")
-    If LenB(tStr) <> 0 Then _
-        Call WriteSystemMessage(tStr)
+
+    If LenB(tStr) <> 0 Then Call WriteSystemMessage(tStr)
+
 End Sub
 
 Private Sub cmdSTAT_Click()
+
     '/STAT
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteRequestCharStats(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteRequestCharStats(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdSUM_Click()
+
     '/SUM
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        Call WriteSummonChar(Nick)
-        frmMain.Show
+    If LenB(Nick) <> 0 Then Call WriteSummonChar(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdTALKAS_Click()
+
     '/TALKAS
     Dim tStr As String
+
     tStr = InputBox("Escriba el mensaje", "Hablar por NPC")
-    If LenB(tStr) <> 0 Then _
-        Call WriteTalkAsNPC(tStr)
+
+    If LenB(tStr) <> 0 Then Call WriteTalkAsNPC(tStr)
+
 End Sub
 
 Private Sub cmdTELEP_Click()
+
     '/TELEP
     Dim tStr As String
+
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
     If LenB(Nick) <> 0 Then
         tStr = InputBox("Indique la posicion (MAPA X Y).", "Transportar a " & Nick)
-        If LenB(tStr) <> 0 Then _
-            Call ParseUserCommand("/TELEP " & Nick & " " & tStr) 'We use the Parser to control the command format
+
+        If LenB(tStr) <> 0 Then Call ParseUserCommand("/TELEP " & Nick & " " & tStr) 'We use the Parser to control the command format
+
     End If
+
     frmMain.Show
+
 End Sub
 
 Private Sub cmdTRABAJANDO_Click()
     '/TRABAJANDO
     Call WriteWorking
     frmMain.Show
+
 End Sub
 
 Private Sub cmdUNBAN_Click()
+
     '/UNBAN
     Dim Nick As String
 
     Nick = cboListaUsus.Text
     
-    If LenB(Nick) <> 0 Then _
-        If MsgBox("Seguro desea unbanear a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call WriteUnbanChar(Nick)
-            frmMain.Show
+    If LenB(Nick) <> 0 Then If MsgBox("Seguro desea unbanear a " & Nick & "?", vbYesNo, "Atencion!") = vbYes Then Call WriteUnbanChar(Nick)
+    frmMain.Show
+
 End Sub
 
 Private Sub cmdUNBANIP_Click()
+
     '/UNBANIP
     Dim tStr As String
     
     tStr = InputBox("Escriba el ip.", "Unbanear IP")
-    If LenB(tStr) <> 0 Then _
-        If MsgBox("Seguro desea unbanear la ip " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/UNBANIP " & tStr) 'We use the Parser to control the command format
-            frmMain.Show
+
+    If LenB(tStr) <> 0 Then If MsgBox("Seguro desea unbanear la ip " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/UNBANIP " & tStr) 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
-
-
-
-
 Private Sub cndPK1_Click()
+
     '/PK Inseguro
-        If MsgBox("Seguro desea hacer el Mapa Inseguro?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO PK 1") 'We use the Parser to control the command format
-frmMain.Show
+    If MsgBox("Seguro desea hacer el Mapa Inseguro?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO PK 1") 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
 Private Sub Command1_Click()
+
     '/BACKUP no Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa NO tenga Backup hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO BACKUP 0") 'We use the Parser to control the command format
+    If MsgBox("Seguro desea hacer que el Mapa NO tenga Backup hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO BACKUP 0") 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub Command10_Click()
     '/Telep yo Isla Morgolock
 
-        Call ParseUserCommand("/TELEP YO 1 795 522") 'We use the Parser to control the command format
+    Call ParseUserCommand("/TELEP YO 1 795 522") 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub Command11_Click()
     '/Telep yo Bosque Elfico
 
-        Call ParseUserCommand("/TELEP YO 1 105 563") 'We use the Parser to control the command format
+    Call ParseUserCommand("/TELEP YO 1 105 563") 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub Command12_Click()
     '/Telep yo Bosque Arkhein
 
-        Call ParseUserCommand("/TELEP YO 1 471 1310")
+    Call ParseUserCommand("/TELEP YO 1 471 1310")
     frmMain.Show
+
 End Sub
 
 Private Sub Command13_Click()
     '/Telep yo Fortaleza Este
 
-        Call ParseUserCommand("/TELEP YO 1 1057 1428")
+    Call ParseUserCommand("/TELEP YO 1 1057 1428")
     frmMain.Show
+
 End Sub
 
 Private Sub Command14_Click()
     '/Telep yo Bosque Negro
 
-        Call ParseUserCommand("/TELEP YO 1 177 704")
+    Call ParseUserCommand("/TELEP YO 1 177 704")
     frmMain.Show
+
 End Sub
 
 Private Sub Command15_Click()
     '/Telep yo Puente de los Caidos
 
-        Call ParseUserCommand("/TELEP YO 1 545 92")
+    Call ParseUserCommand("/TELEP YO 1 545 92")
     frmMain.Show
+
 End Sub
 
 Private Sub Command16_Click()
     '/Telep yo Bosque Dorck
 
-        Call ParseUserCommand("/TELEP YO 1 233 933")
+    Call ParseUserCommand("/TELEP YO 1 233 933")
     frmMain.Show
+
 End Sub
 
 Private Sub Command17_Click()
     '/Telep yo Fortaleza Oeste
 
-        Call ParseUserCommand("/TELEP YO 1 42 1465")
+    Call ParseUserCommand("/TELEP YO 1 42 1465")
     frmMain.Show
+
 End Sub
-
-
-
-
 
 Private Sub Command19_Click()
     '/Telep yo Dungeon Veril
 
-        Call ParseUserCommand("/TELEP YO 1 69 754")
+    Call ParseUserCommand("/TELEP YO 1 69 754")
     frmMain.Show
+
 End Sub
 
 Private Sub Command2_Click()
+
     '/ACC
     Dim tStr As String
     
     tStr = InputBox("Indique el numero del NPC a crear.", "Crear NPC con Respawn")
-    If LenB(tStr) <> 0 Then _
-        If MsgBox("Seguro desea crear el NPC " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/ACC " & tStr) 'We use the Parser to control the command format
+
+    If LenB(tStr) <> 0 Then If MsgBox("Seguro desea crear el NPC " & tStr & "?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/ACC " & tStr) 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
-
-
 
 Private Sub Command20_Click()
     '/Telep yo Dungeon Dragon
 
-        Call ParseUserCommand("/TELEP YO 1 602 1096")
+    Call ParseUserCommand("/TELEP YO 1 602 1096")
     frmMain.Show
+
 End Sub
 
 Private Sub Command21_Click()
     '/Telep yo Dungeon Inferno
 
-        Call ParseUserCommand("/TELEP YO 1 900 402")
+    Call ParseUserCommand("/TELEP YO 1 900 402")
     frmMain.Show
+
 End Sub
 
 Private Sub Command22_Click()
     '/Telep yo Minas Hierro
 
-        Call ParseUserCommand("/TELEP YO 1 373 855")
+    Call ParseUserCommand("/TELEP YO 1 373 855")
     frmMain.Show
+
 End Sub
 
 Private Sub Command23_Click()
     '/Telep yo Minas Plata
 
-        Call ParseUserCommand("/TELEP YO 1 173 968")
+    Call ParseUserCommand("/TELEP YO 1 173 968")
     frmMain.Show
+
 End Sub
 
 Private Sub Command24_Click()
     '/Telep yo Minas Oro
 
-        Call ParseUserCommand("/TELEP YO 2 257 309")
+    Call ParseUserCommand("/TELEP YO 2 257 309")
     frmMain.Show
+
 End Sub
 
 Private Sub Command25_Click()
     '/Telep yo Polo Norte
 
-        Call ParseUserCommand("/TELEP YO 1 993 123")
+    Call ParseUserCommand("/TELEP YO 1 993 123")
     frmMain.Show
+
 End Sub
 
 Private Sub Command26_Click()
     '/Telep yo Isla Pirata
 
-        Call ParseUserCommand("/TELEP YO 1 434 624")
+    Call ParseUserCommand("/TELEP YO 1 434 624")
     frmMain.Show
+
 End Sub
 
 Private Sub Command27_Click()
     '/Telep yo Batallon alkon
 
-        Call ParseUserCommand("/TELEP YO 1 656 184")
+    Call ParseUserCommand("/TELEP YO 1 656 184")
     frmMain.Show
+
 End Sub
 
 Private Sub Command28_Click()
     '/Telep yo Fuerte pretoriano
 
-        Call ParseUserCommand("/TELEP YO 1 410 256")
+    Call ParseUserCommand("/TELEP YO 1 410 256")
     frmMain.Show
+
 End Sub
 
 Private Sub Command29_Click()
     '/Telep yo Muelle Bander
 
-        Call ParseUserCommand("/TELEP YO 1 301 60")
+    Call ParseUserCommand("/TELEP YO 1 301 60")
     frmMain.Show
+
 End Sub
 
 Private Sub Command3_Click()
+
     '/Con Magia Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa tenga Magia hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO MAGIASINEFECTO 1") 'We use the Parser to control the command format
-        frmMain.Show
+    If MsgBox("Seguro desea hacer que el Mapa tenga Magia hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO MAGIASINEFECTO 1") 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
 Private Sub Command30_Click()
     '/Telep yo Muelle Arghal
 
-        Call ParseUserCommand("/TELEP YO 1 800 315")
+    Call ParseUserCommand("/TELEP YO 1 800 315")
     frmMain.Show
+
 End Sub
 
 Private Sub Command31_Click()
     '/Telep yo muelle lindos oeste
 
-        Call ParseUserCommand("/TELEP YO 1 894 995")
+    Call ParseUserCommand("/TELEP YO 1 894 995")
     frmMain.Show
+
 End Sub
 
 Private Sub Command32_Click()
     '/Telep yo muelle Arkeig
 
-        Call ParseUserCommand("/TELEP YO 1 639 1370")
+    Call ParseUserCommand("/TELEP YO 1 639 1370")
     frmMain.Show
+
 End Sub
 
 Private Sub Command33_Click()
     '/Telep yo Desierto
 
-        Call ParseUserCommand("/TELEP YO 1 724 869")
+    Call ParseUserCommand("/TELEP YO 1 724 869")
     frmMain.Show
+
 End Sub
 
 Private Sub Command34_Click()
     '/Telep yo Muelle de Nix
 
-        Call ParseUserCommand("/TELEP YO 1 161 1243")
+    Call ParseUserCommand("/TELEP YO 1 161 1243")
     frmMain.Show
+
 End Sub
 
 Private Sub Command4_Click()
+
     '/Sin Robo Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa NO puedan Robar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO ROBONPC 0") 'We use the Parser to control the command format
-        frmMain.Show
+    If MsgBox("Seguro desea hacer que el Mapa NO puedan Robar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO ROBONPC 0") 'We use the Parser to control the command format
+    frmMain.Show
+
 End Sub
 
 Private Sub Command5_Click()
+
     Dim tStr As String
     
     tStr = InputBox("Indique el numero del Trigger´s a cambiar.", "Crear NPC con Respawn")
-    If LenB(tStr) <> 0 Then _
-        If MsgBox("Seguro desea cambiar a " & tStr & " el trigger donde esta parado?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/trigger " & tStr) 'We use the Parser to control the command format
+
+    If LenB(tStr) <> 0 Then If MsgBox("Seguro desea cambiar a " & tStr & " el trigger donde esta parado?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/trigger " & tStr) 'We use the Parser to control the command format
     frmMain.Show
+
 End Sub
 
 Private Sub Command6_Click()
-    '/Sin Invocación Agregado Por ReyarB 21/05/2020
-        If MsgBox("Seguro desea hacer que el Mapa NO puedan Invocar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then _
-            Call ParseUserCommand("/MODMAPINFO INVOCARSINEFECTO 0") 'We use the Parser to control the command format
-    frmMain.Show
-End Sub
 
+    '/Sin Invocación Agregado Por ReyarB 21/05/2020
+    If MsgBox("Seguro desea hacer que el Mapa NO puedan Invocar hasta un reset.?", vbYesNo, "Atencion!") = vbYes Then Call ParseUserCommand("/MODMAPINFO INVOCARSINEFECTO 0") 'We use the Parser to control the command format
+    frmMain.Show
+
+End Sub
 
 Private Sub Command7_Click()
     '/Telep yo Isla Pirata
 
-        Call ParseUserCommand("/TELEP YO 1 192 47")
+    Call ParseUserCommand("/TELEP YO 1 192 47")
     frmMain.Show
+
 End Sub
 
 Private Sub Command8_Click()
     '/Telep yo Isla Veleta
 
-        Call ParseUserCommand("/TELEP YO 1 594 33")
+    Call ParseUserCommand("/TELEP YO 1 594 33")
+
 End Sub
 
 Private Sub Command9_Click()
     '/Telep yo Isla Euclides
 
-        Call ParseUserCommand("/TELEP YO 1 120 1447")
+    Call ParseUserCommand("/TELEP YO 1 120 1447")
+
 End Sub
 
 Private Sub Form_Load()
@@ -2781,30 +2926,38 @@ Private Sub Form_Load()
     
     'Oculta el menu usado para el PopUp
     mnuSeguimientos.Visible = False
+
 End Sub
 
 Private Sub cmdActualiza_Click()
     Call WriteRequestUserList
     Call FlushBuffer
+
 End Sub
 
 Private Sub cmdCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     Unload Me
+
 End Sub
 
-Private Sub lstUsers_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-'    If Button = vbRightButton Then
-'        PopupMenu mnuSeguimientos
-'    Else
-'        If lstUsers.ListIndex <> -1 Then
-'            Call ClearRecordDetails
-'            Call WriteRecordDetailsRequest(lstUsers.ListIndex + 1)
-'        End If
-'    End If
+Private Sub lstUsers_MouseUp(Button As Integer, _
+                             Shift As Integer, _
+                             x As Single, _
+                             y As Single)
+
+    '    If Button = vbRightButton Then
+    '        PopupMenu mnuSeguimientos
+    '    Else
+    '        If lstUsers.ListIndex <> -1 Then
+    '            Call ClearRecordDetails
+    '            Call WriteRecordDetailsRequest(lstUsers.ListIndex + 1)
+    '        End If
+    '    End If
 End Sub
 
 Private Sub ClearRecordDetails()
@@ -2814,43 +2967,57 @@ Private Sub ClearRecordDetails()
     txtObs.Text = vbNullString
     txtTimeOn.Text = vbNullString
     lblEstado.Caption = vbNullString
+
 End Sub
 
 Private Sub mnuDelete_Click()
-'    With lstUsers
-'        If .ListIndex = -1 Then
-'            Call MsgBox("Seleccione un usuario para remover el seguimiento!", vbOKOnly + vbExclamation)
-'            Exit Sub
-'        End If
-'
-'        If MsgBox("Desea eliminar el seguimiento al personaje " & .List(.ListIndex) & "?", vbYesNo) = vbYes Then
-'            Call WriteRecordRemove(.ListIndex + 1)
-'            Call ClearRecordDetails
-'        End If
-'    End With
+
+    '    With lstUsers
+    '        If .ListIndex = -1 Then
+    '            Call MsgBox("Seleccione un usuario para remover el seguimiento!", vbOKOnly + vbExclamation)
+    '            Exit Sub
+    '        End If
+    '
+    '        If MsgBox("Desea eliminar el seguimiento al personaje " & .List(.ListIndex) & "?", vbYesNo) = vbYes Then
+    '            Call WriteRecordRemove(.ListIndex + 1)
+    '            Call ClearRecordDetails
+    '        End If
+    '    End With
 End Sub
 
 Private Sub mnuIra_Click()
+
     With lstUsers
+
         If .ListIndex <> -1 Then
             Call WriteGoToChar(.List(.ListIndex))
+
         End If
+
     End With
+
 End Sub
 
 Private Sub mnuSum_Click()
+
     With lstUsers
+
         If .ListIndex <> -1 Then
             Call WriteSummonChar(.List(.ListIndex))
+
         End If
+
     End With
+
 End Sub
 
 Private Sub TabStrip_Click()
     Call showTab(TabStrip.SelectedItem.Index)
+
 End Sub
 
 Private Sub showTab(TabId As Byte)
+
     Dim i As Byte
     
     For i = 1 To Frame.UBound
@@ -2861,6 +3028,8 @@ Private Sub showTab(TabId As Byte)
         frmPanelGm.Height = .Height + 1280
         TabStrip.Height = .Height + 480
         cmdCerrar.Top = .Height + 480
+
     End With
+
 End Sub
 

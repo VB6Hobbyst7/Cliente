@@ -46,15 +46,15 @@ Option Base 0
 
 ''
 ' Maximum number of dialogs that can exist.
-Private Const MAX_DIALOGS As Byte = 100
+Private Const MAX_DIALOGS  As Byte = 100
 
 ''
 ' Maximum length of any dialog line without having to split it.
-Private Const MAX_LENGTH As Byte = 18
+Private Const MAX_LENGTH   As Byte = 18
 
 ''
 ' Number of milliseconds to add to the lifetime per dialog character
-Private Const MS_PER_CHAR As Byte = 100
+Private Const MS_PER_CHAR  As Byte = 100
 
 ''
 ' Number of extra milliseconds to add to the lifetime of a new dialog
@@ -73,6 +73,7 @@ Private Const MS_ADD_EXTRA As Integer = 5000
 ' @param    renderable  Set to True if the chat should be rendered this frame, False otherwise
 '                           (used to skip dialogs from people outside render area).
 Private Type dialog
+
     textLine()  As String
     x           As Integer
     y           As Integer
@@ -85,6 +86,7 @@ Private Type dialog
     B           As Byte
     a           As Byte
     renderable  As Boolean
+
 End Type
 
 ''
@@ -93,11 +95,11 @@ Private dialogs(MAX_DIALOGS - 1) As dialog
 
 ''
 ' The number of dialogs being used at the moment.
-Private dialogCount As Byte
+Private dialogCount              As Byte
 
 ''
 ' the size of the font being used to render
-Private usedFont As StdFont
+Private usedFont                 As StdFont
 
 ''
 ' A millisecond precision timer
@@ -107,34 +109,39 @@ Private Declare Function GetTickCount Lib "kernel32" () As Long
 ' Initializes the instance of the class.
 
 Private Sub Class_Initialize()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 07/28/07
-'Initializes the dialog instance
-'***************************************************
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 07/28/07
+    'Initializes the dialog instance
+    '***************************************************
     dialogCount = 0
+
 End Sub
 
 ''
 ' Clean up and release resources
 
 Private Sub Class_Terminate()
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 07/28/07
-'Clean up
-'***************************************************
+
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 07/28/07
+    'Clean up
+    '***************************************************
 End Sub
 
 Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 07/28/07
-'Returns the index of the dialog in the list, or the negation
-'of the position were it should be if not found (for binary insertion)
-'**************************************************************
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 07/28/07
+    'Returns the index of the dialog in the list, or the negation
+    'of the position were it should be if not found (for binary insertion)
+    '**************************************************************
     Dim min As Long
+
     Dim max As Long
+
     Dim mid As Long
     
     min = 0
@@ -151,12 +158,15 @@ Private Function BinarySearch(ByVal CharIndex As Integer) As Integer
             'We found it
             BinarySearch = mid
             Exit Function
+
         End If
+
     Loop
     
     'Not found, return the negation of the position where it should be
     '(all higher values are to the right of the list and lower values are to the left)
     BinarySearch = Not min
+
 End Function
 
 ''
@@ -170,15 +180,21 @@ End Function
 ' @remarks  If there are no more free slots, and the char didn't have a previous dialog,
 '           the chat is ignored.
 
-Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal R As Byte, ByVal G As Byte, ByVal B As Byte)
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modification: 08/29/07 by Rapsodius
-'Changed life time of the dialogs to a variable amount,
-'depending on the number of chars
-'**************************************************************
+Public Sub CreateDialog(ByRef chat As String, _
+                        ByVal CharIndex As Integer, _
+                        ByVal R As Byte, _
+                        ByVal G As Byte, _
+                        ByVal B As Byte)
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modification: 08/29/07 by Rapsodius
+    'Changed life time of the dialogs to a variable amount,
+    'depending on the number of chars
+    '**************************************************************
     Dim slot As Integer
-    Dim i As Long
+
+    Dim i    As Long
     
     slot = BinarySearch(CharIndex)
     
@@ -194,10 +210,13 @@ Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal 
         
         dialogCount = dialogCount + 1
     Else
+
         If Join(dialogs(slot).textLine, " ") = chat And (charlist(CharIndex).nombre = "" Or Left(charlist(CharIndex).nombre, 1) = "!") Then
             Call RemoveDialog(CharIndex)
             Exit Sub
+
         End If
+
     End If
     
     With dialogs(slot)
@@ -211,7 +230,9 @@ Public Sub CreateDialog(ByRef chat As String, ByVal CharIndex As Integer, ByVal 
         .startTime = (GetTickCount() And &H7FFFFFFF)
         .textLine = FormatChat(chat)
         .lifeTime = MS_ADD_EXTRA + (MS_PER_CHAR * Len(chat))
+
     End With
+
 End Sub
 
 ''
@@ -224,20 +245,27 @@ End Sub
 ' @see      MAX_LENGTH
 
 Private Function FormatChat(ByRef chat As String) As String()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 07/28/07
-'Formats a dialog into different text lines.
-'**************************************************************
-    Dim word As String
-    Dim curPos As Long
-    Dim Length As Long
-    Dim acumLength As Long
-    Dim lineLength As Long
-    Dim wordLength As Long
-    Dim curLine As Long
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 07/28/07
+    'Formats a dialog into different text lines.
+    '**************************************************************
+    Dim word        As String
+
+    Dim curPos      As Long
+
+    Dim Length      As Long
+
+    Dim acumLength  As Long
+
+    Dim lineLength  As Long
+
+    Dim wordLength  As Long
+
+    Dim curLine     As Long
+
     Dim chatLines() As String
-    
     
     'Initialize variables
     curLine = 0
@@ -260,6 +288,7 @@ Private Function FormatChat(ByRef chat As String) As String()
             lineLength = wordLength
             acumLength = wordLength
         Else
+
             ' Is the word too long to fit in this line?
             If lineLength + wordLength + 1 > MAX_LENGTH Then
                 'Put it in the next line
@@ -272,9 +301,11 @@ Private Function FormatChat(ByRef chat As String) As String()
                 chatLines(curLine) = chatLines(curLine) & " " & word
                 
                 lineLength = lineLength + wordLength + 1
+
             End If
             
             acumLength = acumLength + wordLength + 1
+
         End If
         
         'Increase to search for next word
@@ -284,12 +315,14 @@ Private Function FormatChat(ByRef chat As String) As String()
     ' If it's only one line, center text
     If curLine = 0 And Length < MAX_LENGTH Then
         chatLines(curLine) = String((MAX_LENGTH - Length) \ 2 + 1, " ") & chatLines(curLine)
+
     End If
     
     'Resize array to fit
     ReDim Preserve chatLines(curLine) As String
     
     FormatChat = chatLines
+
 End Function
 
 ''
@@ -299,74 +332,101 @@ End Function
 ' @param    y           The Y coord where to start rendering.
 ' @param    charIndex   The character whose dialog's position is being updated.
 
-Public Sub UpdateDialogPos(ByVal x As Integer, ByVal y As Integer, ByVal CharIndex As Integer)
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 07/28/07
-'Updates a dialog's position.
-'**************************************************************
+Public Sub UpdateDialogPos(ByVal x As Integer, _
+                           ByVal y As Integer, _
+                           ByVal CharIndex As Integer)
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 07/28/07
+    'Updates a dialog's position.
+    '**************************************************************
     Dim slot As Integer
     
     slot = BinarySearch(CharIndex)
     
     If slot >= 0 Then
+
         With dialogs(slot)
             .x = x '- (MAX_LENGTH \ 2) * 3
             .y = y - (UBound(.textLine()) * 3)
             .renderable = True
+
         End With
+
     End If
+
 End Sub
 
 ''
 ' Displays all renderable dialogs on screen.
 
 Public Sub Render()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modification: 08/29/07 by Rapsodius
-'Changed the way it gets rid of older dialogs.
-'**************************************************************
-    Dim i As Long
-    Dim j As Long
-    Dim offset As Integer
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modification: 08/29/07 by Rapsodius
+    'Changed the way it gets rid of older dialogs.
+    '**************************************************************
+    Dim i              As Long
+
+    Dim J              As Long
+
+    Dim offset         As Integer
+
     Dim removedDialogs As Long
-    Dim NowTime As Long
-    Dim cantidad As Integer
+
+    Dim NowTime        As Long
+
+    Dim cantidad       As Integer
+
     NowTime = (GetTickCount() And &H7FFFFFFF)
+
     For i = 0 To dialogCount - 1
+
         'Decrease index to prevent jumping over a dialog
         'Crappy VB will cache the limit of the For loop, so even if it changed, it won't matter
         With dialogs(i - removedDialogs)
+
             If (NowTime - .startTime) >= .lifeTime Then
                 Call RemoveDialog(.CharIndex)
                 
                 removedDialogs = removedDialogs + 1
             ElseIf .renderable Then
                 offset = -(usedFont.Size + 2) * UBound(.textLine())
+
                 If NowTime - .startTime <= 400 Then
                     .a = (NowTime - .startTime) / 2
                     .color = D3DColorRGBA(.R, .G, .B, .a)
                 ElseIf .a < 200 Then
                     .a = 200
                     .color = D3DColorRGBA(.R, .G, .B, .a)
+
                 End If
+
                 'Render it
                 cantidad = UBound(.textLine())
+
                 If cantidad = 0 Then
                     Call RenderTextCentered(.x, .y, Trim$(.textLine(0)), .color)
                 Else
-                    For j = 0 To cantidad
-                        Call RenderText(.x - 50, .y + offset, Trim$(.textLine(j)), .color)
+
+                    For J = 0 To cantidad
+                        Call RenderText(.x - 50, .y + offset, Trim$(.textLine(J)), .color)
                         offset = offset + usedFont.Size + 5
-                    Next j
+                    Next J
+
                 End If
                 
                 'Won't render it unless it's updated in next frmae
                 .renderable = False
+
             End If
+
         End With
+
     Next i
+
 End Sub
 
 ''
@@ -375,13 +435,15 @@ End Sub
 ' @param    charIndex   The character whose dialog will be removed.
 
 Public Sub RemoveDialog(ByVal CharIndex As Integer)
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 07/28/07
-'Removes the dialog from the requested char.
-'**************************************************************
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 07/28/07
+    'Removes the dialog from the requested char.
+    '**************************************************************
     Dim slot As Integer
-    Dim i As Long
+
+    Dim i    As Long
     
     slot = BinarySearch(CharIndex)
     
@@ -392,18 +454,20 @@ Public Sub RemoveDialog(ByVal CharIndex As Integer)
     Next i
     
     dialogCount = dialogCount - 1
+
 End Sub
 
 ''
 ' Removes all dialogs from all characters.
 
 Public Sub RemoveAllDialogs()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 07/28/07
-'Removes all dialogs from all chars.
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 07/28/07
+    'Removes all dialogs from all chars.
+    '**************************************************************
     dialogCount = 0
+
 End Sub
 
 ''
@@ -412,12 +476,13 @@ End Sub
 ' @return   The font being used to render dialogs.
 
 Public Property Get font() As StdFont
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 07/28/07
-'Retrieves the font being used to render dialogs.
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 07/28/07
+    'Retrieves the font being used to render dialogs.
+    '**************************************************************
     font = usedFont
+
 End Property
 
 ''
@@ -426,10 +491,11 @@ End Property
 ' @param    nValue  The new font to be used to render dialogs.
 
 Public Property Let font(ByRef nValue As StdFont)
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 07/28/07
-'Sets the font being used to render dialogs.
-'**************************************************************
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 07/28/07
+    'Sets the font being used to render dialogs.
+    '**************************************************************
     Set usedFont = nValue
+
 End Property

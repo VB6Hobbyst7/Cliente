@@ -160,24 +160,30 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonAgregar As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
-Private cBotonDisolver As clsGraphicalButton
-Private cBotonLiderGrupo As clsGraphicalButton
-Private cBotonExpulsar As clsGraphicalButton
-Private cBotonSalirParty As clsGraphicalButton
+Private cBotonAgregar            As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Private cBotonCerrar             As clsGraphicalButton
 
+Private cBotonDisolver           As clsGraphicalButton
 
-Private sPartyChat As String
+Private cBotonLiderGrupo         As clsGraphicalButton
+
+Private cBotonExpulsar           As clsGraphicalButton
+
+Private cBotonSalirParty         As clsGraphicalButton
+
+Public LastPressed               As clsGraphicalButton
+
+Private sPartyChat               As String
+
 Private Const LEADER_FORM_HEIGHT As Integer = 6015
-Private Const NORMAL_FORM_HEIGHT As Integer = 4455
-Private Const OFFSET_BUTTONS As Integer = 43 ' pixels
 
+Private Const NORMAL_FORM_HEIGHT As Integer = 4455
+
+Private Const OFFSET_BUTTONS     As Integer = 43 ' pixels
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     
     lstMembers.Clear
         
@@ -187,11 +193,13 @@ Private Sub Form_Load()
     Else
         Me.Picture = LoadPictureEX("VentanaPartyMiembro.jpg")
         Me.Height = NORMAL_FORM_HEIGHT
+
     End If
     
     Call LoadButtons
 
     MirandoParty = True
+
 End Sub
 
 Private Sub LoadButtons()
@@ -204,30 +212,17 @@ Private Sub LoadButtons()
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonAgregar.Initialize(imgAgregar, "BotonAgregarParty.jpg", _
-                                    "BotonAgregarRolloverParty.jpg", _
-                                    "BotonAgregarClickParty.jpg", Me)
+    Call cBotonAgregar.Initialize(imgAgregar, "BotonAgregarParty.jpg", "BotonAgregarRolloverParty.jpg", "BotonAgregarClickParty.jpg", Me)
                                     
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarParty.jpg", _
-                                    "BotonCerrarRolloverParty.jpg", _
-                                    "BotonCerrarClickParty.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarParty.jpg", "BotonCerrarRolloverParty.jpg", "BotonCerrarClickParty.jpg", Me)
                                     
-    Call cBotonDisolver.Initialize(imgDisolver, "BotonDisolverParty.jpg", _
-                                    "BotonDisolverRolloverParty.jpg", _
-                                    "BotonDisolverClickParty.jpg", Me)
+    Call cBotonDisolver.Initialize(imgDisolver, "BotonDisolverParty.jpg", "BotonDisolverRolloverParty.jpg", "BotonDisolverClickParty.jpg", Me)
                                     
-    Call cBotonLiderGrupo.Initialize(imgLiderGrupo, "BotonLiderGrupoParty.jpg", _
-                                    "BotonLiderGrupoRolloverParty.jpg", _
-                                    "BotonLiderGrupoClickParty.jpg", Me)
+    Call cBotonLiderGrupo.Initialize(imgLiderGrupo, "BotonLiderGrupoParty.jpg", "BotonLiderGrupoRolloverParty.jpg", "BotonLiderGrupoClickParty.jpg", Me)
                                     
-    Call cBotonExpulsar.Initialize(imgExpulsar, "BotonExpulsarParty.jpg", _
-                                    "BotonExpulsarRolloverParty.jpg", _
-                                    "BotonExpulsarClickParty.jpg", Me)
+    Call cBotonExpulsar.Initialize(imgExpulsar, "BotonExpulsarParty.jpg", "BotonExpulsarRolloverParty.jpg", "BotonExpulsarClickParty.jpg", Me)
                                     
-    Call cBotonSalirParty.Initialize(imgSalirParty, "BotonSalirGrupoParty.jpg", _
-                                    "BotonSalirGrupoRolloverParty.jpg", _
-                                    "BotonSalirGrupoClickParty.jpg", Me)
+    Call cBotonSalirParty.Initialize(imgSalirParty, "BotonSalirGrupoParty.jpg", "BotonSalirGrupoRolloverParty.jpg", "BotonSalirGrupoClickParty.jpg", Me)
                                     
     ' Botones visibles solo para el lider
     imgExpulsar.Visible = EsPartyLeader
@@ -242,38 +237,47 @@ Private Sub LoadButtons()
     imgDisolver.Top = Me.ScaleHeight - OFFSET_BUTTONS
     imgCerrar.Top = Me.ScaleHeight - OFFSET_BUTTONS
 
+End Sub
+
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
-End Sub
-
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     MirandoParty = False
+
 End Sub
 
 Private Sub imgAgregar_Click()
+
     If Len(txtToAdd) > 0 Then
         If Not IsNumeric(txtToAdd) Then
             Call WritePartyAcceptMember(Trim(txtToAdd.Text))
             Unload Me
             Call WriteRequestPartyForm
+
         End If
+
     End If
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgDisolver_Click()
     Call WritePartyLeave
     Unload Me
+
 End Sub
 
 Private Sub imgExpulsar_Click()
@@ -281,6 +285,7 @@ Private Sub imgExpulsar_Click()
     If lstMembers.ListIndex < 0 Then Exit Sub
     
     Dim fName As String
+
     fName = GetName
     
     If fName <> "" Then
@@ -289,18 +294,21 @@ Private Sub imgExpulsar_Click()
         
         ' Para que no llame al form si disolvió la party
         If UCase$(fName) <> UCase$(UserName) Then Call WriteRequestPartyForm
+
     End If
 
 End Sub
 
 Private Function GetName() As String
-'**************************************************************
-'Author: ZaMa
-'Last Modify Date: 27/12/2009
-'**************************************************************
+
+    '**************************************************************
+    'Author: ZaMa
+    'Last Modify Date: 27/12/2009
+    '**************************************************************
     Dim sName As String
     
     sName = Trim(mid(lstMembers.List(lstMembers.ListIndex), 1, InStr(lstMembers.List(lstMembers.ListIndex), " (")))
+
     If Len(sName) > 0 Then GetName = sName
         
 End Function
@@ -310,65 +318,84 @@ Private Sub imgLiderGrupo_Click()
     If lstMembers.ListIndex < 0 Then Exit Sub
     
     Dim sName As String
+
     sName = GetName
     
     If sName <> "" Then
         Call WritePartySetLeader(sName)
         Unload Me
         Call WriteRequestPartyForm
+
     End If
+
 End Sub
 
 Private Sub imgSalirParty_Click()
     Call WritePartyLeave
     Unload Me
+
 End Sub
 
-Private Sub lstMembers_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub lstMembers_MouseDown(Button As Integer, _
+                                 Shift As Integer, _
+                                 x As Single, _
+                                 y As Single)
 
     If EsPartyLeader Then
         LastPressed.ToggleToNormal
+
     End If
     
 End Sub
 
 Private Sub SendTxt_Change()
-'**************************************************************
-'Author: Unknown
-'Last Modify Date: 03/10/2009
-'**************************************************************
+
+    '**************************************************************
+    'Author: Unknown
+    'Last Modify Date: 03/10/2009
+    '**************************************************************
     If Len(SendTxt.Text) > 160 Then
         sPartyChat = "Soy un cheater, avisenle a un gm"
     Else
+
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i As Long
-        Dim tempstr As String
+        Dim i         As Long
+
+        Dim tempstr   As String
+
         Dim CharAscii As Integer
         
         For i = 1 To Len(SendTxt.Text)
             CharAscii = Asc(mid$(SendTxt.Text, i, 1))
+
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
+
             End If
+
         Next i
         
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
             'constantly and the client will crush
             SendTxt.Text = tempstr
+
         End If
         
         sPartyChat = SendTxt.Text
+
     End If
+
 End Sub
 
 Private Sub SendTxt_KeyPress(KeyAscii As Integer)
-    If Not (KeyAscii = vbKeyBack) And _
-       Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then _
-        KeyAscii = 0
+
+    If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
+
 End Sub
 
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
+
     'Send text
     If KeyCode = vbKeyReturn Then
         If LenB(sPartyChat) <> 0 Then Call WritePartyMessage(sPartyChat)
@@ -377,21 +404,28 @@ Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
         SendTxt.Text = ""
         KeyCode = 0
         SendTxt.SetFocus
+
     End If
+
 End Sub
 
-Private Sub txtToAdd_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub txtToAdd_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               x As Single, _
+                               y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub txtToAdd_KeyPress(KeyAscii As Integer)
-    If Not (KeyAscii = vbKeyBack) And _
-       Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then _
-        KeyAscii = 0
+
+    If Not (KeyAscii = vbKeyBack) And Not (KeyAscii >= vbKeySpace And KeyAscii <= 250) Then KeyAscii = 0
+
 End Sub
 
 Private Sub txtToAdd_KeyUp(KeyCode As Integer, Shift As Integer)
-    If KeyCode = vbKeyReturn Then imgAgregar_Click
-End Sub
 
+    If KeyCode = vbKeyReturn Then imgAgregar_Click
+
+End Sub
 

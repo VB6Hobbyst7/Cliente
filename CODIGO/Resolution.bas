@@ -39,16 +39,24 @@ Attribute VB_Name = "Resolution"
 
 Option Explicit
 
-Private Const CCDEVICENAME As Long = 32
-Private Const CCFORMNAME As Long = 32
-Private Const DM_BITSPERPEL As Long = &H40000
-Private Const DM_PELSWIDTH As Long = &H80000
-Private Const DM_PELSHEIGHT As Long = &H100000
-Private Const DM_DISPLAYFREQUENCY As Long = &H400000
-Private Const CDS_TEST As Long = &H4
+Private Const CCDEVICENAME          As Long = 32
+
+Private Const CCFORMNAME            As Long = 32
+
+Private Const DM_BITSPERPEL         As Long = &H40000
+
+Private Const DM_PELSWIDTH          As Long = &H80000
+
+Private Const DM_PELSHEIGHT         As Long = &H100000
+
+Private Const DM_DISPLAYFREQUENCY   As Long = &H400000
+
+Private Const CDS_TEST              As Long = &H4
+
 Private Const ENUM_CURRENT_SETTINGS As Long = -1
 
 Private Type typDevMODE
+
     dmDeviceName       As String * CCDEVICENAME
     dmSpecVersion      As Integer
     dmDriverVersion    As Integer
@@ -75,25 +83,37 @@ Private Type typDevMODE
     dmPelsHeight       As Long
     dmDisplayFlags     As Long
     dmDisplayFrequency As Long
+
 End Type
 
-Private oldResHeight As Long
-Private oldResWidth As Long
-Private oldDepth As Integer
-Private oldFrequency As Long
-Private bNoResChange As Boolean
-Private MiDevM As typDevMODE
+Private oldResHeight      As Long
+
+Private oldResWidth       As Long
+
+Private oldDepth          As Integer
+
+Private oldFrequency      As Long
+
+Private bNoResChange      As Boolean
+
+Private MiDevM            As typDevMODE
+
 Public ResolucionCambiada As Boolean        ' Se cambio la resolucion?
 
+Private Declare Function EnumDisplaySettings _
+                Lib "user32" _
+                Alias "EnumDisplaySettingsA" (ByVal lpszDeviceName As Long, _
+                                              ByVal iModeNum As Long, _
+                                              lptypDevMode As Any) As Boolean
 
-Private Declare Function EnumDisplaySettings Lib "user32" Alias "EnumDisplaySettingsA" (ByVal lpszDeviceName As Long, ByVal iModeNum As Long, lptypDevMode As Any) As Boolean
-Private Declare Function ChangeDisplaySettings Lib "user32" Alias "ChangeDisplaySettingsA" (lptypDevMode As Any, ByVal dwFlags As Long) As Long
-
+Private Declare Function ChangeDisplaySettings _
+                Lib "user32" _
+                Alias "ChangeDisplaySettingsA" (lptypDevMode As Any, _
+                                                ByVal dwFlags As Long) As Long
 
 'TODO : Change this to not depend on any external public variable using args instead!
 
 Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
-
   
     ' Obtenemos los parametros actuales de la resolucion
     Dim lRes As Long: lRes = EnumDisplaySettings(0, ENUM_CURRENT_SETTINGS, MiDevM)
@@ -121,6 +141,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
                 .dmPelsHeight = newHeight
                 oldDepth = .dmBitsPerPel
                 oldFrequency = .dmDisplayFrequency
+
             End With
             
             ' Cambio la resolucion

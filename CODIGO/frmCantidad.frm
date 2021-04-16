@@ -91,81 +91,93 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonTirar As clsGraphicalButton
+Private cBotonTirar     As clsGraphicalButton
+
 Private cBotonTirarTodo As clsGraphicalButton
-Public LastPressed As clsGraphicalButton
+
+Public LastPressed      As clsGraphicalButton
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     Me.Picture = LoadPictureEX("VentanaTirarOro.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
-
-    
-    
-    
     
     Set cBotonTirar = New clsGraphicalButton
     Set cBotonTirarTodo = New clsGraphicalButton
     
     Set LastPressed = New clsGraphicalButton
 
-    Call cBotonTirar.Initialize(imgTirar, "BotonTirar.jpg", "BotonTirarRollover.jpg", _
-                        "BotonTirarClick.jpg", Me)
-    Call cBotonTirarTodo.Initialize(imgTirarTodo, "BotonTirarTodo.jpg", "BotonTirarTodoRollover.jpg", _
-                        "BotonTirarTodoClick.jpg", Me)
+    Call cBotonTirar.Initialize(imgTirar, "BotonTirar.jpg", "BotonTirarRollover.jpg", "BotonTirarClick.jpg", Me)
+    Call cBotonTirarTodo.Initialize(imgTirarTodo, "BotonTirarTodo.jpg", "BotonTirarTodoRollover.jpg", "BotonTirarTodoClick.jpg", Me)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgTirar_Click()
+
     If LenB(txtCantidad.Text) > 0 Then
         If Not IsNumeric(txtCantidad.Text) Then Exit Sub  'Should never happen
         
         Call WriteDrop(Inventario.SelectedItem, frmCantidad.txtCantidad.Text, Inventario.DropX, Inventario.DropY)
         frmCantidad.txtCantidad.Text = ""
+
     End If
     
     Unload Me
+
 End Sub
 
 Private Sub imgTirarTodo_Click()
+
     If Inventario.SelectedItem = 0 Then Exit Sub
     
     If Inventario.SelectedItem <> FLAGORO Then
         Call WriteDrop(Inventario.SelectedItem, Inventario.Amount(Inventario.SelectedItem), Inventario.DropX, Inventario.DropY)
         Unload Me
     Else
+
         If UserGLD > 10000 Then
             Call WriteDrop(Inventario.SelectedItem, 10000)
             Unload Me
         Else
             Call WriteDrop(Inventario.SelectedItem, UserGLD)
             Unload Me
+
         End If
+
     End If
 
     frmCantidad.txtCantidad.Text = ""
+
 End Sub
 
 Private Sub txtCantidad_Change()
-On Error GoTo ErrHandler
+
+    On Error GoTo ErrHandler
+
     If Val(txtCantidad.Text) < 0 Then
         txtCantidad.Text = "1"
+
     End If
     
     If Val(txtCantidad.Text) > MAX_INVENTORY_OBJS Then
         txtCantidad.Text = "10000"
+
     End If
     
     Exit Sub
@@ -173,24 +185,36 @@ On Error GoTo ErrHandler
 ErrHandler:
     'If we got here the user may have pasted (Shift + Insert) a REALLY large number, causing an overflow, so we set amount back to 1
     txtCantidad.Text = "1"
+
 End Sub
 
 Private Sub txtCantidad_KeyPress(KeyAscii As Integer)
+
     If (KeyAscii <> 8) Then
         If (KeyAscii < 48 Or KeyAscii > 57) Then
             KeyAscii = 0
+
         End If
+
     End If
+
 End Sub
 
 Private Sub txtCantidad_KeyUp(KeyCode As Integer, Shift As Integer)
-If KeyCode = 13 Then
-    imgTirar_Click
-ElseIf KeyCode = 27 Then
-    Unload Me
-End If
+
+    If KeyCode = 13 Then
+        imgTirar_Click
+    ElseIf KeyCode = 27 Then
+        Unload Me
+
+    End If
+
 End Sub
 
-Private Sub txtCantidad_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtCantidad_MouseMove(Button As Integer, _
+                                  Shift As Integer, _
+                                  x As Single, _
+                                  y As Single)
     LastPressed.ToggleToNormal
+
 End Sub

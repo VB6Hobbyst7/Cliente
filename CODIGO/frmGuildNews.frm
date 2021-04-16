@@ -132,16 +132,23 @@ Option Explicit
 
 Private cBotonAceptar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastPressed    As clsGraphicalButton
 
-Private Sub aliados_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub aliados_MouseMove(Button As Integer, _
+                              Shift As Integer, _
+                              x As Single, _
+                              y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
-If KeyCode = 13 Or KeyCode = 27 Then
-    imgAceptar_Click
-End If
+
+    If KeyCode = 13 Or KeyCode = 27 Then
+        imgAceptar_Click
+
+    End If
+
 End Sub
 
 Private Sub Form_Load()
@@ -149,36 +156,43 @@ Private Sub Form_Load()
     Me.Picture = LoadPictureEX("VentanaGuildNews.jpg")
     
     LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonAceptar = New clsGraphicalButton
     Set LastPressed = New clsGraphicalButton
     
-    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarGuildNews.jpg", "BotonAceptarRolloverGuildNews.jpg", _
-                                    "BotonAceptarClickGuildNews.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarGuildNews.jpg", "BotonAceptarRolloverGuildNews.jpg", "BotonAceptarClickGuildNews.jpg", Me)
    
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgAceptar_Click()
+
     On Error Resume Next
+
     Unload Me
     frmMain.SetFocus
+
 End Sub
 
-Private Sub imgAceptar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgAceptar_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 x As Single, _
+                                 y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 

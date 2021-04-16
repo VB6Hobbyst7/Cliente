@@ -92,29 +92,36 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Public Enum eTipo
+
     Crear = 1
     Recuperar = 2
     Borrar = 3
+
 End Enum
+
 Public TIPO As eTipo
 
 Private Sub cmdCrear2_Click()
- Call Audio.PlayWave(SND_CLICKNEW)
+    Call Audio.PlayWave(SND_CLICKNEW)
     
     If txtUsuario.Text = "" Then
-            MessageBox "Escriba un usuario."
+        MessageBox "Escriba un usuario."
         Exit Sub
+
     End If
     
     If txtPassword.Text = "" Then
-            MessageBox "Escriba un password."
+        MessageBox "Escriba un password."
         Exit Sub
+
     End If
     
     If txtMail.Text = "" Then
-            MessageBox "Escriba un mail."
+        MessageBox "Escriba un mail."
         Exit Sub
+
     End If
     
     UserAccount = txtUsuario.Text
@@ -124,15 +131,17 @@ Private Sub cmdCrear2_Click()
     If Right$(txtUsuario.Text, 1) = " " Then
         UserAccount = RTrim$(UserAccount)
         MessageBox "Nombre invalido, se han removido los espacios al final del nombre"
+
     End If
+
     If Len(txtUsuario.Text) > 20 Then
         MessageBox "El nombre es demasiado largo, debe tener como máximo 20 letras."
         Exit Sub
+
     End If
     
     If Not ClientSetup.WinSock Then
         frmMain.Client.CloseSck
-                
                 
         EstadoLogin = E_MODO.CrearCuenta
                 
@@ -145,10 +154,11 @@ Private Sub cmdCrear2_Click()
                     
         Else
             Call Login
+
         End If
+
     Else
         frmMain.WSock.Close
-                
                 
         EstadoLogin = E_MODO.CrearCuenta
                 
@@ -161,7 +171,9 @@ Private Sub cmdCrear2_Click()
                     
         Else
             Call Login
+
         End If
+
     End If
     
     Unload Me
@@ -169,12 +181,16 @@ Private Sub cmdCrear2_Click()
 End Sub
 
 Private Sub Command1_Click()
-Call Audio.PlayWave(SND_CLICKNEW)
-Unload Me
+    Call Audio.PlayWave(SND_CLICKNEW)
+    Unload Me
+
 End Sub
 
 Private Sub Form_Load()
-If TIPO = Crear Then
-    'WB.Navigate ("http://www.aoyind.com/crearcuenta.php")
-End If
+
+    If TIPO = Crear Then
+
+        'WB.Navigate ("http://www.aoyind.com/crearcuenta.php")
+    End If
+
 End Sub

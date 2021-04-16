@@ -1317,139 +1317,197 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonCerrar As clsGraphicalButton
-Public LastPressed As clsGraphicalButton
+Private cBotonCerrar       As clsGraphicalButton
 
-Private Const ANCHO_BARRA As Byte = 73 'pixeles
+Public LastPressed         As clsGraphicalButton
+
+Private Const ANCHO_BARRA  As Byte = 73 'pixeles
+
 Private Const BAR_LEFT_POS As Integer = 361 'pixeles
 
 Public Sub Iniciar_Labels()
-'Iniciamos los labels con los valores de los atributos y los skills
-Dim i As Integer
 
+    'Iniciamos los labels con los valores de los atributos y los skills
+    Dim i As Integer
 
-For i = 1 To NUMATRIBUTOS
-    Atri(i).Caption = UserAtributos(i)
-Next
+    For i = 1 To NUMATRIBUTOS
+        Atri(i).Caption = UserAtributos(i)
+    Next
 
-For i = 1 To NUMSKILLS
-    Skills(i).Caption = UserSkills(i)
-    CalcularBarra (i)
-Next
+    For i = 1 To NUMSKILLS
+        Skills(i).Caption = UserSkills(i)
+        CalcularBarra (i)
+    Next
 
-For i = 0 To bQuitar.UBound
-    bQuitar(i).Tag = "0"
-    bAgregar(i).Tag = "0"
-Next i
+    For i = 0 To bQuitar.UBound
+        bQuitar(i).Tag = "0"
+        bAgregar(i).Tag = "0"
+    Next i
 
-lblSkillPts.Caption = SkillPoints
+    lblSkillPts.Caption = SkillPoints
 
-Label4(1).Caption = UserReputacion.AsesinoRep
-Label4(2).Caption = UserReputacion.BandidoRep
-'Label4(3).Caption = "Burgues: " & UserReputacion.BurguesRep
-Label4(4).Caption = UserReputacion.LadronesRep
-Label4(5).Caption = UserReputacion.NobleRep
-Label4(6).Caption = UserReputacion.PlebeRep
+    Label4(1).Caption = UserReputacion.AsesinoRep
+    Label4(2).Caption = UserReputacion.BandidoRep
+    'Label4(3).Caption = "Burgues: " & UserReputacion.BurguesRep
+    Label4(4).Caption = UserReputacion.LadronesRep
+    Label4(5).Caption = UserReputacion.NobleRep
+    Label4(6).Caption = UserReputacion.PlebeRep
 
-If UserReputacion.Promedio < 0 Then
-    Label4(7).ForeColor = vbRed
-    Label4(7).Caption = "Criminal"
-Else
-    Label4(7).ForeColor = vbBlue
-    Label4(7).Caption = "Ciudadano"
-End If
+    If UserReputacion.Promedio < 0 Then
+        Label4(7).ForeColor = vbRed
+        Label4(7).Caption = "Criminal"
+    Else
+        Label4(7).ForeColor = vbBlue
+        Label4(7).Caption = "Ciudadano"
 
-With UserEstadisticas
-    Label6(0).Caption = .CriminalesMatados
-    Label6(1).Caption = .CiudadanosMatados
-    Label6(2).Caption = .UsuariosMatados
-    Label6(3).Caption = .NpcsMatados
-    Label6(4).Caption = .Clase
-    Label6(5).Caption = .PenaCarcel
-End With
+    End If
+
+    With UserEstadisticas
+        Label6(0).Caption = .CriminalesMatados
+        Label6(1).Caption = .CiudadanosMatados
+        Label6(2).Caption = .UsuariosMatados
+        Label6(3).Caption = .NpcsMatados
+        Label6(4).Caption = .Clase
+        Label6(5).Caption = .PenaCarcel
+
+    End With
 
 End Sub
+
 Sub CalcularBarra(i As Integer)
-Dim Ancho As Single
-Dim TmpS As Single
+
+    Dim Ancho As Single
+
+    Dim TmpS  As Single
+
     TmpS = UserSkillsMod(i)
     Ancho = TmpS * ANCHO_BARRA / 100   'IIf(PorcentajeSkills(i) = 0, ANCHO_BARRA, (100 - PorcentajeSkills(i)) / 100 * ANCHO_BARRA)
     shpSkillsBar(i).Width = ANCHO_BARRA - Ancho
     shpSkillsBar(i).Left = BAR_LEFT_POS + Ancho
-End Sub
-Private Sub bAgregar_Click(Index As Integer)
-Dim i As Integer
-Call Audio.PlayWave(SND_CLICKNEW)
-If SkillPoints > 0 And SPLibres > 0 Then
-    i = Index + 1
-    If UserSkillsMod(i) < 100 Then
-        SPLibres = SPLibres - 1
-        lblSkillPts.Caption = SPLibres
-        UserSkillsMod(i) = UserSkillsMod(i) + 1
-        Skills(i).Caption = UserSkillsMod(i)
-        Skills(i).ForeColor = vbRed
-        CalcularBarra (i)
-    End If
-End If
+
 End Sub
 
-Private Sub bAgregar_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-If bAgregar(Index).Tag = "0" Then
-    LimpiarBtnsDer (Index)
-End If
+Private Sub bAgregar_Click(Index As Integer)
+
+    Dim i As Integer
+
+    Call Audio.PlayWave(SND_CLICKNEW)
+
+    If SkillPoints > 0 And SPLibres > 0 Then
+        i = Index + 1
+
+        If UserSkillsMod(i) < 100 Then
+            SPLibres = SPLibres - 1
+            lblSkillPts.Caption = SPLibres
+            UserSkillsMod(i) = UserSkillsMod(i) + 1
+            Skills(i).Caption = UserSkillsMod(i)
+            Skills(i).ForeColor = vbRed
+            CalcularBarra (i)
+
+        End If
+
+    End If
+
+End Sub
+
+Private Sub bAgregar_MouseMove(Index As Integer, _
+                               Button As Integer, _
+                               Shift As Integer, _
+                               x As Single, _
+                               y As Single)
+
+    If bAgregar(Index).Tag = "0" Then
+        LimpiarBtnsDer (Index)
+
+    End If
+
 End Sub
 
 Private Sub bQuitar_Click(Index As Integer)
-Dim i As Integer
-Call Audio.PlayWave(SND_CLICKNEW)
-If SkillPoints > 0 And SPLibres < SkillPoints Then
-    i = Index + 1
-    If UserSkillsMod(i) > UserSkills(i) Then
-        SPLibres = SPLibres + 1
-        lblSkillPts.Caption = SPLibres
-        UserSkillsMod(i) = UserSkillsMod(i) - 1
-        Skills(i).Caption = UserSkillsMod(i)
-        Skills(i).ForeColor = vbRed
-        CalcularBarra (i)
-        If UserSkillsMod(i) = UserSkills(i) Then
-            Skills(i).ForeColor = &HA2BAC6
+
+    Dim i As Integer
+
+    Call Audio.PlayWave(SND_CLICKNEW)
+
+    If SkillPoints > 0 And SPLibres < SkillPoints Then
+        i = Index + 1
+
+        If UserSkillsMod(i) > UserSkills(i) Then
+            SPLibres = SPLibres + 1
+            lblSkillPts.Caption = SPLibres
+            UserSkillsMod(i) = UserSkillsMod(i) - 1
+            Skills(i).Caption = UserSkillsMod(i)
+            Skills(i).ForeColor = vbRed
+            CalcularBarra (i)
+
+            If UserSkillsMod(i) = UserSkills(i) Then
+                Skills(i).ForeColor = &HA2BAC6
+
+            End If
+
         End If
+
     End If
-End If
+
 End Sub
 
-Private Sub bQuitar_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
-If bQuitar(Index).Tag = "0" Then
-    LimpiarBtnsIzq (Index)
-End If
+Private Sub bQuitar_MouseMove(Index As Integer, _
+                              Button As Integer, _
+                              Shift As Integer, _
+                              x As Single, _
+                              y As Single)
+
+    If bQuitar(Index).Tag = "0" Then
+        LimpiarBtnsIzq (Index)
+
+    End If
+
 End Sub
+
 Sub LimpiarBtnsIzq(Index As Integer)
-Dim i As Integer
-For i = 0 To bQuitar.UBound
-    If i <> Index Then
-        If bQuitar(i).Tag = "1" Then
-            bQuitar(i).Picture = Nothing
-            bQuitar(i).Tag = "0"
+
+    Dim i As Integer
+
+    For i = 0 To bQuitar.UBound
+
+        If i <> Index Then
+            If bQuitar(i).Tag = "1" Then
+                bQuitar(i).Picture = Nothing
+                bQuitar(i).Tag = "0"
+
+            End If
+
+        Else
+            bQuitar(i).Picture = LoadPictureEX("FlechaHoverIzq.gif")
+            bQuitar(i).Tag = "1"
+
         End If
-    Else
-        bQuitar(i).Picture = LoadPictureEX("FlechaHoverIzq.gif")
-        bQuitar(i).Tag = "1"
-    End If
-Next i
+
+    Next i
+
 End Sub
+
 Sub LimpiarBtnsDer(Index As Integer)
-Dim i As Integer
-For i = 0 To bAgregar.UBound
-    If i <> Index Then
-        If bAgregar(i).Tag = "1" Then
-            bAgregar(i).Picture = Nothing
-            bAgregar(i).Tag = "0"
+
+    Dim i As Integer
+
+    For i = 0 To bAgregar.UBound
+
+        If i <> Index Then
+            If bAgregar(i).Tag = "1" Then
+                bAgregar(i).Picture = Nothing
+                bAgregar(i).Tag = "0"
+
+            End If
+
+        Else
+            bAgregar(i).Picture = LoadPictureEX("FlechaHoverDer.gif")
+            bAgregar(i).Tag = "1"
+
         End If
-    Else
-        bAgregar(i).Picture = LoadPictureEX("FlechaHoverDer.gif")
-        bAgregar(i).Tag = "1"
-    End If
-Next i
+
+    Next i
+
 End Sub
 
 Private Sub Form_Load()
@@ -1457,55 +1515,67 @@ Private Sub Form_Load()
     Me.Picture = LoadPictureEX("VentanaEstadisticas.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
     
-    
-    
-    
-    
     Set cBotonCerrar = New clsGraphicalButton
     Set LastPressed = New clsGraphicalButton
     
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarEstadisticas.jpg", _
-                                    "BotonCerrarRolloverEstadisticas.jpg", _
-                                    "BotonCerrarClickEstadisticas.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarEstadisticas.jpg", "BotonCerrarRolloverEstadisticas.jpg", "BotonCerrarClickEstadisticas.jpg", Me)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-LimpiarBtnsIzq (-1)
-LimpiarBtnsDer (-1)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+    LimpiarBtnsIzq (-1)
+    LimpiarBtnsDer (-1)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
-Unload Me
+    Unload Me
+
 End Sub
 
 Private Sub imgCerrar_Click()
+
     Dim skillChanges(NUMSKILLS) As Byte
-    Dim HayCambio As Boolean
-    Dim i As Long
+
+    Dim HayCambio               As Boolean
+
+    Dim i                       As Long
+
     HayCambio = False
+
     For i = 1 To NUMSKILLS
         skillChanges(i) = UserSkillsMod(i) - UserSkills(i)
+
         If UserSkillsMod(i) <> UserSkills(i) Then HayCambio = True
         UserSkills(i) = UserSkillsMod(i)
     Next i
+
     If HayCambio Then Call WriteModifySkills(skillChanges())
-Unload Me
+    Unload Me
+
 End Sub
 
-Private Sub imgCerrar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgCerrar_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                x As Single, _
+                                y As Single)
+
     If imgCerrar.Tag = "1" Then
         imgCerrar.Picture = LoadPictureEX("BotonCerrarApretadoEstadisticas.jpg")
         imgCerrar.Tag = "0"
+
     End If
 
 End Sub

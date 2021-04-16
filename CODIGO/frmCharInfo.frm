@@ -378,24 +378,29 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Private cBotonCerrar   As clsGraphicalButton
 
-Private cBotonCerrar As clsGraphicalButton
 Private cBotonPeticion As clsGraphicalButton
-Private cBotonRechazar As clsGraphicalButton
-Private cBotonEchar As clsGraphicalButton
-Private cBotonAceptar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Private cBotonRechazar As clsGraphicalButton
+
+Private cBotonEchar    As clsGraphicalButton
+
+Private cBotonAceptar  As clsGraphicalButton
+
+Public LastPressed     As clsGraphicalButton
 
 Public Enum CharInfoFrmType
+
     frmMembers
     frmMembershipRequests
+
 End Enum
 
 Public frmType As CharInfoFrmType
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     Me.Picture = LoadPictureEX("VentanaInfoPj.jpg")
     
     Call LoadButtons
@@ -403,9 +408,6 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonCerrar = New clsGraphicalButton
     Set cBotonPeticion = New clsGraphicalButton
@@ -415,35 +417,27 @@ Private Sub LoadButtons()
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarInfoChar.jpg", _
-                                    "BotonCerrarRolloverInfoChar.jpg", _
-                                    "BotonCerrarClickInfoChar.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarInfoChar.jpg", "BotonCerrarRolloverInfoChar.jpg", "BotonCerrarClickInfoChar.jpg", Me)
 
-    Call cBotonPeticion.Initialize(imgPeticion, "BotonPeticion.jpg", _
-                                    "BotonPeticionRollover.jpg", _
-                                    "BotonPeticionClick.jpg", Me)
+    Call cBotonPeticion.Initialize(imgPeticion, "BotonPeticion.jpg", "BotonPeticionRollover.jpg", "BotonPeticionClick.jpg", Me)
 
-    Call cBotonRechazar.Initialize(imgRechazar, "BotonRechazar.jpg", _
-                                    "BotonRechazarRollover.jpg", _
-                                    "BotonRechazarClick.jpg", Me)
+    Call cBotonRechazar.Initialize(imgRechazar, "BotonRechazar.jpg", "BotonRechazarRollover.jpg", "BotonRechazarClick.jpg", Me)
 
-    Call cBotonEchar.Initialize(imgEchar, "BotonEchar.jpg", _
-                                    "BotonEcharRollover.jpg", _
-                                    "BotonEcharClick.jpg", Me)
+    Call cBotonEchar.Initialize(imgEchar, "BotonEchar.jpg", "BotonEcharRollover.jpg", "BotonEcharClick.jpg", Me)
                                     
-    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarInfoChar.jpg", _
-                                    "BotonAceptarRolloverInfoChar.jpg", _
-                                    "BotonAceptarClickInfoChar.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarInfoChar.jpg", "BotonAceptarRolloverInfoChar.jpg", "BotonAceptarClickInfoChar.jpg", Me)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgAceptar_Click()
@@ -451,10 +445,12 @@ Private Sub imgAceptar_Click()
     Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
     Unload Me
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgEchar_Click()
@@ -462,18 +458,25 @@ Private Sub imgEchar_Click()
     Unload frmGuildLeader
     Call WriteRequestGuildLeaderInfo
     Unload Me
+
 End Sub
 
 Private Sub imgPeticion_Click()
     Call WriteGuildRequestJoinerInfo(nombre)
+
 End Sub
 
 Private Sub imgRechazar_Click()
     frmCommet.T = RECHAZOPJ
     frmCommet.nombre = nombre.Caption
     frmCommet.Show vbModeless, frmCharInfo
+
 End Sub
 
-Private Sub txtMiembro_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtMiembro_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 x As Single, _
+                                 y As Single)
     LastPressed.ToggleToNormal
+
 End Sub

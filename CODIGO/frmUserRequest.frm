@@ -91,7 +91,7 @@ Option Explicit
 
 Private cBotonCerrar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastPressed   As clsGraphicalButton
 
 Public Sub recievePeticion(ByVal P As String)
 
@@ -101,11 +101,12 @@ Public Sub recievePeticion(ByVal P As String)
 End Sub
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     
     Me.Picture = LoadPictureEX("VentanaPeticion.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -113,24 +114,27 @@ Private Sub LoadButtons()
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarPeticion.jpg", _
-                                    "BotonCerrarRolloverPeticion.jpg", _
-                                    "BotonCerrarClickPeticion.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarPeticion.jpg", "BotonCerrarRolloverPeticion.jpg", "BotonCerrarClickPeticion.jpg", Me)
+
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub

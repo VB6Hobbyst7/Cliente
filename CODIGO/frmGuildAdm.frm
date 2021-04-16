@@ -120,14 +120,14 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Private cBotonCerrar   As clsGraphicalButton
 
-Private cBotonCerrar As clsGraphicalButton
 Private cBotonDetalles As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastPressed     As clsGraphicalButton
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
 
     Me.Picture = LoadPictureEX("VentanaListaClanes.jpg")
     
@@ -136,58 +136,63 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonCerrar = New clsGraphicalButton
     Set cBotonDetalles = New clsGraphicalButton
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarListaClanes.jpg", _
-                                    "BotonCerrarRolloverListaClanes.jpg", _
-                                    "BotonCerrarClickListaClanes.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarListaClanes.jpg", "BotonCerrarRolloverListaClanes.jpg", "BotonCerrarClickListaClanes.jpg", Me)
 
-    Call cBotonDetalles.Initialize(imgDetalles, "BotonDetallesListaClanes.jpg", _
-                                    "BotonDetallesRolloverListaClanes.jpg", _
-                                    "BotonDetallesClickListaClanes.jpg", Me)
+    Call cBotonDetalles.Initialize(imgDetalles, "BotonDetallesListaClanes.jpg", "BotonDetallesRolloverListaClanes.jpg", "BotonDetallesClickListaClanes.jpg", Me)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
-Private Sub guildslist_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub guildslist_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 x As Single, _
+                                 y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
     frmMain.SetFocus
+
 End Sub
 
 Private Sub imgDetalles_Click()
     frmGuildBrief.EsLeader = False
 
     Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
+
 End Sub
 
 Private Sub txtBuscar_Change()
     Call FiltrarListaClanes(txtBuscar.Text)
+
 End Sub
 
 Private Sub txtBuscar_GotFocus()
+
     With txtBuscar
         .SelStart = 0
         .SelLength = Len(.Text)
+
     End With
+
 End Sub
 
 Public Sub FiltrarListaClanes(ByRef sCompare As String)
@@ -195,6 +200,7 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
     Dim lIndex As Long
     
     If UBound(GuildNames) <> 0 Then
+
         With guildslist
             'Limpio la lista
             .Clear
@@ -203,15 +209,20 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
             
             ' Recorro los arrays
             For lIndex = 0 To UBound(GuildNames)
+
                 ' Si coincide con los patrones
                 If InStr(1, UCase$(GuildNames(lIndex)), UCase$(sCompare)) Then
                     ' Lo agrego a la lista
                     .AddItem GuildNames(lIndex)
+
                 End If
+
             Next lIndex
             
             .Visible = True
+
         End With
+
     End If
 
 End Sub

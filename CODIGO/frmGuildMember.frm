@@ -149,13 +149,15 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private cBotonNoticias As clsGraphicalButton
-Private cBotonDetalles As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Private cBotonDetalles As clsGraphicalButton
+
+Private cBotonCerrar   As clsGraphicalButton
+
+Public LastPressed     As clsGraphicalButton
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     Me.Picture = LoadPictureEX("VENTANAMIEMBROCLAN.jpg")
     
     Call LoadButtons
@@ -163,9 +165,6 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonNoticias = New clsGraphicalButton
     Set cBotonDetalles = New clsGraphicalButton
@@ -173,54 +172,58 @@ Private Sub LoadButtons()
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonDetalles.Initialize(imgDetalles, "BotonDetallesMiembroClan.jpg", _
-                                    "BotonDetallesRolloverMiembroClan.jpg", _
-                                    "BotonDetallesClickMiembroClan.jpg", Me)
+    Call cBotonDetalles.Initialize(imgDetalles, "BotonDetallesMiembroClan.jpg", "BotonDetallesRolloverMiembroClan.jpg", "BotonDetallesClickMiembroClan.jpg", Me)
 
-    Call cBotonNoticias.Initialize(imgNoticias, "BotonNoticiasMiembroClan.jpg", _
-                                    "BotonNoticiasRolloverMiembroClan.jpg", _
-                                    "BotonNoticiasClickMiembroClan.jpg", Me)
+    Call cBotonNoticias.Initialize(imgNoticias, "BotonNoticiasMiembroClan.jpg", "BotonNoticiasRolloverMiembroClan.jpg", "BotonNoticiasClickMiembroClan.jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarMimebroClan.jpg", _
-                                    "BotonCerrarRolloverMimebroClan.jpg", _
-                                    "BotonCerrarClickMimebroClan.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarMimebroClan.jpg", "BotonCerrarRolloverMimebroClan.jpg", "BotonCerrarClickMimebroClan.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgDetalles_Click()
+
     If lstClanes.ListIndex = -1 Then Exit Sub
     
     frmGuildBrief.EsLeader = False
 
     Call WriteGuildRequestDetails(lstClanes.List(lstClanes.ListIndex))
+
 End Sub
 
 Private Sub imgNoticias_Click()
     Call WriteShowGuildNews
+
 End Sub
 
 Private Sub txtSearch_Change()
     Call FiltrarListaClanes(txtSearch.Text)
+
 End Sub
 
 Private Sub txtSearch_GotFocus()
+
     With txtSearch
         .SelStart = 0
         .SelLength = Len(.Text)
+
     End With
+
 End Sub
 
 Public Sub FiltrarListaClanes(ByRef sCompare As String)
@@ -228,6 +231,7 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
     Dim lIndex As Long
     
     If UBound(GuildNames) <> 0 Then
+
         With lstClanes
             'Limpio la lista
             .Clear
@@ -236,15 +240,20 @@ Public Sub FiltrarListaClanes(ByRef sCompare As String)
             
             ' Recorro los arrays
             For lIndex = 0 To UBound(GuildNames)
+
                 ' Si coincide con los patrones
                 If InStr(1, UCase$(GuildNames(lIndex)), UCase$(sCompare)) Then
                     ' Lo agrego a la lista
                     .AddItem GuildNames(lIndex)
+
                 End If
+
             Next lIndex
             
             .Visible = True
+
         End With
+
     End If
 
 End Sub

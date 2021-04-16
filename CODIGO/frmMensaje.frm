@@ -83,24 +83,29 @@ Option Explicit
 
 Private cBotonCerrar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastPressed   As clsGraphicalButton
 
 Private Sub Form_Deactivate()
     Me.SetFocus
+
 End Sub
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
-If KeyAscii = 13 Then
-    Unload Me
-End If
+
+    If KeyAscii = 13 Then
+        Unload Me
+
+    End If
+
 End Sub
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     
     Me.Picture = LoadPictureEX("VentanaMsj.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -109,28 +114,33 @@ Private Sub LoadButtons()
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarMsj.jpg", _
-                                    "BotonCerrarRolloverMsj.jpg", _
-                                    "BotonCerrarClickMsj.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarMsj.jpg", "BotonCerrarRolloverMsj.jpg", "BotonCerrarClickMsj.jpg", Me)
+
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
-Private Sub msg_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub msg_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub msg_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub msg_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub

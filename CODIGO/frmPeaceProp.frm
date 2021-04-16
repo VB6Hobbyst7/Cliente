@@ -110,33 +110,34 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private cBotonAceptar As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
+Private cBotonAceptar  As clsGraphicalButton
+
+Private cBotonCerrar   As clsGraphicalButton
+
 Private cBotonDetalles As clsGraphicalButton
+
 Private cBotonRechazar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastPressed     As clsGraphicalButton
 
-
-Private TipoProp As TIPO_PROPUESTA
+Private TipoProp       As TIPO_PROPUESTA
 
 Public Enum TIPO_PROPUESTA
+
     ALIANZA = 1
     PAZ = 2
+
 End Enum
 
-
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
 
     Call LoadBackGround
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonAceptar = New clsGraphicalButton
     Set cBotonCerrar = New clsGraphicalButton
@@ -145,58 +146,61 @@ Private Sub LoadButtons()
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarOferta.jpg", _
-                                    "BotonAceptarRolloverOferta.jpg", _
-                                    "BotonAceptarClickOferta.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarOferta.jpg", "BotonAceptarRolloverOferta.jpg", "BotonAceptarClickOferta.jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarOferta.jpg", _
-                                    "BotonCerrarRolloverOferta.jpg", _
-                                    "BotonCerrarClickOferta.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarOferta.jpg", "BotonCerrarRolloverOferta.jpg", "BotonCerrarClickOferta.jpg", Me)
 
-    Call cBotonDetalles.Initialize(imgDetalle, "BotonDetallesOferta.jpg", _
-                                    "BotonDetallesRolloverOferta.jpg", _
-                                    "BotonDetallesClickOferta.jpg", Me)
+    Call cBotonDetalles.Initialize(imgDetalle, "BotonDetallesOferta.jpg", "BotonDetallesRolloverOferta.jpg", "BotonDetallesClickOferta.jpg", Me)
 
-    Call cBotonRechazar.Initialize(imgRechazar, "BotonRechazarOferta.jpg", _
-                                    "BotonRechazarRolloverOferta.jpg", _
-                                    "BotonRechazarClickOferta.jpg", Me)
-
+    Call cBotonRechazar.Initialize(imgRechazar, "BotonRechazarOferta.jpg", "BotonRechazarRolloverOferta.jpg", "BotonRechazarClickOferta.jpg", Me)
 
 End Sub
 
 Private Sub LoadBackGround()
+
     If TipoProp = TIPO_PROPUESTA.ALIANZA Then
         Me.Picture = LoadPictureEX("VentanaOfertaAlianza.jpg")
     Else
         Me.Picture = LoadPictureEX("VentanaOfertaPaz.jpg")
+
     End If
+
 End Sub
 
 Public Property Let ProposalType(ByVal nValue As TIPO_PROPUESTA)
     TipoProp = nValue
+
 End Property
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
 Private Sub imgAceptar_Click()
 
     If lista.ListIndex = -1 Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
             Call ShowConsoleMsg("¡Debes selecionar un propuesta!", .red, .green, .blue, .bold, .italic)
+
         End With
+
         Exit Sub
+
     End If
 
     If TipoProp = PAZ Then
         Call WriteGuildAcceptPeace(lista.List(lista.ListIndex))
     Else
         Call WriteGuildAcceptAlliance(lista.List(lista.ListIndex))
+
     End If
+
     If frmGuildLeader.solicitudes.ListIndex > -1 Then
         frmGuildLeader.solicitudes.RemoveItem (frmGuildLeader.solicitudes.ListIndex)
+
     End If
     
     Me.Hide
@@ -207,41 +211,58 @@ End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgDetalle_Click()
+
     If lista.ListIndex = -1 Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
             Call ShowConsoleMsg("¡Debes selecionar un propuesta!", .red, .green, .blue, .bold, .italic)
+
         End With
+
         Exit Sub
+
     End If
 
     If TipoProp = PAZ Then
         Call WriteGuildPeaceDetails(lista.List(lista.ListIndex))
     Else
         Call WriteGuildAllianceDetails(lista.List(lista.ListIndex))
+
     End If
+
 End Sub
 
 Private Sub imgRechazar_Click()
 
     If lista.ListIndex = -1 Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
             Call ShowConsoleMsg("¡Debes selecionar un propuesta!", .red, .green, .blue, .bold, .italic)
+
         End With
+
         Exit Sub
+
     End If
 
     If TipoProp = PAZ Then
         Call WriteGuildRejectPeace(lista.List(lista.ListIndex))
     Else
         Call WriteGuildRejectAlliance(lista.List(lista.ListIndex))
+
     End If
+
     If frmGuildLeader.solicitudes.ListIndex > -1 Then
         frmGuildLeader.solicitudes.RemoveItem (frmGuildLeader.solicitudes.ListIndex)
+
     End If
+
     Me.Hide
     
     Unload Me
+
 End Sub

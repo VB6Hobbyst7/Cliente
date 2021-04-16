@@ -89,21 +89,25 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Private Sub cmdBorrar_Click()
 
     If txtNombreCuenta.Text = "" Then
         MessageBox ("Escriba el nombre de su cuenta.")
         Exit Sub
+
     End If
     
     If txtNombrePersonaje.Text = "" Then
         MessageBox ("Escriba el nombre de su personaje.")
         Exit Sub
+
     End If
     
     If txtPassword.Text = "" Then
         MessageBox ("Escriba su contraseña.")
         Exit Sub
+
     End If
     
     If MsgBox("¿Está seguro de borrar al personaje " & txtNombrePersonaje.Text & "?", vbYesNo, "AoYind 3 - Borrar personaje") = vbYes Then
@@ -114,7 +118,7 @@ Private Sub cmdBorrar_Click()
         iCliente = 0
         DummyCode = StrConv(StrReverse("conectar") & "CuEnTa", vbFromUnicode)
         
-         If Not ClientSetup.WinSock Then
+        If Not ClientSetup.WinSock Then
             frmMain.Client.CloseSck
                     
             EstadoLogin = E_MODO.BorrarPersonaje
@@ -125,7 +129,9 @@ Private Sub cmdBorrar_Click()
                 MessageBox "Error de conexión."
             Else
                 Call Login
+
             End If
+
         Else
             frmMain.WSock.Close
                     
@@ -137,18 +143,21 @@ Private Sub cmdBorrar_Click()
                 MessageBox "Error de conexión."
             Else
                 Call Login
+
             End If
+
         End If
+
     End If
-    
     
 End Sub
 
 Private Sub cmdCerrar_Click()
     Unload Me
-End Sub
 
+End Sub
 
 Private Sub Form_Load()
     Me.Picture = LoadPictureEX("VENTANABORRARPJ.jpg")
+
 End Sub

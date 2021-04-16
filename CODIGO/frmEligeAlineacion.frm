@@ -83,6 +83,7 @@ Attribute VB_Exposed = False
 '**************************************************************************
 
 Option Explicit
+
 '
 'Private cBotonCriminal As clsGraphicalButton
 'Private cBotonCaos As clsGraphicalButton
@@ -91,99 +92,105 @@ Option Explicit
 'Private cBotonReal As clsGraphicalButton
 Private cBotonSalir As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastPressed  As clsGraphicalButton
 
 Private Enum eAlineacion
+
     ieREAL = 0
     ieCAOS = 1
     ieNeutral = 2
     ieLegal = 4
     ieCriminal = 5
+
 End Enum
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
 
     Me.Picture = LoadPictureEX("VentanaFundarClan.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
-'    Set cBotonCriminal = New clsGraphicalButton
-'    Set cBotonCaos = New clsGraphicalButton
-'    Set cBotonLegal = New clsGraphicalButton
-'    Set cBotonNeutral = New clsGraphicalButton
-'    Set cBotonReal = New clsGraphicalButton
+    '    Set cBotonCriminal = New clsGraphicalButton
+    '    Set cBotonCaos = New clsGraphicalButton
+    '    Set cBotonLegal = New clsGraphicalButton
+    '    Set cBotonNeutral = New clsGraphicalButton
+    '    Set cBotonReal = New clsGraphicalButton
     Set cBotonSalir = New clsGraphicalButton
     
     Set LastPressed = New clsGraphicalButton
     
-'
-'    Call cBotonCriminal.Initialize(imgCriminal, "", _
-'                                    "BotonCriminal.jpg", _
-'                                    "BotonCriminal.jpg", Me)
-'
-'    Call cBotonCaos.Initialize(imgCaos, "", _
-'                                    "BotonCaos.jpg", _
-'                                    "BotonCaos.jpg", Me)
-'
-'    Call cBotonLegal.Initialize(imgLegal, "", _
-'                                    "BotonLegal.jpg", _
-'                                    "BotonLegal.jpg", Me)
-'
-'    Call cBotonNeutral.Initialize(imgNeutral, "", _
-'                                    "BotonNeutral.jpg", _
-'                                    "BotonNeutral.jpg", Me)
-'
-'    Call cBotonReal.Initialize(imgReal, "", _
-'                                    "BotonReal.jpg", _
-'                                    "BotonReal.jpg", Me)
+    '
+    '    Call cBotonCriminal.Initialize(imgCriminal, "", _
+    '                                    "BotonCriminal.jpg", _
+    '                                    "BotonCriminal.jpg", Me)
+    '
+    '    Call cBotonCaos.Initialize(imgCaos, "", _
+    '                                    "BotonCaos.jpg", _
+    '                                    "BotonCaos.jpg", Me)
+    '
+    '    Call cBotonLegal.Initialize(imgLegal, "", _
+    '                                    "BotonLegal.jpg", _
+    '                                    "BotonLegal.jpg", Me)
+    '
+    '    Call cBotonNeutral.Initialize(imgNeutral, "", _
+    '                                    "BotonNeutral.jpg", _
+    '                                    "BotonNeutral.jpg", Me)
+    '
+    '    Call cBotonReal.Initialize(imgReal, "", _
+    '                                    "BotonReal.jpg", _
+    '                                    "BotonReal.jpg", Me)
                                     
-    Call cBotonSalir.Initialize(imgSalir, "BotonSalirAlineacion.jpg", _
-                                    "BotonSalirRolloverAlineacion.jpg", _
-                                    "BotonSalirClickAlineacion.jpg", Me)
-
+    Call cBotonSalir.Initialize(imgSalir, "BotonSalirAlineacion.jpg", "BotonSalirRolloverAlineacion.jpg", "BotonSalirClickAlineacion.jpg", Me)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCaos_Click()
     Call WriteGuildFundate(eAlineacion.ieCAOS)
     Unload Me
+
 End Sub
 
 Private Sub imgCriminal_Click()
     Call WriteGuildFundate(eAlineacion.ieCriminal)
     Unload Me
+
 End Sub
 
 Private Sub imgLegal_Click()
     Call WriteGuildFundate(eAlineacion.ieLegal)
     Unload Me
+
 End Sub
 
 Private Sub imgNeutral_Click()
     Call WriteGuildFundate(eAlineacion.ieNeutral)
     Unload Me
+
 End Sub
 
 Private Sub imgReal_Click()
     Call WriteGuildFundate(eAlineacion.ieREAL)
     Unload Me
+
 End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
+
 End Sub

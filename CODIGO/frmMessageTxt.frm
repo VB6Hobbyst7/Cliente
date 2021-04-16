@@ -242,21 +242,24 @@ Option Explicit
 
 Private Sub cancelCmd_Click()
     Unload Me
+
 End Sub
 
 Private Sub Form_Load()
     Me.Picture = LoadPictureEX("VENTANAMENSAJESPREDEFINIDOS.jpg")
-
 
     Dim i As Long
     
     For i = 0 To 9
         messageTxt(i) = CustomMessages.Message(i)
     Next i
+
 End Sub
 
 Private Sub okCmd_Click()
-On Error GoTo ErrHandler
+
+    On Error GoTo ErrHandler
+
     Dim i As Long
     
     For i = 0 To 9
@@ -264,11 +267,14 @@ On Error GoTo ErrHandler
     Next i
     
     Unload Me
-Exit Sub
+    Exit Sub
 
 ErrHandler:
+
     'Did detected an invalid message??
     If Err.Number = CustomMessages.InvalidMessageErrCode Then
         Call MessageBox("El Mensaje " & CStr(i + 1) & " es inválido. Modifiquelo por favor.")
+
     End If
+
 End Sub

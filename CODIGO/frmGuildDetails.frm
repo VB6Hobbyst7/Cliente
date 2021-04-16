@@ -268,70 +268,75 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Private cBotonConfirmar        As clsGraphicalButton
 
-Private cBotonConfirmar As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
+Private cBotonSalir            As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastPressed             As clsGraphicalButton
 
-Private Const MAX_DESC_LENGTH As Integer = 520
+Private Const MAX_DESC_LENGTH  As Integer = 520
+
 Private Const MAX_CODEX_LENGTH As Integer = 100
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     Me.Picture = LoadPictureEX("VentanaCodex.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonConfirmar = New clsGraphicalButton
     Set cBotonSalir = New clsGraphicalButton
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonConfirmar.Initialize(imgConfirmar, "BotonConfirmarCodex.jpg", _
-                                    "BotonConfirmarRolloverCodex.jpg", _
-                                    "BotonConfirmarClickCodex.jpg", Me)
+    Call cBotonConfirmar.Initialize(imgConfirmar, "BotonConfirmarCodex.jpg", "BotonConfirmarRolloverCodex.jpg", "BotonConfirmarClickCodex.jpg", Me)
 
-    Call cBotonSalir.Initialize(imgSalir, "BotonSalirCodex.jpg", _
-                                    "BotonSalirRolloverCodex.jpg", _
-                                    "BotonSalirClickCodex.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, "BotonSalirCodex.jpg", "BotonSalirRolloverCodex.jpg", "BotonSalirClickCodex.jpg", Me)
+
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgConfirmar_Click()
-    Dim fdesc As String
+
+    Dim fdesc   As String
+
     Dim Codex() As String
-    Dim k As Byte
-    Dim Cont As Byte
+
+    Dim k       As Byte
+
+    Dim Cont    As Byte
 
     fdesc = Replace(txtDesc, vbCrLf, "º", , , vbBinaryCompare)
 
-
     Cont = 0
+
     For k = 0 To txtCodex1.UBound
+
         If LenB(txtCodex1(k).Text) <> 0 Then Cont = Cont + 1
     Next k
     
     If Cont < 4 Then
         MessageBox "Debes definir al menos cuatro mandamientos."
         Exit Sub
+
     End If
                 
     ReDim Codex(txtCodex1.UBound) As String
+
     For k = 0 To txtCodex1.UBound
         Codex(k) = txtCodex1(k)
     Next k
@@ -340,26 +345,36 @@ Private Sub imgConfirmar_Click()
         Call WriteCreateNewGuild(fdesc, ClanName, Site, Codex)
     Else
         Call WriteClanCodexUpdate(fdesc, Codex)
+
     End If
 
     CreandoClan = False
     Unload Me
+
 End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
+
 End Sub
 
 Private Sub txtCodex1_Change(Index As Integer)
-    If Len(txtCodex1.item(Index).Text) > MAX_CODEX_LENGTH Then _
-        txtCodex1.item(Index).Text = Left$(txtCodex1.item(Index).Text, MAX_CODEX_LENGTH)
+
+    If Len(txtCodex1.item(Index).Text) > MAX_CODEX_LENGTH Then txtCodex1.item(Index).Text = Left$(txtCodex1.item(Index).Text, MAX_CODEX_LENGTH)
+
 End Sub
 
-Private Sub txtCodex1_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub txtCodex1_MouseMove(Index As Integer, _
+                                Button As Integer, _
+                                Shift As Integer, _
+                                x As Single, _
+                                y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub txtDesc_Change()
-    If Len(txtDesc.Text) > MAX_DESC_LENGTH Then _
-        txtDesc.Text = Left$(txtDesc.Text, MAX_DESC_LENGTH)
+
+    If Len(txtDesc.Text) > MAX_DESC_LENGTH Then txtDesc.Text = Left$(txtDesc.Text, MAX_DESC_LENGTH)
+
 End Sub

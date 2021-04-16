@@ -92,49 +92,51 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-
 Private cBotonAceptar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastPressed    As clsGraphicalButton
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     Me.Picture = LoadPictureEX("VentanaUrlClan.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonAceptar = New clsGraphicalButton
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarUrl.jpg", _
-                                    "BotonAceptaRolloverrUrl.jpg", _
-                                    "BotonAceptarClickUrl.jpg", Me)
+    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarUrl.jpg", "BotonAceptaRolloverrUrl.jpg", "BotonAceptarClickUrl.jpg", Me)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgAceptar_Click()
-    If txtUrl.Text <> "" Then _
-        Call WriteGuildNewWebsite(txtUrl.Text)
+
+    If txtUrl.Text <> "" Then Call WriteGuildNewWebsite(txtUrl.Text)
     
     Unload Me
+
 End Sub
 
-Private Sub txtUrl_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub txtUrl_MouseMove(Button As Integer, _
+                             Shift As Integer, _
+                             x As Single, _
+                             y As Single)
     LastPressed.ToggleToNormal
+
 End Sub

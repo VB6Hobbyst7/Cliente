@@ -645,15 +645,19 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private cBotonVolver As clsGraphicalButton
-Private cBotonCrear As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Private cBotonCrear  As clsGraphicalButton
 
-Private picFullStar As Picture
-Private picHalfStar As Picture
-Private picGlowStar As Picture
+Public LastPressed   As clsGraphicalButton
+
+Private picFullStar  As Picture
+
+Private picHalfStar  As Picture
+
+Private picGlowStar  As Picture
 
 Private Enum eHelp
+
     iePasswd
     ieTirarDados
     ieMail
@@ -680,20 +684,25 @@ Private Enum eHelp
     ieClase
     ieGenero
     ieAlineacion
+
 End Enum
 
-Private vHelp(25) As String
+Private vHelp(25)         As String
+
 Private vEspecialidades() As String
 
 Private Type tModRaza
+
     Fuerza As Single
     Agilidad As Single
     Inteligencia As Single
     Carisma As Single
     Constitucion As Single
+
 End Type
 
 Private Type tModClase
+
     Evasion As Double
     AtaqueArmas As Double
     AtaqueProyectiles As Double
@@ -703,18 +712,22 @@ Private Type tModClase
     Magia As Double
     Vida As Double
     Hit As Double
+
 End Type
 
-Private ModRaza() As tModRaza
+Private ModRaza()  As tModRaza
+
 Private ModClase() As tModClase
 
-Private NroRazas As Integer
-Private NroClases As Integer
+Private NroRazas   As Integer
 
-Private Cargando As Boolean
+Private NroClases  As Integer
+
+Private Cargando   As Boolean
 
 Private currentGrh As Long
-Private Dir As E_Heading
+
+Private Dir        As E_Heading
 
 Private Sub Form_Load()
     Me.Picture = LoadPictureEX("VentanaCrearPersonaje.jpg")
@@ -737,9 +750,9 @@ Private Sub Form_Load()
     UserEmail = ""
     UserHead = 0
     
-#If SeguridadAlkon Then
-    Call ProtectForm(Me)
-#End If
+    #If SeguridadAlkon Then
+        Call ProtectForm(Me)
+    #End If
 
 End Sub
 
@@ -753,21 +766,19 @@ Private Sub CargarEspecialidades()
     vEspecialidades(eClass.Bandit) = "Combate Sin Armas"
     vEspecialidades(eClass.Druid) = "Domar"
     vEspecialidades(eClass.Pirat) = "Navegar"
+
 End Sub
 
 Private Sub IniciarGraficos()
-
     
     Set cBotonVolver = New clsGraphicalButton
     Set cBotonCrear = New clsGraphicalButton
     
     Set LastPressed = New clsGraphicalButton
                                                                             
-    Call cBotonVolver.Initialize(imgVolver, "", "BotonVolverRollover.jpg", _
-                                    "BotonVolverClick.jpg", Me)
+    Call cBotonVolver.Initialize(imgVolver, "", "BotonVolverRollover.jpg", "BotonVolverClick.jpg", Me)
                                     
-    Call cBotonCrear.Initialize(imgCrear, "", "BotonCrearPersonajeRollover.jpg", _
-                                    "BotonCrearPersonajeClick.jpg", Me)
+    Call cBotonCrear.Initialize(imgCrear, "", "BotonCrearPersonajeRollover.jpg", "BotonCrearPersonajeClick.jpg", Me)
 
     Set picFullStar = LoadPictureEX("EstrellaSimple.jpg")
     Set picHalfStar = LoadPictureEX("EstrellaMitad.jpg")
@@ -776,6 +787,7 @@ Private Sub IniciarGraficos()
 End Sub
 
 Private Sub CargarCombos()
+
     Dim i As Integer
     
     lstProfesion.Clear
@@ -791,42 +803,48 @@ Private Sub CargarCombos()
     Next i
     
     lstProfesion.ListIndex = 1
+
 End Sub
 
 Function CheckData() As Boolean
 
-
     If UserRaza = 0 Then
         MessageBox "Seleccione la raza del personaje."
         Exit Function
+
     End If
     
     If UserSexo = 0 Then
         MessageBox "Seleccione el sexo del personaje."
         Exit Function
+
     End If
     
     If UserClase = 0 Then
         MessageBox "Seleccione la clase del personaje."
         Exit Function
+
     End If
     
     If UserHogar = 0 Then
         MessageBox "Seleccione el hogar del personaje."
         Exit Function
+
     End If
     
     If Len(UserName) > 30 Then
         MessageBox ("El nombre debe tener menos de 30 letras.")
         Exit Function
+
     End If
     
     CheckData = True
 
 End Function
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ClearLabel
+
 End Sub
 
 Private Sub Image2_Click()
@@ -835,7 +853,8 @@ End Sub
 
 Private Sub imgCrear_Click()
 
-    Dim i As Integer
+    Dim i         As Integer
+
     Dim CharAscii As Byte
     
     Call Audio.PlayWave(SND_CLICKNEW)
@@ -845,21 +864,22 @@ Private Sub imgCrear_Click()
     If Right$(UserName, 1) = " " Then
         UserName = RTrim$(UserName)
         MessageBox "Nombre invalido, se han removido los espacios al final del nombre"
+
     End If
+
     If Len(UserName) > 20 Then
         MessageBox "El nombre es demasiado largo, debe tener como máximo 20 letras."
         Exit Sub
+
     End If
     
     UserRaza = lstRaza.ListIndex + 1
     UserClase = lstProfesion.ListIndex + 1
-    
 
     If Not CheckData Then Exit Sub
     
     If Not ClientSetup.WinSock Then
         frmMain.Client.CloseSck
-                
                 
         EstadoLogin = E_MODO.CrearNuevoPj
                 
@@ -872,10 +892,11 @@ Private Sub imgCrear_Click()
                     
         Else
             Call Login
+
         End If
+
     Else
         frmMain.WSock.Close
-                
                 
         EstadoLogin = E_MODO.CrearNuevoPj
                 
@@ -888,146 +909,225 @@ Private Sub imgCrear_Click()
                     
         Else
             Call Login
+
         End If
+
     End If
     
 End Sub
 
-
-Private Sub imgNombre_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgNombre_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                x As Single, _
+                                y As Single)
     lblHelp.Caption = vHelp(eHelp.ieNombre)
+
 End Sub
 
-
-Private Sub imgAtributos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgAtributos_MouseMove(Button As Integer, _
+                                   Shift As Integer, _
+                                   x As Single, _
+                                   y As Single)
     lblHelp.Caption = vHelp(eHelp.ieAtributos)
+
 End Sub
 
-
-
-
-
-
-Private Sub imgFuerza_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgFuerza_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                x As Single, _
+                                y As Single)
     lblHelp.Caption = vHelp(eHelp.ieFuerza)
+
 End Sub
 
-Private Sub imgAgilidad_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgAgilidad_MouseMove(Button As Integer, _
+                                  Shift As Integer, _
+                                  x As Single, _
+                                  y As Single)
     lblHelp.Caption = vHelp(eHelp.ieAgilidad)
+
 End Sub
 
-Private Sub imgInteligencia_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgInteligencia_MouseMove(Button As Integer, _
+                                      Shift As Integer, _
+                                      x As Single, _
+                                      y As Single)
     lblHelp.Caption = vHelp(eHelp.ieInteligencia)
+
 End Sub
 
-Private Sub imgCarisma_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgCarisma_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 x As Single, _
+                                 y As Single)
     lblHelp.Caption = vHelp(eHelp.ieCarisma)
+
 End Sub
 
-Private Sub imgConstitucion_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgConstitucion_MouseMove(Button As Integer, _
+                                      Shift As Integer, _
+                                      x As Single, _
+                                      y As Single)
     lblHelp.Caption = vHelp(eHelp.ieConstitucion)
+
 End Sub
 
-Private Sub imgArcos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgArcos_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               x As Single, _
+                               y As Single)
     lblHelp.Caption = vHelp(eHelp.ieArcos)
+
 End Sub
 
-Private Sub imgArmas_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgArmas_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               x As Single, _
+                               y As Single)
     lblHelp.Caption = vHelp(eHelp.ieArmas)
+
 End Sub
 
-Private Sub imgEscudos_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgEscudos_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 x As Single, _
+                                 y As Single)
     lblHelp.Caption = vHelp(eHelp.ieEscudos)
+
 End Sub
 
-Private Sub imgEvasion_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgEvasion_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 x As Single, _
+                                 y As Single)
     lblHelp.Caption = vHelp(eHelp.ieEvasion)
+
 End Sub
 
-Private Sub imgMagia_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgMagia_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               x As Single, _
+                               y As Single)
     lblHelp.Caption = vHelp(eHelp.ieMagia)
+
 End Sub
 
-Private Sub imgVida_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgVida_MouseMove(Button As Integer, _
+                              Shift As Integer, _
+                              x As Single, _
+                              y As Single)
     lblHelp.Caption = vHelp(eHelp.ieVida)
+
 End Sub
 
-
-Private Sub imgPuebloOrigen_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgPuebloOrigen_MouseMove(Button As Integer, _
+                                      Shift As Integer, _
+                                      x As Single, _
+                                      y As Single)
     lblHelp.Caption = vHelp(eHelp.iePuebloOrigen)
+
 End Sub
 
-Private Sub imgRaza_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgRaza_MouseMove(Button As Integer, _
+                              Shift As Integer, _
+                              x As Single, _
+                              y As Single)
     lblHelp.Caption = vHelp(eHelp.ieRaza)
+
 End Sub
 
-Private Sub imgClase_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgClase_MouseMove(Button As Integer, _
+                               Shift As Integer, _
+                               x As Single, _
+                               y As Single)
     lblHelp.Caption = vHelp(eHelp.ieClase)
+
 End Sub
 
-Private Sub imgGenero_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub imgGenero_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                x As Single, _
+                                y As Single)
     lblHelp.Caption = vHelp(eHelp.ieGenero)
-End Sub
 
+End Sub
 
 Private Sub imgVolver_Click()
     'Call Audio.PlayMIDI("2.mid")
     Call Audio.PlayWave(SND_CLICKNEW)
 
     Unload Me
+
 End Sub
 
-
 Private Sub lstProfesion_Click()
-On Error Resume Next
-'    Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
-'
+
+    On Error Resume Next
+
+    '    Image1.Picture = LoadPicture(App.path & "\graficos\" & lstProfesion.Text & ".jpg")
+    '
     UserClase = lstProfesion.ListIndex + 1
     
     Call UpdateStats
     Call UpdateEspecialidad(UserClase)
+
 End Sub
 
 Private Sub UpdateEspecialidad(ByVal eClase As eClass)
     lblEspecialidad.Caption = vEspecialidades(eClase)
+
 End Sub
 
 Private Sub lstRaza_Click()
     UserRaza = lstRaza.ListIndex + 1
 
     Call UpdateStats
+
 End Sub
 
-
-
 Private Sub optGenero_Click(Index As Integer)
-Dim i As Integer
-For i = 0 To optGenero.UBound
-    If i = Index Then
-        optGenero(i).Picture = LoadPictureEX("Tilde.gif")
-        UserSexo = i + 1
-    Else
-        optGenero(i).Picture = Nothing
-    End If
-Next i
-Call Audio.PlayWave(SND_CLICKNEW)
+
+    Dim i As Integer
+
+    For i = 0 To optGenero.UBound
+
+        If i = Index Then
+            optGenero(i).Picture = LoadPictureEX("Tilde.gif")
+            UserSexo = i + 1
+        Else
+            optGenero(i).Picture = Nothing
+
+        End If
+
+    Next i
+
+    Call Audio.PlayWave(SND_CLICKNEW)
+
 End Sub
 
 Private Sub optHogar_Click(Index As Integer)
-Dim i As Integer
-For i = 0 To optHogar.UBound
-    If i = Index Then
-        optHogar(i).Picture = LoadPictureEX("Tilde.gif")
-        UserHogar = i + 1
-    Else
-        optHogar(i).Picture = Nothing
-    End If
-Next i
-Call Audio.PlayWave(SND_CLICKNEW)
+
+    Dim i As Integer
+
+    For i = 0 To optHogar.UBound
+
+        If i = Index Then
+            optHogar(i).Picture = LoadPictureEX("Tilde.gif")
+            UserHogar = i + 1
+        Else
+            optHogar(i).Picture = Nothing
+
+        End If
+
+    Next i
+
+    Call Audio.PlayWave(SND_CLICKNEW)
+
 End Sub
 
 Private Sub txtNombre_Change()
     txtNombre.Text = LTrim(txtNombre.Text)
+
 End Sub
 
 Private Sub LoadHelp()
@@ -1057,27 +1157,35 @@ Private Sub LoadHelp()
     vHelp(eHelp.ieClase) = "La clase influirá en las características principales que tenga tu personaje, asi como en las magias e items que podrá utilizar. Las estrellas que ves abajo te mostrarán en qué habilidades se destaca la misma."
     vHelp(eHelp.ieGenero) = "Indica si el personaje será masculino o femenino. Esto influye en los items que podrá equipar."
     vHelp(eHelp.ieAlineacion) = "Indica si el personaje seguirá la senda del mal o del bien. (Actualmente deshabilitado)"
+
 End Sub
 
 Private Sub ClearLabel()
     LastPressed.ToggleToNormal
     lblHelp = ""
+
 End Sub
 
-Private Sub txtNombre_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub txtNombre_MouseMove(Button As Integer, _
+                                Shift As Integer, _
+                                x As Single, _
+                                y As Single)
     lblHelp.Caption = vHelp(eHelp.ieNombre)
+
 End Sub
 
 Public Sub UpdateStats()
     
     Call UpdateRazaMod
     Call UpdateStars
+
 End Sub
 
 Private Sub UpdateRazaMod()
+
     Dim SelRaza As Integer
-    Dim i As Integer
-    
+
+    Dim i       As Integer
     
     If lstRaza.ListIndex > -1 Then
     
@@ -1089,13 +1197,15 @@ Private Sub UpdateRazaMod()
             lblAtributoFinal(3).Caption = 18 + .Inteligencia
             lblAtributoFinal(4).Caption = 18 + .Carisma
             lblAtributoFinal(5).Caption = 18 + .Constitucion
+
         End With
+
     End If
-    
 
 End Sub
 
 Private Sub UpdateStars()
+
     Dim NumStars As Double
     
     If UserClase = 0 Then Exit Sub
@@ -1117,23 +1227,24 @@ Private Sub UpdateStars()
     Call SetStars(imgEscudosStar, NumStars * 2)
     
     ' Estrellas de armas
-    NumStars = (0.509 + 0.01185 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * ModClase(UserClase).Hit * _
-                ModClase(UserClase).DañoArmas + 0.119 * ModClase(UserClase).AtaqueArmas * _
-                Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
+    NumStars = (0.509 + 0.01185 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * ModClase(UserClase).Hit * ModClase(UserClase).DañoArmas + 0.119 * ModClase(UserClase).AtaqueArmas * Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArmasStar, NumStars * 2)
     
     ' Estrellas de arcos
-    NumStars = (0.4915 + 0.01265 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * _
-                ModClase(UserClase).DañoProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * _
-                Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
+    NumStars = (0.4915 + 0.01265 * Val(lblAtributoFinal(eAtributos.Fuerza).Caption)) * ModClase(UserClase).DañoProyectiles * ModClase(UserClase).Hit + 0.119 * ModClase(UserClase).AtaqueProyectiles * Val(lblAtributoFinal(eAtributos.Agilidad).Caption)
     Call SetStars(imgArcoStar, NumStars * 2)
+
 End Sub
 
 Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
-    Dim FullStars As Integer
+
+    Dim FullStars   As Integer
+
     Dim HasHalfStar As Boolean
-    Dim Index As Integer
-    Dim counter As Integer
+
+    Dim Index       As Integer
+
+    Dim counter     As Integer
 
     If NumStars > 0 Then
         
@@ -1143,20 +1254,25 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
         
         ' Tienen brillo extra si estan todas
         If FullStars = 5 Then
+
             For Index = 1 To FullStars
                 ImgContainer(Index).Picture = picGlowStar
             Next Index
+
         Else
+
             ' Numero impar? Entonces hay que poner "media estrella"
             If (NumStars Mod 2) > 0 Then HasHalfStar = True
             
             ' Muestro las estrellas enteras
             If FullStars > 0 Then
+
                 For Index = 1 To FullStars
                     ImgContainer(Index).Picture = picFullStar
                 Next Index
                 
                 counter = FullStars
+
             End If
             
             ' Muestro la mitad de la estrella (si tiene)
@@ -1164,29 +1280,37 @@ Private Sub SetStars(ByRef ImgContainer As Object, ByVal NumStars As Integer)
                 counter = counter + 1
                 
                 ImgContainer(counter).Picture = picHalfStar
+
             End If
             
             ' Si estan completos los espacios, no borro nada
             If counter <> 5 Then
+
                 ' Limpio las que queden vacias
                 For Index = counter + 1 To 5
                     Set ImgContainer(Index).Picture = Nothing
                 Next Index
+
             End If
             
         End If
+
     Else
+
         ' Limpio todo
         For Index = 1 To 5
             Set ImgContainer(Index).Picture = Nothing
         Next Index
+
     End If
 
 End Sub
 
 Private Sub LoadCharInfo()
+
     Dim SearchVar As String
-    Dim i As Integer
+
+    Dim i         As Integer
     
     NroRazas = UBound(ListaRazas())
     NroClases = UBound(ListaClases())
@@ -1196,6 +1320,7 @@ Private Sub LoadCharInfo()
     
     'Modificadores de Clase
     For i = 1 To NroClases
+
         With ModClase(i)
             SearchVar = ListaClases(i)
             
@@ -1208,11 +1333,14 @@ Private Sub LoadCharInfo()
             .Hit = Val(GetVar(IniPath & "CharInfo.dat", "HIT", SearchVar))
             .Magia = Val(GetVar(IniPath & "CharInfo.dat", "MODMAGIA", SearchVar))
             .Vida = Val(GetVar(IniPath & "CharInfo.dat", "MODVIDA", SearchVar))
+
         End With
+
     Next i
     
     'Modificadores de Raza
     For i = 1 To NroRazas
+
         With ModRaza(i)
             SearchVar = Replace(ListaRazas(i), " ", "")
         
@@ -1221,7 +1349,9 @@ Private Sub LoadCharInfo()
             .Inteligencia = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Inteligencia"))
             .Carisma = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Carisma"))
             .Constitucion = Val(GetVar(IniPath & "CharInfo.dat", "MODRAZA", SearchVar + "Constitucion"))
+
         End With
+
     Next i
 
 End Sub

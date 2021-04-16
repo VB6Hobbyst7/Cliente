@@ -88,54 +88,58 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private cBotonInvocar As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Private cBotonSalir   As clsGraphicalButton
+
+Public LastPressed    As clsGraphicalButton
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     
     Me.Picture = LoadPictureEX("VentanaInvocar.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonInvocar = New clsGraphicalButton
     Set cBotonSalir = New clsGraphicalButton
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonInvocar.Initialize(imgInvocar, "BotonInvocar.jpg", _
-                                    "BotonInvocarRollover.jpg", _
-                                    "BotonInvocarClick.jpg", Me)
+    Call cBotonInvocar.Initialize(imgInvocar, "BotonInvocar.jpg", "BotonInvocarRollover.jpg", "BotonInvocarClick.jpg", Me)
 
-    Call cBotonSalir.Initialize(imgSalir, "BotonSalirInvocar.jpg", _
-                                    "BotonSalirRolloverInvocar.jpg", _
-                                    "BotonSalirClickInvocar.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, "BotonSalirInvocar.jpg", "BotonSalirRolloverInvocar.jpg", "BotonSalirClickInvocar.jpg", Me)
+
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgInvocar_Click()
     Call WriteSpawnCreature(lstCriaturas.ListIndex + 1)
+
 End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
+
 End Sub
 
-Private Sub lstCriaturas_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lstCriaturas_MouseMove(Button As Integer, _
+                                   Shift As Integer, _
+                                   x As Single, _
+                                   y As Single)
     LastPressed.ToggleToNormal
+
 End Sub

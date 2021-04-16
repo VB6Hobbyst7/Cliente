@@ -101,11 +101,12 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private cBotonCerrar As clsGraphicalButton
+
 Private cBotonEnviar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Public LastPressed   As clsGraphicalButton
 
-Dim CName As String
+Dim CName            As String
 
 Public Sub RecieveSolicitud(ByVal GuildName As String)
 
@@ -114,11 +115,12 @@ Public Sub RecieveSolicitud(ByVal GuildName As String)
 End Sub
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     
     Me.Picture = LoadPictureEX("VentanaIngreso.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
@@ -128,34 +130,36 @@ Private Sub LoadButtons()
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarIngreso.jpg", _
-                                    "BotonCerrarRolloverIngreso.jpg", _
-                                    "BotonCerrarClickIngreso.jpg", Me)
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarIngreso.jpg", "BotonCerrarRolloverIngreso.jpg", "BotonCerrarClickIngreso.jpg", Me)
 
-    Call cBotonEnviar.Initialize(imgEnviar, "BotonEnviarIngreso.jpg", _
-                                    "BotonEnviarRolloverIngreso.jpg", _
-                                    "BotonEnviarClickIngreso.jpg", Me)
+    Call cBotonEnviar.Initialize(imgEnviar, "BotonEnviarIngreso.jpg", "BotonEnviarRolloverIngreso.jpg", "BotonEnviarClickIngreso.jpg", Me)
+
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
+
 End Sub
 
 Private Sub imgEnviar_Click()
     Call WriteGuildRequestMembership(CName, Replace(Replace(Text1.Text, ",", ";"), vbCrLf, "º"))
 
     Unload Me
+
 End Sub
 
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub

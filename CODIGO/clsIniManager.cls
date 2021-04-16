@@ -69,8 +69,10 @@ Option Base 0
 ' @see      MainNode
 '
 Private Type ChildNode
+
     key As String
     Value As String
+
 End Type
 
 ''
@@ -83,9 +85,11 @@ End Type
 ' @param    numValues Number of entrys in the main node.
 
 Private Type MainNode
+
     name As String
     values() As ChildNode
     numValues As Integer
+
 End Type
 
 ''
@@ -150,7 +154,9 @@ Public Sub Initialize(ByVal File As String)
     'Opens the requested file and loads it's data into memory
     '**************************************************************
     Dim handle As Integer
+
     Dim Text   As String
+
     Dim Pos    As Long
     
     'Prevent memory losses if we are attempting to reload a file....
@@ -225,9 +231,12 @@ Public Sub Initialize(ByVal File As String)
         
         'Sort values of each node to allow binary search
         For i = 0 To MainNodes - 1
+
             If fileData(i).numValues Then
                 Call SortChildNodes(fileData(i), 0, fileData(i).numValues - 1)
+
             End If
+
         Next i
 
     End If
@@ -252,8 +261,11 @@ Private Sub SortChildNodes(ByRef Node As MainNode, _
     'this allows the use of Binary Search for faster searches
     '**************************************************************
     Dim min  As Integer      'First item in the list
+
     Dim max  As Integer      'Last item in the list
+
     Dim comp As String      'Item used to compare
+
     Dim temp As ChildNode
     
     min = First
@@ -304,8 +316,11 @@ Private Sub SortMainNodes(ByVal First As Integer, ByVal Last As Integer)
     'this allows the use of Binary Search for faster searches
     '**************************************************************
     Dim min  As Integer      'First item in the list
+
     Dim max  As Integer      'Last item in the list
+
     Dim comp As String      'Item used to compare
+
     Dim temp As MainNode
     
     min = First
@@ -353,6 +368,7 @@ Public Function GetValue(ByVal Main As String, ByVal key As String) As String
     'Returns a value if the key and main node exist, or a nullstring otherwise
     '**************************************************************
     Dim i As Long
+
     Dim J As Long
     
     'Search for the main node
@@ -385,6 +401,7 @@ Public Sub ChangeValue(ByVal Main As String, ByVal key As String, ByVal Value As
     'If the key and main node exist, changes the value
     '**************************************************************
     Dim i As Long
+
     Dim J As Long
     
     'Search for the main node
@@ -423,7 +440,9 @@ Private Function FindKey(ByVal MainPos As Long, ByVal key As String) As Long
     'or the negation of the position were it should be if not found
     '**************************************************************
     Dim min As Long
+
     Dim max As Long
+
     Dim mid As Long
     
     key = UCase$(key)
@@ -476,7 +495,9 @@ Private Function FindMain(ByVal name As String) As Long
     'or the negation of the position were it should be if not found
     '**************************************************************
     Dim min As Long
+
     Dim max As Long
+
     Dim mid As Long
     
     name = UCase$(name)
@@ -532,6 +553,7 @@ Private Function AddNode(ByRef name As String) As Long
     '
     '**************************************************************
     Dim i       As Long
+
     Dim MainPos As Long
 
     'Add a main node
@@ -571,8 +593,9 @@ Private Function AddKey(ByVal MainPos As Long, _
     'Last Modify Date: 10/10/2010
     '
     '**************************************************************
-    Dim i       As Long
-    Dim KeyPos  As Long
+    Dim i      As Long
+
+    Dim KeyPos As Long
 
     With fileData(MainPos)
         
@@ -609,7 +632,9 @@ Public Sub DumpFile(ByRef File As String)
     '
     '**************************************************************
     Dim hFile As Integer
+
     Dim i     As Long
+
     Dim J     As Long
 
     hFile = FreeFile()
@@ -634,5 +659,4 @@ Public Sub DumpFile(ByRef File As String)
     Close hFile
 
 End Sub
-
 

@@ -49,152 +49,198 @@ Implements clsSurfaceManager
 Const HASH_TABLE_SIZE As Long = 541
 
 Private Type SURFACE_ENTRY_STATIC
+
     fileIndex As Long
     Surface As Direct3DTexture8
+
 End Type
 
 Private Type HashBucket
+
     surfaceCount As Integer
     SurfaceEntry() As SURFACE_ENTRY_STATIC
+
 End Type
 
 Private surfaceList(HASH_TABLE_SIZE - 1) As HashBucket
 
-Private DeviceD3D As Direct3DDevice8
-Private DirectD3X As D3DX8
+Private DeviceD3D                        As Direct3DDevice8
 
-Private useVideoMemory As Boolean
+Private DirectD3X                        As D3DX8
 
-Private Const DIB_PAL_COLORS As Long = 1
-Private Const DIB_RGB_COLORS As Long = 0
+Private useVideoMemory                   As Boolean
+
+Private Const DIB_PAL_COLORS             As Long = 1
+
+Private Const DIB_RGB_COLORS             As Long = 0
     
 Private Sub Class_Initialize()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'
-'**************************************************************
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    '
+    '**************************************************************
 End Sub
 
 Private Sub Class_Terminate()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Clean up
-'**************************************************************
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    'Clean up
+    '**************************************************************
     Dim i As Long
+
     Dim J As Long
     
     'Destroy every surface in memory
     For i = 0 To HASH_TABLE_SIZE - 1
+
         With surfaceList(i)
+
             For J = 1 To .surfaceCount
                 Set .SurfaceEntry(J).Surface = Nothing
                 .SurfaceEntry(J).fileIndex = 0
             Next J
+
             surfaceList(i).surfaceCount = 0
             'Destroy the arrays
             Erase .SurfaceEntry
+
         End With
+
     Next i
+
 End Sub
+
 Private Sub clsSurfaceManager_Limpiar()
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Clean up
-'**************************************************************
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    'Clean up
+    '**************************************************************
     Dim i As Long
+
     Dim J As Long
     
     'Destroy every surface in memory
     For i = 0 To HASH_TABLE_SIZE - 1
+
         With surfaceList(i)
+
             For J = 1 To .surfaceCount
                 Set .SurfaceEntry(J).Surface = Nothing
                 .SurfaceEntry(J).fileIndex = 0
             Next J
+
             surfaceList(i).surfaceCount = 0
             'Destroy the arrays
             Erase .SurfaceEntry
+
         End With
+
     Next i
+
 End Sub
-Private Sub clsSurfaceManager_Initialize(ByRef D3DD As Direct3DDevice8, ByRef D3DX As D3DX8, ByVal videoMemory As Boolean, ByVal graphicPath As String, Optional ByVal maxMemoryUsageInMb As Long = -1&)
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'
-'**************************************************************
+
+Private Sub clsSurfaceManager_Initialize(ByRef D3DD As Direct3DDevice8, _
+                                         ByRef D3DX As D3DX8, _
+                                         ByVal videoMemory As Boolean, _
+                                         ByVal graphicPath As String, _
+                                         Optional ByVal maxMemoryUsageInMb As Long = -1&)
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    '
+    '**************************************************************
     Set DeviceD3D = D3DD
     Set DirectD3X = D3DX
     
     useVideoMemory = videoMemory
     
     Call LoadSurfaces(graphicPath)
+
 End Sub
 
 Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direct3DTexture8
-'**************************************************************
-'Author: Juan Martín Sotuyo Dodero
-'Last Modify Date: 3/06/2006
-'Retrieves the requested texture
-'**************************************************************
-On Error GoTo ErrHandler:
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 3/06/2006
+    'Retrieves the requested texture
+    '**************************************************************
+    On Error GoTo ErrHandler:
+
     Dim i As Long
     
     ' Search for it and return it
     With surfaceList(fileIndex Mod HASH_TABLE_SIZE)
+
         For i = 1 To .surfaceCount
+
             If .SurfaceEntry(i).fileIndex = fileIndex Then
                 Set clsSurfaceManager_Surface = .SurfaceEntry(i).Surface
                 Exit Property
+
             End If
+
         Next i
+
     End With
     
     'We have a missing bmp!
-    MsgBox "No se encuentra el archivo " & CStr(fileIndex) & ".bmp. Reinstale el juego, " _
-        & "y si el problema persiste contactese con los adminsitradores", vbOKOnly Or vbCritical Or vbExclamation, "Error"
+    MsgBox "No se encuentra el archivo " & CStr(fileIndex) & ".bmp. Reinstale el juego, " & "y si el problema persiste contactese con los adminsitradores", vbOKOnly Or vbCritical Or vbExclamation, "Error"
     
     End
-Exit Property
+    Exit Property
 
 ErrHandler:
-    MsgBox "Un error inesperado ocurrió a intentar cargar el archivo " & CStr(fileIndex) & ".bmp. & vbcrlf" _
-        & "Error: " & CStr(Err.Number), vbOKOnly Or vbCritical Or vbExclamation, "Error"
+    MsgBox "Un error inesperado ocurrió a intentar cargar el archivo " & CStr(fileIndex) & ".bmp. & vbcrlf" & "Error: " & CStr(Err.Number), vbOKOnly Or vbCritical Or vbExclamation, "Error"
     
     End
+
 End Property
 
 Private Sub LoadSurfaces(ByVal ResourcePath As String)
-'**************************************************************
-'Author: Nicolas Matias Gonzalez (NIGO)
-'Last Modify Date: 12/02/2007
-'Loads all surfaces in random order and then sorts them
-'**************************************************************
-On Error Resume Next
+
+    '**************************************************************
+    'Author: Nicolas Matias Gonzalez (NIGO)
+    'Last Modify Date: 12/02/2007
+    'Loads all surfaces in random order and then sorts them
+    '**************************************************************
+    On Error Resume Next
+
     Dim surfaceIndex As Long
-    Dim Data() As Byte
-    Dim i As Long
+
+    Dim Data()       As Byte
+
+    Dim i            As Long
     
     While GetNext_File(ResourcePath, i, Data(), surfaceIndex)
+
         Call LoadSurface(Data(), surfaceIndex)
     Wend
+
 End Sub
 
 Private Sub LoadSurface(ByRef Data() As Byte, ByVal fileIndex As Long)
-'**************************************************************
-'Author: Nicolas Matias Gonzalez (NIGO)
-'Last Modify Date: 11/30/2007
-'Loads the surface named fileIndex + ".bmp" and inserts it to the
-'surface list in the listIndex position
-'**************************************************************
-On Error GoTo ErrHandler
+
+    '**************************************************************
+    'Author: Nicolas Matias Gonzalez (NIGO)
+    'Last Modify Date: 11/30/2007
+    'Loads the surface named fileIndex + ".bmp" and inserts it to the
+    'surface list in the listIndex position
+    '**************************************************************
+    On Error GoTo ErrHandler
 
     Dim newSurface As SURFACE_ENTRY_STATIC
+
     Dim Tamaño As Long
+
     Dim pDesc As D3DSURFACE_DESC
+
     'ddsd.lWidth = bmpInfo.bmiHeader.biWidth
     'ddsd.lHeight = bmpInfo.bmiHeader.biHeight
     Tamaño = UBound(Data) + 1
@@ -207,6 +253,7 @@ On Error GoTo ErrHandler
         .Surface.GetLevelDesc 0, pDesc
         SurfaceSize(fileIndex).x = pDesc.Width
         SurfaceSize(fileIndex).y = pDesc.Height
+
     End With
     
     'Store the surface in the given index (it MUST be empty or data will be lost)
@@ -215,17 +262,20 @@ On Error GoTo ErrHandler
         ReDim Preserve .SurfaceEntry(1 To .surfaceCount) As SURFACE_ENTRY_STATIC
         
         .SurfaceEntry(.surfaceCount) = newSurface
+
     End With
-Exit Sub
+
+    Exit Sub
 
 ErrHandler:
+
     If Err.Number = 1 Then
         ' No video memory? Try system memory! We want all surfaces loaded!
         Resume
+
     End If
     
-    MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & _
-            "El código de error es " & CStr(Err.Number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", _
-            vbOKOnly Or vbCritical Or vbExclamation, "Error"
-        End
+    MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & "El código de error es " & CStr(Err.Number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", vbOKOnly Or vbCritical Or vbExclamation, "Error"
+    End
+
 End Sub

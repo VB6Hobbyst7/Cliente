@@ -192,137 +192,185 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Dim Vs As Byte
-Dim PorItems As Boolean
-Dim Oro As Long
-Dim CreaReto As Boolean
-Private cBotonAceptar As clsGraphicalButton
-Private cBotonRechazar As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Dim Vs                 As Byte
+
+Dim PorItems           As Boolean
+
+Dim Oro                As Long
+
+Dim CreaReto           As Boolean
+
+Private cBotonAceptar  As clsGraphicalButton
+
+Private cBotonRechazar As clsGraphicalButton
+
+Private cBotonSalir    As clsGraphicalButton
+
+Public LastPressed     As clsGraphicalButton
+
 Private Sub chkItems_Click()
-Call Audio.PlayWave(SND_CLICKNEW)
-PorItems = Not PorItems
-If PorItems Then
-    chkItems.Picture = LoadPictureEX("Tilde.gif")
-Else
-    chkItems.Picture = Nothing
-End If
+    Call Audio.PlayWave(SND_CLICKNEW)
+    PorItems = Not PorItems
+
+    If PorItems Then
+        chkItems.Picture = LoadPictureEX("Tilde.gif")
+    Else
+        chkItems.Picture = Nothing
+
+    End If
+
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
-If KeyCode = 27 Then
-    imgSalir_Click
-End If
+
+    If KeyCode = 27 Then
+        imgSalir_Click
+
+    End If
+
 End Sub
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     
     Me.Picture = LoadPictureEX("VentanaRetos.jpg")
     
     Call LoadButtons
+
 End Sub
-Public Sub Iniciar(pVs As Byte, pPorItems As Boolean, pOro As Long, Pj1 As String, Apj1 As Boolean, Pj2 As String, Apj2 As Boolean, Pj3 As String, Apj3 As Boolean, Pj4 As String, Apj4 As Boolean, Acepto As Boolean)
-Vs = pVs
-PorItems = pPorItems
-Oro = pOro
-j1.Text = Pj1
-j2.Text = Pj2
-j3.Text = Pj3
-j4.Text = Pj4
-tOro.Text = Oro
-If Vs = 1 Then
-    opt1vs1.Picture = LoadPictureEX("Tilde.gif")
-Else
-    opt2vs2.Picture = LoadPictureEX("Tilde.gif")
-End If
 
-If PorItems Then chkItems.Picture = LoadPictureEX("Tilde.gif")
+Public Sub Iniciar(pVs As Byte, _
+                   pPorItems As Boolean, _
+                   pOro As Long, _
+                   Pj1 As String, _
+                   Apj1 As Boolean, _
+                   Pj2 As String, _
+                   Apj2 As Boolean, _
+                   Pj3 As String, _
+                   Apj3 As Boolean, _
+                   Pj4 As String, _
+                   Apj4 As Boolean, _
+                   Acepto As Boolean)
+    Vs = pVs
+    PorItems = pPorItems
+    Oro = pOro
+    j1.Text = Pj1
+    j2.Text = Pj2
+    j3.Text = Pj3
+    j4.Text = Pj4
+    tOro.Text = Oro
 
-If Apj1 Then Aj1.Picture = LoadPictureEX("Tilde.gif")
-If Apj2 Then Aj2.Picture = LoadPictureEX("Tilde.gif")
-If Apj3 Then Aj3.Picture = LoadPictureEX("Tilde.gif")
-If Apj4 Then Aj4.Picture = LoadPictureEX("Tilde.gif")
+    If Vs = 1 Then
+        opt1vs1.Picture = LoadPictureEX("Tilde.gif")
+    Else
+        opt2vs2.Picture = LoadPictureEX("Tilde.gif")
 
-CreaReto = Pj2 = ""
+    End If
 
-tOro.Locked = Not CreaReto
-j1.Locked = True
-j2.Locked = Not CreaReto
-j3.Locked = Not CreaReto
-j4.Locked = Not CreaReto
-j3.Enabled = Vs = 2
-j4.Enabled = Vs = 2
-imgRechazar.Enabled = Not CreaReto
-cBotonRechazar.EnableButton imgRechazar.Enabled
-imgAceptar.Enabled = Not Acepto
-cBotonAceptar.EnableButton imgAceptar.Enabled
-opt1vs1.Enabled = CreaReto
-opt2vs2.Enabled = CreaReto
-chkItems.Enabled = CreaReto
+    If PorItems Then chkItems.Picture = LoadPictureEX("Tilde.gif")
+
+    If Apj1 Then Aj1.Picture = LoadPictureEX("Tilde.gif")
+    If Apj2 Then Aj2.Picture = LoadPictureEX("Tilde.gif")
+    If Apj3 Then Aj3.Picture = LoadPictureEX("Tilde.gif")
+    If Apj4 Then Aj4.Picture = LoadPictureEX("Tilde.gif")
+
+    CreaReto = Pj2 = ""
+
+    tOro.Locked = Not CreaReto
+    j1.Locked = True
+    j2.Locked = Not CreaReto
+    j3.Locked = Not CreaReto
+    j4.Locked = Not CreaReto
+    j3.Enabled = Vs = 2
+    j4.Enabled = Vs = 2
+    imgRechazar.Enabled = Not CreaReto
+    cBotonRechazar.EnableButton imgRechazar.Enabled
+    imgAceptar.Enabled = Not Acepto
+    cBotonAceptar.EnableButton imgAceptar.Enabled
+    opt1vs1.Enabled = CreaReto
+    opt2vs2.Enabled = CreaReto
+    chkItems.Enabled = CreaReto
+
 End Sub
 
 Private Sub imgAceptar_Click()
-If CreaReto Then
-    'Prevalidaciones del cliente
-    If Trim$(j2.Text) = "" Then
-        frmMensaje.msg.Caption = "Debe ingresar el nombre del jugador 2."
-        frmMensaje.Show
-        Exit Sub
-    End If
-    If Vs = 2 Then
-        If Trim$(j3.Text) = "" Or Trim$(j4.Text) = "" Then
-            frmMensaje.msg.Caption = "Debe ingresar el nombre del jugador 3 y 4."
+
+    If CreaReto Then
+
+        'Prevalidaciones del cliente
+        If Trim$(j2.Text) = "" Then
+            frmMensaje.msg.Caption = "Debe ingresar el nombre del jugador 2."
             frmMensaje.Show
             Exit Sub
+
         End If
+
+        If Vs = 2 Then
+            If Trim$(j3.Text) = "" Or Trim$(j4.Text) = "" Then
+                frmMensaje.msg.Caption = "Debe ingresar el nombre del jugador 3 y 4."
+                frmMensaje.Show
+                Exit Sub
+
+            End If
+
+        End If
+
+        If Oro <= 0 Then
+            frmMensaje.msg.Caption = "Ingrese el monto de la apuesta."
+            frmMensaje.Show
+            Exit Sub
+
+        End If
+
+        Call WriteRetosCrear(Vs, PorItems, Oro, j2.Text, j3.Text, j4.Text)
+    Else
+        Call WriteRetosDecide(True)
+
     End If
-    If Oro <= 0 Then
-        frmMensaje.msg.Caption = "Ingrese el monto de la apuesta."
-        frmMensaje.Show
-        Exit Sub
-    End If
-    Call WriteRetosCrear(Vs, PorItems, Oro, j2.Text, j3.Text, j4.Text)
-Else
-    Call WriteRetosDecide(True)
-End If
+
 End Sub
 
 Private Sub imgRechazar_Click()
-Call WriteRetosDecide(False)
+    Call WriteRetosDecide(False)
+
 End Sub
 
 Private Sub imgSalir_Click()
-Unload Me
+    Unload Me
+
 End Sub
 
 Private Sub opt1vs1_Click()
-Call Audio.PlayWave(SND_CLICKNEW)
+    Call Audio.PlayWave(SND_CLICKNEW)
 
-If Vs <> 1 Then
-    opt1vs1.Picture = LoadPictureEX("Tilde.gif")
-    opt2vs2.Picture = Nothing
-    Vs = 1
-    j3.Text = ""
-    j3.Enabled = False
-    j4.Text = ""
-    j4.Enabled = False
-End If
+    If Vs <> 1 Then
+        opt1vs1.Picture = LoadPictureEX("Tilde.gif")
+        opt2vs2.Picture = Nothing
+        Vs = 1
+        j3.Text = ""
+        j3.Enabled = False
+        j4.Text = ""
+        j4.Enabled = False
+
+    End If
+
 End Sub
 
 Private Sub opt2vs2_Click()
-Call Audio.PlayWave(SND_CLICKNEW)
+    Call Audio.PlayWave(SND_CLICKNEW)
 
-If Vs <> 2 Then
-    opt2vs2.Picture = LoadPictureEX("Tilde.gif")
-    opt1vs1.Picture = Nothing
-    Vs = 2
-    j3.Enabled = True
-    j4.Enabled = True
-End If
+    If Vs <> 2 Then
+        opt2vs2.Picture = LoadPictureEX("Tilde.gif")
+        opt1vs1.Picture = Nothing
+        Vs = 2
+        j3.Enabled = True
+        j4.Enabled = True
+
+    End If
+
 End Sub
+
 Private Sub LoadButtons()
 
     Set cBotonAceptar = New clsGraphicalButton
@@ -331,30 +379,26 @@ Private Sub LoadButtons()
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarComUsu.jpg", _
-                                        "BotonAceptarRolloverComUsu.jpg", _
-                                        "BotonAceptarClickComUsu.jpg", Me, _
-                                        "BotonAceptarGrisComUsu.jpg", True)
+    Call cBotonAceptar.Initialize(imgAceptar, "BotonAceptarComUsu.jpg", "BotonAceptarRolloverComUsu.jpg", "BotonAceptarClickComUsu.jpg", Me, "BotonAceptarGrisComUsu.jpg", True)
                                         
-    Call cBotonRechazar.Initialize(imgRechazar, "BotonRechazarComUsu.jpg", _
-                                        "BotonRechazarRolloverComUsu.jpg", _
-                                        "BotonRechazarClickComUsu.jpg", Me, _
-                                        "BotonRechazarGrisComUsu.jpg", True)
+    Call cBotonRechazar.Initialize(imgRechazar, "BotonRechazarComUsu.jpg", "BotonRechazarRolloverComUsu.jpg", "BotonRechazarClickComUsu.jpg", Me, "BotonRechazarGrisComUsu.jpg", True)
     
-    Call cBotonSalir.Initialize(imgSalir, "BotonSalirAlineacion.jpg", _
-                                    "BotonSalirRolloverAlineacion.jpg", _
-                                    "BotonSalirClickAlineacion.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, "BotonSalirAlineacion.jpg", "BotonSalirRolloverAlineacion.jpg", "BotonSalirClickAlineacion.jpg", Me)
+
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub tOro_Change()
-Oro = Val(tOro.Text)
+    Oro = Val(tOro.Text)
+
 End Sub

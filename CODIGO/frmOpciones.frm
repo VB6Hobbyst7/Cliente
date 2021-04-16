@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOpciones 
    Appearance      =   0  'Flat
    BackColor       =   &H00000000&
@@ -371,55 +371,69 @@ Option Explicit
 Private loading As Boolean
 
 Private Sub Check1_Click(Index As Integer)
+
     Select Case Index
+
         Case 0
+
             If Check1(0).Value = vbChecked Then
                 mOpciones.Music = True
             Else
                 mOpciones.Music = False
+
             End If
             
             Audio.MusicActivated = mOpciones.Music
             
         Case 1
+
             If Check1(0).Value = vbChecked Then
                 mOpciones.sound = True
             Else
                 mOpciones.sound = False
+
             End If
             
             Audio.SoundActivated = mOpciones.sound
             
         Case 2
+
             If Check1(0).Value = vbChecked Then
                 mOpciones.SoundEffects = True
             Else
                 mOpciones.SoundEffects = False
+
             End If
             
             Audio.SoundEffectsActivated = mOpciones.SoundEffects
+
     End Select
+
 End Sub
 
 Private Sub cmdConfigDefault_Click()
     Call mOpciones_Default
     Call LoadOptionsValues
+
 End Sub
 
 Private Sub cmdCustomKeys_Click()
-    If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK)
+
+    If Not loading Then Call Audio.PlayWave(SND_CLICK)
     Call frmCustomKeys.Show(vbModal, Me)
+
 End Sub
 
 Private Sub cmdManual_Click()
-    If Not loading Then _
-        Call Audio.PlayWave(SND_CLICK)
+
+    If Not loading Then Call Audio.PlayWave(SND_CLICK)
     Call ShellExecute(0, "Open", "http://wiki.aoyind.com", "", App.path, SW_SHOWNORMAL)
+
 End Sub
 
 Private Sub cmdChangePassword_Click()
     Call frmNewPassword.Show(vbModal, Me)
+
 End Sub
 
 Private Sub Command2_Click()
@@ -432,6 +446,7 @@ Private Sub Command2_Click()
     If IsNumeric(txtCantMensajes.Text) Then
         mOpciones.DialogCantMessages = CInt(txtCantMensajes.Text)
         DialogosClanes.CantidadDialogos = mOpciones.DialogCantMessages
+
     End If
     
     mOpciones.GuildNews = chkNoticiasClanMostrar.Value
@@ -439,6 +454,7 @@ Private Sub Command2_Click()
     
     If IsNumeric(txtScreenShooterNivel.Text) Then
         mOpciones.ScreenShooterNivelSuperiorIndex = CInt(txtScreenShooterNivel.Text)
+
     End If
     
     mOpciones.ScreenShooterAlMorir = chkScreenShooterAlMorir.Value
@@ -446,7 +462,6 @@ Private Sub Command2_Click()
     
     Audio.SoundActivated = mOpciones.sound
     Audio.MusicActivated = mOpciones.Music
-    
     
     Audio.MusicVolume = mOpciones.VolMusic
     Audio.SoundVolume = mOpciones.VolSound
@@ -467,10 +482,12 @@ Private Sub Command2_Click()
    
     Unload Me
     frmMain.SetFocus
+
 End Sub
 
 Private Sub customMsgCmd_Click()
     Call frmMessageTxt.Show(vbModeless, Me)
+
 End Sub
 
 Private Sub Form_Load()
@@ -481,118 +498,134 @@ Private Sub Form_Load()
     Call LoadOptionsValues
     
     loading = False     'Enable sounds when setting check's values
+
 End Sub
 
 Private Sub slSound_Change()
     mOpciones.VolSound = slSound.Value
     Audio.SoundVolume = mOpciones.VolSound
+
 End Sub
 
 Private Sub slMusica_Change()
     mOpciones.VolMusic = slMusica.Value
     Audio.MusicVolume = mOpciones.VolMusic
+
 End Sub
 
 Private Sub txtCantMensajes_LostFocus()
     txtCantMensajes.Text = Trim$(txtCantMensajes.Text)
+
     If IsNumeric(txtCantMensajes.Text) Then
         DialogosClanes.CantidadDialogos = Trim$(txtCantMensajes.Text)
     Else
         txtCantMensajes.Text = 5
+
     End If
+
 End Sub
 
-
 Public Sub LoadOptionsValues()
-     If mOpciones.Music = True Then
-         Audio.MusicActivated = True
-         Check1(0).Value = vbChecked
-         slMusica.Value = mOpciones.VolMusic
-     Else
-         Audio.MusicActivated = False
-         Check1(0).Value = vbUnchecked
-         slMusica.Value = mOpciones.VolMusic
-     End If
+
+    If mOpciones.Music = True Then
+        Audio.MusicActivated = True
+        Check1(0).Value = vbChecked
+        slMusica.Value = mOpciones.VolMusic
+    Else
+        Audio.MusicActivated = False
+        Check1(0).Value = vbUnchecked
+        slMusica.Value = mOpciones.VolMusic
+
+    End If
      
-     If mOpciones.sound = True Then
-         Audio.SoundActivated = True
-         Check1(1).Value = vbChecked
-         slSound.Value = mOpciones.VolSound
-     Else
-         Audio.SoundActivated = False
-         Check1(1).Value = vbUnchecked
-         slSound.Value = mOpciones.VolSound
-     End If
+    If mOpciones.sound = True Then
+        Audio.SoundActivated = True
+        Check1(1).Value = vbChecked
+        slSound.Value = mOpciones.VolSound
+    Else
+        Audio.SoundActivated = False
+        Check1(1).Value = vbUnchecked
+        slSound.Value = mOpciones.VolSound
+
+    End If
      
-     If mOpciones.SoundEffects = True Then
-         Check1(2).Value = vbChecked
-     Else
-         Check1(2).Value = vbUnchecked
-     End If
+    If mOpciones.SoundEffects = True Then
+        Check1(2).Value = vbChecked
+    Else
+        Check1(2).Value = vbUnchecked
+
+    End If
      
-     If mOpciones.DialogConsole = True Then
-         optConsola.Value = False
-         optPantalla.Value = True
-     Else
-         optConsola.Value = True
-         optPantalla.Value = False
-     End If
+    If mOpciones.DialogConsole = True Then
+        optConsola.Value = False
+        optPantalla.Value = True
+    Else
+        optConsola.Value = True
+        optPantalla.Value = False
+
+    End If
      
-     If (mOpciones.DialogCantMessages > 0) Then
-         txtCantMensajes.Text = CStr(mOpciones.DialogCantMessages)
-     Else
-         txtCantMensajes.Text = 0
-     End If
+    If (mOpciones.DialogCantMessages > 0) Then
+        txtCantMensajes.Text = CStr(mOpciones.DialogCantMessages)
+    Else
+        txtCantMensajes.Text = 0
+
+    End If
      
-      If mOpciones.GuildNews = True Then
-         chkNoticiasClanMostrar.Value = vbChecked
-     Else
-         chkNoticiasClanMostrar.Value = vbUnchecked
-     End If
+    If mOpciones.GuildNews = True Then
+        chkNoticiasClanMostrar.Value = vbChecked
+    Else
+        chkNoticiasClanMostrar.Value = vbUnchecked
+
+    End If
      
-     If mOpciones.ScreenShooterNivelSuperior = True Then
-         chkScreenShooterNivelSuperior.Value = vbChecked
-         txtScreenShooterNivel = mOpciones.ScreenShooterNivelSuperiorIndex
-     Else
-         chkScreenShooterNivelSuperior.Value = vbUnchecked
-         txtScreenShooterNivel = mOpciones.ScreenShooterNivelSuperiorIndex
-     End If
+    If mOpciones.ScreenShooterNivelSuperior = True Then
+        chkScreenShooterNivelSuperior.Value = vbChecked
+        txtScreenShooterNivel = mOpciones.ScreenShooterNivelSuperiorIndex
+    Else
+        chkScreenShooterNivelSuperior.Value = vbUnchecked
+        txtScreenShooterNivel = mOpciones.ScreenShooterNivelSuperiorIndex
+
+    End If
      
-     If mOpciones.ScreenShooterAlMorir = True Then
-         chkScreenShooterAlMorir.Value = vbChecked
-     Else
-         chkScreenShooterAlMorir.Value = vbUnchecked
-     End If
-     
+    If mOpciones.ScreenShooterAlMorir = True Then
+        chkScreenShooterAlMorir.Value = vbChecked
+    Else
+        chkScreenShooterAlMorir.Value = vbUnchecked
+
+    End If
      
     Audio.MusicVolume = mOpciones.VolMusic
     Audio.SoundVolume = mOpciones.VolSound
     Audio.SoundEffectsActivated = mOpciones.SoundEffects
-    
     
     'VIDEO
     If mOpciones.TransparencyTree = True Then
         chkVideoTransparencyTree.Value = vbChecked
     Else
         chkVideoTransparencyTree.Value = vbUnchecked
+
     End If
     
     If mOpciones.Shadows = True Then
         chkVideoShadows.Value = vbChecked
     Else
         chkVideoShadows.Value = vbUnchecked
+
     End If
     
     If mOpciones.BlurEffects = True Then
         chkVideoBlurEffects.Value = vbChecked
     Else
         chkVideoBlurEffects.Value = vbUnchecked
+
     End If
     
     If mOpciones.Niebla = True Then
         chkNiebla.Value = vbChecked
     Else
         chkNiebla.Value = vbUnchecked
+
     End If
     
     'OTROS
@@ -600,14 +633,17 @@ Public Sub LoadOptionsValues()
         chkCursorFaccionario.Value = vbChecked
     Else
         chkCursorFaccionario.Value = vbUnchecked
+
     End If
-  
           
 End Sub
 
 Private Sub txtScreenShooterNivel_LostFocus()
     txtScreenShooterNivel.Text = Trim$(txtScreenShooterNivel.Text)
+
     If Not IsNumeric(txtScreenShooterNivel.Text) Then
         txtScreenShooterNivel.Text = 15
+
     End If
+
 End Sub

@@ -95,8 +95,6 @@ Attribute VB_Exposed = False
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
-
-
 '[CODE]:MatuX
 '
 '    Le puse el iconito de la manito a los botones ^_^,
@@ -107,11 +105,11 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-
 Private cBotonLuchar As clsGraphicalButton
-Private cBotonSalir As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Private cBotonSalir  As clsGraphicalButton
+
+Public LastPressed   As clsGraphicalButton
 
 Private Sub Form_Load()
     'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
@@ -123,43 +121,44 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonLuchar = New clsGraphicalButton
     Set cBotonSalir = New clsGraphicalButton
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonLuchar.Initialize(imgLuchar, "BotonLuchar.jpg", _
-                                    "BotonLucharRollover.jpg", _
-                                    "BotonLucharClick.jpg", Me)
+    Call cBotonLuchar.Initialize(imgLuchar, "BotonLuchar.jpg", "BotonLucharRollover.jpg", "BotonLucharClick.jpg", Me)
 
-    Call cBotonSalir.Initialize(imgSalir, "BotonSalirEntrenador.jpg", _
-                                    "BotonSalirRolloverEntrenador.jpg", _
-                                    "BotonSalirClickEntrenador.jpg", Me)
+    Call cBotonSalir.Initialize(imgSalir, "BotonSalirEntrenador.jpg", "BotonSalirRolloverEntrenador.jpg", "BotonSalirClickEntrenador.jpg", Me)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgLuchar_Click()
     Call WriteTrain(lstCriaturas.ListIndex + 1)
     Unload Me
+
 End Sub
 
 Private Sub imgSalir_Click()
     Unload Me
+
 End Sub
 
-Private Sub lstCriaturas_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lstCriaturas_MouseMove(Button As Integer, _
+                                   Shift As Integer, _
+                                   x As Single, _
+                                   y As Single)
     LastPressed.ToggleToNormal
+
 End Sub

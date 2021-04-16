@@ -275,32 +275,39 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Const MAX_NEWS_LENGTH As Integer = 512
+Private Const MAX_NEWS_LENGTH     As Integer = 512
 
-Private cBotonElecciones As clsGraphicalButton
-Private cBotonActualizar As clsGraphicalButton
-Private cBotonDetallesClan As clsGraphicalButton
-Private cBotonDetallesMiembros As clsGraphicalButton
+Private cBotonElecciones          As clsGraphicalButton
+
+Private cBotonActualizar          As clsGraphicalButton
+
+Private cBotonDetallesClan        As clsGraphicalButton
+
+Private cBotonDetallesMiembros    As clsGraphicalButton
+
 Private cBotonDetallesSolicitudes As clsGraphicalButton
-Private cBotonEditarCodex As clsGraphicalButton
-Private cBotonEditarURL As clsGraphicalButton
-Private cBotonPropuestasPaz As clsGraphicalButton
-Private cBotonPropuestasAlianzas As clsGraphicalButton
-Private cBotonCerrar As clsGraphicalButton
 
-Public LastPressed As clsGraphicalButton
+Private cBotonEditarCodex         As clsGraphicalButton
+
+Private cBotonEditarURL           As clsGraphicalButton
+
+Private cBotonPropuestasPaz       As clsGraphicalButton
+
+Private cBotonPropuestasAlianzas  As clsGraphicalButton
+
+Private cBotonCerrar              As clsGraphicalButton
+
+Public LastPressed                As clsGraphicalButton
 
 Private Sub Form_Load()
-'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
+    'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     Me.Picture = LoadPictureEX("VentanaAdministrarClan.jpg")
     
     Call LoadButtons
+
 End Sub
 
 Private Sub LoadButtons()
-    
-    
-    
 
     Set cBotonElecciones = New clsGraphicalButton
     Set cBotonActualizar = New clsGraphicalButton
@@ -315,157 +322,186 @@ Private Sub LoadButtons()
     
     Set LastPressed = New clsGraphicalButton
     
-    
-    Call cBotonElecciones.Initialize(imgElecciones, "BotonElecciones.jpg", _
-                                    "BotonEleccionesRollover.jpg", _
-                                    "BotonEleccionesClick.jpg", Me)
+    Call cBotonElecciones.Initialize(imgElecciones, "BotonElecciones.jpg", "BotonEleccionesRollover.jpg", "BotonEleccionesClick.jpg", Me)
 
-    Call cBotonActualizar.Initialize(imgActualizar, "BotonActualizar.jpg", _
-                                    "BotonActualizarRollover.jpg", _
-                                    "BotonActualizarClick.jpg", Me)
+    Call cBotonActualizar.Initialize(imgActualizar, "BotonActualizar.jpg", "BotonActualizarRollover.jpg", "BotonActualizarClick.jpg", Me)
 
-    Call cBotonDetallesClan.Initialize(imgDetallesClan, "BotonDetallesAdministrarClan.jpg", _
-                                    "BotonDetallesRolloverAdministrarClan.jpg", _
-                                    "BotonDetallesClickAdministrarClan.jpg", Me)
+    Call cBotonDetallesClan.Initialize(imgDetallesClan, "BotonDetallesAdministrarClan.jpg", "BotonDetallesRolloverAdministrarClan.jpg", "BotonDetallesClickAdministrarClan.jpg", Me)
 
-    Call cBotonDetallesMiembros.Initialize(imgDetallesMiembros, "BotonDetallesAdministrarClan.jpg", _
-                                    "BotonDetallesRolloverAdministrarClan.jpg", _
-                                    "BotonDetallesClickAdministrarClan.jpg", Me)
+    Call cBotonDetallesMiembros.Initialize(imgDetallesMiembros, "BotonDetallesAdministrarClan.jpg", "BotonDetallesRolloverAdministrarClan.jpg", "BotonDetallesClickAdministrarClan.jpg", Me)
                                     
-    Call cBotonDetallesSolicitudes.Initialize(imgDetallesSolicitudes, "BotonDetallesAdministrarClan.jpg", _
-                                    "BotonDetallesRolloverAdministrarClan.jpg", _
-                                    "BotonDetallesClickAdministrarClan.jpg", Me)
+    Call cBotonDetallesSolicitudes.Initialize(imgDetallesSolicitudes, "BotonDetallesAdministrarClan.jpg", "BotonDetallesRolloverAdministrarClan.jpg", "BotonDetallesClickAdministrarClan.jpg", Me)
 
-    Call cBotonEditarCodex.Initialize(imgEditarCodex, "BotonEditarCodex.jpg", _
-                                    "BotonEditarCodexRollover.jpg", _
-                                    "BotonEditarCodexClick.jpg", Me)
+    Call cBotonEditarCodex.Initialize(imgEditarCodex, "BotonEditarCodex.jpg", "BotonEditarCodexRollover.jpg", "BotonEditarCodexClick.jpg", Me)
 
-    Call cBotonEditarURL.Initialize(imgEditarURL, "BotonEditarURL.jpg", _
-                                    "BotonEditarURLRollover.jpg", _
-                                    "BotonEditarURLClick.jpg", Me)
+    Call cBotonEditarURL.Initialize(imgEditarURL, "BotonEditarURL.jpg", "BotonEditarURLRollover.jpg", "BotonEditarURLClick.jpg", Me)
 
-    Call cBotonPropuestasPaz.Initialize(imgPropuestasPaz, "BotonPropuestaPaz.jpg", _
-                                    "BotonPropuestaPazRollover.jpg", _
-                                    "BotonPropuestaPazClick.jpg", Me)
+    Call cBotonPropuestasPaz.Initialize(imgPropuestasPaz, "BotonPropuestaPaz.jpg", "BotonPropuestaPazRollover.jpg", "BotonPropuestaPazClick.jpg", Me)
 
-    Call cBotonPropuestasAlianzas.Initialize(imgPropuestasAlianzas, "BotonPropuestasAlianzas.jpg", _
-                                    "BotonPropuestasAlianzasRollover.jpg", _
-                                    "BotonPropuestasAlianzasClick.jpg", Me)
+    Call cBotonPropuestasAlianzas.Initialize(imgPropuestasAlianzas, "BotonPropuestasAlianzas.jpg", "BotonPropuestasAlianzasRollover.jpg", "BotonPropuestasAlianzasClick.jpg", Me)
 
-    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarAdministrarClan.jpg", _
-                                    "BotonCerrarRolloverAdministrarClan.jpg", _
-                                    "BotonCerrarClickAdministrarClan.jpg", Me)
-
+    Call cBotonCerrar.Initialize(imgCerrar, "BotonCerrarAdministrarClan.jpg", "BotonCerrarRolloverAdministrarClan.jpg", "BotonCerrarClickAdministrarClan.jpg", Me)
 
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
-If Button = 1 Then MoverVentana (Me.hwnd)
+
+    If Button = 1 Then MoverVentana (Me.hwnd)
+
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
-Private Sub guildslist_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub guildslist_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 x As Single, _
+                                 y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub imgActualizar_Click()
+
     Dim k As String
 
     k = Replace(txtguildnews, vbCrLf, "º")
     
     Call WriteGuildUpdateNews(k)
+
 End Sub
 
 Private Sub imgCerrar_Click()
     Unload Me
     frmMain.SetFocus
+
 End Sub
 
 Private Sub imgDetallesClan_Click()
     frmGuildBrief.EsLeader = True
+
     If guildslist.ListIndex = -1 Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
             Call ShowConsoleMsg("¡Debes selecionar un Clan!", .red, .green, .blue, .bold, .italic)
+
         End With
+
         Exit Sub
+
     End If
+
     Call WriteGuildRequestDetails(guildslist.List(guildslist.ListIndex))
+
 End Sub
 
 Private Sub imgDetallesMiembros_Click()
+
     If members.ListIndex = -1 Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
             Call ShowConsoleMsg("¡Debes selecionar un Miembro!", .red, .green, .blue, .bold, .italic)
+
         End With
+
         Exit Sub
+
     End If
     
     frmCharInfo.frmType = CharInfoFrmType.frmMembers
     Call WriteGuildMemberInfo(members.List(members.ListIndex))
+
 End Sub
 
 Private Sub imgDetallesSolicitudes_Click()
+
     If solicitudes.ListIndex = -1 Then
+
         With FontTypes(FontTypeNames.FONTTYPE_INFO)
             Call ShowConsoleMsg("¡Debes selecionar una solicitud!", .red, .green, .blue, .bold, .italic)
+
         End With
+
         Exit Sub
+
     End If
     
     frmCharInfo.frmType = CharInfoFrmType.frmMembershipRequests
     Call WriteGuildMemberInfo(solicitudes.List(solicitudes.ListIndex))
+
 End Sub
 
 Private Sub imgEditarCodex_Click()
     Call frmGuildDetails.Show(vbModal, frmGuildLeader)
+
 End Sub
 
 Private Sub imgEditarURL_Click()
     Call frmGuildURL.Show(vbModeless, frmGuildLeader)
+
 End Sub
 
 Private Sub imgElecciones_Click()
     Call WriteGuildOpenElections
     Unload Me
+
 End Sub
 
 Private Sub imgPropuestasAlianzas_Click()
     Call WriteGuildAlliancePropList
+
 End Sub
 
 Private Sub imgPropuestasPaz_Click()
     Call WriteGuildPeacePropList
+
 End Sub
 
-Private Sub members_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub members_MouseMove(Button As Integer, _
+                              Shift As Integer, _
+                              x As Single, _
+                              y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
-Private Sub solicitudes_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub solicitudes_MouseMove(Button As Integer, _
+                                  Shift As Integer, _
+                                  x As Single, _
+                                  y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub txtguildnews_Change()
-    If Len(txtguildnews.Text) > MAX_NEWS_LENGTH Then _
-        txtguildnews.Text = Left$(txtguildnews.Text, MAX_NEWS_LENGTH)
+
+    If Len(txtguildnews.Text) > MAX_NEWS_LENGTH Then txtguildnews.Text = Left$(txtguildnews.Text, MAX_NEWS_LENGTH)
+
 End Sub
 
-Private Sub txtguildnews_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub txtguildnews_MouseMove(Button As Integer, _
+                                   Shift As Integer, _
+                                   x As Single, _
+                                   y As Single)
     LastPressed.ToggleToNormal
+
 End Sub
 
 Private Sub txtFiltrarClanes_Change()
     Call FiltrarListaClanes(txtFiltrarClanes.Text)
+
 End Sub
 
 Private Sub txtFiltrarClanes_GotFocus()
+
     With txtFiltrarClanes
         .SelStart = 0
         .SelLength = Len(.Text)
+
     End With
+
 End Sub
 
 Private Sub FiltrarListaClanes(ByRef sCompare As String)
@@ -480,27 +516,35 @@ Private Sub FiltrarListaClanes(ByRef sCompare As String)
         
         ' Recorro los arrays
         For lIndex = 0 To UBound(GuildNames)
+
             ' Si coincide con los patrones
             If InStr(1, UCase$(GuildNames(lIndex)), UCase$(sCompare)) Then
                 ' Lo agrego a la lista
                 .AddItem GuildNames(lIndex)
+
             End If
+
         Next lIndex
         
         .Visible = True
+
     End With
 
 End Sub
 
 Private Sub txtFiltrarMiembros_Change()
     Call FiltrarListaMiembros(txtFiltrarMiembros.Text)
+
 End Sub
 
 Private Sub txtFiltrarMiembros_GotFocus()
+
     With txtFiltrarMiembros
         .SelStart = 0
         .SelLength = Len(.Text)
+
     End With
+
 End Sub
 
 Private Sub FiltrarListaMiembros(ByRef sCompare As String)
@@ -515,15 +559,19 @@ Private Sub FiltrarListaMiembros(ByRef sCompare As String)
         
         ' Recorro los arrays
         For lIndex = 0 To UBound(GuildMembers)
+
             ' Si coincide con los patrones
             If InStr(1, UCase$(GuildMembers(lIndex)), UCase$(sCompare)) Then
                 ' Lo agrego a la lista
                 .AddItem GuildMembers(lIndex)
+
             End If
+
         Next lIndex
         
         .Visible = True
-    End With
-End Sub
 
+    End With
+
+End Sub
 

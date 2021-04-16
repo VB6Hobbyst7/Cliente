@@ -2,6 +2,7 @@ Attribute VB_Name = "Paquetes"
 Option Explicit
 
 Public Enum ClientPacketIDGuild
+
     GuildAcceptPeace        'ACEPPEAT
     GuildRejectAlliance     'RECPALIA
     GuildRejectPeace        'RECPPEAT
@@ -24,9 +25,11 @@ Public Enum ClientPacketIDGuild
     GuildRequestMembership  'SOLICITUD
     GuildRequestDetails     'CLANDETAILS
     ShowGuildNews
+
 End Enum
 
 Public Enum ClientPacketIDGM
+
     GMMessage               '/GMSG
     showName                '/SHOWNAME
     OnlineRoyalArmy         '/ONLINEREAL
@@ -148,9 +151,11 @@ Public Enum ClientPacketIDGM
     SetIniVar               '/SETINIVAR LLAVE CLAVE VALOR
     AddGM
     CuentaRegresiva         '/CUENTAREGRESIVA
+
 End Enum
 
 Public Enum ServerPacketID
+
     OpenAccount
     logged                  ' LOGGED
     ChangeHour
@@ -292,9 +297,11 @@ Public Enum ServerPacketID
     GoHome
     GotHome
     Tooltip
+
 End Enum
 
 Public Enum ClientPacketID
+
     BorrarPJ                'Borrar
     OpenAccount             'ALOGIN
     LoginExistingChar       'OLOGIN
@@ -411,10 +418,12 @@ Public Enum ClientPacketID
     CreateEfectoClient           'Creamos efecto desde el cliente
     CreateEfectoClientAction     'Luego hacemos la accion (daño, etc)
     AnclarEmbarcacion            'Ancla la embarcacion
+
     'DesAnclarEmbarcacion            'DesAncla la embarcacion
 End Enum
 
 Public Enum FontTypeNames
+
     FONTTYPE_TALK
     FONTTYPE_FIGHT
     FONTTYPE_WARNING
@@ -438,132 +447,134 @@ Public Enum FontTypeNames
     FONTTYPE_DIOS
     FONTTYPE_RETOS
     FONTTYPE_EXP
+
 End Enum
 
 Public PaqueteName(0 To 255) As String
 
 Public Sub InitDebug()
-PaqueteName(0) = "OpenAccount"
-PaqueteName(1) = "logged"
-PaqueteName(2) = "ChangeHour"
-PaqueteName(3) = "RemoveDialogs"
-PaqueteName(4) = "RemoveCharDialog"
-PaqueteName(5) = "NavigateToggle"
-PaqueteName(6) = "Disconnect"
-PaqueteName(7) = "CommerceEnd"
-PaqueteName(8) = "BankEnd"
-PaqueteName(9) = "CommerceInit"
-PaqueteName(10) = "BankInit"
-PaqueteName(11) = "UserCommerceInit"
-PaqueteName(12) = "UserCommerceEnd"
-PaqueteName(13) = "UserOfferConfirm"
-PaqueteName(14) = "CancelOfferItem"
-PaqueteName(15) = "ShowBlacksmithForm"
-PaqueteName(16) = "ShowCarpenterForm"
-PaqueteName(17) = "NPCSwing"
-PaqueteName(18) = "NPCKillUser"
-PaqueteName(19) = "BlockedWithShieldUser"
-PaqueteName(20) = "BlockedWithShieldOther"
-PaqueteName(21) = "UserSwing"
-PaqueteName(22) = "SafeModeOn"
-PaqueteName(23) = "SafeModeOff"
-PaqueteName(24) = "ResuscitationSafeOn"
-PaqueteName(25) = "ResuscitationSafeOff"
-PaqueteName(26) = "NobilityLost"
-PaqueteName(27) = "CantUseWhileMeditating"
-PaqueteName(28) = "Ataca"
-PaqueteName(29) = "UpdateSta"
-PaqueteName(30) = "UpdateMana"
-PaqueteName(31) = "UpdateHP"
-PaqueteName(32) = "UpdateGold"
-PaqueteName(33) = "UpdateBankGold"
-PaqueteName(34) = "UpdateExp"
-PaqueteName(35) = "ChangeMap"
-PaqueteName(36) = "PosUpdate"
-PaqueteName(37) = "NPCHitUser"
-PaqueteName(38) = "UserHitNPC"
-PaqueteName(39) = "UserAttackedSwing"
-PaqueteName(40) = "UserHittedByUser"
-PaqueteName(41) = "UserHittedUser"
-PaqueteName(42) = "ChatOverHead"
-PaqueteName(43) = "ConsoleMsg"
-PaqueteName(44) = "GuildChat"
-PaqueteName(45) = "ShowMessageBox"
-PaqueteName(46) = "ShowMessageScroll"
-PaqueteName(47) = "UserIndexInServer"
-PaqueteName(48) = "UserCharIndexInServer"
-PaqueteName(49) = "CharacterCreate"
-PaqueteName(50) = "CharacterRemove"
-PaqueteName(51) = "CharacterMove"
-PaqueteName(52) = "ForceCharMove"
-PaqueteName(53) = "CharacterChange"
-PaqueteName(54) = "ObjectCreate"
-PaqueteName(55) = "ObjectDelete"
-PaqueteName(56) = "BlockPosition"
-PaqueteName(57) = "PlayWave"
-PaqueteName(58) = "guildList"
-PaqueteName(59) = "AreaChanged"
-PaqueteName(60) = "PauseToggle"
-PaqueteName(61) = "RainToggle"
-PaqueteName(62) = "CreateFX"
-PaqueteName(63) = "CreateEfecto"
-PaqueteName(64) = "UpdateUserStats"
-PaqueteName(65) = "WorkRequestTarget"
-PaqueteName(66) = "ChangeInventorySlot"
-PaqueteName(67) = "ChangeBankSlot"
-PaqueteName(68) = "ChangeSpellSlot"
-PaqueteName(69) = "atributes"
-PaqueteName(70) = "BlacksmithWeapons"
-PaqueteName(71) = "BlacksmithArmors"
-PaqueteName(72) = "CarpenterObjects"
-PaqueteName(73) = "RestOK"
-PaqueteName(74) = "ErrorMsg"
-PaqueteName(75) = "Blind"
-PaqueteName(76) = "Dumb"
-PaqueteName(77) = "ShowSignal"
-PaqueteName(78) = "ChangeNPCInventorySlot"
-PaqueteName(79) = "UpdateHungerAndThirst"
-PaqueteName(80) = "Fame"
-PaqueteName(81) = "MiniStats"
-PaqueteName(82) = "LevelUp"
-PaqueteName(83) = "SetInvisible"
-PaqueteName(84) = "MeditateToggle"
-PaqueteName(85) = "BlindNoMore"
-PaqueteName(86) = "DumbNoMore"
-PaqueteName(87) = "SendSkills"
-PaqueteName(88) = "TrainerCreatureList"
-PaqueteName(89) = "guildNews"
-PaqueteName(90) = "OfferDetails"
-PaqueteName(91) = "AlianceProposalsList"
-PaqueteName(92) = "PeaceProposalsList"
-PaqueteName(93) = "CharacterInfo"
-PaqueteName(94) = "GuildLeaderInfo"
-PaqueteName(95) = "GuildMemberInfo"
-PaqueteName(96) = "GuildDetails"
-PaqueteName(97) = "ShowGuildFundationForm"
-PaqueteName(98) = "ParalizeOK"
-PaqueteName(99) = "ShowUserRequest"
-PaqueteName(100) = "TradeOK"
-PaqueteName(101) = "BankOK"
-PaqueteName(102) = "ChangeUserTradeSlot"
-PaqueteName(103) = "Pong"
-PaqueteName(104) = "UpdateTagAndStatus"
-PaqueteName(105) = "UsersOnline"
-PaqueteName(106) = "CommerceChat"
-PaqueteName(107) = "ShowPartyForm"
-PaqueteName(108) = "StopWorking"
-PaqueteName(109) = "RetosAbre"
-PaqueteName(110) = "RetosRespuesta"
-PaqueteName(111) = "SpawnList"
-PaqueteName(112) = "ShowSOSForm"
-PaqueteName(113) = "ShowMOTDEditionForm"
-PaqueteName(114) = "ShowGMPanelForm"
-PaqueteName(115) = "UserNameList"
-PaqueteName(116) = "ShowBarco"
-PaqueteName(117) = "AgregarPasajero"
-PaqueteName(118) = "QuitarPasajero"
-PaqueteName(119) = "QuitarBarco"
-PaqueteName(120) = "GoHome"
-PaqueteName(121) = "GotHome"
-PaqueteName(122) = "Tooltip"
+    PaqueteName(0) = "OpenAccount"
+    PaqueteName(1) = "logged"
+    PaqueteName(2) = "ChangeHour"
+    PaqueteName(3) = "RemoveDialogs"
+    PaqueteName(4) = "RemoveCharDialog"
+    PaqueteName(5) = "NavigateToggle"
+    PaqueteName(6) = "Disconnect"
+    PaqueteName(7) = "CommerceEnd"
+    PaqueteName(8) = "BankEnd"
+    PaqueteName(9) = "CommerceInit"
+    PaqueteName(10) = "BankInit"
+    PaqueteName(11) = "UserCommerceInit"
+    PaqueteName(12) = "UserCommerceEnd"
+    PaqueteName(13) = "UserOfferConfirm"
+    PaqueteName(14) = "CancelOfferItem"
+    PaqueteName(15) = "ShowBlacksmithForm"
+    PaqueteName(16) = "ShowCarpenterForm"
+    PaqueteName(17) = "NPCSwing"
+    PaqueteName(18) = "NPCKillUser"
+    PaqueteName(19) = "BlockedWithShieldUser"
+    PaqueteName(20) = "BlockedWithShieldOther"
+    PaqueteName(21) = "UserSwing"
+    PaqueteName(22) = "SafeModeOn"
+    PaqueteName(23) = "SafeModeOff"
+    PaqueteName(24) = "ResuscitationSafeOn"
+    PaqueteName(25) = "ResuscitationSafeOff"
+    PaqueteName(26) = "NobilityLost"
+    PaqueteName(27) = "CantUseWhileMeditating"
+    PaqueteName(28) = "Ataca"
+    PaqueteName(29) = "UpdateSta"
+    PaqueteName(30) = "UpdateMana"
+    PaqueteName(31) = "UpdateHP"
+    PaqueteName(32) = "UpdateGold"
+    PaqueteName(33) = "UpdateBankGold"
+    PaqueteName(34) = "UpdateExp"
+    PaqueteName(35) = "ChangeMap"
+    PaqueteName(36) = "PosUpdate"
+    PaqueteName(37) = "NPCHitUser"
+    PaqueteName(38) = "UserHitNPC"
+    PaqueteName(39) = "UserAttackedSwing"
+    PaqueteName(40) = "UserHittedByUser"
+    PaqueteName(41) = "UserHittedUser"
+    PaqueteName(42) = "ChatOverHead"
+    PaqueteName(43) = "ConsoleMsg"
+    PaqueteName(44) = "GuildChat"
+    PaqueteName(45) = "ShowMessageBox"
+    PaqueteName(46) = "ShowMessageScroll"
+    PaqueteName(47) = "UserIndexInServer"
+    PaqueteName(48) = "UserCharIndexInServer"
+    PaqueteName(49) = "CharacterCreate"
+    PaqueteName(50) = "CharacterRemove"
+    PaqueteName(51) = "CharacterMove"
+    PaqueteName(52) = "ForceCharMove"
+    PaqueteName(53) = "CharacterChange"
+    PaqueteName(54) = "ObjectCreate"
+    PaqueteName(55) = "ObjectDelete"
+    PaqueteName(56) = "BlockPosition"
+    PaqueteName(57) = "PlayWave"
+    PaqueteName(58) = "guildList"
+    PaqueteName(59) = "AreaChanged"
+    PaqueteName(60) = "PauseToggle"
+    PaqueteName(61) = "RainToggle"
+    PaqueteName(62) = "CreateFX"
+    PaqueteName(63) = "CreateEfecto"
+    PaqueteName(64) = "UpdateUserStats"
+    PaqueteName(65) = "WorkRequestTarget"
+    PaqueteName(66) = "ChangeInventorySlot"
+    PaqueteName(67) = "ChangeBankSlot"
+    PaqueteName(68) = "ChangeSpellSlot"
+    PaqueteName(69) = "atributes"
+    PaqueteName(70) = "BlacksmithWeapons"
+    PaqueteName(71) = "BlacksmithArmors"
+    PaqueteName(72) = "CarpenterObjects"
+    PaqueteName(73) = "RestOK"
+    PaqueteName(74) = "ErrorMsg"
+    PaqueteName(75) = "Blind"
+    PaqueteName(76) = "Dumb"
+    PaqueteName(77) = "ShowSignal"
+    PaqueteName(78) = "ChangeNPCInventorySlot"
+    PaqueteName(79) = "UpdateHungerAndThirst"
+    PaqueteName(80) = "Fame"
+    PaqueteName(81) = "MiniStats"
+    PaqueteName(82) = "LevelUp"
+    PaqueteName(83) = "SetInvisible"
+    PaqueteName(84) = "MeditateToggle"
+    PaqueteName(85) = "BlindNoMore"
+    PaqueteName(86) = "DumbNoMore"
+    PaqueteName(87) = "SendSkills"
+    PaqueteName(88) = "TrainerCreatureList"
+    PaqueteName(89) = "guildNews"
+    PaqueteName(90) = "OfferDetails"
+    PaqueteName(91) = "AlianceProposalsList"
+    PaqueteName(92) = "PeaceProposalsList"
+    PaqueteName(93) = "CharacterInfo"
+    PaqueteName(94) = "GuildLeaderInfo"
+    PaqueteName(95) = "GuildMemberInfo"
+    PaqueteName(96) = "GuildDetails"
+    PaqueteName(97) = "ShowGuildFundationForm"
+    PaqueteName(98) = "ParalizeOK"
+    PaqueteName(99) = "ShowUserRequest"
+    PaqueteName(100) = "TradeOK"
+    PaqueteName(101) = "BankOK"
+    PaqueteName(102) = "ChangeUserTradeSlot"
+    PaqueteName(103) = "Pong"
+    PaqueteName(104) = "UpdateTagAndStatus"
+    PaqueteName(105) = "UsersOnline"
+    PaqueteName(106) = "CommerceChat"
+    PaqueteName(107) = "ShowPartyForm"
+    PaqueteName(108) = "StopWorking"
+    PaqueteName(109) = "RetosAbre"
+    PaqueteName(110) = "RetosRespuesta"
+    PaqueteName(111) = "SpawnList"
+    PaqueteName(112) = "ShowSOSForm"
+    PaqueteName(113) = "ShowMOTDEditionForm"
+    PaqueteName(114) = "ShowGMPanelForm"
+    PaqueteName(115) = "UserNameList"
+    PaqueteName(116) = "ShowBarco"
+    PaqueteName(117) = "AgregarPasajero"
+    PaqueteName(118) = "QuitarPasajero"
+    PaqueteName(119) = "QuitarBarco"
+    PaqueteName(120) = "GoHome"
+    PaqueteName(121) = "GotHome"
+    PaqueteName(122) = "Tooltip"
+
 End Sub

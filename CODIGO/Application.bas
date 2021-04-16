@@ -17,7 +17,6 @@ Attribute VB_Name = "Application"
 'along with this program; if not, you can find it at http://www.affero.org/oagpl.html
 '**************************************************************************
 
-
 Option Explicit
 
 ''
@@ -33,42 +32,45 @@ Private Declare Function GetActiveWindow Lib "user32" () As Long
 ' @return   True if any of the app's windows are the foreground window, false otherwise.
 
 Public Function IsAppActive() As Boolean
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (maraxus)
-'Last Modify Date: 03/03/2007
-'Checks if this is the active application or not
-'***************************************************
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (maraxus)
+    'Last Modify Date: 03/03/2007
+    'Checks if this is the active application or not
+    '***************************************************
     IsAppActive = (GetActiveWindow <> 0)
+
 End Function
 
-Public Sub LogError(ByVal Numero As Long, ByVal Descripcion As String, ByVal Componente As String, Optional ByVal Linea As Integer)
-'**********************************************************
-'Author: Jopi
-'Guarda una descripcion detallada del error en Errores.log
-'**********************************************************
+Public Sub LogError(ByVal Numero As Long, _
+                    ByVal Descripcion As String, _
+                    ByVal Componente As String, _
+                    Optional ByVal Linea As Integer)
+
+    '**********************************************************
+    'Author: Jopi
+    'Guarda una descripcion detallada del error en Errores.log
+    '**********************************************************
     Dim File As Integer
-        File = FreeFile
+
+    File = FreeFile
         
     Open App.path & "\Errores.log" For Append As #File
     
-        Print #File, "Error: " & Numero
-        Print #File, "Descripcion: " & Descripcion
+    Print #File, "Error: " & Numero
+    Print #File, "Descripcion: " & Descripcion
         
-        If LenB(Linea) <> 0 Then
-            Print #File, "Linea: " & Linea
-        End If
+    If LenB(Linea) <> 0 Then
+        Print #File, "Linea: " & Linea
+
+    End If
         
-        Print #File, "Componente: " & Componente
-        Print #File, "Fecha y Hora: " & Date$ & "-" & time$
-        Print #File, vbNullString
+    Print #File, "Componente: " & Componente
+    Print #File, "Fecha y Hora: " & Date$ & "-" & time$
+    Print #File, vbNullString
         
     Close #File
     
-    Debug.Print "Error: " & Numero & vbNewLine & _
-                "Descripcion: " & Descripcion & vbNewLine & _
-                "Componente: " & Componente & vbNewLine & _
-                "Fecha y Hora: " & Date$ & "-" & time$ & vbNewLine
+    Debug.Print "Error: " & Numero & vbNewLine & "Descripcion: " & Descripcion & vbNewLine & "Componente: " & Componente & vbNewLine & "Fecha y Hora: " & Date$ & "-" & time$ & vbNewLine
                 
 End Sub
-
 

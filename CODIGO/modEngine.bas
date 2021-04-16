@@ -1,21 +1,33 @@
 Attribute VB_Name = "modEngine"
 Option Explicit
-Public dX As DirectX8
-Public D3D As Direct3D8
-Public D3DX As D3DX8
-Public D3DDevice As Direct3DDevice8
+
+Public dX          As DirectX8
+
+Public D3D         As Direct3D8
+
+Public D3DX        As D3DX8
+
+Public D3DDevice   As Direct3DDevice8
 
 Public ShadowColor As Long
-Private Const FVF = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE 'D3DFVF_XYZ Or D3DFVF_NORMAL Or D3DFVF_TEX1 ' D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR
-Private Const PI As Single = 3.14159275180032   'can be worked out using (4*atn(1))
-Public Const ANSI_FIXED_FONT As Long = 11
-Public Declare Function GetStockObject Lib "gdi32" (ByVal nIndex As Long) As Long
-'Very percise counter 64bit system counter
-Private Declare Function QueryPerformanceFrequency Lib "kernel32" (lpFrequency As Currency) As Long
-Private Declare Function QueryPerformanceCounter Lib "kernel32" (lpPerformanceCount As Currency) As Long
 
+Private Const FVF = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE 'D3DFVF_XYZ Or D3DFVF_NORMAL Or D3DFVF_TEX1 ' D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR
+
+Private Const PI             As Single = 3.14159275180032   'can be worked out using (4*atn(1))
+
+Public Const ANSI_FIXED_FONT As Long = 11
+
+Public Declare Function GetStockObject Lib "gdi32" (ByVal nIndex As Long) As Long
+
+'Very percise counter 64bit system counter
+Private Declare Function QueryPerformanceFrequency _
+                Lib "kernel32" (lpFrequency As Currency) As Long
+
+Private Declare Function QueryPerformanceCounter _
+                Lib "kernel32" (lpPerformanceCount As Currency) As Long
 
 Public Type TLVERTEX
+
     x As Single
     y As Single
     z As Single
@@ -23,218 +35,271 @@ Public Type TLVERTEX
     color As Long
     tu As Single
     tv As Single
+
 End Type
+
 Public Type TexInfo
+
     x As Integer
     y As Integer
+
 End Type
+
 Private Type PosC
+
     x As Long
     y As Long
     X2 As Long
     Y2 As Long
+
 End Type
 
+Public SurfaceSize()        As TexInfo
 
-Public SurfaceSize() As TexInfo
 'The size of a FVF vertex
-Private Const FVF_Size As Long = 28
+Private Const FVF_Size      As Long = 28
 
-Public MainFont As D3DXFont
-Public MainFontDesc As IFont
-Public fnt As New StdFont
+Public MainFont             As D3DXFont
 
-Public FontCartel As D3DXFont
-Public FontCartelDesc As IFont
-Public fntCartel As New StdFont
+Public MainFontDesc         As IFont
 
-Public MainFontBig As D3DXFont
-Public MainFontBigDesc As IFont
-Public fnt2 As New StdFont
+Public fnt                  As New StdFont
 
-Public pRenderTexture As Direct3DTexture8
-Public pRenderSurface As Direct3DSurface8
-Public pBackbuffer As Direct3DSurface8
+Public FontCartel           As D3DXFont
+
+Public FontCartelDesc       As IFont
+
+Public fntCartel            As New StdFont
+
+Public MainFontBig          As D3DXFont
+
+Public MainFontBigDesc      As IFont
+
+Public fnt2                 As New StdFont
+
+Public pRenderTexture       As Direct3DTexture8
+
+Public pRenderSurface       As Direct3DSurface8
+
+Public pBackbuffer          As Direct3DSurface8
 
 Public Const DegreeToRadian As Single = 0.01745329251994 'Pi / 180
+
 Public Const RadianToDegree As Single = 57.2958279087977 '180 / Pi
 
-Private LastTexture As Integer
-Public Textura As Direct3DTexture8
-Private Caracteres(255) As PosC
+Private LastTexture         As Integer
 
-Public Sprite As D3DXSprite
-Private SpriteScaleVector As D3DVECTOR2
+Public Textura              As Direct3DTexture8
 
+Private Caracteres(255)     As PosC
 
-Public RectJuego As D3DRECT
+Public Sprite               As D3DXSprite
 
-Dim end_time As Currency
-Dim timer_freq As Currency
+Private SpriteScaleVector   As D3DVECTOR2
+
+Public RectJuego            As D3DRECT
+
+Dim end_time                As Currency
+
+Dim timer_freq              As Currency
 
 Public Function DDRect(x, y, X1, Y1) As RECT
-DDRect.Bottom = Y1
-DDRect.Top = y
-DDRect.Left = x
-DDRect.Right = X1
+    DDRect.Bottom = Y1
+    DDRect.Top = y
+    DDRect.Left = x
+    DDRect.Right = X1
+
 End Function
+
 Public Function IniciarD3D() As Boolean
-On Error Resume Next
-Set dX = New DirectX8
+
+    On Error Resume Next
+
+    Set dX = New DirectX8
+
     If Err Then
         MessageBox "No se puede iniciar DirectX. Por favor asegurese de tener la ultima version correctamente instalada."
         Exit Function
+
     End If
 
-Set D3D = dX.Direct3DCreate()
-Set D3DX = New D3DX8
+    Set D3D = dX.Direct3DCreate()
+    Set D3DX = New D3DX8
 
-If Not IniciarDevice(D3DCREATE_PUREDEVICE) Then
-    If Not IniciarDevice(D3DCREATE_HARDWARE_VERTEXPROCESSING) Then
-        If Not IniciarDevice(D3DCREATE_MIXED_VERTEXPROCESSING) Then
-            If Not IniciarDevice(D3DCREATE_SOFTWARE_VERTEXPROCESSING) Then
-                MessageBox "No se pudo iniciar el D3DDevice. Saliendo...", vbCritical
-                LiberarObjetosDX
-                End
+    If Not IniciarDevice(D3DCREATE_PUREDEVICE) Then
+        If Not IniciarDevice(D3DCREATE_HARDWARE_VERTEXPROCESSING) Then
+            If Not IniciarDevice(D3DCREATE_MIXED_VERTEXPROCESSING) Then
+                If Not IniciarDevice(D3DCREATE_SOFTWARE_VERTEXPROCESSING) Then
+                    MessageBox "No se pudo iniciar el D3DDevice. Saliendo...", vbCritical
+                    LiberarObjetosDX
+                    End
+
+                End If
+
             End If
+
         End If
+
     End If
-End If
 
-Call SetDevice(D3DDevice)
+    Call SetDevice(D3DDevice)
 
-
-
-
-Set Sprite = D3DX.CreateSprite(D3DDevice)
+    Set Sprite = D3DX.CreateSprite(D3DDevice)
      
-'Set the scaling to default aspect ratio
-SpriteScaleVector.x = 1
-SpriteScaleVector.y = 1
+    'Set the scaling to default aspect ratio
+    SpriteScaleVector.x = 1
+    SpriteScaleVector.y = 1
 
-Call setup_ambient
+    Call setup_ambient
 
-IluRGB.r = 255
-IluRGB.G = 255
-IluRGB.B = 255
+    IluRGB.R = 255
+    IluRGB.G = 255
+    IluRGB.B = 255
 
-Iluminacion = D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, 255)
-ColorTecho = Iluminacion
+    Iluminacion = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255)
+    ColorTecho = Iluminacion
 
-bAlpha = 255
-nAlpha = 100
+    bAlpha = 255
+    nAlpha = 100
 
-Set pRenderTexture = D3DX.CreateTexture(D3DDevice, 480, 80, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT)
-Set pRenderSurface = pRenderTexture.GetSurfaceLevel(0)
-Set pBackbuffer = D3DDevice.GetRenderTarget
+    Set pRenderTexture = D3DX.CreateTexture(D3DDevice, 480, 80, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT)
+    Set pRenderSurface = pRenderTexture.GetSurfaceLevel(0)
+    Set pBackbuffer = D3DDevice.GetRenderTarget
 
-IniciarD3D = True
+    IniciarD3D = True
+
 End Function
+
 Public Sub SetDevice(D3DD As Direct3DDevice8)
-With D3DD
-    .SetVertexShader FVF
 
-    'Set the render states
-    .SetRenderState D3DRS_LIGHTING, False
-    .SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-    .SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-    .SetRenderState D3DRS_ALPHABLENDENABLE, True
-    .SetRenderState D3DRS_FILLMODE, D3DFILL_SOLID
-    .SetRenderState D3DRS_CULLMODE, D3DCULL_NONE
-    .SetRenderState D3DRS_ZENABLE, True
-    .SetRenderState D3DRS_ZWRITEENABLE, True
-    .SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
+    With D3DD
+        .SetVertexShader FVF
 
-    'Particle engine settings
-    .SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
-    .SetRenderState D3DRS_POINTSCALE_ENABLE, 0
+        'Set the render states
+        .SetRenderState D3DRS_LIGHTING, False
+        .SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        .SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+        .SetRenderState D3DRS_ALPHABLENDENABLE, True
+        .SetRenderState D3DRS_FILLMODE, D3DFILL_SOLID
+        .SetRenderState D3DRS_CULLMODE, D3DCULL_NONE
+        .SetRenderState D3DRS_ZENABLE, True
+        .SetRenderState D3DRS_ZWRITEENABLE, True
+        .SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
+
+        'Particle engine settings
+        .SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
+        .SetRenderState D3DRS_POINTSCALE_ENABLE, 0
     
-    'Set the texture stage stats (filters)
-    .SetTextureStageState 0, D3DTSS_MAGFILTER, D3DTEXF_POINT
-    .SetTextureStageState 0, D3DTSS_MINFILTER, D3DTEXF_POINT
-End With
+        'Set the texture stage stats (filters)
+        .SetTextureStageState 0, D3DTSS_MAGFILTER, D3DTEXF_POINT
+        .SetTextureStageState 0, D3DTSS_MINFILTER, D3DTEXF_POINT
+
+    End With
+
 End Sub
+
 Public Sub CargarFont()
-Dim i As Integer
-Open (PathInit & "\Font.ind") For Binary As #1
+
+    Dim i As Integer
+
+    Open (PathInit & "\Font.ind") For Binary As #1
+
     For i = 1 To 255
         Get #1, , Caracteres(i)
     Next i
-Close #1
 
-Dim hFont As Long
+    Close #1
 
-fntCartel.name = "Augusta"
-fntCartel.Size = 14
-fntCartel.bold = False
-Set FontCartelDesc = fntCartel
+    Dim hFont As Long
 
+    fntCartel.name = "Augusta"
+    fntCartel.Size = 14
+    fntCartel.bold = False
+    Set FontCartelDesc = fntCartel
 
-fnt.name = "Augusta"
-fnt.Size = 48
-fnt.bold = False
-Set MainFontDesc = fnt
+    fnt.name = "Augusta"
+    fnt.Size = 48
+    fnt.bold = False
+    Set MainFontDesc = fnt
 
-fnt2.name = "Augusta"
-fnt2.Size = 72
-fnt2.bold = False
-Set MainFontBigDesc = fnt2
-'hFont = GetStockObject(ANSI_FIXED_FONT)
+    fnt2.name = "Augusta"
+    fnt2.Size = 72
+    fnt2.bold = False
+    Set MainFontBigDesc = fnt2
+    'hFont = GetStockObject(ANSI_FIXED_FONT)
     
-Set MainFont = D3DX.CreateFont(D3DDevice, MainFontDesc.hFont)
-Set MainFontBig = D3DX.CreateFont(D3DDevice, MainFontBigDesc.hFont)
-Set FontCartel = D3DX.CreateFont(D3DDevice, FontCartelDesc.hFont)
+    Set MainFont = D3DX.CreateFont(D3DDevice, MainFontDesc.hFont)
+    Set MainFontBig = D3DX.CreateFont(D3DDevice, MainFontBigDesc.hFont)
+    Set FontCartel = D3DX.CreateFont(D3DDevice, FontCartelDesc.hFont)
+
 End Sub
-Public Sub DrawFont(Texto As String, ByVal x As Long, ByVal y As Long, ByVal color As Long, Optional Centrado As Boolean = False)
-Dim i As Integer
-Dim SumaX As Integer
-Dim SumaL As Integer
-Dim CharC As Byte
-If Centrado Then
+
+Public Sub DrawFont(Texto As String, _
+                    ByVal x As Long, _
+                    ByVal y As Long, _
+                    ByVal color As Long, _
+                    Optional Centrado As Boolean = False)
+
+    Dim i     As Integer
+
+    Dim SumaX As Integer
+
+    Dim SumaL As Integer
+
+    Dim CharC As Byte
+
+    If Centrado Then
+
+        For i = 1 To Len(Texto)
+            CharC = Asc(mid$(Texto, i, 1))
+            SumaL = SumaL + Caracteres(CharC).X2 - 2
+        Next i
+
+        SumaL = SumaL / 2
+
+    End If
+
     For i = 1 To Len(Texto)
         CharC = Asc(mid$(Texto, i, 1))
-        SumaL = SumaL + Caracteres(CharC).X2 - 2
-    Next i
-    SumaL = SumaL / 2
-End If
-For i = 1 To Len(Texto)
-    CharC = Asc(mid$(Texto, i, 1))
-    'Call Engine_Render_D3DXSprite(X - SumaL + SumaX, Y, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, Caracteres(CharC).X + 1, Caracteres(CharC).Y + 1, Color, 14324, 0)
-    Call Engine_Render_Rectangle(x - SumaL + SumaX, y, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, Caracteres(CharC).x + 1, Caracteres(CharC).y + 1, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, , , , 14324, color, color, color, color)
+        'Call Engine_Render_D3DXSprite(X - SumaL + SumaX, Y, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, Caracteres(CharC).X + 1, Caracteres(CharC).Y + 1, Color, 14324, 0)
+        Call Engine_Render_Rectangle(x - SumaL + SumaX, y, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, Caracteres(CharC).x + 1, Caracteres(CharC).y + 1, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, , , , 14324, color, color, color, color)
     
-    SumaX = SumaX + Caracteres(CharC).X2 - 2
-Next i
+        SumaX = SumaX + Caracteres(CharC).X2 - 2
+    Next i
+
 End Sub
+
 Public Function IniciarDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS) As Boolean
-On Error GoTo ErrOut
 
-Dim DispMode As D3DDISPLAYMODE
-Dim D3DWindow As D3DPRESENT_PARAMETERS
-UseMotionBlur = 1
+    On Error GoTo ErrOut
 
-D3D.GetAdapterDisplayMode D3DADAPTER_DEFAULT, DispMode
+    Dim DispMode  As D3DDISPLAYMODE
 
-D3DWindow.Windowed = 1
-D3DWindow.SwapEffect = D3DSWAPEFFECT_COPY
-D3DWindow.BackBufferFormat = DispMode.Format
-D3DWindow.EnableAutoDepthStencil = 0
-D3DWindow.AutoDepthStencilFormat = D3DFMT_A8R8G8B8
+    Dim D3DWindow As D3DPRESENT_PARAMETERS
 
-'If UseMotionBlur Then
-'    D3DWindow.EnableAutoDepthStencil = 1
-'    D3DWindow.AutoDepthStencilFormat = D3DFMT_D16
-'End If
-frmMain.SetRender (True)
+    UseMotionBlur = 1
 
-RectJuego.X1 = 0
-RectJuego.Y1 = 0
-RectJuego.X2 = 800
-RectJuego.Y2 = 608
+    D3D.GetAdapterDisplayMode D3DADAPTER_DEFAULT, DispMode
 
+    D3DWindow.Windowed = 1
+    D3DWindow.SwapEffect = D3DSWAPEFFECT_COPY
+    D3DWindow.BackBufferFormat = DispMode.Format
+    D3DWindow.EnableAutoDepthStencil = 0
+    D3DWindow.AutoDepthStencilFormat = D3DFMT_A8R8G8B8
 
-If Not D3DDevice Is Nothing Then Set D3DDevice = Nothing
-Set D3DDevice = D3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.pRender.hwnd, D3DCREATEFLAGS, D3DWindow)
+    'If UseMotionBlur Then
+    '    D3DWindow.EnableAutoDepthStencil = 1
+    '    D3DWindow.AutoDepthStencilFormat = D3DFMT_D16
+    'End If
+    frmMain.SetRender (True)
 
+    RectJuego.X1 = 0
+    RectJuego.Y1 = 0
+    RectJuego.X2 = 800
+    RectJuego.Y2 = 608
+
+    If Not D3DDevice Is Nothing Then Set D3DDevice = Nothing
+    Set D3DDevice = D3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.pRender.hwnd, D3DCREATEFLAGS, D3DWindow)
     
     If UseMotionBlur Then
         'Set DeviceBuffer = D3DDevice.GetRenderTarget
@@ -251,6 +316,7 @@ Set D3DDevice = D3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.pRe
             BlurTA(T).color = D3DColorXRGB(255, 255, 255)
             BlurTA(T).rhw = 1
         Next T
+
         BlurTA(1).x = ScreenWidth
         BlurTA(2).y = ScreenHeight
         BlurTA(3).x = ScreenWidth
@@ -261,14 +327,14 @@ Set D3DDevice = D3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.pRe
     'Set the blur to off
     BlurIntensity = 255
 
-IniciarDevice = True
-Exit Function
+    IniciarDevice = True
+    Exit Function
 
 ErrHandler:
-MessageBox "Su placa de video no es combatible. Este al tanto en la página web para parches que puedan solucionar este incomveniente.", vbCritical
-IniciarDevice = False
+    MessageBox "Su placa de video no es combatible. Este al tanto en la página web para parches que puedan solucionar este incomveniente.", vbCritical
+    IniciarDevice = False
 
-Exit Function
+    Exit Function
 
 ErrOut:
 
@@ -281,34 +347,51 @@ ErrOut:
 End Function
 
 Public Sub LiberarObjetosDX()
-Err.Clear
-On Error GoTo fin:
+    Err.Clear
 
-Set D3DDevice = Nothing
-Set D3D = Nothing
-Set D3DX = Nothing
-Set dX = Nothing
-Exit Sub
-fin: MsgBox "Error producido en Public Sub LiberarObjetosDX()"
+    On Error GoTo fin:
+
+    Set D3DDevice = Nothing
+    Set D3D = Nothing
+    Set D3DX = Nothing
+    Set dX = Nothing
+    Exit Sub
+fin:         MsgBox "Error producido en Public Sub LiberarObjetosDX()"
+
 End Sub
 
 Public Sub Engine_ReadyTexture(ByVal TextureNum As Integer)
+
     'Set the texture
     If TextureNum > 0 Then
         If LastTexture <> TextureNum Then
             Set Textura = SurfaceDB.Surface(TextureNum)
             D3DDevice.SetTexture 0, Textura
             LastTexture = TextureNum
+
         End If
+
     End If
+
     LastTexture = TextureNum
+
 End Sub
 
-Public Sub Engine_Render_D3DXSprite(ByVal x As Single, ByVal y As Single, ByVal Width As Single, ByVal Height As Single, ByVal srcX As Single, ByVal srcY As Single, ByVal Light As Long, ByVal TextureNum As Long, ByVal Degrees As Single)
-Dim SrcRect As RECT
-Dim v2 As D3DVECTOR2
-Dim v3 As D3DVECTOR2
+Public Sub Engine_Render_D3DXSprite(ByVal x As Single, _
+                                    ByVal y As Single, _
+                                    ByVal Width As Single, _
+                                    ByVal Height As Single, _
+                                    ByVal srcX As Single, _
+                                    ByVal srcY As Single, _
+                                    ByVal Light As Long, _
+                                    ByVal TextureNum As Long, _
+                                    ByVal Degrees As Single)
 
+    Dim SrcRect As RECT
+
+    Dim v2      As D3DVECTOR2
+
+    Dim v3      As D3DVECTOR2
     
     'Ready the texture
     Engine_ReadyTexture TextureNum
@@ -319,16 +402,21 @@ Dim v3 As D3DVECTOR2
         .Top = srcY
         .Right = .Left + Width
         .Bottom = .Top + Height
+
     End With
     
     'Create the rotation point
     If Degrees Then
         Degrees = ((Degrees + 180) * DegreeToRadian)
+
         If Degrees > 360 Then Degrees = Degrees - 360
+
         With v2
             .x = (Width * 0.5)
             .y = (Height * 0.5)
+
         End With
+
     End If
     
     'Set the translation (location on the screen)
@@ -339,16 +427,27 @@ Dim v3 As D3DVECTOR2
     If TextureNum > 0 Then
         Sprite.Draw Textura, SrcRect, SpriteScaleVector, v2, Degrees, v3, Light
     Else
+
         'Sprite.Draw Nothing, SrcRect, SpriteScaleVector, v2, 0, v3, Light
     End If
     
 End Sub
 
-Public Sub Engine_Render_D3DXTexture(ByVal x As Single, ByVal y As Single, ByVal Width As Single, ByVal Height As Single, ByVal srcX As Single, ByVal srcY As Single, ByVal Light As Long, ByVal Texture As Direct3DTexture8, ByVal Degrees As Single)
-Dim SrcRect As RECT
-Dim v2 As D3DVECTOR2
-Dim v3 As D3DVECTOR2
+Public Sub Engine_Render_D3DXTexture(ByVal x As Single, _
+                                     ByVal y As Single, _
+                                     ByVal Width As Single, _
+                                     ByVal Height As Single, _
+                                     ByVal srcX As Single, _
+                                     ByVal srcY As Single, _
+                                     ByVal Light As Long, _
+                                     ByVal Texture As Direct3DTexture8, _
+                                     ByVal Degrees As Single)
 
+    Dim SrcRect As RECT
+
+    Dim v2      As D3DVECTOR2
+
+    Dim v3      As D3DVECTOR2
     
     'Ready the texture
     'D3DDevice.SetTexture 0, Texture
@@ -360,16 +459,21 @@ Dim v3 As D3DVECTOR2
         .Top = srcY
         .Right = .Left + Width
         .Bottom = .Top + Height
+
     End With
     
     'Create the rotation point
     If Degrees Then
         Degrees = ((Degrees + 180) * DegreeToRadian)
+
         If Degrees > 360 Then Degrees = Degrees - 360
+
         With v2
             .x = (Width * 0.5)
             .y = (Height * 0.5)
+
         End With
+
     End If
     
     'Set the translation (location on the screen)
@@ -381,22 +485,50 @@ Dim v3 As D3DVECTOR2
     
 End Sub
 
-Sub Engine_Render_Rectangle(ByVal x As Single, ByVal y As Single, ByVal Width As Single, ByVal Height As Single, ByVal srcX As Single, ByVal srcY As Single, ByVal SrcWidth As Single, ByVal SrcHeight As Single, Optional ByVal SrcBitmapWidth As Long = -1, Optional ByVal SrcBitmapHeight As Long = -1, Optional ByVal Degrees As Single = 0, Optional ByVal TextureNum As Long, Optional ByVal Color0 As Long = -1, Optional ByVal Color1 As Long = -1, Optional ByVal Color2 As Long = -1, Optional ByVal Color3 As Long = -1, Optional ByVal Shadow As Byte = 0, Optional ByVal InBoundsCheck As Boolean = True)
-'************************************************************
-'Render a square/rectangle based on the specified values then rotate it if needed
-'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Render_Rectangle
-'************************************************************
-Dim VertexArray(0 To 3) As TLVERTEX
-Dim RadAngle As Single 'The angle in Radians
-Dim CenterX As Single
-Dim CenterY As Single
-Dim Index As Integer
-Dim NewX As Single
-Dim NewY As Single
-Dim SinRad As Single
-Dim CosRad As Single
-Dim ShadowAdd As Single
-Dim l As Single
+Sub Engine_Render_Rectangle(ByVal x As Single, _
+                            ByVal y As Single, _
+                            ByVal Width As Single, _
+                            ByVal Height As Single, _
+                            ByVal srcX As Single, _
+                            ByVal srcY As Single, _
+                            ByVal SrcWidth As Single, _
+                            ByVal SrcHeight As Single, _
+                            Optional ByVal SrcBitmapWidth As Long = -1, _
+                            Optional ByVal SrcBitmapHeight As Long = -1, _
+                            Optional ByVal Degrees As Single = 0, _
+                            Optional ByVal TextureNum As Long, _
+                            Optional ByVal Color0 As Long = -1, _
+                            Optional ByVal Color1 As Long = -1, _
+                            Optional ByVal Color2 As Long = -1, _
+                            Optional ByVal Color3 As Long = -1, _
+                            Optional ByVal Shadow As Byte = 0, _
+                            Optional ByVal InBoundsCheck As Boolean = True)
+
+    '************************************************************
+    'Render a square/rectangle based on the specified values then rotate it if needed
+    'More info: http://www.vbgore.com/GameClient.TileEngine.Engine_Render_Rectangle
+    '************************************************************
+    Dim VertexArray(0 To 3) As TLVERTEX
+
+    Dim RadAngle            As Single 'The angle in Radians
+
+    Dim CenterX             As Single
+
+    Dim CenterY             As Single
+
+    Dim Index               As Integer
+
+    Dim NewX                As Single
+
+    Dim NewY                As Single
+
+    Dim SinRad              As Single
+
+    Dim CosRad              As Single
+
+    Dim ShadowAdd           As Single
+
+    Dim l                   As Single
        
     Width = Width
     Height = Height
@@ -407,6 +539,7 @@ Dim l As Single
         If y - 256 + SrcHeight <= 0 Then Exit Sub
         If x - 256 >= frmMain.pRender.Width Then Exit Sub
         If y - 256 >= frmMain.pRender.Height Then Exit Sub
+
     End If
 
     'Ready the texture
@@ -489,6 +622,7 @@ Dim l As Single
 
         'Find the left side of the rectangle
         VertexArray(0).x = x - 256
+
         If SrcBitmapWidth = 0 Then Exit Sub
         VertexArray(0).tu = (srcX / SrcBitmapWidth)
 
@@ -503,6 +637,7 @@ Dim l As Single
         'These values will only equal each other when not a shadow
         VertexArray(2).x = VertexArray(0).x
         VertexArray(3).x = VertexArray(1).x
+
     End If
     
     'Find the bottom of the rectangle
@@ -557,14 +692,17 @@ Public Function EngineSpeed() As Single
 
     If UserEquitando Then
         EngineSpeed = EngineSpeed + 0.002
+
     End If
     
     If UserCongelado Then
         EngineSpeed = EngineSpeed - 0.005
+
     End If
     
     If UserChiquito Then
         EngineSpeed = EngineSpeed + 0.001
+
     End If
     
 End Function
@@ -575,17 +713,22 @@ Public Function DamePasos(ByVal Heading As Byte) As Integer
     'If UserEstado = 1 Then Exit Function
 
     Select Case Heading
+
         Case E_Heading.north
             DamePasos = 26646
+
             '62
         Case E_Heading.east
             DamePasos = 26644
+
             '63
         Case E_Heading.west
             DamePasos = 26645
+
             '64
         Case E_Heading.south
             DamePasos = 26647
+
             '61
     End Select
     
@@ -593,14 +736,17 @@ End Function
 
 Public Sub RenderCuentaRegresiva()
 
-    Dim color As Long
+    Dim color        As Long
+
     Static last_tick As Long
     
     If AlphaCuenta > 0 Then
         If (GetTickCount And &H7FFFFFFF) - last_tick >= 18 Then
             AlphaCuenta = AlphaCuenta - 5
             last_tick = (GetTickCount And &H7FFFFFFF)
+
         End If
+
     End If
     
     color = D3DColorRGBA(255, 255, 255, AlphaCuenta)
@@ -611,14 +757,17 @@ End Sub
 
 Public Sub RenderUserDieBlood()
 
-    Dim color As Long
+    Dim color        As Long
+
     Static last_tick As Long
     
     If AlphaBloodUserDie > 0 Then
         If (GetTickCount And &H7FFFFFFF) - last_tick >= 18 Then
             AlphaBloodUserDie = AlphaBloodUserDie - 3
             last_tick = (GetTickCount And &H7FFFFFFF)
+
         End If
+
     End If
     
     color = D3DColorRGBA(255, 255, 255, AlphaBloodUserDie)
@@ -629,14 +778,17 @@ End Sub
 
 Public Sub RenderBlood()
 
-    Dim color As Long
+    Dim color        As Long
+
     Static last_tick As Long
     
     If AlphaBlood > 0 Then
         If (GetTickCount And &H7FFFFFFF) - last_tick >= 18 Then
             AlphaBlood = AlphaBlood - 5
             last_tick = (GetTickCount And &H7FFFFFFF)
+
         End If
+
     End If
     
     color = D3DColorRGBA(255, 255, 255, AlphaBlood)
@@ -647,7 +799,8 @@ End Sub
 
 Public Sub RenderCeguera()
 
-    Dim color As Long
+    Dim color        As Long
+
     Static last_tick As Long
     
     If AlphaCeguera > 10 Then
@@ -656,11 +809,16 @@ Public Sub RenderCeguera()
                 AlphaCeguera = AlphaCeguera - 0.2
             Else
                 AlphaCeguera = AlphaCeguera - 10
+
             End If
+
             last_tick = (GetTickCount And &H7FFFFFFF)
+
         End If
+
     Else
         AlphaCeguera = 255
+
     End If
     
     color = D3DColorRGBA(0, 0, 0, AlphaCeguera)
@@ -672,14 +830,17 @@ End Sub
 
 Public Sub RenderTextKills()
 
-    Dim color As Long
+    Dim color        As Long
+
     Static last_tick As Long
     
     If AlphaTextKills > 0 Then
         If (GetTickCount And &H7FFFFFFF) - last_tick >= 18 Then
             AlphaTextKills = AlphaTextKills - 5
             last_tick = (GetTickCount And &H7FFFFFFF)
+
         End If
+
     End If
     
     color = D3DColorRGBA(255, 255, 255, AlphaTextKills)
@@ -690,22 +851,28 @@ End Sub
 
 Public Sub ReproducirSonidosDeAmbiente()
 
-If UserCharIndex <= 0 Then Exit Sub
+    If UserCharIndex <= 0 Then Exit Sub
 
-If Zonas(ZonaActual).CantSonidos > 0 Then
-   Static last_tick As Long
+    If Zonas(ZonaActual).CantSonidos > 0 Then
+
+        Static last_tick As Long
     
-    If (GetTickCount And &H7FFFFFFF) - last_tick >= 12000 Then
-    With charlist(UserCharIndex)
-        Call Audio.PlayWave(Zonas(ZonaActual).Sonido(RandomNumber(1, Zonas(ZonaActual).CantSonidos)), RandomNumber(.Pos.x - 10, .Pos.x + 10), RandomNumber(.Pos.y - 9, .Pos.y + 9))
-        last_tick = (GetTickCount And &H7FFFFFFF)
-    End With
+        If (GetTickCount And &H7FFFFFFF) - last_tick >= 12000 Then
+
+            With charlist(UserCharIndex)
+                Call Audio.PlayWave(Zonas(ZonaActual).Sonido(RandomNumber(1, Zonas(ZonaActual).CantSonidos)), RandomNumber(.Pos.x - 10, .Pos.x + 10), RandomNumber(.Pos.y - 9, .Pos.y + 9))
+                last_tick = (GetTickCount And &H7FFFFFFF)
+
+            End With
+
+        End If
+
     End If
-End If
 
 End Sub
 
 Public Sub RenderRelampago()
+
     'Dim color As Long
     Static last_tick As Long
     
@@ -713,13 +880,18 @@ Public Sub RenderRelampago()
         If (GetTickCount And &H7FFFFFFF) - last_tick >= 18 Then
             AlphaRelampago = AlphaRelampago - RandomNumber(15, 25)
             last_tick = (GetTickCount And &H7FFFFFFF)
+
         End If
+
     Else
+
         If HayRelampago = True Then
             Hora = OrigHora
             Call SetDayLight(False)
             HayRelampago = False
+
         End If
+
     End If
     
     'color = D3DColorRGBA(255, 255, 255, AlphaRelampago)
@@ -728,16 +900,20 @@ End Sub
 
 Public Sub RenderSaliendo()
 
-    Dim color As Long
+    Dim color        As Long
+
     Static last_tick As Long
     
     If AlphaSalir > 0 And AlphaSalir < 255 Then
         If (GetTickCount And &H7FFFFFFF) - last_tick >= 32 Then
-                AlphaSalir = AlphaSalir + 1
-                last_tick = (GetTickCount And &H7FFFFFFF)
+            AlphaSalir = AlphaSalir + 1
+            last_tick = (GetTickCount And &H7FFFFFFF)
+
         End If
+
     Else
         AlphaSalir = 255
+
     End If
     
     color = D3DColorRGBA(0, 0, 0, AlphaSalir)
@@ -745,5 +921,4 @@ Public Sub RenderSaliendo()
     Call Engine_Render_D3DXSprite(255, 255, 1024, 768, 0, 0, color, 14706, 0)
     
 End Sub
-
 
