@@ -1997,12 +1997,12 @@ Private Sub HandleUpdateExp()
     
     'Get data and update form
     UserExp = incomingData.ReadLong()
-    frmMain.iBEXP.ToolTipText = "Exp: " & UserExp & "/" & UserPasarNivel
-    frmMain.iBEXP.Width = 122 * Round(CDbl(UserExp) / CDbl(UserPasarNivel), 2) + 4
+    'frmMain.iBEXP.ToolTipText = "Exp: " & UserExp & "/" & UserPasarNivel
+    'frmMain.iBEXP.Width = 122 * Round(CDbl(UserExp) / CDbl(UserPasarNivel), 2) + 4
     ' frmMain.Experiencia.Left = frmMain.iBEXP.Left + frmMain.iBEXP.Width
-    frmMain.exp.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
-    frmMain.exp.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
-
+    ''frmMain.exp.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
+    'frmMain.exp.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
+'neo sacados
 End Sub
 
 ''
