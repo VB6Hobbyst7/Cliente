@@ -1,4 +1,4 @@
-Application = 208, 208, 1270, 843, 
+Application = 208, 208, 1270, 843, Z
 Carteles = 0, 0, 0, 0, C
 cDIBSection = 130, 130, 1150, 764, 
 clsAudio = 286, 286, 1377, 921, 
@@ -40,7 +40,7 @@ frmMensaje = 182, 182, 1674, 672, , 286, 286, 1361, 905, C
 frmMessageTxt = 0, 0, 0, 0, C, 0, 0, 1075, 619, C
 frmMSG = 0, 0, 0, 0, C, 26, 26, 1101, 645, C
 frmNewPassword = 0, 0, 0, 0, C, 52, 52, 1127, 671, C
-frmOpciones = 0, 0, 1091, 635, Z, 78, 78, 1153, 697, C
+frmOpciones = 0, 0, 1091, 635, , 78, 78, 1153, 697, C
 frmPanelGm = 130, 130, 1221, 765, , 104, 104, 1179, 723, C
 frmPeaceProp = 0, 0, 0, 0, C, 130, 130, 1205, 749, C
 frmScreenshots = 0, 0, 0, 0, C, 156, 156, 1231, 775, C
