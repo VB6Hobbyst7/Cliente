@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{BF3128D8-55B8-11D4-8ED4-00E07D815373}#1.0#0"; "MBPrgBar.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
@@ -38,6 +38,7 @@ Begin VB.Form frmMain
       TabIndex        =   42
       TabStop         =   0   'False
       Top             =   11175
+      Visible         =   0   'False
       Width           =   480
    End
    Begin VB.PictureBox BarraHechiz 
@@ -1577,7 +1578,7 @@ End Sub
 Public Sub SetRender(Full As Boolean)
 
     If Full Then
-        pRender.Move 0, 0, 1024, 768
+        pRender.Move 0, 0, 1024, 782
     Else
         pRender.Move 2, 125, 800, 608
 

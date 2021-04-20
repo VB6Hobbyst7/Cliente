@@ -732,10 +732,10 @@ Sub RenderConectar()
                         frmMain.tRePass.Visible = True
                         frmMain.tUser.SetFocus
                     
-                        frmMain.tUser.Top = 603 - 13
-                        frmMain.tEmail.Top = 626 - 10
-                        frmMain.tPass.Top = 648 - 5
-                        frmMain.tRePass.Top = 665 + 2
+                        frmMain.tUser.Top = 603 - 13 - 8
+                        frmMain.tEmail.Top = 626 - 10 - 8
+                        frmMain.tPass.Top = 648 - 5 - 8
+                        frmMain.tRePass.Top = 665 + 2 - 8
                     
                         frmMain.tPass.Left = 446
                         frmMain.tRePass.Left = 446
@@ -759,21 +759,21 @@ Sub RenderConectar()
             Else
 
                 If T2 < 1 Then
-                    Call Engine_Render_D3DXSprite(255, 1023 - 388.5 * T2 + 259 / 2 * (T2 ^ 2), 1024, 259, 0, 177, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, MostrarEntrar, 200, 4)), 14703, 0)
+                    Call Engine_Render_D3DXSprite(255, 1023 + 14 - 388.5 * T2 + 259 / 2 * (T2 ^ 2), 1024, 259, 0, 177, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, MostrarEntrar, 200, 4)), 14703, 0)
                 Else
-                    Call Engine_Render_D3DXSprite(255, 1023 - 259, 1024, 259, 0, 177, D3DColorRGBA(255, 255, 255, 200), 14703, 0)
+                    Call Engine_Render_D3DXSprite(255, 1023 + 14 - 259, 1024, 259, 0, 177, D3DColorRGBA(255, 255, 255, 200), 14703, 0)
                 
                     If mOpciones.Recordar = True Then
-                        Call Engine_Render_D3DXSprite(870, 920, 37, 41, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14771, 0)
+                        Call Engine_Render_D3DXSprite(870, 920 + 14, 37, 41, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14771, 0)
                     Else
-                        Call Engine_Render_D3DXSprite(870, 920, 37, 41, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14770, 0)
+                        Call Engine_Render_D3DXSprite(870, 920 + 14, 37, 41, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14770, 0)
 
                     End If
                 
                     If frmMain.tUser.Visible = False Then
                     
-                        frmMain.tUser.Top = 612
-                        frmMain.tPass.Top = 637
+                        frmMain.tUser.Top = 612 + 5
+                        frmMain.tPass.Top = 637 + 5
                         frmMain.tPass.Left = 428
                         frmMain.tUser.Left = 428
                     
@@ -847,7 +847,7 @@ Sub RenderConectar()
             Call Engine_Render_D3DXSprite(255, 1023 - Int(23 * T - 5.75 / 2 * (T ^ 2)), 1024, 47, 0, 436, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
         Else
             Call Engine_Render_D3DXSprite(255, 255, 1024, 177, 0, 0, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
-            Call Engine_Render_D3DXSprite(255, 1023 - 46, 1024, 47, 0, 436, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
+            Call Engine_Render_D3DXSprite(255, 1023 - 34, 1024, 47, 0, 436, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
 
         End If
     
