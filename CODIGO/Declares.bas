@@ -31,7 +31,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
-
+Public Movement_Speed As Single
 Public Enum eMessages
 
     mUserMuerto
@@ -1289,3 +1289,14 @@ Public SinMidi                   As Boolean
 
 Public iTickMidi                 As Long
 
+
+Public Function EsNPC(ByVal CharIndex As Integer) As Boolean
+
+    If charlist(CharIndex).iHead = 0 Then
+        EsNPC = True
+        Exit Function
+    End If
+    
+    EsNPC = False
+
+End Function
