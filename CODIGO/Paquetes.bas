@@ -297,7 +297,10 @@ Public Enum ServerPacketID
     GoHome
     GotHome
     Tooltip
-
+  'quest
+   QuestDetails
+    QuestListSend
+    'quest
 End Enum
 
 Public Enum ClientPacketID
@@ -420,6 +423,14 @@ Public Enum ClientPacketID
     AnclarEmbarcacion            'Ancla la embarcacion
 
     'DesAnclarEmbarcacion            'DesAncla la embarcacion
+    
+    'quest
+    Quest                   '/QUEST
+    QuestAccept
+    QuestListRequest
+    QuestDetailsRequest
+    QuestAbandon
+    'quest
 End Enum
 
 Public Enum FontTypeNames
