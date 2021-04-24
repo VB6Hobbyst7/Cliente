@@ -721,7 +721,7 @@ Sub CargarMap(ByVal Map As Integer)
             Pos = Pos + 2
 
             For i = Pos To Pos + tmpInt - 1
-                MapInfo.name = MapInfo.name & Chr(DataMap1(i))
+                MapInfo.Name = MapInfo.Name & Chr(DataMap1(i))
             Next i
 
             Pos = Pos + tmpInt
@@ -754,7 +754,7 @@ Sub CargarMap(ByVal Map As Integer)
             Pos = Pos + 2
 
             For i = Pos To Pos + tmpInt - 1
-                MapInfo.name = MapInfo.name & Chr(DataMap2(i))
+                MapInfo.Name = MapInfo.Name & Chr(DataMap2(i))
             Next i
 
             Pos = Pos + tmpInt
@@ -1100,6 +1100,11 @@ Sub Main()
     Call CargarZonas
     Call CargarPasos
     Call CargarTutorial
+    'quest
+    Call CargarNpc
+Call CargarQuests
+Call CargarObjetos
+    'quest
     
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.45
     DoEvents
@@ -1833,7 +1838,7 @@ Sub ClosePj()
     
     For i = 0 To Forms.Count - 1
 
-        If Forms(i).name <> frmMain.name And Forms(i).name <> frmCrearPersonaje.name And Forms(i).name <> frmMensaje.name Then
+        If Forms(i).Name <> frmMain.Name And Forms(i).Name <> frmCrearPersonaje.Name And Forms(i).Name <> frmMensaje.Name Then
             Unload Forms(i)
 
         End If
@@ -1887,7 +1892,7 @@ Sub ClosePj()
     
     For Each frm In Forms
 
-        If frm.name <> frmMain.name Then
+        If frm.Name <> frmMain.Name Then
             Unload frm
 
         End If
@@ -2020,7 +2025,7 @@ Public Sub SetCursor(ByVal tCursor As eCursor)
 
             End If
 
-        Case eCursor.Proyectil
+        Case eCursor.proyectil
             curProyectil.CursorOn frmMain.pRender.hwnd
 
         Case eCursor.ProyectilPequena

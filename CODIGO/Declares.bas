@@ -31,6 +31,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
+Public COLOR_AZUL  As Long
 Public Movement_Speed As Single
 Public Enum eMessages
 
@@ -611,7 +612,7 @@ Public Enum eCursor
 
     General
     Hechiz
-    Proyectil
+    proyectil
     ProyectilPequena
 
 End Enum
@@ -756,14 +757,14 @@ Public Const MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA As String = "puntos de ex
 Type Inventory
 
     OBJIndex As Integer
-    name As String
+    Name As String
     GrhIndex As Integer
     '[Alejo]: tipo de datos ahora es Long
     Amount As Long
     '[/Alejo]
     Equipped As Byte
     Valor As Single
-    OBJType As Integer
+    ObjType As Integer
     MinDef As Integer
     MaxDef As Integer
     MaxHit As Integer
@@ -775,11 +776,11 @@ End Type
 Type NpCinV
 
     OBJIndex As Integer
-    name As String
+    Name As String
     GrhIndex As Integer
     Amount As Integer
     Valor As Single
-    OBJType As Integer
+    ObjType As Integer
     MaxDef As Integer
     MinDef As Integer
     MaxHit As Integer
@@ -821,7 +822,7 @@ End Type
 
 Type tItemsConstruibles
 
-    name As String
+    Name As String
     OBJIndex As Integer
     GrhIndex As Integer
     LinH As Integer
@@ -1291,12 +1292,13 @@ Public iTickMidi                 As Long
 
 
 Public Function EsNPC(ByVal CharIndex As Integer) As Boolean
-
+'If CharIndex > 0 Then
+   If Not CharIndex < 0 Then
     If charlist(CharIndex).iHead = 0 Then
         EsNPC = True
         Exit Function
     End If
     
     EsNPC = False
-
+End If
 End Function

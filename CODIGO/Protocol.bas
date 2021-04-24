@@ -34,6 +34,10 @@ Attribute VB_Name = "Protocol"
 
 Option Explicit
 
+
+ 
+
+
 Public NotEnoughData    As Boolean
 ''
 ' TODO : /BANIP y /UNBANIP ya no trabajan con nicks. Esto lo puede mentir en forma local el cliente con un paquete a NickToIp
@@ -655,11 +659,17 @@ Public Sub HandleIncomingData()
         Call HandleTooltip
 
         'quest
-   Case ServerPacketID.QuestDetails
-      Call HandleQuestDetails
+    Case ServerPacketID.QuestDetails
+        Call HandleQuestDetails
 
-Case ServerPacketID.QuestListSend
-      Call HandleQuestListSend
+    Case ServerPacketID.QuestListSend
+        Call HandleQuestListSend
+
+    Case ServerPacketID.NpcQuestListSend
+        Call HandleNpcQuestListSend
+
+    Case ServerPacketID.UpdateNPCSimbolo
+        Call HandleUpdateNPCSimbolo
         'quest
 
 
@@ -845,12 +855,12 @@ Private Sub HandleCommerceChat()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As clsByteQueue: Set Buffer = New clsByteQueue
+    Dim buffer As clsByteQueue: Set buffer = New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim chat      As String
 
@@ -864,8 +874,8 @@ Private Sub HandleCommerceChat()
 
     Dim B         As Byte
     
-    chat = Buffer.ReadASCIIString()
-    FontIndex = Buffer.ReadByte()
+    chat = buffer.ReadASCIIString()
+    FontIndex = buffer.ReadByte()
     
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
@@ -909,7 +919,7 @@ Private Sub HandleCommerceChat()
     End If
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -920,7 +930,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -971,7 +981,7 @@ Private Sub HandleCommerceInit()
         If Inventario.OBJIndex(i) <> 0 Then
 
             With Inventario
-                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
 
             End With
 
@@ -985,7 +995,7 @@ Private Sub HandleCommerceInit()
         If NPCInventory(i).OBJIndex <> 0 Then
 
             With NPCInventory(i)
-                Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .PuedeUsarItem)
+                Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
             End With
 
@@ -1026,7 +1036,7 @@ Private Sub HandleBankInit()
     For i = 1 To Inventario.MaxObjs
 
         With Inventario
-            Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+            Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
 
         End With
 
@@ -1035,7 +1045,7 @@ Private Sub HandleBankInit()
     For i = 1 To MAX_BANCOINVENTORY_SLOTS
 
         With UserBancoInventory(i)
-            Call InvBanco(0).SetItem(i, .OBJIndex, .Amount, .Equipped, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .PuedeUsarItem)
+            Call InvBanco(0).SetItem(i, .OBJIndex, .Amount, .Equipped, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
         End With
 
@@ -1144,7 +1154,7 @@ Private Sub HandleUserCommerceInit()
         If Inventario.OBJIndex(i) <> 0 Then
 
             With Inventario
-                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
 
             End With
 
@@ -2466,12 +2476,12 @@ Private Sub HandleChatOverHead()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim chat      As String
 
@@ -2483,17 +2493,17 @@ Private Sub HandleChatOverHead()
 
     Dim B         As Byte
     
-    chat = Buffer.ReadASCIIString()
-    CharIndex = Buffer.ReadInteger()
+    chat = buffer.ReadASCIIString()
+    CharIndex = buffer.ReadInteger()
     
-    R = Buffer.ReadByte()
-    G = Buffer.ReadByte()
-    B = Buffer.ReadByte()
+    R = buffer.ReadByte()
+    G = buffer.ReadByte()
+    B = buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
     If charlist(CharIndex).ACTIVE Or charlist(CharIndex).priv = 10 Then Call Dialogos.CreateDialog(chat, CharIndex, R, G, B)
         
-    Dim name As String
+    Dim Name As String
 
     Dim Pos  As Integer
 
@@ -2501,12 +2511,12 @@ Private Sub HandleChatOverHead()
 
     If Pos = 0 Then Pos = Len(charlist(CharIndex).nombre) + 2
         
-    name = Left$(charlist(CharIndex).nombre, Pos - 2)
+    Name = Left$(charlist(CharIndex).nombre, Pos - 2)
         
-    If charlist(CharIndex).nombre <> "" And charlist(CharIndex).invisible = False Then Call AddtoRichPicture(name & "> " & chat, 190, 190, 190, False, True)
+    If charlist(CharIndex).nombre <> "" And charlist(CharIndex).invisible = False Then Call AddtoRichPicture(Name & "> " & chat, 190, 190, 190, False, True)
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
 
 ErrHandler:
 
@@ -2517,7 +2527,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
     
     If Error <> 0 Then Err.Raise Error
 
@@ -2542,12 +2552,12 @@ Private Sub HandleConsoleMessage()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim chat      As String
 
@@ -2561,8 +2571,8 @@ Private Sub HandleConsoleMessage()
 
     Dim B         As Byte
     
-    chat = Buffer.ReadASCIIString()
-    FontIndex = Buffer.ReadByte()
+    chat = buffer.ReadASCIIString()
+    FontIndex = buffer.ReadByte()
     
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
@@ -2608,7 +2618,7 @@ Private Sub HandleConsoleMessage()
     End If
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -2619,7 +2629,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     ' If error <> 0 Then _
     '   Err.Raise error
@@ -2644,12 +2654,12 @@ Private Sub HandleGuildChat()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim chat As String
 
@@ -2665,7 +2675,7 @@ Private Sub HandleGuildChat()
 
     Dim Cont As Integer
     
-    chat = Buffer.ReadASCIIString()
+    chat = buffer.ReadASCIIString()
     
     'If Not DialogosClanes.Activo Then
     If mOpciones.DialogConsole = False Then
@@ -2713,7 +2723,7 @@ Private Sub HandleGuildChat()
     End If
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -2724,7 +2734,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -2749,18 +2759,18 @@ Private Sub HandleShowMessageBox()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
-    frmMensaje.msg.Caption = Buffer.ReadASCIIString()
+    frmMensaje.msg.Caption = buffer.ReadASCIIString()
     frmMensaje.Show
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -2771,7 +2781,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -2791,17 +2801,17 @@ Private Sub HandleShowMessageScroll()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
-    Call DrawTextPergamino(Buffer.ReadASCIIString(), Buffer.ReadInteger, Buffer.ReadByte)
+    Call DrawTextPergamino(buffer.ReadASCIIString(), buffer.ReadInteger, buffer.ReadByte)
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -2812,7 +2822,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -2905,12 +2915,12 @@ Private Sub HandleCharacterCreate()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim CharIndex As Integer
 
@@ -2932,23 +2942,23 @@ Private Sub HandleCharacterCreate()
 
     Dim privs     As Integer
     
-    CharIndex = Buffer.ReadInteger()
-    Body = Buffer.ReadInteger()
-    Head = Buffer.ReadInteger()
-    Heading = Buffer.ReadByte()
-    x = Buffer.ReadInteger()
-    y = Buffer.ReadInteger()
-    weapon = Buffer.ReadInteger()
-    shield = Buffer.ReadInteger()
-    helmet = Buffer.ReadInteger()
+    CharIndex = buffer.ReadInteger()
+    Body = buffer.ReadInteger()
+    Head = buffer.ReadInteger()
+    Heading = buffer.ReadByte()
+    x = buffer.ReadInteger()
+    y = buffer.ReadInteger()
+    weapon = buffer.ReadInteger()
+    shield = buffer.ReadInteger()
+    helmet = buffer.ReadInteger()
     
     With charlist(CharIndex)
-        Call SetCharacterFx(CharIndex, Buffer.ReadInteger(), Buffer.ReadInteger())
+        Call SetCharacterFx(CharIndex, buffer.ReadInteger(), buffer.ReadInteger())
         
-        .nombre = Buffer.ReadASCIIString()
-        .Criminal = Buffer.ReadByte()
+        .nombre = buffer.ReadASCIIString()
+        .Criminal = buffer.ReadByte()
         
-        privs = Buffer.ReadByte()
+        privs = buffer.ReadByte()
         
         If privs <> 0 Then
 
@@ -2983,7 +2993,7 @@ Private Sub HandleCharacterCreate()
     'Call RefreshAllChars
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -2994,7 +3004,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -3368,18 +3378,18 @@ Private Sub HandleGuildList()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     With frmGuildAdm
         'Clear guild's list
         .guildslist.Clear
         
-        GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildNames = Split(buffer.ReadASCIIString(), SEPARATOR)
         
         Dim i As Long
 
@@ -3388,7 +3398,7 @@ Private Sub HandleGuildList()
         Next i
         
         'If we got here then packet is complete, copy data back to original queue
-        Call incomingData.CopyBuffer(Buffer)
+        Call incomingData.CopyBuffer(buffer)
         
         .Show vbModeless, frmMain
 
@@ -3403,7 +3413,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -3759,7 +3769,7 @@ Private Sub HandleWorkRequestTarget()
 
             'frmMain.tMouse.Enabled = True
             If UserNavegando = True And UsingSecondSkill = 1 Then
-                Call SetCursor(Proyectil)
+                Call SetCursor(proyectil)
             Else
                 Call SetCursor(ProyectilPequena)
 
@@ -3790,30 +3800,30 @@ Private Sub HandleShowPartyForm()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim members() As String
 
     Dim i         As Long
     
-    EsPartyLeader = CBool(Buffer.ReadByte())
+    EsPartyLeader = CBool(buffer.ReadByte())
        
-    members = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    members = Split(buffer.ReadASCIIString(), SEPARATOR)
 
     For i = 0 To UBound(members())
         Call frmParty.lstMembers.AddItem(members(i))
     Next i
     
-    frmParty.lblTotalExp.Caption = Buffer.ReadLong
+    frmParty.lblTotalExp.Caption = buffer.ReadLong
     frmParty.Show , frmMain
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -3824,7 +3834,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -3849,18 +3859,18 @@ Private Sub HandleChangeInventorySlot()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim slot          As Byte
 
     Dim OBJIndex      As Integer
 
-    Dim name          As String
+    Dim Name          As String
 
     Dim Amount        As Integer
 
@@ -3868,7 +3878,7 @@ Private Sub HandleChangeInventorySlot()
 
     Dim GrhIndex      As Integer
 
-    Dim OBJType       As Byte
+    Dim ObjType       As Byte
 
     Dim MaxHit        As Integer
 
@@ -3882,23 +3892,23 @@ Private Sub HandleChangeInventorySlot()
 
     Dim PuedeUsarItem As Byte
     
-    slot = Buffer.ReadByte()
-    OBJIndex = Buffer.ReadInteger()
-    name = Buffer.ReadASCIIString()
-    Amount = Buffer.ReadInteger()
-    Equipped = Buffer.ReadBoolean()
-    GrhIndex = Buffer.ReadInteger()
-    OBJType = Buffer.ReadByte()
-    MaxHit = Buffer.ReadInteger()
-    MinHit = Buffer.ReadInteger()
-    MinDef = Buffer.ReadInteger()
-    MaxDef = Buffer.ReadInteger()
-    Value = Buffer.ReadSingle()
-    PuedeUsarItem = Buffer.ReadByte()
+    slot = buffer.ReadByte()
+    OBJIndex = buffer.ReadInteger()
+    Name = buffer.ReadASCIIString()
+    Amount = buffer.ReadInteger()
+    Equipped = buffer.ReadBoolean()
+    GrhIndex = buffer.ReadInteger()
+    ObjType = buffer.ReadByte()
+    MaxHit = buffer.ReadInteger()
+    MinHit = buffer.ReadInteger()
+    MinDef = buffer.ReadInteger()
+    MaxDef = buffer.ReadInteger()
+    Value = buffer.ReadSingle()
+    PuedeUsarItem = buffer.ReadByte()
     
     If Equipped Then
 
-        Select Case OBJType
+        Select Case ObjType
 
             Case eObjType.otWeapon
                 frmMain.lblArma = MinHit & "/" & MaxHit
@@ -3920,9 +3930,9 @@ Private Sub HandleChangeInventorySlot()
 
     Else
 
-        If OBJType > 0 Then
+        If ObjType > 0 Then
 
-            Select Case OBJType
+            Select Case ObjType
 
                 Case eObjType.otWeapon
                     frmMain.lblArma = "N/A"
@@ -3946,10 +3956,10 @@ Private Sub HandleChangeInventorySlot()
 
     End If
     
-    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MinDef, MaxDef, Value, name, PuedeUsarItem)
+    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, ObjType, MaxHit, MinHit, MinDef, MaxDef, Value, Name, PuedeUsarItem)
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -3960,7 +3970,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -3985,39 +3995,39 @@ Private Sub HandleChangeBankSlot()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim slot As Byte
 
-    slot = Buffer.ReadByte()
+    slot = buffer.ReadByte()
     
     With UserBancoInventory(slot)
-        .OBJIndex = Buffer.ReadInteger()
-        .name = Buffer.ReadASCIIString()
-        .Amount = Buffer.ReadInteger()
-        .GrhIndex = Buffer.ReadInteger()
-        .OBJType = Buffer.ReadByte()
-        .MaxHit = Buffer.ReadInteger()
-        .MinHit = Buffer.ReadInteger()
-        .MaxDef = Buffer.ReadInteger()
+        .OBJIndex = buffer.ReadInteger()
+        .Name = buffer.ReadASCIIString()
+        .Amount = buffer.ReadInteger()
+        .GrhIndex = buffer.ReadInteger()
+        .ObjType = buffer.ReadByte()
+        .MaxHit = buffer.ReadInteger()
+        .MinHit = buffer.ReadInteger()
+        .MaxDef = buffer.ReadInteger()
         .MinDef = .MaxDef
-        .Valor = Buffer.ReadLong()
-        .PuedeUsarItem = Buffer.ReadByte()
+        .Valor = buffer.ReadLong()
+        .PuedeUsarItem = buffer.ReadByte()
         
         If Comerciando Then
-            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, .Equipped, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .PuedeUsarItem)
+            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, .Equipped, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
         End If
 
     End With
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -4028,7 +4038,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -4053,28 +4063,28 @@ Private Sub HandleChangeSpellSlot()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim slot As Byte
 
-    slot = Buffer.ReadByte()
+    slot = buffer.ReadByte()
     
-    UserHechizos(slot) = Buffer.ReadInteger()
+    UserHechizos(slot) = buffer.ReadInteger()
     
     If slot <= frmMain.hlst.ListCount Then
-        frmMain.hlst.List(slot - 1) = Buffer.ReadASCIIString()
+        frmMain.hlst.List(slot - 1) = buffer.ReadASCIIString()
     Else
-        Call frmMain.hlst.AddItem(Buffer.ReadASCIIString())
+        Call frmMain.hlst.AddItem(buffer.ReadASCIIString())
 
     End If
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -4085,7 +4095,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -4155,12 +4165,12 @@ Private Sub HandleBlacksmithWeapons()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim Count As Integer
 
@@ -4170,7 +4180,7 @@ Private Sub HandleBlacksmithWeapons()
 
     Dim k     As Long
     
-    Count = Buffer.ReadInteger()
+    Count = buffer.ReadInteger()
     
     ReDim ArmasHerrero(Count) As tItemsConstruibles
     ReDim HerreroMejorar(0) As tItemsConstruibles
@@ -4178,13 +4188,13 @@ Private Sub HandleBlacksmithWeapons()
     For i = 1 To Count
 
         With ArmasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
-            .GrhIndex = Buffer.ReadInteger()
-            .LinH = Buffer.ReadInteger()        'The iron needed
-            .LinP = Buffer.ReadInteger()        'The silver needed
-            .LinO = Buffer.ReadInteger()        'The gold needed
-            .OBJIndex = Buffer.ReadInteger()
-            .Upgrade = Buffer.ReadInteger()
+            .Name = buffer.ReadASCIIString()    'Get the object's name
+            .GrhIndex = buffer.ReadInteger()
+            .LinH = buffer.ReadInteger()        'The iron needed
+            .LinP = buffer.ReadInteger()        'The silver needed
+            .LinO = buffer.ReadInteger()        'The gold needed
+            .OBJIndex = buffer.ReadInteger()
+            .Upgrade = buffer.ReadInteger()
 
         End With
 
@@ -4215,10 +4225,10 @@ Private Sub HandleBlacksmithWeapons()
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(J).name = .name
+                        HerreroMejorar(J).Name = .Name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
                         HerreroMejorar(J).OBJIndex = .OBJIndex
-                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).name
+                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).Name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
                         HerreroMejorar(J).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
@@ -4237,7 +4247,7 @@ Private Sub HandleBlacksmithWeapons()
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     Exit Sub
 ErrHandler:
 
@@ -4248,7 +4258,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -4273,12 +4283,12 @@ Private Sub HandleBlacksmithArmors()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim Count As Integer
 
@@ -4288,20 +4298,20 @@ Private Sub HandleBlacksmithArmors()
 
     Dim k     As Long
     
-    Count = Buffer.ReadInteger()
+    Count = buffer.ReadInteger()
     
     ReDim ArmadurasHerrero(Count) As tItemsConstruibles
     
     For i = 1 To Count
 
         With ArmadurasHerrero(i)
-            .name = Buffer.ReadASCIIString()    'Get the object's name
-            .GrhIndex = Buffer.ReadInteger()
-            .LinH = Buffer.ReadInteger()        'The iron needed
-            .LinP = Buffer.ReadInteger()        'The silver needed
-            .LinO = Buffer.ReadInteger()        'The gold needed
-            .OBJIndex = Buffer.ReadInteger()
-            .Upgrade = Buffer.ReadInteger()
+            .Name = buffer.ReadASCIIString()    'Get the object's name
+            .GrhIndex = buffer.ReadInteger()
+            .LinH = buffer.ReadInteger()        'The iron needed
+            .LinP = buffer.ReadInteger()        'The silver needed
+            .LinO = buffer.ReadInteger()        'The gold needed
+            .OBJIndex = buffer.ReadInteger()
+            .Upgrade = buffer.ReadInteger()
 
         End With
 
@@ -4322,10 +4332,10 @@ Private Sub HandleBlacksmithArmors()
                 
                         ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
                         
-                        HerreroMejorar(J).name = .name
+                        HerreroMejorar(J).Name = .Name
                         HerreroMejorar(J).GrhIndex = .GrhIndex
                         HerreroMejorar(J).OBJIndex = .OBJIndex
-                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).name
+                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).Name
                         HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
                         HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
                         HerreroMejorar(J).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
@@ -4344,7 +4354,7 @@ Private Sub HandleBlacksmithArmors()
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     Exit Sub
 ErrHandler:
 
@@ -4355,7 +4365,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -4380,12 +4390,12 @@ Private Sub HandleCarpenterObjects()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim Count As Integer
 
@@ -4395,7 +4405,7 @@ Private Sub HandleCarpenterObjects()
 
     Dim k     As Long
     
-    Count = Buffer.ReadInteger()
+    Count = buffer.ReadInteger()
     
     ReDim ObjCarpintero(Count) As tItemsConstruibles
     ReDim CarpinteroMejorar(0) As tItemsConstruibles
@@ -4403,12 +4413,12 @@ Private Sub HandleCarpenterObjects()
     For i = 1 To Count
 
         With ObjCarpintero(i)
-            .name = Buffer.ReadASCIIString()        'Get the object's name
-            .GrhIndex = Buffer.ReadInteger()
-            .Madera = Buffer.ReadInteger()          'The wood needed
-            .MaderaElfica = Buffer.ReadInteger()    'The elfic wood needed
-            .OBJIndex = Buffer.ReadInteger()
-            .Upgrade = Buffer.ReadInteger()
+            .Name = buffer.ReadASCIIString()        'Get the object's name
+            .GrhIndex = buffer.ReadInteger()
+            .Madera = buffer.ReadInteger()          'The wood needed
+            .MaderaElfica = buffer.ReadInteger()    'The elfic wood needed
+            .OBJIndex = buffer.ReadInteger()
+            .Upgrade = buffer.ReadInteger()
 
         End With
 
@@ -4439,10 +4449,10 @@ Private Sub HandleCarpenterObjects()
                 
                         ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
                         
-                        CarpinteroMejorar(J).name = .name
+                        CarpinteroMejorar(J).Name = .Name
                         CarpinteroMejorar(J).GrhIndex = .GrhIndex
                         CarpinteroMejorar(J).OBJIndex = .OBJIndex
-                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).name
+                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).Name
                         CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
                         CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
                         CarpinteroMejorar(J).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
@@ -4460,7 +4470,7 @@ Private Sub HandleCarpenterObjects()
     Next i
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -4471,7 +4481,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -4512,14 +4522,14 @@ Private Sub HandleErrorMessage()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
-    Call MessageBox(Buffer.ReadASCIIString())
+    Call MessageBox(buffer.ReadASCIIString())
     
     If MostrarEntrar > 0 Then
         CloseSock
@@ -4527,7 +4537,7 @@ Private Sub HandleErrorMessage()
     End If
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -4538,7 +4548,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -4596,21 +4606,21 @@ Private Sub HandleShowSignal()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim tmp As String
 
-    tmp = Buffer.ReadASCIIString()
+    tmp = buffer.ReadASCIIString()
     
-    Call InitCartel(tmp, Buffer.ReadInteger())
+    Call InitCartel(tmp, buffer.ReadInteger())
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -4621,7 +4631,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -4646,34 +4656,34 @@ Private Sub HandleChangeNPCInventorySlot()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim slot As Byte
 
-    slot = Buffer.ReadByte()
+    slot = buffer.ReadByte()
     
     With NPCInventory(slot)
-        .name = Buffer.ReadASCIIString()
-        .Amount = Buffer.ReadInteger()
-        .Valor = Buffer.ReadSingle()
-        .GrhIndex = Buffer.ReadInteger()
-        .OBJIndex = Buffer.ReadInteger()
-        .OBJType = Buffer.ReadByte()
-        .MaxHit = Buffer.ReadInteger()
-        .MinHit = Buffer.ReadInteger()
-        .MaxDef = Buffer.ReadInteger()
-        .PuedeUsarItem = Buffer.ReadByte()
+        .Name = buffer.ReadASCIIString()
+        .Amount = buffer.ReadInteger()
+        .Valor = buffer.ReadSingle()
+        .GrhIndex = buffer.ReadInteger()
+        .OBJIndex = buffer.ReadInteger()
+        .ObjType = buffer.ReadByte()
+        .MaxHit = buffer.ReadInteger()
+        .MinHit = buffer.ReadInteger()
+        .MaxDef = buffer.ReadInteger()
+        .PuedeUsarItem = buffer.ReadByte()
         
         '.MinDef = Buffer.ReadInteger
     End With
         
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
 ErrHandler:
 
     Dim Error As Long
@@ -4683,7 +4693,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5040,36 +5050,36 @@ Private Sub HandleRetosAbre()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim Crea As Boolean
 
     Dim Vs   As Byte
 
-    Crea = Buffer.ReadBoolean
+    Crea = buffer.ReadBoolean
     
     If Crea Then
         Call frmRetos.Iniciar(1, False, 0, UserName, False, "", False, "", False, "", False, False)
         
     Else
-        Vs = Buffer.ReadByte
+        Vs = buffer.ReadByte
 
         If Vs = 1 Then
-            Call frmRetos.Iniciar(Vs, Buffer.ReadBoolean, Buffer.ReadLong, Buffer.ReadASCIIString, Buffer.ReadBoolean, Buffer.ReadASCIIString, Buffer.ReadBoolean, "", False, "", False, Buffer.ReadBoolean)
+            Call frmRetos.Iniciar(Vs, buffer.ReadBoolean, buffer.ReadLong, buffer.ReadASCIIString, buffer.ReadBoolean, buffer.ReadASCIIString, buffer.ReadBoolean, "", False, "", False, buffer.ReadBoolean)
         Else
-            Call frmRetos.Iniciar(Vs, Buffer.ReadBoolean, Buffer.ReadLong, Buffer.ReadASCIIString, Buffer.ReadBoolean, Buffer.ReadASCIIString, Buffer.ReadBoolean, Buffer.ReadASCIIString, Buffer.ReadBoolean, Buffer.ReadASCIIString, Buffer.ReadBoolean, Buffer.ReadBoolean)
+            Call frmRetos.Iniciar(Vs, buffer.ReadBoolean, buffer.ReadLong, buffer.ReadASCIIString, buffer.ReadBoolean, buffer.ReadASCIIString, buffer.ReadBoolean, buffer.ReadASCIIString, buffer.ReadBoolean, buffer.ReadASCIIString, buffer.ReadBoolean, buffer.ReadBoolean)
 
         End If
 
     End If
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
     frmRetos.Show , frmMain
     
@@ -5082,7 +5092,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5104,17 +5114,17 @@ Private Sub HandleRetosRespuesta()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer  As New clsByteQueue
+    Dim buffer  As New clsByteQueue
 
     Dim msg     As Byte
 
     Dim Mensaje As String
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
-    msg = Buffer.ReadByte
+    Call buffer.ReadByte
+    msg = buffer.ReadByte
     
     Select Case msg
 
@@ -5175,7 +5185,7 @@ Private Sub HandleRetosRespuesta()
     End If
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -5186,7 +5196,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5211,18 +5221,18 @@ Private Sub HandleTrainerCreatureList()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim creatures() As String
 
     Dim i           As Long
     
-    creatures = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    creatures = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     For i = 0 To UBound(creatures())
         Call frmEntrenador.lstCriaturas.AddItem(creatures(i))
@@ -5231,7 +5241,7 @@ Private Sub HandleTrainerCreatureList()
     frmEntrenador.Show , frmMain
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -5242,7 +5252,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5267,12 +5277,12 @@ Private Sub HandleGuildNews()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim guildList() As String
 
@@ -5281,10 +5291,10 @@ Private Sub HandleGuildNews()
     Dim sTemp       As String
     
     'Get news' string
-    frmGuildNews.news = Buffer.ReadASCIIString()
+    frmGuildNews.news = buffer.ReadASCIIString()
     
     'Get Enemy guilds list
-    guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     For i = 0 To UBound(guildList)
         sTemp = frmGuildNews.txtClanesGuerra.Text
@@ -5292,7 +5302,7 @@ Private Sub HandleGuildNews()
     Next i
     
     'Get Allied guilds list
-    guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     For i = 0 To UBound(guildList)
         sTemp = frmGuildNews.txtClanesAliados.Text
@@ -5305,7 +5315,7 @@ Private Sub HandleGuildNews()
     End If
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -5316,7 +5326,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5341,17 +5351,17 @@ Private Sub HandleOfferDetails()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
-    Call frmUserRequest.recievePeticion(Buffer.ReadASCIIString())
+    Call frmUserRequest.recievePeticion(buffer.ReadASCIIString())
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -5362,7 +5372,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5387,18 +5397,18 @@ Private Sub HandleAlianceProposalsList()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim guildList() As String
 
     Dim i           As Long
     
-    guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     For i = 0 To UBound(guildList())
         Call frmPeaceProp.lista.AddItem(guildList(i))
@@ -5408,7 +5418,7 @@ Private Sub HandleAlianceProposalsList()
     Call frmPeaceProp.Show(vbModeless, frmMain)
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -5419,7 +5429,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5444,18 +5454,18 @@ Private Sub HandlePeaceProposalsList()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim guildList() As String
 
     Dim i           As Long
     
-    guildList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     For i = 0 To UBound(guildList())
         Call frmPeaceProp.lista.AddItem(guildList(i))
@@ -5465,7 +5475,7 @@ Private Sub HandlePeaceProposalsList()
     Call frmPeaceProp.Show(vbModeless, frmMain)
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -5476,7 +5486,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5501,12 +5511,12 @@ Private Sub HandleCharacterInfo()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     With frmCharInfo
 
@@ -5523,37 +5533,37 @@ Private Sub HandleCharacterInfo()
 
         End If
         
-        .nombre.Caption = Buffer.ReadASCIIString()
-        .Raza.Caption = ListaRazas(Buffer.ReadByte())
-        .Clase.Caption = ListaClases(Buffer.ReadByte())
+        .nombre.Caption = buffer.ReadASCIIString()
+        .Raza.Caption = ListaRazas(buffer.ReadByte())
+        .Clase.Caption = ListaClases(buffer.ReadByte())
         
-        If Buffer.ReadByte() = 1 Then
+        If buffer.ReadByte() = 1 Then
             .Genero.Caption = "Hombre"
         Else
             .Genero.Caption = "Mujer"
 
         End If
         
-        .Nivel.Caption = Buffer.ReadByte()
-        .Oro.Caption = Buffer.ReadLong()
-        .Banco.Caption = Buffer.ReadLong()
+        .Nivel.Caption = buffer.ReadByte()
+        .Oro.Caption = buffer.ReadLong()
+        .Banco.Caption = buffer.ReadLong()
         
         Dim reputation As Long
 
-        reputation = Buffer.ReadLong()
+        reputation = buffer.ReadLong()
         
         .reputacion.Caption = reputation
         
-        .txtPeticiones.Text = Buffer.ReadASCIIString()
-        .guildactual.Caption = Buffer.ReadASCIIString()
-        .txtMiembro.Text = Buffer.ReadASCIIString()
+        .txtPeticiones.Text = buffer.ReadASCIIString()
+        .guildactual.Caption = buffer.ReadASCIIString()
+        .txtMiembro.Text = buffer.ReadASCIIString()
         
         Dim armada As Boolean
 
         Dim caos   As Boolean
         
-        armada = Buffer.ReadBoolean()
-        caos = Buffer.ReadBoolean()
+        armada = buffer.ReadBoolean()
+        caos = buffer.ReadBoolean()
         
         If armada Then
             .ejercito.Caption = "Armada Real"
@@ -5562,8 +5572,8 @@ Private Sub HandleCharacterInfo()
 
         End If
         
-        .Ciudadanos.Caption = CStr(Buffer.ReadLong())
-        .criminales.Caption = CStr(Buffer.ReadLong())
+        .Ciudadanos.Caption = CStr(buffer.ReadLong())
+        .criminales.Caption = CStr(buffer.ReadLong())
         
         If reputation > 0 Then
             .status.Caption = " Ciudadano"
@@ -5579,7 +5589,7 @@ Private Sub HandleCharacterInfo()
     End With
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -5590,7 +5600,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5615,12 +5625,12 @@ Private Sub HandleGuildLeaderInfo()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim i      As Long
 
@@ -5628,7 +5638,7 @@ Private Sub HandleGuildLeaderInfo()
     
     With frmGuildLeader
         'Get list of existing guilds
-        GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildNames = Split(buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
         Call .guildslist.Clear
@@ -5638,7 +5648,7 @@ Private Sub HandleGuildLeaderInfo()
         Next i
         
         'Get list of guild's members
-        GuildMembers = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildMembers = Split(buffer.ReadASCIIString(), SEPARATOR)
         .Miembros.Caption = CStr(UBound(GuildMembers()) + 1)
         
         'Empty the list
@@ -5648,10 +5658,10 @@ Private Sub HandleGuildLeaderInfo()
             Call .members.AddItem(GuildMembers(i))
         Next i
         
-        .txtguildnews = Buffer.ReadASCIIString()
+        .txtguildnews = buffer.ReadASCIIString()
         
         'Get list of join requests
-        List = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        List = Split(buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
         Call .solicitudes.Clear
@@ -5665,7 +5675,7 @@ Private Sub HandleGuildLeaderInfo()
     End With
 
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -5676,7 +5686,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5698,18 +5708,18 @@ Private Sub HandleGuildMemberInfo()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     With frmGuildMember
         'Clear guild's list
         .lstClanes.Clear
         
-        GuildNames = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildNames = Split(buffer.ReadASCIIString(), SEPARATOR)
         
         Dim i As Long
 
@@ -5718,7 +5728,7 @@ Private Sub HandleGuildMemberInfo()
         Next i
         
         'Get list of guild's members
-        GuildMembers = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        GuildMembers = Split(buffer.ReadASCIIString(), SEPARATOR)
         .lblCantMiembros.Caption = CStr(UBound(GuildMembers()) + 1)
         
         'Empty the list
@@ -5729,7 +5739,7 @@ Private Sub HandleGuildMemberInfo()
         Next i
         
         'If we got here then packet is complete, copy data back to original queue
-        Call incomingData.CopyBuffer(Buffer)
+        Call incomingData.CopyBuffer(buffer)
         
         .Show vbModeless, frmMain
 
@@ -5744,7 +5754,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5769,53 +5779,53 @@ Private Sub HandleGuildDetails()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     With frmGuildBrief
         .imgDeclararGuerra.Visible = .EsLeader
         .imgOfrecerAlianza.Visible = .EsLeader
         .imgOfrecerPaz.Visible = .EsLeader
         
-        .nombre.Caption = Buffer.ReadASCIIString()
-        .fundador.Caption = Buffer.ReadASCIIString()
-        .creacion.Caption = Buffer.ReadASCIIString()
-        .lider.Caption = Buffer.ReadASCIIString()
-        .web.Caption = Buffer.ReadASCIIString()
-        .Miembros.Caption = Buffer.ReadInteger()
+        .nombre.Caption = buffer.ReadASCIIString()
+        .fundador.Caption = buffer.ReadASCIIString()
+        .creacion.Caption = buffer.ReadASCIIString()
+        .lider.Caption = buffer.ReadASCIIString()
+        .web.Caption = buffer.ReadASCIIString()
+        .Miembros.Caption = buffer.ReadInteger()
         
-        If Buffer.ReadBoolean() Then
+        If buffer.ReadBoolean() Then
             .eleccion.Caption = "ABIERTA"
         Else
             .eleccion.Caption = "CERRADA"
 
         End If
         
-        .lblAlineacion.Caption = Buffer.ReadASCIIString()
-        .Enemigos.Caption = Buffer.ReadInteger()
-        .Aliados.Caption = Buffer.ReadInteger()
-        .antifaccion.Caption = Buffer.ReadASCIIString()
+        .lblAlineacion.Caption = buffer.ReadASCIIString()
+        .Enemigos.Caption = buffer.ReadInteger()
+        .Aliados.Caption = buffer.ReadInteger()
+        .antifaccion.Caption = buffer.ReadASCIIString()
         
         Dim codexStr() As String
 
         Dim i          As Long
         
-        codexStr = Split(Buffer.ReadASCIIString(), SEPARATOR)
+        codexStr = Split(buffer.ReadASCIIString(), SEPARATOR)
         
         For i = 0 To 7
             .Codex(i).Caption = codexStr(i)
         Next i
         
-        .Desc.Text = Buffer.ReadASCIIString()
+        .Desc.Text = buffer.ReadASCIIString()
 
     End With
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
     frmGuildBrief.Show vbModeless, frmMain
     
@@ -5828,7 +5838,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5885,18 +5895,18 @@ Private Sub HandleShowUserRequest()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
-    Call frmUserRequest.recievePeticion(Buffer.ReadASCIIString())
+    Call frmUserRequest.recievePeticion(buffer.ReadASCIIString())
     Call frmUserRequest.Show(vbModeless, frmMain)
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -5907,7 +5917,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -5936,7 +5946,7 @@ Private Sub HandleTradeOK()
             If Inventario.OBJIndex(i) <> InvComUsu.OBJIndex(i) Then
 
                 With Inventario
-                    Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+                    Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
 
                 End With
 
@@ -5955,7 +5965,7 @@ Private Sub HandleTradeOK()
             If NPCInventory(i).OBJIndex <> InvComNpc.OBJIndex(i) Then
 
                 With NPCInventory(i)
-                    Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .name, .PuedeUsarItem)
+                    Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
                 End With
 
@@ -5990,7 +6000,7 @@ Private Sub HandleBankOK()
         For i = 1 To Inventario.MaxObjs
 
             With Inventario
-                Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), 0)
+                Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), 0)
 
             End With
 
@@ -6031,18 +6041,18 @@ Private Sub HandleChangeUserTradeSlot()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     Dim OfferSlot As Byte
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
-    OfferSlot = Buffer.ReadByte
+    OfferSlot = buffer.ReadByte
     
-    With Buffer
+    With buffer
 
         If OfferSlot = GOLD_OFFER_SLOT Then
             Call InvOroComUsu(2).SetItem(1, .ReadInteger(), .ReadLong(), 0, .ReadInteger(), .ReadByte(), .ReadInteger(), .ReadInteger(), .ReadInteger(), 0, .ReadLong(), .ReadASCIIString(), 0)
@@ -6056,7 +6066,7 @@ Private Sub HandleChangeUserTradeSlot()
     Call frmComerciarUsu.PrintCommerceMsg(TradingUserName & " ha modificado su oferta.", FontTypeNames.FONTTYPE_VENENO)
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -6067,7 +6077,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -6092,18 +6102,18 @@ Private Sub HandleSpawnList()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim creatureList() As String
 
     Dim i              As Long
     
-    creatureList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    creatureList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     For i = 0 To UBound(creatureList())
         Call frmSpawnList.lstCriaturas.AddItem(creatureList(i))
@@ -6112,7 +6122,7 @@ Private Sub HandleSpawnList()
     frmSpawnList.Show , frmMain
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -6123,7 +6133,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -6148,18 +6158,18 @@ Private Sub HandleShowSOSForm()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim sosList() As String
 
     Dim i         As Long
     
-    sosList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    sosList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     For i = 0 To UBound(sosList())
         Call frmMSG.List1.AddItem(sosList(i))
@@ -6168,7 +6178,7 @@ Private Sub HandleShowSOSForm()
     frmMSG.Show , frmMain
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -6179,7 +6189,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -6204,18 +6214,18 @@ Private Sub HandleShowMOTDEditionForm()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
-    frmCambiaMotd.txtMotd.Text = Buffer.ReadASCIIString()
+    frmCambiaMotd.txtMotd.Text = buffer.ReadASCIIString()
     frmCambiaMotd.Show , frmMain
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -6226,7 +6236,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -6267,18 +6277,18 @@ Private Sub HandleUserNameList()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim userList() As String
 
     Dim i          As Long
     
-    userList = Split(Buffer.ReadASCIIString(), SEPARATOR)
+    userList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     If frmPanelGm.Visible Then
         frmPanelGm.cboListaUsus.Clear
@@ -6292,7 +6302,7 @@ Private Sub HandleUserNameList()
     End If
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -6303,7 +6313,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -6345,12 +6355,12 @@ Private Sub HandleUpdateTagAndStatus()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim CharIndex As Integer
 
@@ -6358,9 +6368,9 @@ Private Sub HandleUpdateTagAndStatus()
 
     Dim userTag   As String
     
-    CharIndex = Buffer.ReadInteger()
-    Criminal = Buffer.ReadBoolean()
-    userTag = Buffer.ReadASCIIString()
+    CharIndex = buffer.ReadInteger()
+    Criminal = buffer.ReadBoolean()
+    userTag = buffer.ReadASCIIString()
     
     'Update char status adn tag!
     With charlist(CharIndex)
@@ -6384,7 +6394,7 @@ Private Sub HandleUpdateTagAndStatus()
     End With
     
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -6395,7 +6405,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -6417,19 +6427,19 @@ Private Sub HandleUsersOnline()
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
     
     Dim UsersOn As Integer
 
-    UsersOn = Buffer.ReadInteger()
+    UsersOn = buffer.ReadInteger()
     frmMain.lblUsers.Caption = UsersOn
     'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
 
@@ -6440,7 +6450,7 @@ ErrHandler:
     On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
 
     If Error <> 0 Then Err.Raise Error
 
@@ -6544,26 +6554,26 @@ Private Sub HandlePalabrasMagicas()
     End If
     
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
-    Dim Buffer As New clsByteQueue
+    Dim buffer As New clsByteQueue
 
-    Call Buffer.CopyBuffer(incomingData)
+    Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
  
     Dim SpellWords As String
 
     Dim CharIndex  As Integer
     
-    SpellWords = Buffer.ReadASCIIString
-    CharIndex = Buffer.ReadInteger
+    SpellWords = buffer.ReadASCIIString
+    CharIndex = buffer.ReadInteger
     
     If SpellWords <> "" Then
         Call Dialogos.CreateDialog(SpellWords, CharIndex, 0, 222, 222)
 
     End If
     
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
 
 End Sub
 
@@ -7925,7 +7935,7 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteCreateNewGuild(ByVal Desc As String, _
-                               ByVal name As String, _
+                               ByVal Name As String, _
                                ByVal Site As String, _
                                ByRef Codex() As String)
 
@@ -7942,7 +7952,7 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, _
         Call .WriteByte(ClientPacketID.CreateNewGuild)
         
         Call .WriteASCIIString(Desc)
-        Call .WriteASCIIString(name)
+        Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
         For i = LBound(Codex()) To UBound(Codex())
@@ -11566,7 +11576,7 @@ End Sub
 ' @param    npcIndex The index of the NPC to be created.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNPC(ByVal NPCIndex As Integer)
+Public Sub WriteCreateNPC(ByVal NpcIndex As Integer)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -11577,7 +11587,7 @@ Public Sub WriteCreateNPC(ByVal NPCIndex As Integer)
         Call .WriteByte(ClientPacketID.gm)
         Call .WriteByte(ClientPacketIDGM.CreateNPC)
         
-        Call .WriteInteger(NPCIndex)
+        Call .WriteInteger(NpcIndex)
 
     End With
 
@@ -11589,7 +11599,7 @@ End Sub
 ' @param    npcIndex The index of the NPC to be created.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNPCWithRespawn(ByVal NPCIndex As Integer)
+Public Sub WriteCreateNPCWithRespawn(ByVal NpcIndex As Integer)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -11600,7 +11610,7 @@ Public Sub WriteCreateNPCWithRespawn(ByVal NPCIndex As Integer)
         Call .WriteByte(ClientPacketID.gm)
         Call .WriteByte(ClientPacketIDGM.CreateNPCWithRespawn)
         
-        Call .WriteInteger(NPCIndex)
+        Call .WriteInteger(NpcIndex)
 
     End With
 
@@ -12463,159 +12473,443 @@ Public Sub WriteQuestDetailsRequest(ByVal QuestSlot As Byte)
     Call outgoingData.WriteByte(QuestSlot)
 End Sub
  
-Public Sub WriteQuestAccept()
+Public Sub WriteQuestAccept(ByVal ListInd As Byte)
 '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 'Escribe el paquete QuestAccept al servidor.
 'Last modified: 31/01/2010 by Amraphen
 '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     Call outgoingData.WriteByte(ClientPacketID.QuestAccept)
+     Call outgoingData.WriteByte(ListInd)
 End Sub
  
 Private Sub HandleQuestDetails()
-'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-'Recibe y maneja el paquete QuestDetails del servidor.
-'Last modified: 31/01/2010 by Amraphen
-'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    'Recibe y maneja el paquete QuestDetails del servidor.
+    'Last modified: 31/01/2010 by Amraphen
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     If incomingData.Length < 15 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
+
     End If
     
-On Error GoTo ErrHandler
-    Dim Buffer As New clsByteQueue
-    Call Buffer.CopyBuffer(incomingData)
+    On Error GoTo ErrHandler
+
+    Dim buffer As New clsByteQueue
+
+    Call buffer.CopyBuffer(incomingData)
     
-    Dim tmpStr As String
-    Dim tmpByte As Byte
+    Dim tmpStr        As String
+
+    Dim tmpByte       As Byte
+
     Dim QuestEmpezada As Boolean
-    Dim i As Integer
+
+    Dim i             As Integer
     
-    With Buffer
+    Dim cantidadnpc   As Integer
+
+    Dim NpcIndex      As Integer
+    
+    Dim cantidadobj   As Integer
+
+    Dim OBJIndex      As Integer
+    
+    Dim AmountHave      As Integer
+    
+    Dim QuestIndex    As Integer
+    
+    
+    Dim LevelRequerido As Byte
+    Dim QuestRequerida As Integer
+    
+    FrmQuests.ListView2.ListItems.Clear
+    FrmQuests.ListView1.ListItems.Clear
+    FrmQuestInfo.ListView2.ListItems.Clear
+    FrmQuestInfo.ListView1.ListItems.Clear
+    
+    
+    
+    
+    
+        FrmQuests.PlayerView.BackColor = RGB(11, 11, 11)
+        FrmQuests.picture1.BackColor = RGB(19, 14, 11)
+        FrmQuests.PlayerView.Refresh
+        FrmQuests.picture1.Refresh
+        FrmQuests.npclbl.Caption = ""
+        FrmQuests.objetolbl.Caption = ""
+
+    
+    With buffer
         'Leemos el id del paquete
         Call .ReadByte
         
         'Nos fijamos si se trata de una quest empezada, para poder leer los NPCs que se han matado.
         QuestEmpezada = IIf(.ReadByte, True, False)
         
-        tmpStr = "Misión: " & .ReadASCIIString & vbCrLf
-        tmpStr = tmpStr & "Detalles: " & .ReadASCIIString & vbCrLf
-        tmpStr = tmpStr & "Nivel requerido: " & .ReadByte & vbCrLf
+        If Not QuestEmpezada Then
         
-        tmpStr = tmpStr & vbCrLf & "OBJETIVOS" & vbCrLf
+            QuestIndex = .ReadInteger
         
-        tmpByte = .ReadByte
-        If tmpByte Then 'Hay NPCs
-            For i = 1 To tmpByte
-                tmpStr = tmpStr & "*) Matar " & .ReadInteger & " " & .ReadASCIIString & "."
-                If QuestEmpezada Then
-                    tmpStr = tmpStr & " (Has matado " & .ReadInteger & ")" & vbCrLf
+            FrmQuestInfo.titulo.Caption = QuestList(QuestIndex).nombre
+           
+            'tmpStr = "Mision: " & .ReadASCIIString & vbCrLf
+            
+            
+            
+            
+            
+            LevelRequerido = .ReadByte
+            QuestRequerida = .ReadInteger
+           
+            If QuestRequerida <> 0 Then
+                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf & "Quest:" & QuestList(QuestRequerida).RequiredQuest
+            Else
+            
+                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
+            
+            
+            End If
+            
+
+           
+            tmpByte = .ReadByte
+
+            If tmpByte Then 'Hay NPCs
+                If tmpByte > 5 Then
+                    FrmQuestInfo.ListView1.FlatScrollBar = False
                 Else
-                    tmpStr = tmpStr & vbCrLf
+                    FrmQuestInfo.ListView1.FlatScrollBar = True
+           
                 End If
-            Next i
-        End If
+
+                For i = 1 To tmpByte
+                    cantidadnpc = .ReadInteger
+                    NpcIndex = .ReadInteger
+               
+                    ' tmpStr = tmpStr & "*) Matar " & .ReadInteger & " " & .ReadASCIIString & "."
+                    If QuestEmpezada Then
+                        tmpStr = tmpStr & " (Has matado " & .ReadInteger & ")" & vbCrLf
+                    Else
+                        tmpStr = tmpStr & vbCrLf
+                       
+                        Dim subelemento As ListItem
+
+                        Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , NpcData(NpcIndex).Name)
+                       
+                        subelemento.SubItems(1) = cantidadnpc
+                        subelemento.SubItems(2) = NpcIndex
+                        subelemento.SubItems(3) = 0
+
+                    End If
+
+                Next i
+
+            End If
+           
+            tmpByte = .ReadByte
+
+            If tmpByte Then 'Hay OBJs
+
+                For i = 1 To tmpByte
+               
+                    cantidadobj = .ReadInteger
+                    OBJIndex = .ReadInteger
+                    
+                    AmountHave = .ReadInteger
+                   
+                    Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , ObjData(OBJIndex).Name)
+                    subelemento.SubItems(1) = AmountHave & "/" & cantidadobj
+                    subelemento.SubItems(2) = OBJIndex
+                    subelemento.SubItems(3) = 1
+                Next i
+
+            End If
+    
+            tmpStr = tmpStr & vbCrLf & "RECOMPENSAS" & vbCrLf
+            'tmpStr = tmpStr & "*) Oro: " & .ReadLong & " monedas de oro." & vbCrLf
+            'tmpStr = tmpStr & "*) Experiencia: " & .ReadLong & " puntos de experiencia." & vbCrLf
+           
+            Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Oro")
+                       
+            subelemento.SubItems(1) = .ReadLong
+            subelemento.SubItems(2) = 12
+            subelemento.SubItems(3) = 0
+           
+            Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Experiencia")
+                       
+            subelemento.SubItems(1) = .ReadLong
+            subelemento.SubItems(2) = 608
+            subelemento.SubItems(3) = 1
+           
+            tmpByte = .ReadByte
+
+            If tmpByte Then
+
+                For i = 1 To tmpByte
+                    'tmpStr = tmpStr & "*) " & .ReadInteger & " " & .ReadInteger & vbCrLf
+                   
+                    Dim cantidadobjs As Integer
+
+                    Dim obindex      As Integer
+                   
+                    cantidadobjs = .ReadInteger
+                    obindex = .ReadInteger
+                   
+                    Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , ObjData(obindex).Name)
+                       
+                    subelemento.SubItems(1) = cantidadobjs
+                    subelemento.SubItems(2) = obindex
+                    subelemento.SubItems(3) = 1
+                           
+                    ' Set subelemento = frmQuestInfo.ListView2.ListItems.Add(, , "Experiencia")
+                               
+                    ' subelemento.SubItems(1) = .ReadInteger
+                    ' subelemento.SubItems(2) = 0
+                    ' subelemento.SubItems(3) = 1
+           
+                Next i
+
+            End If
+
+        Else
         
-        tmpByte = .ReadByte
-        If tmpByte Then 'Hay OBJs
-            For i = 1 To tmpByte
-                tmpStr = tmpStr & "*) Conseguir " & .ReadInteger & " " & .ReadASCIIString & "." & vbCrLf
-            Next i
-        End If
- 
-        tmpStr = tmpStr & vbCrLf & "RECOMPENSAS" & vbCrLf
-        tmpStr = tmpStr & "*) Oro: " & .ReadLong & " monedas de oro." & vbCrLf
-        tmpStr = tmpStr & "*) Experiencia: " & .ReadLong & " puntos de experiencia." & vbCrLf
+            QuestIndex = .ReadInteger
         
-        tmpByte = .ReadByte
-        If tmpByte Then
-            For i = 1 To tmpByte
-                tmpStr = tmpStr & "*) " & .ReadInteger & " " & .ReadASCIIString & vbCrLf
-            Next i
+            FrmQuests.titulo.Caption = QuestList(QuestIndex).nombre
+           
+            LevelRequerido = .ReadByte
+            QuestRequerida = .ReadInteger
+           
+            FrmQuests.detalle.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
+            If QuestRequerida <> 0 Then
+                 FrmQuests.detalle.Text = FrmQuests.detalle.Text & vbCrLf & "Quest: " & QuestList(QuestRequerida).nombre
+            End If
+            
+            'tmpStr = tmpStr & "Detalles: " & .ReadASCIIString & vbCrLf
+            'tmpStr = tmpStr & "Nivel requerido: " & .ReadByte & vbCrLf
+           
+            tmpStr = tmpStr & vbCrLf & "OBJETIVOS" & vbCrLf
+           
+            tmpByte = .ReadByte
+
+            If tmpByte Then 'Hay NPCs
+
+                For i = 1 To tmpByte
+                    cantidadnpc = .ReadInteger
+                    NpcIndex = .ReadInteger
+               
+                    Dim matados As Integer
+               
+                    matados = .ReadInteger
+                                     
+                    Set subelemento = FrmQuests.ListView1.ListItems.Add(, , NpcData(NpcIndex).Name)
+                       
+                    Dim cantok As Integer
+
+                    cantok = cantidadnpc - matados
+                       
+                    If cantok = 0 Then
+                        subelemento.SubItems(1) = "OK"
+                    Else
+                        subelemento.SubItems(1) = matados & "/" & cantidadnpc
+
+                    End If
+                        
+                    ' subelemento.SubItems(1) = cantidadnpc - matados
+                    subelemento.SubItems(2) = NpcIndex
+                    subelemento.SubItems(3) = 0
+                    'End If
+                Next i
+
+            End If
+           
+            tmpByte = .ReadByte
+
+            If tmpByte Then 'Hay OBJs
+
+                For i = 1 To tmpByte
+               
+                    cantidadobj = .ReadInteger
+                    OBJIndex = .ReadInteger
+                    
+                    AmountHave = .ReadInteger
+                   
+                    Set subelemento = FrmQuests.ListView1.ListItems.Add(, , ObjData(OBJIndex).Name)
+                    subelemento.SubItems(1) = AmountHave & "/" & cantidadobj
+                    subelemento.SubItems(2) = OBJIndex
+                    subelemento.SubItems(3) = 1
+                Next i
+
+            End If
+    
+            tmpStr = tmpStr & vbCrLf & "RECOMPENSAS" & vbCrLf
+            'tmpStr = tmpStr & "*) Oro: " & .ReadLong & " monedas de oro." & vbCrLf
+            'tmpStr = tmpStr & "*) Experiencia: " & .ReadLong & " puntos de experiencia." & vbCrLf
+           
+           
+           Dim tmpLong As Long
+           
+           
+           tmpLong = .ReadLong
+           
+            If tmpLong <> 0 Then
+                Set subelemento = FrmQuests.ListView2.ListItems.Add(, , "Oro")
+                subelemento.SubItems(1) = tmpLong
+                subelemento.SubItems(2) = 12
+                subelemento.SubItems(3) = 0
+            End If
+            
+            tmpLong = .ReadLong
+           
+            If tmpLong <> 0 Then
+                Set subelemento = FrmQuests.ListView2.ListItems.Add(, , "Experiencia")
+                           
+                subelemento.SubItems(1) = tmpLong
+                subelemento.SubItems(2) = 608
+                subelemento.SubItems(3) = 1
+            End If
+           
+            tmpByte = .ReadByte
+
+            If tmpByte Then
+
+                For i = 1 To tmpByte
+                    'tmpStr = tmpStr & "*) " & .ReadInteger & " " & .ReadInteger & vbCrLf
+                   
+                    cantidadobjs = .ReadInteger
+                    obindex = .ReadInteger
+                   
+                    Set subelemento = FrmQuests.ListView2.ListItems.Add(, , ObjData(obindex).Name)
+                       
+                    subelemento.SubItems(1) = cantidadobjs
+                    subelemento.SubItems(2) = obindex
+                    subelemento.SubItems(3) = 1
+                           
+                    ' Set subelemento = frmQuestInfo.ListView2.ListItems.Add(, , "Experiencia")
+                               
+                    ' subelemento.SubItems(1) = .ReadInteger
+                    ' subelemento.SubItems(2) = 0
+                    ' subelemento.SubItems(3) = 1
+           
+                Next i
+
+            End If
+        
         End If
+
     End With
     
-    'Determinamos que formulario se muestra, según si recibimos la información y la quest está empezada o no.
+    'Determinamos que formulario se muestra, segï¿½n si recibimos la informaciï¿½n y la quest estï¿½ empezada o no.
     If QuestEmpezada Then
-        frmQuests.txtInfo.Text = tmpStr
+        FrmQuests.txtInfo.Text = tmpStr
+        Call FrmQuests.ListView1_Click
+        Call FrmQuests.ListView2_Click
+        Call FrmQuests.lstQuests.SetFocus
     Else
-        frmQuestInfo.txtInfo.Text = tmpStr
-        frmQuestInfo.Show vbModeless, frmMain
+        ' frmQuestInfo.txtInfo.Text = tmpStr
+        FrmQuestInfo.Show vbModeless, frmMain
+        'FrmQuestInfo.Picture = LoadInterface("ventananuevamision.bmp")
+        Call FrmQuestInfo.ListView1_Click
+        Call FrmQuestInfo.ListView2_Click
+
     End If
     
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
+
+    If Err.Number <> 0 And Err.Number <> incomingData.NotEnoughDataErrCode Then Resume Next
+    
     Dim Error As Long
+
     Error = Err.Number
-On Error GoTo 0
+
+    On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
  
-    If Error <> 0 Then _
-        Err.Raise Error
+    If Error <> 0 Then Err.Raise Error
+
 End Sub
  
 Public Sub HandleQuestListSend()
-'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-'Recibe y maneja el paquete QuestListSend del servidor.
-'Last modified: 31/01/2010 by Amraphen
-'$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    'Recibe y maneja el paquete QuestListSend del servidor.
+    'Last modified: 31/01/2010 by Amraphen
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     If incomingData.Length < 1 Then
         Err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
+
     End If
     
-On Error GoTo ErrHandler
-    Dim Buffer As New clsByteQueue
-    Call Buffer.CopyBuffer(incomingData)
+    On Error GoTo ErrHandler
+
+    Dim buffer As New clsByteQueue
+
+    Call buffer.CopyBuffer(incomingData)
     
-    Dim i As Integer
+    Dim i       As Integer
+
     Dim tmpByte As Byte
-    Dim tmpStr As String
+
+    Dim tmpStr  As String
     
     'Leemos el id del paquete
-    Call Buffer.ReadByte
+    Call buffer.ReadByte
      
     'Leemos la cantidad de quests que tiene el usuario
-    tmpByte = Buffer.ReadByte
+    tmpByte = buffer.ReadByte
     
     'Limpiamos el ListBox y el TextBox del formulario
-    frmQuests.lstQuests.Clear
-    frmQuests.txtInfo.Text = vbNullString
+    FrmQuests.lstQuests.Clear
+    FrmQuests.txtInfo.Text = vbNullString
         
     'Si el usuario tiene quests entonces hacemos el handle
     If tmpByte Then
         'Leemos el string
-        tmpStr = Buffer.ReadASCIIString
+        tmpStr = buffer.ReadASCIIString
         
         'Agregamos los items
         For i = 1 To tmpByte
-            frmQuests.lstQuests.AddItem ReadField(i, tmpStr, 45)
+            FrmQuests.lstQuests.AddItem ReadField(i, tmpStr, 45)
         Next i
+
     End If
     
     'Mostramos el formulario
-    frmQuests.Show vbModeless, frmMain
     
-    'Pedimos la información de la primer quest (si la hay)
+    COLOR_AZUL = RGB(0, 0, 0)
+    'Call Establecer_Borde(FrmQuests.lstQuests, FrmQuests, COLOR_AZUL, 0, 0)
+    'FrmQuests.Picture = LoadInterface("ventanadetallemision.bmp")
+    FrmQuests.Show vbModeless, frmMain
+    
+    'Pedimos la informaciï¿½n de la primer quest (si la hay)
     If tmpByte Then Call Protocol.WriteQuestDetailsRequest(1)
     
     'Copiamos de vuelta el buffer
-    Call incomingData.CopyBuffer(Buffer)
+    Call incomingData.CopyBuffer(buffer)
  
 ErrHandler:
+
+    If Err.Number <> 0 And Err.Number <> incomingData.NotEnoughDataErrCode Then Resume Next
+    
     Dim Error As Long
+
     Error = Err.Number
-On Error GoTo 0
+
+    On Error GoTo 0
     
     'Destroy auxiliar buffer
-    Set Buffer = Nothing
+    Set buffer = Nothing
  
-    If Error <> 0 Then _
-        Err.Raise Error
+    If Error <> 0 Then Err.Raise Error
+
 End Sub
- 
 Public Sub WriteQuestListRequest()
 '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 'Escribe el paquete QuestListRequest al servidor.
@@ -12637,4 +12931,294 @@ Public Sub WriteQuestAbandon(ByVal QuestSlot As Byte)
 End Sub
 'questtt
 'quest
+
+
+Public Sub HandleNpcQuestListSend()
+
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    'Recibe y maneja el paquete QuestListSend del servidor.
+    'Last modified: 31/01/2010 by Amraphen
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+   If incomingData.Length < 14 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+
+    End If
+    
+    On Error GoTo ErrHandler
+
+    Dim buffer As New clsByteQueue
+
+    Call buffer.CopyBuffer(incomingData)
+    
+    Dim tmpStr        As String
+
+    Dim tmpByte       As Byte
+
+    Dim QuestEmpezada As Boolean
+
+    Dim i             As Integer
+    
+    Dim J             As Byte
+    
+    Dim cantidadnpc   As Integer
+
+    Dim NpcIndex      As Integer
+    
+    Dim cantidadobj   As Integer
+
+    Dim OBJIndex      As Integer
+    
+    Dim QuestIndex    As Integer
+    
+    Dim estado    As Byte
+    
+    
+    Dim LevelRequerido As Byte
+    Dim QuestRequerida As Integer
+    
+    
+    Dim CantidadQuest As Byte
+    Dim subelemento As ListItem
+    
+    
+    FrmQuestInfo.ListView2.ListItems.Clear
+    FrmQuestInfo.ListView1.ListItems.Clear
+    
+    With buffer
+        'Leemos el id del paquete
+        Call .ReadByte
+        
+        
+            CantidadQuest = .ReadByte
+        
+            
+            For J = 1 To CantidadQuest
+        
+                QuestIndex = .ReadInteger
+            
+                FrmQuestInfo.titulo.Caption = QuestList(QuestIndex).nombre
+               
+                'tmpStr = "Mision: " & .ReadASCIIString & vbCrLf
+               
+                QuestList(QuestIndex).RequiredLevel = .ReadByte
+                
+                QuestList(QuestIndex).RequiredQuest = .ReadInteger
+                
+               ' FrmQuestInfo.Text1 = QuestList(QuestIndex).desc & vbCrLf & "Nivel requerido: " & QuestList(QuestIndex).RequiredLevel & vbCrLf
+                'tmpStr = tmpStr & "Detalles: " & .ReadASCIIString & vbCrLf
+                'tmpStr = tmpStr & "Nivel requerido: " & .ReadByte & vbCrLf
+               
+                tmpByte = .ReadByte
+    
+                If tmpByte Then 'Hay NPCs
+                    If tmpByte > 5 Then
+                        FrmQuestInfo.ListView1.FlatScrollBar = False
+                    Else
+                        FrmQuestInfo.ListView1.FlatScrollBar = True
+               
+                    End If
+                    
+                    
+                    ReDim QuestList(QuestIndex).RequiredNPC(1 To tmpByte)
+                    
+                    For i = 1 To tmpByte
+                                                
+                        QuestList(QuestIndex).RequiredNPC(i).Amount = .ReadInteger
+                        QuestList(QuestIndex).RequiredNPC(i).NpcIndex = .ReadInteger
+
+                          '
+    
+                          '  Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , NpcData(QuestList(QuestIndex).RequiredNPC(i).NpcIndex).Name)
+                           
+                         '   subelemento.SubItems(1) = QuestList(QuestIndex).RequiredNPC(i).Amount
+                         '   subelemento.SubItems(2) = QuestList(QuestIndex).RequiredNPC(i).NpcIndex
+                          '  subelemento.SubItems(3) = 0
+
+    
+                    Next i
+                Else
+                    ReDim QuestList(QuestIndex).RequiredNPC(0)
+                End If
+               
+                tmpByte = .ReadByte
+                    
+    
+                If tmpByte Then 'Hay OBJs
+                    ReDim QuestList(QuestIndex).RequiredOBJ(1 To tmpByte)
+    
+                    For i = 1 To tmpByte
+                   
+                        QuestList(QuestIndex).RequiredOBJ(i).Amount = .ReadInteger
+                        QuestList(QuestIndex).RequiredOBJ(i).OBJIndex = .ReadInteger
+
+                       
+                       ' Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , ObjData(QuestList(QuestIndex).RequiredOBJ(i).OBJIndex).Name)
+                       ' subelemento.SubItems(1) = QuestList(QuestIndex).RequiredOBJ(i).Amount
+                       ' subelemento.SubItems(2) = QuestList(QuestIndex).RequiredOBJ(i).OBJIndex
+                       ' subelemento.SubItems(3) = 1
+                    Next i
+                Else
+                     ReDim QuestList(QuestIndex).RequiredOBJ(0)
+                
+    
+                End If
+        
+               
+                QuestList(QuestIndex).RewardGLD = .ReadLong
+               ' Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Oro")
+                           
+              '  subelemento.SubItems(1) = QuestList(QuestIndex).RewardGLD
+               ' subelemento.SubItems(2) = 12
+               ' subelemento.SubItems(3) = 0
+               
+              '  Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Experiencia")
+                           
+                           
+                QuestList(QuestIndex).RewardEXP = .ReadLong
+                'subelemento.SubItems(1) = QuestList(QuestIndex).RewardEXP
+               ' subelemento.SubItems(2) = 608
+               ' subelemento.SubItems(3) = 1
+               
+                tmpByte = .ReadByte
+    
+                If tmpByte Then
+                
+                
+                    ReDim QuestList(QuestIndex).RewardOBJ(1 To tmpByte)
+    
+                    For i = 1 To tmpByte
+
+                                              
+                        QuestList(QuestIndex).RewardOBJ(i).Amount = .ReadInteger
+                        QuestList(QuestIndex).RewardOBJ(i).OBJIndex = .ReadInteger
+                       
+                        'Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , ObjData(QuestList(QuestIndex).RewardOBJ(i).OBJIndex).Name)
+                           
+                        'subelemento.SubItems(1) = QuestList(QuestIndex).RewardOBJ(i).Amount
+                        'subelemento.SubItems(2) = QuestList(QuestIndex).RewardOBJ(i).OBJIndex
+                        'subelemento.SubItems(3) = 1
+                               
+               
+                    Next i
+                Else
+                    ReDim QuestList(QuestIndex).RewardOBJ(0)
+                
+    
+                End If
+                
+                estado = .ReadByte
+                
+                Select Case estado
+                
+                    Case 0
+                        Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).nombre)
+                        
+                        subelemento.SubItems(1) = "Disponible"
+                        subelemento.SubItems(2) = QuestIndex
+                        subelemento.ForeColor = vbWhite
+                        subelemento.ListSubItems(1).ForeColor = vbWhite
+                        
+                        'FrmQuestInfo.lstQuests.AddItem QuestIndex & "-" & QuestList(QuestIndex).nombre & "(Disponible)"
+                    Case 1
+                        Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).nombre)
+                        
+                        subelemento.SubItems(1) = "En Curso"
+                        subelemento.ForeColor = RGB(255, 175, 10)
+                        subelemento.SubItems(2) = QuestIndex
+                        subelemento.ListSubItems(1).ForeColor = RGB(255, 175, 10)
+                        FrmQuestInfo.ListViewQuest.Refresh
+                        'FrmQuestInfo.lstQuests.AddItem QuestIndex & "-" & QuestList(QuestIndex).nombre & "(En curso)"
+                    Case 2
+                        Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).nombre)
+                        
+                        subelemento.SubItems(1) = "Finalizada"
+                        subelemento.SubItems(2) = QuestIndex
+                        subelemento.ForeColor = RGB(15, 140, 50)
+                        subelemento.ListSubItems(1).ForeColor = RGB(15, 140, 50)
+                        FrmQuestInfo.ListViewQuest.Refresh
+                       ' FrmQuestInfo.lstQuests.AddItem QuestIndex & "-" & QuestList(QuestIndex).nombre & "(Realizada)"
+                    Case 3
+                        Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).nombre)
+                        
+                        subelemento.SubItems(1) = "No disponible"
+                        subelemento.SubItems(2) = QuestIndex
+                        subelemento.ForeColor = RGB(255, 10, 10)
+                        subelemento.ListSubItems(1).ForeColor = RGB(255, 10, 10)
+                        FrmQuestInfo.ListViewQuest.Refresh
+                
+                End Select
+                
+            Next J
+        
+        
+
+    End With
+    
+    'Determinamos que formulario se muestra, segï¿½n si recibimos la informaciï¿½n y la quest estï¿½ empezada o no.
+
+        ' frmQuestInfo.txtInfo.Text = tmpStr
+        FrmQuestInfo.Show vbModeless, frmMain
+        'FrmQuestInfo.Picture = LoadInterface("ventananuevamision.bmp")
+        'Call FrmQuestInfo.ListView1_Click
+        'Call FrmQuestInfo.ListView2_Click
+
+    
+    Call incomingData.CopyBuffer(buffer)
+    
+ErrHandler:
+
+    If Err.Number <> 0 And Err.Number <> incomingData.NotEnoughDataErrCode Then Resume Next
+    
+    Dim Error As Long
+
+    Error = Err.Number
+
+    On Error GoTo 0
+    
+    'Destroy auxiliar buffer
+    Set buffer = Nothing
+ 
+    If Error <> 0 Then Err.Raise Error
+    
+End Sub
+
+
+Private Sub HandleUpdateNPCSimbolo()
+    
+    On Error GoTo HandleUpdateNPCSimbolo_Err
+    
+
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 05/17/06
+    '
+    '***************************************************
+    If incomingData.Length < 4 Then
+        Err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+
+    End If
+    
+    'Remove packet ID
+    Call incomingData.ReadByte
+    
+    Dim NpcIndex As Integer
+
+    Dim simbolo  As Byte
+    
+    NpcIndex = incomingData.ReadInteger()
+    
+    simbolo = incomingData.ReadByte()
+
+    charlist(NpcIndex).simbolo = simbolo
+
+    
+    Exit Sub
+
+HandleUpdateNPCSimbolo_Err:
+   ' Call RegistrarError(Err.Number, Err.Description, "Protocol.HandleUpdateNPCSimbolo", Erl)
+    Resume Next
+    
+End Sub
 

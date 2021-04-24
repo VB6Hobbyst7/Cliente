@@ -300,6 +300,8 @@ Public Enum ServerPacketID
   'quest
    QuestDetails
     QuestListSend
+    NpcQuestListSend
+    UpdateNPCSimbolo
     'quest
 End Enum
 
