@@ -12,6 +12,7 @@ Begin VB.Form FrmQuests
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmQuests.frx":0000
    ScaleHeight     =   6555
    ScaleWidth      =   12255
    ShowInTaskbar   =   0   'False
@@ -152,7 +153,7 @@ Begin VB.Form FrmQuests
          Text            =   "Tipo"
          Object.Width           =   0
       EndProperty
-      Picture         =   "frmQuests.frx":0000
+      Picture         =   "frmQuests.frx":11599
    End
    Begin MSComctlLib.ListView ListView2 
       Height          =   2325
@@ -204,7 +205,7 @@ Begin VB.Form FrmQuests
          Text            =   "Tipo"
          Object.Width           =   0
       EndProperty
-      Picture         =   "frmQuests.frx":CF0A
+      Picture         =   "frmQuests.frx":1E4A3
    End
    Begin VB.Label objetolbl 
       Alignment       =   2  'Center
@@ -502,20 +503,20 @@ Sub DibujarBody(ByVal MyBody As Integer, Optional ByVal Heading As Byte = 3)
     
     On Error GoTo DibujarBody_Err
     
-    Dim grh As grh
+    Dim Grh As Grh
 
-    grh = BodyData(NpcData(MyBody).Body).Walk(3)
+    Grh = BodyData(NpcData(MyBody).Body).Walk(3)
 
     Dim x    As Long
 
     Dim y    As Long
 
-    Dim grhH As grh
+    Dim grhH As Grh
 
     grhH = HeadData(NpcData(MyBody).Head).Head(3)
 
-    x = (PlayerView.ScaleWidth - GrhData(grh.GrhIndex).PixelWidth) / 2
-    y = (PlayerView.ScaleHeight - GrhData(grh.GrhIndex).PixelHeight) / 2
+    x = (PlayerView.ScaleWidth - GrhData(Grh.GrhIndex).PixelWidth) / 2
+    y = (PlayerView.ScaleHeight - GrhData(Grh.GrhIndex).PixelHeight) / 2
     'Call Grh_Render_To_Hdc(PlayerView, GrhData(grh.GrhIndex).Frames(1), x, y, False, RGB(11, 11, 11))
 
     If NpcData(MyBody).Head <> 0 Then

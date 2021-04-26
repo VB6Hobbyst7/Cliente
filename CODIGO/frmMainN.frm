@@ -639,6 +639,14 @@ Begin VB.Form frmMain
       BarPicture      =   "frmMainN.frx":115BB0
       Style           =   1
    End
+   Begin VB.Label QuestBoton 
+      Caption         =   "Misiones"
+      Height          =   375
+      Left            =   1080
+      TabIndex        =   43
+      Top             =   11280
+      Width           =   735
+   End
    Begin VB.Label lbStats 
       Appearance      =   0  'Flat
       AutoSize        =   -1  'True
@@ -1913,6 +1921,44 @@ End Sub
 
 
 
+Private Sub QuestBoton_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+    
+    On Error GoTo QuestBoton_MouseMove_Err
+    
+
+    If QuestBoton.Tag = "0" Then
+        'QuestBoton.Picture = LoadInterface("questover.bmp")
+        QuestBoton.Tag = "1"
+
+    End If
+
+    
+    Exit Sub
+
+QuestBoton_MouseMove_Err:
+    'Call RegistrarError(Err.Number, Err.Description, "frmMain.QuestBoton_MouseMove", Erl)
+    Resume Next
+    
+End Sub
+
+Private Sub QuestBoton_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+    
+    On Error GoTo QuestBoton_MouseUp_Err
+    
+    
+    If pausa Then Exit Sub
+    
+    Call WriteQuestListRequest
+
+    
+    Exit Sub
+
+QuestBoton_MouseUp_Err:
+   ' Call RegistrarError(Err.Number, Err.Description, "frmMain.QuestBoton_MouseUp", Erl)
+    Resume Next
+    
+End Sub
+
 Private Sub Macro_Timer()
     PuedeMacrear = True
 
@@ -2618,7 +2664,7 @@ Private Sub picInv_DblClick()
     
         If macrotrabajo.Enabled Then DesactivarMacroTrabajo
     
-        Select Case Inventario.OBJType(Inventario.SelectedItem)
+        Select Case Inventario.ObjType(Inventario.SelectedItem)
         
             Case eObjType.otcasco
                 Call EquiparItem
@@ -2933,6 +2979,7 @@ Public Sub CallbackMenuFashion(ByVal MenuId As Long, ByVal Sel As Long)
     End Select
 
 End Sub
+
 
 Private Sub tMouse_Timer()
 

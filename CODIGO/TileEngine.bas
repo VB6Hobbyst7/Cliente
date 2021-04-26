@@ -488,6 +488,8 @@ Private Declare Function GetTextExtentPoint32 _
 Public PosMapX As Single
 
 Public PosMapY As Single
+Public Declare Function timeGetTime Lib "winmm.dll" () As Long
+'Public FrameTime          As Long
 
 Sub CargarCabezas()
 
@@ -2723,7 +2725,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         Call RenderSaliendo
 
     End If
-
+FrameTime = (timeGetTime() And &H7FFFFFFF)
     If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
 
 End Sub
@@ -3441,6 +3443,14 @@ Public Sub CharRender(ByRef rChar As Char, _
             End If
 
         End If
+         If .simbolo <> 0 Then
+                           'frmMain.TimerSimbolo.Enabled = True
+                           'Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 61 + SimboloY + 5, 1, D3DColorRGBA(255, 0, 0, 255))
+                           Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255))
+                            
+Else
+'frmMain.TimerSimbolo.Enabled = False
+                        End If
 
         'If done moving stop animation
         If Not moved And True Then
@@ -3590,13 +3600,10 @@ Public Sub CharRender(ByRef rChar As Char, _
                 Call RenderReflejos(CharIndex, PixelOffSetX, PixelOffSetY)
                 'Draw Body
                 If .Body.Walk(.Heading).GrhIndex Then
-                    If EsNPC(Val(CharIndex)) Then
+                    'If EsNPC(Val(CharIndex)) Then
 
-                        If .simbolo <> 0 Then
-                            Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX + 6, PixelOffSetY + .Body.HeadOffset.y - 12, 1, D3DColorRGBA(255, 0, 255, 170))
-
-                        End If
-                    End If
+                       
+                   ' End If
 
                     Call DrawGrhShadow(.Body.Walk(.Heading), TempBodyOffsetX, TempBodyOffsetY, 1, 0.5, IIf(Sombra, 0, 1), ColorPj, 255, .Chiquito)
 
@@ -3992,4 +3999,40 @@ Error:
         MsgBox "Error en el Engine Grafico, Por favor contacte a los adminsitradores enviandoles el archivo Errors.Log que se encuentra el la carpeta del cliente.", vbCritical
         Call CloseClient
     End If
+End Sub
+
+
+Public Sub Grh_Render_To_Hdc(ByRef pic As PictureBox, ByVal GrhIndex As Long, ByVal screen_x As Integer, ByVal screen_y As Integer, Optional ByVal Alpha As Integer = False, Optional ByVal ClearColor As Long = &O0)
+    
+    On Error GoTo Grh_Render_To_Hdc_Err
+    
+
+    If GrhIndex = 0 Then Exit Sub
+
+    Static Picture As RECT
+
+    With Picture
+        .Left = 0
+        .Top = 0
+
+        .Bottom = pic.ScaleHeight
+        .Right = pic.ScaleWidth
+
+    End With
+
+    Call D3DDevice.BeginScene
+    Call D3DDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, ClearColor, 1#, 0)
+    
+    DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255)
+    
+   Call D3DDevice.EndScene
+    Call D3DDevice.Present(Picture, ByVal 0, pic.hwnd, ByVal 0)
+    
+    
+    Exit Sub
+
+Grh_Render_To_Hdc_Err:
+   ' Call RegistrarError(Err.Number, Err.Description, "TileEngine.Grh_Render_To_Hdc", Erl)
+    Resume Next
+    
 End Sub

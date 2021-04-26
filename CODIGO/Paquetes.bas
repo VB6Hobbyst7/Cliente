@@ -432,6 +432,7 @@ Public Enum ClientPacketID
     QuestListRequest
     QuestDetailsRequest
     QuestAbandon
+    newPacketID
     'quest
 End Enum
 

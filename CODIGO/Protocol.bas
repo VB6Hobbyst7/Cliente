@@ -2959,7 +2959,7 @@ Private Sub HandleCharacterCreate()
         .Criminal = buffer.ReadByte()
         
         privs = buffer.ReadByte()
-        
+       .simbolo = buffer.ReadByte()
         If privs <> 0 Then
 
             'If the player belongs to a council AND is an admin, only whos as an admin
@@ -12478,8 +12478,9 @@ Public Sub WriteQuestAccept(ByVal ListInd As Byte)
 'Escribe el paquete QuestAccept al servidor.
 'Last modified: 31/01/2010 by Amraphen
 '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    'Call outgoingData.WriteByte(ClientPacketID.newPacketID)
     Call outgoingData.WriteByte(ClientPacketID.QuestAccept)
-     Call outgoingData.WriteByte(ListInd)
+     Call outgoingData.WriteInteger(ListInd)
 End Sub
  
 Private Sub HandleQuestDetails()

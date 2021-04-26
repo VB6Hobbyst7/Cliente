@@ -482,7 +482,7 @@ Public Sub ListView1_Click()
         
             x = (PlayerView.ScaleWidth - GrhData(ListView1.SelectedItem.SubItems(2)).PixelWidth) / 2
             y = (PlayerView.ScaleHeight - GrhData(ListView1.SelectedItem.SubItems(2)).PixelHeight) / 2
-           ' Call Grh_Render_To_Hdc(PlayerView, ObjData(ListView1.SelectedItem.SubItems(2)).GrhIndex, x, y, False, RGB(11, 11, 11))
+            Call Grh_Render_To_Hdc(PlayerView, ObjData(ListView1.SelectedItem.SubItems(2)).GrhIndex, x, y, False, RGB(11, 11, 11))
         
             npclbl.Caption = ObjData(ListView1.SelectedItem.SubItems(2)).Name & " (" & ListView1.SelectedItem.SubItems(1) & ")"
     
@@ -520,7 +520,7 @@ Sub DibujarBody(ByVal MyBody As Integer, Optional ByVal Heading As Byte = 3)
 
     x = (PlayerView.ScaleWidth - GrhData(Grh.GrhIndex).PixelWidth) / 2
     y = (PlayerView.ScaleHeight - GrhData(Grh.GrhIndex).PixelHeight) / 2
-    ' Call Grh_Render_To_Hdc(PlayerView, GrhData(grh.GrhIndex).Frames(1), x, y, False, RGB(11, 11, 11))
+     Call Grh_Render_To_Hdc(PlayerView, GrhData(Grh.GrhIndex).Frames(1), x, y, False, RGB(11, 11, 11))
     
 
     If NpcData(MyBody).Head <> 0 Then
@@ -548,7 +548,7 @@ Public Sub ListView2_Click()
 
     If ListView2.SelectedItem.SubItems(2) <> "" Then
  
-       ' Call Grh_Render_To_Hdc(picture1, ObjData(ListView2.SelectedItem.SubItems(2)).GrhIndex, 0, 0, False, RGB(19, 14, 11))
+       Call Grh_Render_To_Hdc(picture1, ObjData(ListView2.SelectedItem.SubItems(2)).GrhIndex, 0, 0, False, RGB(19, 14, 11))
     
     End If
     
@@ -791,3 +791,6 @@ lstQuests_Click_Err:
     
 End Sub
 
+Private Sub PlaViewyer_Click()
+
+End Sub

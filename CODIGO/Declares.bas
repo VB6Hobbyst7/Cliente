@@ -31,6 +31,8 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
+Public SimboloY As Integer
+Public SimboloOn As Boolean
 Public COLOR_AZUL  As Long
 Public Movement_Speed As Single
 Public Enum eMessages
