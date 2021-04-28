@@ -47,7 +47,7 @@ Public Type NpcDatas
     Body As Integer
     Hp As Long
     exp As Long
-    oro As Long
+    Oro As Long
     MinHit As Integer
     MaxHit As Integer
     Head As Integer
@@ -93,7 +93,7 @@ End Type
 
 Public Sub CargarNpc()
 
-ObjFile = "C:\Users\waalter\Documents\GitHub\Recursos\Dat\NPCs.dat"
+ObjFile = PathInit & "\NPCs.dat"
 Call Leer.Initialize(ObjFile)
 NumNpcs = Val(Leer.GetValue("INIT", "NumNPCs"))
 
@@ -116,7 +116,7 @@ For npc = 1 To NumNpcs
         NpcData(npc).Hp = Val(Leer.GetValue("npc" & npc, "Hp"))
         NpcData(npc).MaxHit = Val(Leer.GetValue("npc" & npc, "MaxHit"))
         NpcData(npc).MinHit = Val(Leer.GetValue("npc" & npc, "MinHit"))
-        NpcData(npc).oro = Val(Leer.GetValue("npc" & npc, "oro"))
+        NpcData(npc).Oro = Val(Leer.GetValue("npc" & npc, "oro"))
         
         NpcData(npc).ExpClan = Val(Leer.GetValue("npc" & npc, "GiveEXPClan"))
        
@@ -141,7 +141,7 @@ For npc = 1 To NumNpcs
 End Sub
 
 Public Sub CargarQuests()
-   ObjFile = "C:\Users\waalter\Documents\GitHub\Recursos\Dat\QUESTS.dat"
+   ObjFile = PathInit & "\QUESTS.dat"
 Call Leer.Initialize(ObjFile)
   NumQuest = Val(Leer.GetValue("INIT", "NumQuests"))
   ReDim QuestList(1 To NumQuest)
@@ -161,11 +161,11 @@ End Sub
 
 
 Public Sub CargarObjetos()
-ObjFile = "C:\Users\waalter\Documents\GitHub\Recursos\Dat\obj.dat"
+ObjFile = PathInit & "\obj.dat"
 Call Leer.Initialize(ObjFile)
-NumOBJs = Val(Leer.GetValue("INIT", "NumObjs"))
-ReDim ObjData(0 To NumOBJs) As ObjDatas
-For Obj = 1 To NumOBJs
+numObjs = Val(Leer.GetValue("INIT", "NumObjs"))
+ReDim ObjData(0 To numObjs) As ObjDatas
+For Obj = 1 To numObjs
         DoEvents
         ObjData(Obj).GrhIndex = Val(Leer.GetValue("OBJ" & Obj, "grhindex"))
         ObjData(Obj).Name = Leer.GetValue("OBJ" & Obj, "Name")
