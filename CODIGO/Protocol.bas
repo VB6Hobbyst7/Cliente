@@ -1914,6 +1914,11 @@ Private Sub HandleUpdateHP()
     
     'Get data and update form
     UserMinHP = incomingData.ReadInteger()
+    
+     frmMain.bar_salud.max = UserMaxHP
+    frmMain.bar_salud.Value = UserMinHP
+    
+    frmMain.bar_salud.TextAfterCaption = " / " & UserMaxHP
     ' frmMain.HpshpV.Value = (((UserMinHP / 100) / (UserMaxHP / 100)) * 100)
     
 '    frmMain.lblVidaN.Caption = UserMinHP & "/" & UserMaxHP
@@ -5576,11 +5581,11 @@ Private Sub HandleCharacterInfo()
         .criminales.Caption = CStr(buffer.ReadLong())
         
         If reputation > 0 Then
-            .status.Caption = " Ciudadano"
-            .status.ForeColor = vbBlue
+            .Status.Caption = " Ciudadano"
+            .Status.ForeColor = vbBlue
         Else
-            .status.Caption = " Criminal"
-            .status.ForeColor = vbRed
+            .Status.Caption = " Criminal"
+            .Status.ForeColor = vbRed
 
         End If
         
@@ -5820,7 +5825,7 @@ Private Sub HandleGuildDetails()
             .Codex(i).Caption = codexStr(i)
         Next i
         
-        .Desc.Text = buffer.ReadASCIIString()
+        .desc.Text = buffer.ReadASCIIString()
 
     End With
     
@@ -7934,7 +7939,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal Desc As String, _
+Public Sub WriteCreateNewGuild(ByVal desc As String, _
                                ByVal Name As String, _
                                ByVal Site As String, _
                                ByRef Codex() As String)
@@ -7951,7 +7956,7 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, _
     With outgoingData
         Call .WriteByte(ClientPacketID.CreateNewGuild)
         
-        Call .WriteASCIIString(Desc)
+        Call .WriteASCIIString(desc)
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
@@ -8232,7 +8237,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8246,7 +8251,7 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ClanCodexUpdate)
         
-        Call .WriteASCIIString(Desc)
+        Call .WriteASCIIString(desc)
         
         For i = LBound(Codex()) To UBound(Codex())
             temp = temp & Codex(i) & SEPARATOR
@@ -9334,7 +9339,7 @@ End Sub
 ' @param    desc The new description of the user's character.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChangeDescription(ByVal Desc As String)
+Public Sub WriteChangeDescription(ByVal desc As String)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9344,7 +9349,7 @@ Public Sub WriteChangeDescription(ByVal Desc As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ChangeDescription)
         
-        Call .WriteASCIIString(Desc)
+        Call .WriteASCIIString(desc)
 
     End With
 
@@ -10775,7 +10780,7 @@ End Sub
 ' @param    desc The description to set to players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSetCharDescription(ByVal Desc As String)
+Public Sub WriteSetCharDescription(ByVal desc As String)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10786,7 +10791,7 @@ Public Sub WriteSetCharDescription(ByVal Desc As String)
         Call .WriteByte(ClientPacketID.gm)
         Call .WriteByte(ClientPacketIDGM.SetCharDescription)
         
-        Call .WriteASCIIString(Desc)
+        Call .WriteASCIIString(desc)
 
     End With
 
@@ -12565,10 +12570,10 @@ Private Sub HandleQuestDetails()
             QuestRequerida = .ReadInteger
            
             If QuestRequerida <> 0 Then
-                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf & "Quest:" & QuestList(QuestRequerida).RequiredQuest
+                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf & "Quest:" & QuestList(QuestRequerida).RequiredQuest
             Else
             
-                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
+                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
             
             
             End If
@@ -12683,7 +12688,7 @@ Private Sub HandleQuestDetails()
             LevelRequerido = .ReadByte
             QuestRequerida = .ReadInteger
            
-            FrmQuests.detalle.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
+            FrmQuests.detalle.Text = QuestList(QuestIndex).desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
             If QuestRequerida <> 0 Then
                  FrmQuests.detalle.Text = FrmQuests.detalle.Text & vbCrLf & "Quest: " & QuestList(QuestRequerida).nombre
             End If
