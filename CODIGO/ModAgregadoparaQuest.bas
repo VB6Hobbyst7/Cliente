@@ -16,7 +16,7 @@ End Type
 Public Type tQuest
 
     nombre As String
-    desc As String
+    Desc As String
     NextQuest As String
     DescFinal As String
     RequiredLevel As Byte
@@ -43,7 +43,7 @@ Public NpcData()          As NpcDatas
 Public Type NpcDatas
 
     Name As String
-    desc As String
+    Desc As String
     Body As Integer
     Hp As Long
     exp As Long
@@ -109,7 +109,7 @@ For npc = 1 To NumNpcs
 
         End If
 
-        NpcData(npc).desc = Leer.GetValue("npc" & npc, "desc")
+        NpcData(npc).Desc = Leer.GetValue("npc" & npc, "desc")
       
         NpcData(npc).exp = Val(Leer.GetValue("npc" & npc, "exp"))
         NpcData(npc).Head = Val(Leer.GetValue("npc" & npc, "Head"))
@@ -151,7 +151,7 @@ Call Leer.Initialize(ObjFile)
         
         QuestList(Nquest).nombre = Leer.GetValue("QUEST" & Nquest, "Nombre")
         
-        QuestList(Nquest).desc = Leer.GetValue("QUEST" & Nquest, "Desc")
+        QuestList(Nquest).Desc = Leer.GetValue("QUEST" & Nquest, "Desc")
         QuestList(Nquest).NextQuest = Leer.GetValue("QUEST" & Nquest, "NextQuest")
         QuestList(Nquest).DescFinal = Leer.GetValue("QUEST" & Nquest, "DescFinal")
         QuestList(Nquest).RequiredLevel = Val(Leer.GetValue("QUEST" & Nquest, "RequiredLevel"))

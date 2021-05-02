@@ -31,6 +31,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
+Public NieveOn As Boolean
 Public SimboloY As Integer
 Public SimboloOn As Boolean
 Public COLOR_AZUL  As Long
@@ -315,7 +316,7 @@ Public RawServersList                          As String
 
 Public Type tColor
 
-    R As Byte
+    r As Byte
     G As Byte
     B As Byte
 
@@ -1291,6 +1292,23 @@ Public MidiCambio                As Byte
 Public SinMidi                   As Boolean
 
 Public iTickMidi                 As Long
+'Particulas
+'*************
+Public LastTexture As Long
+ 
+'Public Const ScreenWidth As Long = 800
+'Public Const ScreenHeight As Long = 600
+ 
+Public ParticleOffsetX As Long
+Public ParticleOffsetY As Long
+Public LastOffsetX As Long
+Public LastOffsetY As Long
+ 
+Public End_Time As Long
+Public ElapsedTime As Single
+'Particulas
+'****************************
+
 
 
 Public Function EsNPC(ByVal CharIndex As Integer) As Boolean

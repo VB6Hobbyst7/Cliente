@@ -15,6 +15,12 @@ Begin VB.Form FrmQuestInfo
    ScaleWidth      =   12315
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Timer aniTimer 
+      Enabled         =   0   'False
+      Interval        =   23
+      Left            =   0
+      Top             =   0
+   End
    Begin VB.TextBox Text1 
       Alignment       =   2  'Center
       Appearance      =   0  'Flat
@@ -35,7 +41,7 @@ Begin VB.Form FrmQuestInfo
       Left            =   3860
       LinkItem        =   "detalle"
       MultiLine       =   -1  'True
-      TabIndex        =   8
+      TabIndex        =   7
       Top             =   2040
       Width           =   3320
    End
@@ -54,7 +60,7 @@ Begin VB.Form FrmQuestInfo
       ForeColor       =   &H00FFFFFF&
       Height          =   2760
       Left            =   10560
-      TabIndex        =   7
+      TabIndex        =   6
       Top             =   8040
       Width           =   2835
    End
@@ -68,24 +74,9 @@ Begin VB.Form FrmQuestInfo
       ScaleHeight     =   32
       ScaleMode       =   0  'User
       ScaleWidth      =   32
-      TabIndex        =   4
+      TabIndex        =   3
       Top             =   1830
       Width           =   480
-   End
-   Begin VB.PictureBox PlayerView 
-      Appearance      =   0  'Flat
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      ClipControls    =   0   'False
-      ForeColor       =   &H80000008&
-      Height          =   1420
-      Left            =   7330
-      ScaleHeight     =   95
-      ScaleMode       =   0  'User
-      ScaleWidth      =   146
-      TabIndex        =   2
-      Top             =   3960
-      Width           =   2190
    End
    Begin MSComctlLib.ListView ListView1 
       Height          =   1560
@@ -141,7 +132,7 @@ Begin VB.Form FrmQuestInfo
    Begin MSComctlLib.ListView ListView2 
       Height          =   2280
       Left            =   9840
-      TabIndex        =   3
+      TabIndex        =   2
       Top             =   3000
       Width           =   1965
       _ExtentX        =   3466
@@ -193,7 +184,7 @@ Begin VB.Form FrmQuestInfo
    Begin MSComctlLib.ListView ListViewQuest 
       Height          =   2640
       Left            =   600
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   1920
       Width           =   2835
       _ExtentX        =   5001
@@ -234,6 +225,13 @@ Begin VB.Form FrmQuestInfo
          Object.Width           =   0
       EndProperty
    End
+   Begin VB.Image Imagen 
+      Height          =   1095
+      Left            =   7560
+      Stretch         =   -1  'True
+      Top             =   4080
+      Width           =   1575
+   End
    Begin VB.Image Image3 
       Height          =   375
       Left            =   11760
@@ -255,7 +253,7 @@ Begin VB.Form FrmQuestInfo
       ForeColor       =   &H00FFFFFF&
       Height          =   495
       Left            =   7320
-      TabIndex        =   6
+      TabIndex        =   5
       Top             =   3760
       Width           =   2295
    End
@@ -274,7 +272,7 @@ Begin VB.Form FrmQuestInfo
       ForeColor       =   &H00FFFFFF&
       Height          =   495
       Left            =   9840
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   2520
       Width           =   1935
    End
@@ -318,6 +316,36 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Type GIFAnimator
+    Frames As Long
+    Frame As Long
+    LoopCount As Long
+    Intervals() As Long
+End Type
+Private myAnimator As GIFAnimator
+Private Sub aniTimer_Timer()
+On Error GoTo err
+  aniTimer.Enabled = False
+    With myAnimator
+        If .Frame = .Frames Then        ' loop occurred
+            ' intervals(0) is number of loops before stopping animation. values < 1 indicate infinite looping
+            .Frame = 0
+            If .Intervals(0) > 0 Then
+                .LoopCount = .LoopCount + 1
+                If .LoopCount = .Intervals(0) Then
+                    .LoopCount = 0 ' if loops terminated, stop on last frame or first frame. your choice
+                    Exit Sub
+                End If
+            End If
+        End If
+        .Frame = .Frame + 1&
+    End With
+    Set Imagen.Picture = StdPictureEx.SubImage(Imagen.Picture, myAnimator.Frame)
+    Imagen.Refresh  ' note: form/picturebox picture property does not require a refresh; updated automatically
+    aniTimer.Interval = myAnimator.Intervals(myAnimator.Frame) * 10
+    aniTimer.Enabled = True
+err:
+End Sub
 
 Private Sub Form_Load()
     
@@ -326,7 +354,7 @@ Private Sub Form_Load()
     'Me.Picture = LoadInterface("ventananuevamision.bmp")
 
     Text1.BackColor = RGB(11, 11, 11)
-    PlayerView.BackColor = RGB(11, 11, 11)
+    'Imagen.BackColor = RGB(11, 11, 11)
     picture1.BackColor = RGB(19, 14, 11)
     
     Exit Sub
@@ -464,28 +492,34 @@ End Sub
 Public Sub ListView1_Click()
     
     On Error GoTo ListView1_Click_Err
-    
+    aniTimer.Enabled = False
     If ListView1.SelectedItem Is Nothing Then Exit Sub
 
     If ListView1.SelectedItem.SubItems(2) <> "" Then
         If ListView1.SelectedItem.SubItems(3) = 0 Then
-            PlayerView.BackColor = RGB(11, 11, 11)
-            Call DibujarBody(ListView1.SelectedItem.SubItems(2), 3)
-      
+           ' Imagen.BackColor = RGB(11, 11, 11)
+           ' Call DibujarBody(ListView1.SelectedItem.SubItems(2), 3)
+          'If NpcData(ListView1.SelectedItem.SubItems(2)).Name = "Lobo" Then
+             'Imagen.Picture = LoadPicture("C:\Users\waalter\Desktop\ques\" & NpcData(ListView1.SelectedItem.SubItems(2)).Name & "2" & ".gif")
+         ' aniTimer.Enabled = True
+          myAnimator.Frames = 0
+          Animacion Imagen
+          'Else
+          '  Imagen.Picture = StdPictureEx.LoadPicture("C:\Users\waalter\Desktop\ques\" & NpcData(ListView1.SelectedItem.SubItems(2)).Name & ".png")
+          '
+         ' End If
+          
+        
+           
             npclbl.Caption = NpcData(ListView1.SelectedItem.SubItems(2)).Name & " (" & ListView1.SelectedItem.SubItems(1) & ")"
     
         Else
 
-            Dim x As Long
-
-            Dim y As Long
-        
-            x = (PlayerView.ScaleWidth - GrhData(ListView1.SelectedItem.SubItems(2)).PixelWidth) / 2
-            y = (PlayerView.ScaleHeight - GrhData(ListView1.SelectedItem.SubItems(2)).PixelHeight) / 2
-            Call Grh_Render_To_Hdc(PlayerView, ObjData(ListView1.SelectedItem.SubItems(2)).GrhIndex, x, y, False, RGB(11, 11, 11))
+            Imagen.Picture = StdPictureEx.LoadPicture("C:\Users\waalter\Desktop\ques\" & ObjData(ListView1.SelectedItem.SubItems(2)).Name & ".gif")
+           ' Call Grh_Render_To_Hdc(Imagen, ObjData(ListView1.SelectedItem.SubItems(2)).GrhIndex, x, y, False, RGB(11, 11, 11))
         
             npclbl.Caption = ObjData(ListView1.SelectedItem.SubItems(2)).Name & " (" & ListView1.SelectedItem.SubItems(1) & ")"
-    
+      
         End If
 
     End If
@@ -499,47 +533,7 @@ ListView1_Click_Err:
     
 End Sub
 
-Sub DibujarBody(ByVal MyBody As Integer, Optional ByVal Heading As Byte = 3)
-    
-    On Error GoTo DibujarBody_Err
-    
 
-    
-
-    Dim Grh As Grh
-
-    Grh = BodyData(NpcData(MyBody).Body).Walk(3)
-
-    Dim x    As Long
-
-    Dim y    As Long
-
-    Dim grhH As Grh
-
-    grhH = HeadData(NpcData(MyBody).Head).Head(3)
-
-    x = (PlayerView.ScaleWidth - GrhData(Grh.GrhIndex).PixelWidth) / 2
-    y = (PlayerView.ScaleHeight - GrhData(Grh.GrhIndex).PixelHeight) / 2
-     Call Grh_Render_To_Hdc(PlayerView, GrhData(Grh.GrhIndex).Frames(1), x, y, False, RGB(11, 11, 11))
-    
-
-    If NpcData(MyBody).Head <> 0 Then
-        x = (PlayerView.ScaleWidth - GrhData(grhH.GrhIndex).PixelWidth) / 2
-        y = (PlayerView.ScaleHeight - GrhData(grhH.GrhIndex).PixelHeight) / 2 + 8 + BodyData(NpcData(MyBody).Body).HeadOffset.y
-        PlayerView.BackColor = RGB(11, 11, 11)
-        'Call Grh_Render_To_HdcSinBorrar(PlayerView, GrhData(grhH.GrhIndex).Frames(1), x, y, False)
-
-
-    End If
-
-    
-    Exit Sub
-
-DibujarBody_Err:
-   ' Call RegistrarError(Err.Number, Err.Description, "FrmQuestInfo.DibujarBody", Erl)
-    Resume Next
-    
-End Sub
 
 Public Sub ListView2_Click()
     
@@ -548,7 +542,8 @@ Public Sub ListView2_Click()
 
     If ListView2.SelectedItem.SubItems(2) <> "" Then
  
-       Call Grh_Render_To_Hdc(picture1, ObjData(ListView2.SelectedItem.SubItems(2)).GrhIndex, 0, 0, False, RGB(19, 14, 11))
+       'Call Grh_Render_To_Hdc(picture1, ObjData(ListView2.SelectedItem.SubItems(2)).GrhIndex, 0, 0, False, RGB(19, 14, 11))
+       picture1.Picture = StdPictureEx.LoadPicture("C:\Users\waalter\Desktop\ques\" & ObjData(ListView2.SelectedItem.SubItems(2)).Name & ".png")
     
     End If
     
@@ -583,9 +578,9 @@ Private Sub ListViewQuest_ItemClick(ByVal item As MSComctlLib.ListItem)
         
         FrmQuestInfo.Text1.Text = ""
         
-        PlayerView.BackColor = RGB(11, 11, 11)
+       ' Imagen.BackColor = RGB(11, 11, 11)
         picture1.BackColor = RGB(19, 14, 11)
-        PlayerView.Refresh
+        Imagen.Refresh
         picture1.Refresh
         npclbl.Caption = ""
         objetolbl.Caption = ""
@@ -791,6 +786,25 @@ lstQuests_Click_Err:
     
 End Sub
 
-Private Sub PlaViewyer_Click()
-
+Sub Animacion(imagen2 As Image)
+If aniTimer.Enabled Then
+        aniTimer.Enabled = False
+    ElseIf myAnimator.Frames = 0& Then
+        'If StdPictureEx.IsManaged(Imagen.Picture) = False Then
+            Set imagen2.Picture = StdPictureEx.LoadPicture("C:\Users\waalter\Desktop\ques\" & NpcData(ListView1.SelectedItem.SubItems(2)).Name & ".gif", , , , , True)  ' True=can change frames
+            myAnimator.Frames = StdPictureEx.SubImageCount(imagen2.Picture)
+            If myAnimator.Frames < 2 Or StdPictureEx.PictureType(imagen2.Picture) <> ptcGIF Then
+                myAnimator.Frames = -1 ' flag indicating this image is not GIF or can't be animated
+                aniTimer.Interval = 0
+            Else
+                myAnimator.Frame = 1
+                Call StdPictureEx.GetGIFAnimationInfo(imagen2.Picture, myAnimator.Intervals)
+                aniTimer.Interval = myAnimator.Intervals(1) * 10
+                aniTimer.Enabled = True
+            End If
+       ' End If
+    Else
+        aniTimer.Enabled = True
+    End If
 End Sub
+

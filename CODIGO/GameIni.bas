@@ -48,7 +48,7 @@ Public Type tGameIni
     fX As Byte
     tip As Byte
     Password As String
-    name As String
+    Name As String
     DirGraficos As String
     DirSonidos As String
     DirMusica As String
@@ -79,7 +79,7 @@ Public MiCabecera    As tCabecera
 
 Public Config_Inicio As tGameIni
 
-Private Lector       As clsIniManager
+Dim Lector       As New clsIniManager
 
 Public Sub IniciarCabecera(ByRef Cabecera As tCabecera)
     Cabecera.Desc = "Argentum Online by Noland Studios. Copyright Noland-Studios 2001, pablomarquez@noland-studios.com.ar"
@@ -121,7 +121,7 @@ End Sub
 Public Sub SaveConfig()
     On Local Error GoTo fileErr:
     
-    Set Lector = New clsIniManager
+    'Set Lector = New clsIniManager
     Call Lector.Initialize(App.path & "/INIT/Config.ini")
 
     With mOpciones
@@ -162,20 +162,20 @@ Public Sub SaveConfig()
     Call Lector.DumpFile(App.path & "/INIT/Config.ini")
 fileErr:
 
-    If Err.Number <> 0 Then
-        MsgBox ("Ha ocurrido un error al guardar la configuracion del cliente. Error " & Err.Number & " : " & Err.Description)
+    If err.Number <> 0 Then
+        MsgBox ("Ha ocurrido un error al guardar la configuracion del cliente. Error " & err.Number & " : " & err.Description)
 
     End If
 
 End Sub
 
 Public Sub ReadConfig()
-    On Local Error GoTo fileErr:
+    'On Local Error GoTo fileErr:
     
-    Set Lector = New clsIniManager
+   ' Set Lector = New clsIniManager
     Call Lector.Initialize(App.path & "/INIT/Config.ini")
 
-    With mOpciones
+    'With mOpciones
         
         ' AUDIO
         mOpciones.Music = Lector.GetValue("AUDIO", "Music")
@@ -204,11 +204,12 @@ Public Sub ReadConfig()
         mOpciones.Shadows = Lector.GetValue("VIDEO", "Shadows")
         mOpciones.BlurEffects = Lector.GetValue("VIDEO", "BlurEffects")
         mOpciones.Niebla = Lector.GetValue("VIDEO", "Niebla")
-        
+       
         ' OTROS
         mOpciones.CursorFaccionario = Lector.GetValue("OTROS", "CursorFaccionario")
         
         #If Debugging Then
+          
             PathGraficos = Lector.GetValue("PATH", "PathGraficos")
             PathRecursosCliente = Lector.GetValue("PATH", "PathRecursosCliente")
             PathWav = Lector.GetValue("PATH", "PathWav")
@@ -221,14 +222,14 @@ Public Sub ReadConfig()
             PuertoServidor = 7222
         #End If
         
-    End With
+   ' End With
     
     Call Lector.DumpFile(App.path & "/INIT/Config.ini")
 fileErr:
 
-    If Err.Number <> 0 Then
+    If err.Number <> 0 Then
         Call mOpciones_Default
-        MsgBox ("ERROR - Config.ini cargado por defecto." & Err.Description)
+        MsgBox ("ERROR - Config.ini cargado por defecto." & err.Description)
 
     End If
     

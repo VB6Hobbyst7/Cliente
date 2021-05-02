@@ -270,15 +270,14 @@ Public Sub SetDayLight(Optional ByVal WithSound As Boolean = False)
 End Sub
 
 Public Sub DoRelampago()
-
+On Error GoTo err
     If Zonas(ZonaActual).Terreno = eTerreno.Dungeon Then Exit Sub
 
-    Dim randomRelampagoX As Integer
-
-    Dim randomRelampagoY As Integer
+    
 
     randomRelampagoX = RandomNumber(charlist(UserCharIndex).Pos.x - 10, charlist(UserCharIndex).Pos.x + 10)
     randomRelampagoY = RandomNumber(charlist(UserCharIndex).Pos.y - 10, charlist(UserCharIndex).Pos.y + 10)
+    
     Call Audio.PlayWave(105, randomRelampagoX, randomRelampagoY)
 
     If bTecho = True Then Exit Sub
@@ -297,6 +296,6 @@ Public Sub DoRelampago()
     HayRelampago = True
 
     Call SetAreaFx(randomRelampagoX, randomRelampagoY, 61, 0)
-
+err:
 End Sub
 

@@ -8,6 +8,7 @@ Public D3D         As Direct3D8
 Public D3DX        As D3DX8
 
 Public D3DDevice   As Direct3DDevice8
+Public ParticleTexture(1 To 13) As Direct3DTexture8
 
 Public ShadowColor As Long
 
@@ -99,7 +100,7 @@ Private SpriteScaleVector   As D3DVECTOR2
 
 Public RectJuego            As D3DRECT
 
-Dim end_time                As Currency
+Dim End_Time                As Currency
 
 Dim timer_freq              As Currency
 
@@ -117,7 +118,7 @@ Public Function IniciarD3D() As Boolean
 
     Set dX = New DirectX8
 
-    If Err Then
+    If err Then
         MessageBox "No se puede iniciar DirectX. Por favor asegurese de tener la ultima version correctamente instalada."
         Exit Function
 
@@ -212,17 +213,17 @@ Public Sub CargarFont()
 
     Dim hFont As Long
 
-    fntCartel.name = "Augusta"
+    fntCartel.Name = "Augusta"
     fntCartel.Size = 14
     fntCartel.bold = False
     Set FontCartelDesc = fntCartel
 
-    fnt.name = "Augusta"
+    fnt.Name = "Augusta"
     fnt.Size = 48
     fnt.bold = False
     Set MainFontDesc = fnt
 
-    fnt2.name = "Augusta"
+    fnt2.Name = "Augusta"
     fnt2.Size = 72
     fnt2.bold = False
     Set MainFontBigDesc = fnt2
@@ -347,7 +348,7 @@ ErrOut:
 End Function
 
 Public Sub LiberarObjetosDX()
-    Err.Clear
+    err.Clear
 
     On Error GoTo fin:
 
@@ -387,7 +388,7 @@ Public Sub Engine_Render_D3DXSprite(ByVal x As Single, _
                                     ByVal TextureNum As Long, _
                                     ByVal Degrees As Single)
 
-    Dim SrcRect As RECT
+    Dim srcRect As RECT
 
     Dim v2      As D3DVECTOR2
 
@@ -397,7 +398,7 @@ Public Sub Engine_Render_D3DXSprite(ByVal x As Single, _
     Engine_ReadyTexture TextureNum
     
     'Create the source rectangle
-    With SrcRect
+    With srcRect
         .Left = srcX
         .Top = srcY
         .Right = .Left + Width
@@ -425,7 +426,7 @@ Public Sub Engine_Render_D3DXSprite(ByVal x As Single, _
 
     'Draw the sprite
     If TextureNum > 0 Then
-        Sprite.Draw Textura, SrcRect, SpriteScaleVector, v2, Degrees, v3, Light
+        Sprite.Draw Textura, srcRect, SpriteScaleVector, v2, Degrees, v3, Light
     Else
 
         'Sprite.Draw Nothing, SrcRect, SpriteScaleVector, v2, 0, v3, Light
@@ -443,7 +444,7 @@ Public Sub Engine_Render_D3DXTexture(ByVal x As Single, _
                                      ByVal Texture As Direct3DTexture8, _
                                      ByVal Degrees As Single)
 
-    Dim SrcRect As RECT
+    Dim srcRect As RECT
 
     Dim v2      As D3DVECTOR2
 
@@ -454,7 +455,7 @@ Public Sub Engine_Render_D3DXTexture(ByVal x As Single, _
     LastTexture = 0
     
     'Create the source rectangle
-    With SrcRect
+    With srcRect
         .Left = srcX
         .Top = srcY
         .Right = .Left + Width
@@ -481,7 +482,7 @@ Public Sub Engine_Render_D3DXTexture(ByVal x As Single, _
     v3.y = y - 256
 
     'Draw the sprite
-    Sprite.Draw Texture, SrcRect, SpriteScaleVector, v2, Degrees, v3, Light
+    Sprite.Draw Texture, srcRect, SpriteScaleVector, v2, Degrees, v3, Light
     
 End Sub
 
@@ -875,6 +876,7 @@ Public Sub RenderRelampago()
 
     'Dim color As Long
     Static last_tick As Long
+    Dim color As Long
     
     If AlphaRelampago > 0 Then
         If (GetTickCount And &H7FFFFFFF) - last_tick >= 18 Then
@@ -893,9 +895,9 @@ Public Sub RenderRelampago()
         End If
 
     End If
-    
+  
     'color = D3DColorRGBA(255, 255, 255, AlphaRelampago)
-    'Call Engine_Render_D3DXSprite(255, 255, 1024, 768, 0, 0, color, 14783, 0)
+    'Call Engine_Render_D3DXSprite(randomRelampagoX2, randomRelampagoY2, 400, 313, 0, 0, color, 14783, 0)
 End Sub
 
 Public Sub RenderSaliendo()

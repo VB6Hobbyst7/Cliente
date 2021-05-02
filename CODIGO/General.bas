@@ -30,7 +30,12 @@ Attribute VB_Name = "Mod_General"
 'La Plata - Pcia, Buenos Aires - Republica Argentina
 'Código Postal 1900
 'Pablo Ignacio Márquez
-
+'Particulas
+'********************************
+Public Declare Function timeGetTime Lib "winmm.dll" () As Long
+Private Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) As Long
+'Particulas
+'***************************
 Option Explicit
 
 Public iplst               As String
@@ -670,7 +675,7 @@ Sub CargarMap(ByVal Map As Integer)
 
     Dim ByFlags As Byte
 
-    Dim handle  As Integer
+    Dim Handle  As Integer
     
     'If ArchivoMapa > 0 Then
        
@@ -795,7 +800,8 @@ Sub SwitchMap(ByVal Map As Integer)
     CurMap = Map
     
     CargarMap (Map)
-
+  
+  Call Effect_Snow_Begin(13, 100)
 End Sub
 
 Sub AddtoRichPicture(ByVal Text As String, _
@@ -913,7 +919,7 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
     'Last Modify Date: 07/29/2007
     '*****************************************************************
-    Dim Count     As Long
+    Dim count     As Long
 
     Dim curPos    As Long
 
@@ -927,10 +933,10 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     
     Do
         curPos = InStr(curPos + 1, Text, delimiter)
-        Count = Count + 1
+        count = count + 1
     Loop While curPos <> 0
     
-    FieldCount = Count
+    FieldCount = count
 
 End Function
 
@@ -1463,7 +1469,7 @@ Reintentar:
 
 Error:
 
-    If Err.Number = 75 Then 'Si el archivo AoUpdateTMP.exe está en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
+    If err.Number = 75 Then 'Si el archivo AoUpdateTMP.exe está en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
         Reintentos = Reintentos + 1
 
         If Reintentos = 3 Then
@@ -1476,7 +1482,7 @@ Error:
         End If
         
     Else
-        MsgBox Err.Description & vbCrLf, vbInformation, "[ " & Err.Number & " ]" & " Error "
+        MsgBox err.Description & vbCrLf, vbInformation, "[ " & err.Number & " ]" & " Error "
         End
 
     End If
@@ -1836,7 +1842,7 @@ Sub ClosePj()
     ZoomLevel = 0
     'D3DDevice.SetRenderTarget pBackbuffer, DeviceStencil, 0
     
-    For i = 0 To Forms.Count - 1
+    For i = 0 To Forms.count - 1
 
         If Forms(i).Name <> frmMain.Name And Forms(i).Name <> frmCrearPersonaje.Name And Forms(i).Name <> frmMensaje.Name Then
             Unload Forms(i)
@@ -2058,3 +2064,190 @@ Public Function getTagPosition(ByVal Nick As String) As Integer
     getTagPosition = Len(Nick) + 2
     
 End Function
+
+'Particulas *****************
+'*****************************
+Function Engine_ElapsedTime() As Long
+ 
+'**************************************************************
+'Gets the time that past since the last call
+'**************************************************************
+ 
+Dim Start_Time As Long
+ 
+'Get current time
+ 
+    Start_Time = timeGetTime
+ 
+    'Calculate elapsed time
+    Engine_ElapsedTime = Start_Time - End_Time
+ 
+    'Get next end time
+    End_Time = Start_Time
+ 
+End Function
+ 
+Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integer, ByVal TargetX As Integer, ByVal TargetY As Integer) As Single
+ 
+'************************************************************
+'Gets the angle between two points in a 2d plane
+'************************************************************
+ 
+    On Error GoTo ErrOut
+Dim SideA As Single
+Dim SideC As Single
+ 
+    'Check for horizontal lines (90 or 270 degrees)
+    If CenterY = TargetY Then
+ 
+        'Check for going right (90 degrees)
+        If CenterX < TargetX Then
+            Engine_GetAngle = 90
+ 
+            'Check for going left (270 degrees)
+        Else
+            Engine_GetAngle = 270
+        End If
+ 
+        'Exit the function
+        Exit Function
+ 
+    End If
+ 
+    'Check for horizontal lines (360 or 180 degrees)
+    If CenterX = TargetX Then
+ 
+        'Check for going up (360 degrees)
+        If CenterY > TargetY Then
+            Engine_GetAngle = 360
+ 
+            'Check for going down (180 degrees)
+        Else
+            Engine_GetAngle = 180
+        End If
+ 
+        'Exit the function
+        Exit Function
+ 
+    End If
+ 
+    'Calculate Side C
+    SideC = Sqr(Abs(TargetX - CenterX) ^ 2 + Abs(TargetY - CenterY) ^ 2)
+ 
+    'Side B = CenterY
+ 
+    'Calculate Side A
+    SideA = Sqr(Abs(TargetX - CenterX) ^ 2 + TargetY ^ 2)
+ 
+    'Calculate the angle
+    Engine_GetAngle = (SideA ^ 2 - CenterY ^ 2 - SideC ^ 2) / (CenterY * SideC * -2)
+    Engine_GetAngle = (Atn(-Engine_GetAngle / Sqr(-Engine_GetAngle * Engine_GetAngle + 1)) + 1.5708) * 57.29583
+ 
+    'If the angle is >180, subtract from 360
+    If TargetX < CenterX Then Engine_GetAngle = 360 - Engine_GetAngle
+ 
+    'Exit function
+ 
+Exit Function
+ 
+    'Check for error
+ErrOut:
+ 
+    'Return a 0 saying there was an error
+    Engine_GetAngle = 0
+ 
+Exit Function
+ 
+End Function
+ 
+Public Sub Engine_Init_RenderStates()
+ 
+'************************************************************
+'Set the render states of the Direct3D Device
+'This is in a seperate sub since if using Fullscreen and device is lost
+'this is eventually called to restore settings.
+'************************************************************
+'Set the shader to be used
+ 
+    D3DDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR
+ 
+    'Set the render states
+    D3DDevice.SetRenderState D3DRS_LIGHTING, False
+    D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+    D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+    D3DDevice.SetRenderState D3DRS_ALPHABLENDENABLE, True
+    D3DDevice.SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
+ 
+    'Particle engine settings
+   D3DDevice.SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
+    D3DDevice.SetRenderState D3DRS_POINTSCALE_ENABLE, 0
+ 
+    'Set the texture stage stats (filters)
+    '//D3DDevice.SetTextureStageState 0, D3DTSS_MAGFILTER, D3DTEXF_LINEAR
+    '//D3DDevice.SetTextureStageState 0, D3DTSS_MINFILTER, D3DTEXF_LINEAR
+ 
+End Sub
+ 
+Public Sub Engine_Init_ParticleEngine()
+ 
+'*****************************************************************
+'Loads all particles into memory - unlike normal textures, these stay in memory. This isn't
+'done for any reason in particular, they just use so little memory since they are so small
+'*****************************************************************
+ 
+Dim i As Byte
+ 
+'Set the particles texture
+ 
+    NumEffects = 20
+    ReDim Effect(1 To NumEffects)
+ 
+    For i = 1 To UBound(ParticleTexture())
+        Set ParticleTexture(i) = D3DX.CreateTextureFromFileEx(D3DDevice, App.path & "\Recursos\" & "p" & i & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, &HFF000000, ByVal 0, ByVal 0)
+    Next i
+ 
+End Sub
+ 
+Function Engine_PixelPosX(ByVal x As Long) As Long
+'*****************************************************************
+'Converts a tile position to a screen position
+'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX]http://www.vbgore.com/GameClient.TileEn ... _PixelPosX[/url]
+'*****************************************************************
+ 
+    Engine_PixelPosX = (x - 1) * TilePixelWidth
+ 
+End Function
+ 
+Function Engine_PixelPosY(ByVal y As Long) As Long
+'*****************************************************************
+'Converts a tile position to a screen position
+'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY]http://www.vbgore.com/GameClient.TileEn ... _PixelPosY[/url]
+'*****************************************************************
+ 
+    Engine_PixelPosY = (y - 1) * TilePixelHeight
+ 
+End Function
+ 
+Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
+ 
+'************************************************************
+'Tile Position to Screen Position
+'Takes the tile position and returns the pixel location on the screen
+'************************************************************
+    
+    'This acts just as a dummy in this project
+ 
+End Function
+ 
+Public Function Engine_TPtoSPY(ByVal y As Byte) As Long
+ 
+'************************************************************
+'Tile Position to Screen Position
+'Takes the tile position and returns the pixel location on the screen
+'************************************************************
+ 
+    'This acts just as a dummy in this project
+    
+End Function
+'Particulas
+'Particulas *********************
