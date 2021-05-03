@@ -322,11 +322,6 @@ Begin VB.Form frmMain
             Width           =   210
          End
       End
-      Begin VB.Timer tRelampago 
-         Interval        =   7500
-         Left            =   6240
-         Top             =   120
-      End
       Begin MSWinsockLib.Winsock WSock 
          Left            =   6960
          Top             =   0
@@ -1190,7 +1185,7 @@ End Sub
 
 Private Sub Client_CloseSck()
 
-    Dim I As Long
+    Dim i As Long
 
     Client.CloseSck
     
@@ -1867,7 +1862,7 @@ End Sub
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If y < 24 And NoRes Then
-        MoverVentana (Me.hWnd)
+        MoverVentana (Me.hwnd)
 
     End If
 
@@ -2511,21 +2506,21 @@ End Sub
 Public Sub ReDrawConsola()
     pConsola.Cls
 
-    Dim I As Long
+    Dim i As Long
 
-    For I = OffSetConsola To OffSetConsola + 6
+    For i = OffSetConsola To OffSetConsola + 6
 
-        If I >= 0 And I <= LineasConsola Then
+        If i >= 0 And i <= LineasConsola Then
             pConsola.CurrentX = 0
-            pConsola.CurrentY = (I - OffSetConsola - 1) * 14
-            pConsola.ForeColor = Consola(I).color
-            pConsola.FontBold = CBool(Consola(I).bold)
-            pConsola.FontItalic = CBool(Consola(I).italic)
-            pConsola.Print Consola(I).Texto
+            pConsola.CurrentY = (i - OffSetConsola - 1) * 14
+            pConsola.ForeColor = Consola(i).color
+            pConsola.FontBold = CBool(Consola(i).bold)
+            pConsola.FontItalic = CBool(Consola(i).italic)
+            pConsola.Print Consola(i).Texto
 
         End If
 
-    Next I
+    Next i
 
 End Sub
 
@@ -2799,21 +2794,21 @@ Private Sub SendTxt_Change()
     Else
 
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim I         As Long
+        Dim i         As Long
 
         Dim tempstr   As String
 
         Dim CharAscii As Integer
         
-        For I = 1 To Len(SendTxt.Text)
-            CharAscii = Asc(mid$(SendTxt.Text, I, 1))
+        For i = 1 To Len(SendTxt.Text)
+            CharAscii = Asc(mid$(SendTxt.Text, i, 1))
 
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
 
             End If
 
-        Next I
+        Next i
 
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -2867,21 +2862,21 @@ Private Sub SendCMSTXT_Change()
     Else
 
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim I         As Long
+        Dim i         As Long
 
         Dim tempstr   As String
 
         Dim CharAscii As Integer
         
-        For I = 1 To Len(SendCMSTXT.Text)
-            CharAscii = Asc(mid$(SendCMSTXT.Text, I, 1))
+        For i = 1 To Len(SendCMSTXT.Text)
+            CharAscii = Asc(mid$(SendCMSTXT.Text, i, 1))
 
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
 
             End If
 
-        Next I
+        Next i
         
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -2904,7 +2899,7 @@ Private Sub AbrirMenuViewPort()
             If MapData(tX, tY).CharIndex > 0 Then
                 If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-                    Dim I As Long
+                    Dim i As Long
 
                     Dim m As New frmMenuseFashion
             
@@ -3016,10 +3011,7 @@ Private Sub tPass_LostFocus()
 
 End Sub
 
-Private Sub tRelampago_Timer()
-    Call DoRelampago
 
-End Sub
 
 Private Sub tUser_KeyDown(KeyCode As Integer, Shift As Integer)
 
