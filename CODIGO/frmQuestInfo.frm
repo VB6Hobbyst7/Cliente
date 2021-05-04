@@ -226,11 +226,11 @@ Begin VB.Form FrmQuestInfo
       EndProperty
    End
    Begin VB.Image Imagen 
-      Height          =   1095
-      Left            =   7560
+      Height          =   735
+      Left            =   7920
       Stretch         =   -1  'True
-      Top             =   4080
-      Width           =   1575
+      Top             =   4440
+      Width           =   1095
    End
    Begin VB.Image Image3 
       Height          =   375
@@ -254,7 +254,7 @@ Begin VB.Form FrmQuestInfo
       Height          =   495
       Left            =   7320
       TabIndex        =   5
-      Top             =   3760
+      Top             =   3885
       Width           =   2295
    End
    Begin VB.Label objetolbl 
