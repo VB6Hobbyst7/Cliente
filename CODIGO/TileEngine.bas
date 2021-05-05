@@ -224,7 +224,9 @@ Public Type Char
     ContadorInvi As Integer
     iTick As Long
     priv As Byte
-    
+    'aura
+    aura(0 To 5) As tAuras
+    'aura
     Quieto As Byte
 
 End Type
@@ -1574,11 +1576,11 @@ Sub DrawGrhLuz(ByRef Grh As Grh, _
 
 Error:
 
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
         End
 
     End If
@@ -1678,11 +1680,11 @@ Sub DrawGrhShadow(ByRef Grh As Grh, _
 
 Error:
 
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
         End
 
     End If
@@ -1744,11 +1746,11 @@ Sub DrawGrhShadowOff(ByRef Grh As Grh, _
 
 Error:
 
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
         End
 
     End If
@@ -1837,11 +1839,11 @@ Sub DrawGrh(ByRef Grh As Grh, _
 
 Error:
 
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
         End
 
     End If
@@ -2278,7 +2280,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                     If ((SupIndex >= 7000 And SupIndex <= 7008) Or (SupIndex >= 1261 And SupIndex <= 1287) Or SupIndex = 648 Or SupIndex = 645) Then
                         If mOpciones.TransparencyTree = True And UserPos.x >= x - 3 And UserPos.x <= x + 3 And UserPos.y >= y - 5 And UserPos.y <= y Then
-                            Call DrawGrh(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, 0, D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, 180))
+                            Call DrawGrh(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 180))
                         Else
                             Call DrawGrhLuz(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, MapData(x, y).Light_Value)
 
@@ -2295,7 +2297,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                 'Layer 3 Plus FX *****************************************
                 If .fXGrh.Started = 1 Then
-                    Call DrawGrh(.fXGrh, PixelOffSetXTemp - FxData(.fX).OFFSETX, PixelOffSetYTemp - FxData(.fX).OFFSETY, 1, 1)
+                    Call DrawGrh(.fXGrh, PixelOffSetXTemp - FxData(.fX).OffSetX, PixelOffSetYTemp - FxData(.fX).OffSetY, 1, 1)
 
                     If .fXGrh.Started = 0 Then .fX = 0
 
@@ -2354,7 +2356,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If bAlpha < 255 Then
             If tTick < (GetTickCount() And &H7FFFFFFF) - 30 Then
                 bAlpha = bAlpha + IIf(bAlpha + 8 < 255, 8, 255 - bAlpha)
-                ColorTecho = D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, bAlpha)
+                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
                 tTick = (GetTickCount() And &H7FFFFFFF)
 
             End If
@@ -2366,7 +2368,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If bAlpha > 0 Then
             If tTick < (GetTickCount() And &H7FFFFFFF) - 30 Then
                 bAlpha = bAlpha - IIf(bAlpha - 8 > 0, 8, bAlpha)
-                ColorTecho = D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, bAlpha)
+                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
                 tTick = (GetTickCount() And &H7FFFFFFF)
 
             End If
@@ -2413,7 +2415,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                 End If
 
-                ColorLluvia = D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, 140)
+                ColorLluvia = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 140)
 
                 For y = 0 To 5
                     For x = 0 To 6
@@ -3515,7 +3517,7 @@ Public Sub CharRender(ByRef rChar As Char, _
          If .simbolo <> 0 Then
                            'frmMain.TimerSimbolo.Enabled = True
                            'Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 61 + SimboloY + 5, 1, D3DColorRGBA(255, 0, 0, 255))
-                           Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, 255))
+                           Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
                             
 Else
 'frmMain.TimerSimbolo.Enabled = False
@@ -3591,7 +3593,7 @@ Else
 
         End If
 
-        ColorPj = D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, .Alpha)
+        ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, .Alpha)
 
         If .Head.Head(.Heading).GrhIndex Then
             If .invisible Then
@@ -3618,12 +3620,57 @@ Else
                 End If
 
             End If
+            
+            
+            'auras
+             'Call Effect_Fire_Begin(Engine_PixelPosX(291), Engine_PixelPosY(855), 8, 100, 180)
+            
+            If ActivarAuras = "1" Then
+                Dim loopxx As Long
+                For loopxx = 0 To 5
+                    If .aura(loopxx).AuraGrh Then
+
+                        
+                        Dim tmpColor As Long
+
+                        'tmpColor = D3DColorRGBA(.aura(loopxx).R, .aura(loopxx).G, .aura(loopxx).B, -1)
+                        
+                            If .aura(loopxx).Giratoria = True And RotarActivado = "1" Then
+                                Rotacion = Rotacion + 0.05
+                                D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+                               D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+                               Call Engine_Render_Rectangle(PixelOffSetX - 35, PixelOffSetY - 40, 100, 100, .aura(loopxx).OffSetX, .aura(loopxx).OffSetX, 128, 128, , , Rotacion, .aura(loopxx).AuraGrh)
+                               D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+                               D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+                              Else
+                              D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+                               D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+                               Call Engine_Render_Rectangle(PixelOffSetX - 35, PixelOffSetY - 40, 100, 100, .aura(loopxx).OffSetX, .aura(loopxx).OffSetX, 128, 128, , , 0, .aura(loopxx).AuraGrh)
+                               D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+                               D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+                            End If
+                                                     
+                        
+                      
+                        
+                    End If
+                               
+                Next loopxx
+            End If
+            'auras
+
+            
+            
+            
+            
+            
+            
 
             If .Alpha > 0 Then
                 If .priv = 9 Then
                     ColorPj = D3DColorRGBA(10, 10, 10, 255)
                 Else
-                    ColorPj = D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, .Alpha)
+                    ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, .Alpha)
 
                     If .congelado = True Then
                         ColorPj = D3DColorRGBA(0, 175, 255, 225)
@@ -3715,14 +3762,14 @@ Else
                         ElseIf .priv = 0 Then
 
                             If .Criminal Then
-                                color = D3DColorRGBA(ColoresPJ(50).r, ColoresPJ(50).G, ColoresPJ(50).B, 200)
+                                color = D3DColorRGBA(ColoresPJ(50).R, ColoresPJ(50).G, ColoresPJ(50).b, 200)
                             Else
-                                color = D3DColorRGBA(ColoresPJ(49).r, ColoresPJ(49).G, ColoresPJ(49).B, 200)
+                                color = D3DColorRGBA(ColoresPJ(49).R, ColoresPJ(49).G, ColoresPJ(49).b, 200)
 
                             End If
 
                         Else
-                            color = D3DColorRGBA(ColoresPJ(.priv).r, ColoresPJ(.priv).G, ColoresPJ(.priv).B, 200)
+                            color = D3DColorRGBA(ColoresPJ(.priv).R, ColoresPJ(.priv).G, ColoresPJ(.priv).b, 200)
 
                         End If
 
@@ -3766,7 +3813,7 @@ Else
         If .FxIndex <> 0 Then
             D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
             D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
-            Call DrawGrh(.fX, PixelOffSetX + FxData(.FxIndex).OFFSETX, PixelOffSetY + FxData(.FxIndex).OFFSETY, 1, 1, 0, D3DColorRGBA(255, 255, 255, 170))
+            Call DrawGrh(.fX, PixelOffSetX + FxData(.FxIndex).OffSetX, PixelOffSetY + FxData(.FxIndex).OffSetY, 1, 1, 0, D3DColorRGBA(255, 255, 255, 170))
             D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
             D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
 
@@ -3902,7 +3949,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffSetX As Int
 '****************************************************
 ' Renderizamos el char reflejado en el agua
 '****************************************************
-    On Error GoTo err
+    On Error GoTo Err
     With charlist(CharIndex)
     
         Movement_Speed = 0.5
@@ -3994,7 +4041,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffSetX As Int
         End If
         
     End With
-err:
+Err:
 End Sub
 
 
@@ -4060,7 +4107,7 @@ On Error GoTo Error
 Exit Sub
 
 Error:
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
@@ -4092,7 +4139,7 @@ Public Sub Grh_Render_To_Hdc(ByRef pic As PictureBox, ByVal GrhIndex As Long, By
     Call D3DDevice.BeginScene
     Call D3DDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, ClearColor, 1#, 0)
     
-    DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.r, IluRGB.G, IluRGB.B, 255)
+    DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)
     
    Call D3DDevice.EndScene
     Call D3DDevice.Present(Picture, ByVal 0, pic.hWnd, ByVal 0)

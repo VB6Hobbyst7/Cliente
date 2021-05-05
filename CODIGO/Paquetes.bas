@@ -171,6 +171,9 @@ Public Enum ServerPacketID
     UserCommerceEnd         ' FINCOMUSUOK
     UserOfferConfirm
     CancelOfferItem
+    'aura
+    SendAura                ' Auras
+    'aura
     ShowBlacksmithForm      ' SFH
     ShowCarpenterForm       ' SFC
     NPCSwing                ' N1

@@ -27,6 +27,36 @@ Begin VB.Form frmOpciones
    ScaleWidth      =   4815
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.Frame Frame3 
+      BackColor       =   &H80000009&
+      Caption         =   "Auras"
+      ForeColor       =   &H8000000B&
+      Height          =   735
+      Left            =   240
+      TabIndex        =   32
+      Top             =   5760
+      Width           =   4215
+      Begin VB.CheckBox ActAura 
+         BackColor       =   &H80000012&
+         Caption         =   "Activar Auras"
+         ForeColor       =   &H8000000B&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   34
+         Top             =   240
+         Width           =   1335
+      End
+      Begin VB.CheckBox RotaAura 
+         BackColor       =   &H80000012&
+         Caption         =   "Rotación"
+         ForeColor       =   &H8000000F&
+         Height          =   375
+         Left            =   2040
+         TabIndex        =   33
+         Top             =   210
+         Width           =   1455
+      End
+   End
    Begin VB.Frame frameOtros 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -370,6 +400,16 @@ Option Explicit
 
 Private loading As Boolean
 
+Private Sub ActAura_Click()
+If ActAura.Value = vbUnchecked Then
+  WriteVar OpcionesPath, "AURAS", "AuraActiva", 0
+  ActivarAuras = GetVar(OpcionesPath, "AURAS", "AuraActiva")
+Else
+  WriteVar OpcionesPath, "AURAS", "AuraActiva", 1
+  ActivarAuras = GetVar(OpcionesPath, "AURAS", "AuraActiva")
+End If
+End Sub
+
 Private Sub Check1_Click(Index As Integer)
 
     Select Case Index
@@ -499,6 +539,16 @@ Private Sub Form_Load()
     
     loading = False     'Enable sounds when setting check's values
 
+End Sub
+
+Private Sub RotaAura_Click()
+If RotaAura.Value = vbUnchecked Then
+  WriteVar OpcionesPath, "AURAS", "rotacion", 0
+  RotarActivado = GetVar(OpcionesPath, "AURAS", "rotacion")
+Else
+  WriteVar OpcionesPath, "AURAS", "rotacion", 1
+  RotarActivado = GetVar(OpcionesPath, "AURAS", "rotacion")
+End If
 End Sub
 
 Private Sub slSound_Change()
@@ -635,6 +685,19 @@ Public Sub LoadOptionsValues()
         chkCursorFaccionario.Value = vbUnchecked
 
     End If
+    
+    If ActivarAuras = "1" Then
+   frmOpciones.ActAura.Value = vbChecked
+   Else
+   frmOpciones.ActAura.Value = vbUnchecked
+   End If
+   
+   If RotarActivado = "1" Then
+   frmOpciones.RotaAura.Value = vbChecked
+   Else
+   frmOpciones.RotaAura.Value = vbUnchecked
+   End If
+    
           
 End Sub
 

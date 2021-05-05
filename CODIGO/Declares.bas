@@ -36,6 +36,12 @@ Public SimboloY As Integer
 Public SimboloOn As Boolean
 Public COLOR_AZUL  As Long
 Public Movement_Speed As Single
+'aura
+Public OpcionesPath As String
+Public ActivarAuras As String
+Public RotarActivado As String
+Public Rotacion As Single
+'aura
 Public Enum eMessages
 
     mUserMuerto
@@ -316,9 +322,9 @@ Public RawServersList                          As String
 
 Public Type tColor
 
-    r As Byte
+    R As Byte
     G As Byte
-    B As Byte
+    b As Byte
 
 End Type
 
@@ -1176,8 +1182,8 @@ Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 Public Const SW_SHOWNORMAL As Long = 1
 
 Public Declare Function ShellExecute _
-               Lib "shell32.dll" _
-               Alias "ShellExecuteA" (ByVal hwnd As Long, _
+               Lib "Shell32.dll" _
+               Alias "ShellExecuteA" (ByVal hWnd As Long, _
                                       ByVal lpOperation As String, _
                                       ByVal lpFile As String, _
                                       ByVal lpParameters As String, _
@@ -1208,8 +1214,8 @@ End Type
 Public Type tIndiceFx
 
     Animacion As Integer
-    OFFSETX As Integer
-    OFFSETY As Integer
+    OffSetX As Integer
+    OffSetY As Integer
 
 End Type
 

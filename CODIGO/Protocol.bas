@@ -294,6 +294,10 @@ Public Sub HandleIncomingData()
 
     Case ServerPacketID.CancelOfferItem
         Call HandleCancelOfferItem
+        'aura
+        Case ServerPacketID.SendAura
+            Call HandleSendAura
+        'aura
 
     Case ServerPacketID.ShowBlacksmithForm      ' SFH
         Call HandleShowBlacksmithForm
@@ -802,7 +806,7 @@ Private Sub HandleDisconnect()
     'Last Modification: 05/17/06
     '
     '***************************************************
-    Dim i As Long
+    Dim I As Long
     
     'Remove packet ID
     Call incomingData.ReadByte
@@ -872,7 +876,7 @@ Private Sub HandleCommerceChat()
 
     Dim G         As Byte
 
-    Dim B         As Byte
+    Dim b         As Byte
     
     chat = buffer.ReadASCIIString()
     FontIndex = buffer.ReadByte()
@@ -899,9 +903,9 @@ Private Sub HandleCommerceChat()
         str = ReadField(4, chat, 126)
 
         If Val(str) > 255 Then
-            B = 255
+            b = 255
         Else
-            B = Val(str)
+            b = Val(str)
 
         End If
             
@@ -966,7 +970,7 @@ Private Sub HandleCommerceInit()
     'Last Modification: 05/17/06
     '
     '***************************************************
-    Dim i As Long
+    Dim I As Long
     
     'Remove packet ID
     Call incomingData.ReadByte
@@ -976,32 +980,32 @@ Private Sub HandleCommerceInit()
     Call InvComNpc.Initialize(frmComerciar.picInvNpc, 0, 0, MAX_NPC_INVENTORY_SLOTS, False)    ')
 
     'Fill user inventory
-    For i = 1 To MAX_INVENTORY_SLOTS
+    For I = 1 To MAX_INVENTORY_SLOTS
 
-        If Inventario.OBJIndex(i) <> 0 Then
+        If Inventario.OBJIndex(I) <> 0 Then
 
             With Inventario
-                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+                Call InvComUsu.SetItem(I, .OBJIndex(I), .Amount(I), .Equipped(I), .GrhIndex(I), .ObjType(I), .MaxHit(I), .MinHit(I), .MaxDef(I), .MinDef(I), .Valor(I), .ItemName(I), .PuedeUsarItem(I))
 
             End With
 
         End If
 
-    Next i
+    Next I
     
     ' Fill Npc inventory
-    For i = 1 To 50
+    For I = 1 To 50
 
-        If NPCInventory(i).OBJIndex <> 0 Then
+        If NPCInventory(I).OBJIndex <> 0 Then
 
-            With NPCInventory(i)
-                Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
+            With NPCInventory(I)
+                Call InvComNpc.SetItem(I, .OBJIndex, .Amount, 0, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
             End With
 
         End If
 
-    Next i
+    Next I
     
     'Set state and show form
     Comerciando = True
@@ -1022,7 +1026,7 @@ Private Sub HandleBankInit()
     'Last Modification: 05/17/06
     '
     '***************************************************
-    Dim i        As Long
+    Dim I        As Long
 
     Dim BankGold As Long
     
@@ -1033,23 +1037,23 @@ Private Sub HandleBankInit()
     Call InvBanco(0).Initialize(frmBancoObj.PicBancoInv, 0, 0, MAX_BANCOINVENTORY_SLOTS, False)
     Call InvBanco(1).Initialize(frmBancoObj.picInv, 0, 0, Inventario.MaxObjs, False)
     
-    For i = 1 To Inventario.MaxObjs
+    For I = 1 To Inventario.MaxObjs
 
         With Inventario
-            Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+            Call InvBanco(1).SetItem(I, .OBJIndex(I), .Amount(I), .Equipped(I), .GrhIndex(I), .ObjType(I), .MaxHit(I), .MinHit(I), .MaxDef(I), .MinDef(I), .Valor(I), .ItemName(I), .PuedeUsarItem(I))
 
         End With
 
-    Next i
+    Next I
     
-    For i = 1 To MAX_BANCOINVENTORY_SLOTS
+    For I = 1 To MAX_BANCOINVENTORY_SLOTS
 
-        With UserBancoInventory(i)
-            Call InvBanco(0).SetItem(i, .OBJIndex, .Amount, .Equipped, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
+        With UserBancoInventory(I)
+            Call InvBanco(0).SetItem(I, .OBJIndex, .Amount, .Equipped, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
         End With
 
-    Next i
+    Next I
     
     'Set state and show form
     Comerciando = True
@@ -1134,7 +1138,7 @@ Private Sub HandleUserCommerceInit()
     'Last Modification: 05/17/06
     '
     '***************************************************
-    Dim i As Long
+    Dim I As Long
     
     'Remove packet ID
     Call incomingData.ReadByte
@@ -1149,18 +1153,18 @@ Private Sub HandleUserCommerceInit()
     Call InvOroComUsu(2).Initialize(frmComerciarUsu.picInvOroOfertaOtro, 0, 0, INV_GOLD_SLOTS, False, , TilePixelWidth * 2, TilePixelHeight, TilePixelWidth / 2)
 
     'Fill user inventory
-    For i = 1 To MAX_INVENTORY_SLOTS
+    For I = 1 To MAX_INVENTORY_SLOTS
 
-        If Inventario.OBJIndex(i) <> 0 Then
+        If Inventario.OBJIndex(I) <> 0 Then
 
             With Inventario
-                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+                Call InvComUsu.SetItem(I, .OBJIndex(I), .Amount(I), .Equipped(I), .GrhIndex(I), .ObjType(I), .MaxHit(I), .MinHit(I), .MaxDef(I), .MinDef(I), .Valor(I), .ItemName(I), .PuedeUsarItem(I))
 
             End With
 
         End If
 
-    Next i
+    Next I
 
     ' Inventarios de oro
     Call InvOroComUsu(0).SetItem(1, ORO_INDEX, UserGLD, 0, ORO_GRH, 0, 0, 0, 0, 0, 0, "Oro", 1)
@@ -1595,7 +1599,7 @@ Private Sub HandleShowBarco()
 
     Dim Pasajeros(1 To 4) As Integer
 
-    Dim i                 As Integer
+    Dim I                 As Integer
 
     Dim Body              As Integer, Head As Integer, Casco As Integer
     
@@ -1608,15 +1612,15 @@ Private Sub HandleShowBarco()
     
     Debug.Print "Paquete Barco"
     
-    For i = 1 To 4
-        Pasajeros(i) = incomingData.ReadInteger()
+    For I = 1 To 4
+        Pasajeros(I) = incomingData.ReadInteger()
         Body = incomingData.ReadInteger()
         Head = incomingData.ReadInteger()
         Casco = incomingData.ReadInteger()
 
-        If Pasajeros(i) > 0 Then
+        If Pasajeros(I) > 0 Then
 
-            With charlist(Pasajeros(i))
+            With charlist(Pasajeros(I))
                 .Body = BodyData(Body)
                 .Head = HeadData(Head)
                 .Casco = CascoAnimData(Casco)
@@ -1626,7 +1630,7 @@ Private Sub HandleShowBarco()
 
         End If
 
-    Next i
+    Next I
     
     Call Dialogos.RemoveDialog(9999)
     Call Dialogos.RemoveDialog(10000)
@@ -1826,7 +1830,7 @@ Private Sub HandleTooltip()
 
     Dim TIPO    As Byte
 
-    Dim R       As Byte, G As Byte, B As Byte
+    Dim R       As Byte, G As Byte, b As Byte
     
     'Remove packet ID
     Call incomingData.ReadByte
@@ -1841,53 +1845,53 @@ Private Sub HandleTooltip()
     If TIPO = 0 Then
         R = 255
         G = 0
-        B = 0
+        b = 0
     ElseIf TIPO = 1 Then
         R = 250
         G = 201
-        B = 20
+        b = 20
     ElseIf TIPO = 2 Then ' PESCA
         R = 153
         G = 217
-        B = 234
+        b = 234
     ElseIf TIPO = 3 Then ' MINA
         R = 128
         G = 128
-        B = 128
+        b = 128
     ElseIf TIPO = 4 Then ' TALA
         R = 185
         G = 122
-        B = 87
+        b = 87
     ElseIf TIPO = 5 Then ' HERRERIA DAGA
         R = 185
         G = 222
-        B = 87
+        b = 87
     ElseIf TIPO = 6 Then ' SUBE HP
         R = 255
         G = 119
-        B = 119
+        b = 119
     ElseIf TIPO = 7 Then ' SUBE MANA
         R = 128
         G = 255
-        B = 255
+        b = 255
     ElseIf TIPO = 8 Then ' SUBE STA
         R = 255
         G = 255
-        B = 81
+        b = 81
     ElseIf TIPO = 9 Then ' SUBE FUERZA
         R = 17
         G = 153
-        B = 17
+        b = 17
     ElseIf TIPO = 10 Then ' SUBE AGILIDAD
         R = 255
         G = 255
-        B = 81
+        b = 81
 
     End If
     
     Dim c As New clsToolTip
 
-    Call c.Init(x, y, Mensaje, R, G, B)
+    Call c.Init(x, y, Mensaje, R, G, b)
     Tooltips.Add c
     
 End Sub
@@ -2496,17 +2500,17 @@ Private Sub HandleChatOverHead()
 
     Dim G         As Byte
 
-    Dim B         As Byte
+    Dim b         As Byte
     
     chat = buffer.ReadASCIIString()
     CharIndex = buffer.ReadInteger()
     
     R = buffer.ReadByte()
     G = buffer.ReadByte()
-    B = buffer.ReadByte()
+    b = buffer.ReadByte()
     
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
-    If charlist(CharIndex).ACTIVE Or charlist(CharIndex).priv = 10 Then Call Dialogos.CreateDialog(chat, CharIndex, R, G, B)
+    If charlist(CharIndex).ACTIVE Or charlist(CharIndex).priv = 10 Then Call Dialogos.CreateDialog(chat, CharIndex, R, G, b)
         
     Dim Name As String
 
@@ -2574,7 +2578,7 @@ Private Sub HandleConsoleMessage()
 
     Dim G         As Byte
 
-    Dim B         As Byte
+    Dim b         As Byte
     
     chat = buffer.ReadASCIIString()
     FontIndex = buffer.ReadByte()
@@ -2601,13 +2605,13 @@ Private Sub HandleConsoleMessage()
         str = ReadField(4, chat, 126)
 
         If Val(str) > 255 Then
-            B = 255
+            b = 255
         Else
-            B = Val(str)
+            b = Val(str)
 
         End If
             
-        Call AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), R, G, B, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+        Call AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), R, G, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
 
         With FontTypes(FontIndex)
@@ -2674,7 +2678,7 @@ Private Sub HandleGuildChat()
 
     Dim G    As Byte
 
-    Dim B    As Byte
+    Dim b    As Byte
 
     Dim tmp  As Integer
 
@@ -2706,13 +2710,13 @@ Private Sub HandleGuildChat()
             str = ReadField(4, chat, 126)
 
             If Val(str) > 255 Then
-                B = 255
+                b = 255
             Else
-                B = Val(str)
+                b = Val(str)
 
             End If
             
-            Call AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), R, G, B, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+            Call AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), R, G, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
         Else
 
             With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
@@ -2892,7 +2896,7 @@ Private Sub HandleUserCharIndexInServer()
 
     If bTecho Then
         bAlpha = 70
-        ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, bAlpha)
+        ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
 
     End If
     
@@ -3396,11 +3400,11 @@ Private Sub HandleGuildList()
         
         GuildNames = Split(buffer.ReadASCIIString(), SEPARATOR)
         
-        Dim i As Long
+        Dim I As Long
 
-        For i = 0 To UBound(GuildNames())
-            Call .guildslist.AddItem(GuildNames(i))
-        Next i
+        For I = 0 To UBound(GuildNames())
+            Call .guildslist.AddItem(GuildNames(I))
+        Next I
         
         'If we got here then packet is complete, copy data back to original queue
         Call incomingData.CopyBuffer(buffer)
@@ -3814,15 +3818,15 @@ Private Sub HandleShowPartyForm()
     
     Dim members() As String
 
-    Dim i         As Long
+    Dim I         As Long
     
     EsPartyLeader = CBool(buffer.ReadByte())
        
     members = Split(buffer.ReadASCIIString(), SEPARATOR)
 
-    For i = 0 To UBound(members())
-        Call frmParty.lstMembers.AddItem(members(i))
-    Next i
+    For I = 0 To UBound(members())
+        Call frmParty.lstMembers.AddItem(members(I))
+    Next I
     
     frmParty.lblTotalExp.Caption = buffer.ReadLong
     frmParty.Show , frmMain
@@ -4125,7 +4129,7 @@ Private Sub HandleAtributes()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim i    As Long
+    Dim I    As Long
 
     Dim TIPO As Byte
     
@@ -4141,9 +4145,9 @@ Private Sub HandleAtributes()
         frmMain.lblAgilidad.Caption = UserAtributos(2)
     Else
 
-        For i = 1 To NUMATRIBUTES
-            UserAtributos(i) = incomingData.ReadByte()
-        Next i
+        For I = 1 To NUMATRIBUTES
+            UserAtributos(I) = incomingData.ReadByte()
+        Next I
 
         LlegaronAtrib = True
 
@@ -4177,22 +4181,22 @@ Private Sub HandleBlacksmithWeapons()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim Count As Integer
+    Dim count As Integer
 
-    Dim i     As Long
+    Dim I     As Long
 
     Dim J     As Long
 
     Dim k     As Long
     
-    Count = buffer.ReadInteger()
+    count = buffer.ReadInteger()
     
-    ReDim ArmasHerrero(Count) As tItemsConstruibles
+    ReDim ArmasHerrero(count) As tItemsConstruibles
     ReDim HerreroMejorar(0) As tItemsConstruibles
     
-    For i = 1 To Count
+    For I = 1 To count
 
-        With ArmasHerrero(i)
+        With ArmasHerrero(I)
             .Name = buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = buffer.ReadInteger()
             .LinH = buffer.ReadInteger()        'The iron needed
@@ -4203,7 +4207,7 @@ Private Sub HandleBlacksmithWeapons()
 
         End With
 
-    Next i
+    Next I
     
     With frmHerrero
         ' Inicializo los inventarios
@@ -4212,18 +4216,18 @@ Private Sub HandleBlacksmithWeapons()
         Call InvLingosHerreria(3).Initialize(.picLingotes2, 0, 0, 3, False, , , , , , False)
         Call InvLingosHerreria(4).Initialize(.picLingotes3, 0, 0, 3, False, , , , , , False)
         
-        Call .HideExtraControls(Count)
+        Call .HideExtraControls(count)
         Call .RenderList(1, True)
 
     End With
     
-    For i = 1 To Count
+    For I = 1 To count
 
-        With ArmasHerrero(i)
+        With ArmasHerrero(I)
 
             If .Upgrade Then
 
-                For k = 1 To Count
+                For k = 1 To count
 
                     If .Upgrade = ArmasHerrero(k).OBJIndex Then
                         J = J + 1
@@ -4249,7 +4253,7 @@ Private Sub HandleBlacksmithWeapons()
 
         End With
 
-    Next i
+    Next I
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(buffer)
@@ -4295,21 +4299,21 @@ Private Sub HandleBlacksmithArmors()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim Count As Integer
+    Dim count As Integer
 
-    Dim i     As Long
+    Dim I     As Long
 
     Dim J     As Long
 
     Dim k     As Long
     
-    Count = buffer.ReadInteger()
+    count = buffer.ReadInteger()
     
-    ReDim ArmadurasHerrero(Count) As tItemsConstruibles
+    ReDim ArmadurasHerrero(count) As tItemsConstruibles
     
-    For i = 1 To Count
+    For I = 1 To count
 
-        With ArmadurasHerrero(i)
+        With ArmadurasHerrero(I)
             .Name = buffer.ReadASCIIString()    'Get the object's name
             .GrhIndex = buffer.ReadInteger()
             .LinH = buffer.ReadInteger()        'The iron needed
@@ -4320,17 +4324,17 @@ Private Sub HandleBlacksmithArmors()
 
         End With
 
-    Next i
+    Next I
     
     J = UBound(HerreroMejorar)
     
-    For i = 1 To Count
+    For I = 1 To count
 
-        With ArmadurasHerrero(i)
+        With ArmadurasHerrero(I)
 
             If .Upgrade Then
 
-                For k = 1 To Count
+                For k = 1 To count
 
                     If .Upgrade = ArmadurasHerrero(k).OBJIndex Then
                         J = J + 1
@@ -4356,7 +4360,7 @@ Private Sub HandleBlacksmithArmors()
 
         End With
 
-    Next i
+    Next I
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(buffer)
@@ -4402,22 +4406,22 @@ Private Sub HandleCarpenterObjects()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim Count As Integer
+    Dim count As Integer
 
-    Dim i     As Long
+    Dim I     As Long
 
     Dim J     As Long
 
     Dim k     As Long
     
-    Count = buffer.ReadInteger()
+    count = buffer.ReadInteger()
     
-    ReDim ObjCarpintero(Count) As tItemsConstruibles
+    ReDim ObjCarpintero(count) As tItemsConstruibles
     ReDim CarpinteroMejorar(0) As tItemsConstruibles
     
-    For i = 1 To Count
+    For I = 1 To count
 
-        With ObjCarpintero(i)
+        With ObjCarpintero(I)
             .Name = buffer.ReadASCIIString()        'Get the object's name
             .GrhIndex = buffer.ReadInteger()
             .Madera = buffer.ReadInteger()          'The wood needed
@@ -4427,7 +4431,7 @@ Private Sub HandleCarpenterObjects()
 
         End With
 
-    Next i
+    Next I
     
     With frmCarp
         ' Inicializo los inventarios
@@ -4436,18 +4440,18 @@ Private Sub HandleCarpenterObjects()
         Call InvMaderasCarpinteria(3).Initialize(.picMaderas2, 0, 0, 2, False, , , , , , False)
         Call InvMaderasCarpinteria(4).Initialize(.picMaderas3, 0, 0, 2, False, , , , , , False)
         
-        Call .HideExtraControls(Count)
+        Call .HideExtraControls(count)
         Call .RenderList(1)
 
     End With
     
-    For i = 1 To Count
+    For I = 1 To count
 
-        With ObjCarpintero(i)
+        With ObjCarpintero(I)
 
             If .Upgrade Then
 
-                For k = 1 To Count
+                For k = 1 To count
 
                     If .Upgrade = ObjCarpintero(k).OBJIndex Then
                         J = J + 1
@@ -4472,7 +4476,7 @@ Private Sub HandleCarpenterObjects()
 
         End With
 
-    Next i
+    Next I
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(buffer)
@@ -5025,15 +5029,15 @@ Private Sub HandleSendSkills()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim i As Long
+    Dim I As Long
     
     SkillPoints = incomingData.ReadInteger()
     SPLibres = SkillPoints
 
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = incomingData.ReadByte()
-        UserSkillsMod(i) = UserSkills(i)
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = incomingData.ReadByte()
+        UserSkillsMod(I) = UserSkills(I)
+    Next I
 
     LlegaronSkills = True
 
@@ -5235,13 +5239,13 @@ Private Sub HandleTrainerCreatureList()
     
     Dim creatures() As String
 
-    Dim i           As Long
+    Dim I           As Long
     
     creatures = Split(buffer.ReadASCIIString(), SEPARATOR)
     
-    For i = 0 To UBound(creatures())
-        Call frmEntrenador.lstCriaturas.AddItem(creatures(i))
-    Next i
+    For I = 0 To UBound(creatures())
+        Call frmEntrenador.lstCriaturas.AddItem(creatures(I))
+    Next I
 
     frmEntrenador.Show , frmMain
     
@@ -5291,7 +5295,7 @@ Private Sub HandleGuildNews()
     
     Dim guildList() As String
 
-    Dim i           As Long
+    Dim I           As Long
 
     Dim sTemp       As String
     
@@ -5301,18 +5305,18 @@ Private Sub HandleGuildNews()
     'Get Enemy guilds list
     guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
-    For i = 0 To UBound(guildList)
+    For I = 0 To UBound(guildList)
         sTemp = frmGuildNews.txtClanesGuerra.Text
-        frmGuildNews.txtClanesGuerra.Text = sTemp & guildList(i) & vbCrLf
-    Next i
+        frmGuildNews.txtClanesGuerra.Text = sTemp & guildList(I) & vbCrLf
+    Next I
     
     'Get Allied guilds list
     guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
-    For i = 0 To UBound(guildList)
+    For I = 0 To UBound(guildList)
         sTemp = frmGuildNews.txtClanesAliados.Text
-        frmGuildNews.txtClanesAliados.Text = sTemp & guildList(i) & vbCrLf
-    Next i
+        frmGuildNews.txtClanesAliados.Text = sTemp & guildList(I) & vbCrLf
+    Next I
     
     If mOpciones.GuildNews = True Then
         frmGuildNews.Show vbModeless, frmMain
@@ -5411,13 +5415,13 @@ Private Sub HandleAlianceProposalsList()
     
     Dim guildList() As String
 
-    Dim i           As Long
+    Dim I           As Long
     
     guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
-    For i = 0 To UBound(guildList())
-        Call frmPeaceProp.lista.AddItem(guildList(i))
-    Next i
+    For I = 0 To UBound(guildList())
+        Call frmPeaceProp.lista.AddItem(guildList(I))
+    Next I
     
     frmPeaceProp.ProposalType = TIPO_PROPUESTA.ALIANZA
     Call frmPeaceProp.Show(vbModeless, frmMain)
@@ -5468,13 +5472,13 @@ Private Sub HandlePeaceProposalsList()
     
     Dim guildList() As String
 
-    Dim i           As Long
+    Dim I           As Long
     
     guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
-    For i = 0 To UBound(guildList())
-        Call frmPeaceProp.lista.AddItem(guildList(i))
-    Next i
+    For I = 0 To UBound(guildList())
+        Call frmPeaceProp.lista.AddItem(guildList(I))
+    Next I
     
     frmPeaceProp.ProposalType = TIPO_PROPUESTA.PAZ
     Call frmPeaceProp.Show(vbModeless, frmMain)
@@ -5637,7 +5641,7 @@ Private Sub HandleGuildLeaderInfo()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim i      As Long
+    Dim I      As Long
 
     Dim List() As String
     
@@ -5648,9 +5652,9 @@ Private Sub HandleGuildLeaderInfo()
         'Empty the list
         Call .guildslist.Clear
         
-        For i = 0 To UBound(GuildNames())
-            Call .guildslist.AddItem(GuildNames(i))
-        Next i
+        For I = 0 To UBound(GuildNames())
+            Call .guildslist.AddItem(GuildNames(I))
+        Next I
         
         'Get list of guild's members
         GuildMembers = Split(buffer.ReadASCIIString(), SEPARATOR)
@@ -5659,9 +5663,9 @@ Private Sub HandleGuildLeaderInfo()
         'Empty the list
         Call .members.Clear
         
-        For i = 0 To UBound(GuildMembers())
-            Call .members.AddItem(GuildMembers(i))
-        Next i
+        For I = 0 To UBound(GuildMembers())
+            Call .members.AddItem(GuildMembers(I))
+        Next I
         
         .txtguildnews = buffer.ReadASCIIString()
         
@@ -5671,9 +5675,9 @@ Private Sub HandleGuildLeaderInfo()
         'Empty the list
         Call .solicitudes.Clear
         
-        For i = 0 To UBound(List())
-            Call .solicitudes.AddItem(List(i))
-        Next i
+        For I = 0 To UBound(List())
+            Call .solicitudes.AddItem(List(I))
+        Next I
         
         .Show , frmMain
 
@@ -5726,11 +5730,11 @@ Private Sub HandleGuildMemberInfo()
         
         GuildNames = Split(buffer.ReadASCIIString(), SEPARATOR)
         
-        Dim i As Long
+        Dim I As Long
 
-        For i = 0 To UBound(GuildNames())
-            Call .lstClanes.AddItem(GuildNames(i))
-        Next i
+        For I = 0 To UBound(GuildNames())
+            Call .lstClanes.AddItem(GuildNames(I))
+        Next I
         
         'Get list of guild's members
         GuildMembers = Split(buffer.ReadASCIIString(), SEPARATOR)
@@ -5739,9 +5743,9 @@ Private Sub HandleGuildMemberInfo()
         'Empty the list
         Call .lstMiembros.Clear
         
-        For i = 0 To UBound(GuildMembers())
-            Call .lstMiembros.AddItem(GuildMembers(i))
-        Next i
+        For I = 0 To UBound(GuildMembers())
+            Call .lstMiembros.AddItem(GuildMembers(I))
+        Next I
         
         'If we got here then packet is complete, copy data back to original queue
         Call incomingData.CopyBuffer(buffer)
@@ -5817,15 +5821,15 @@ Private Sub HandleGuildDetails()
         
         Dim codexStr() As String
 
-        Dim i          As Long
+        Dim I          As Long
         
         codexStr = Split(buffer.ReadASCIIString(), SEPARATOR)
         
-        For i = 0 To 7
-            .Codex(i).Caption = codexStr(i)
-        Next i
+        For I = 0 To 7
+            .Codex(I).Caption = codexStr(I)
+        Next I
         
-        .desc.Text = buffer.ReadASCIIString()
+        .Desc.Text = buffer.ReadASCIIString()
 
     End With
     
@@ -5942,45 +5946,45 @@ Private Sub HandleTradeOK()
     
     If frmComerciar.Visible Then
 
-        Dim i As Long
+        Dim I As Long
         
         'Update user inventory
-        For i = 1 To MAX_INVENTORY_SLOTS
+        For I = 1 To MAX_INVENTORY_SLOTS
 
             ' Agrego o quito un item en su totalidad
-            If Inventario.OBJIndex(i) <> InvComUsu.OBJIndex(i) Then
+            If Inventario.OBJIndex(I) <> InvComUsu.OBJIndex(I) Then
 
                 With Inventario
-                    Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+                    Call InvComUsu.SetItem(I, .OBJIndex(I), .Amount(I), .Equipped(I), .GrhIndex(I), .ObjType(I), .MaxHit(I), .MinHit(I), .MaxDef(I), .MinDef(I), .Valor(I), .ItemName(I), .PuedeUsarItem(I))
 
                 End With
 
                 ' Vendio o compro cierta cantidad de un item que ya tenia
-            ElseIf Inventario.Amount(i) <> InvComUsu.Amount(i) Then
-                Call InvComUsu.ChangeSlotItemAmount(i, Inventario.Amount(i))
+            ElseIf Inventario.Amount(I) <> InvComUsu.Amount(I) Then
+                Call InvComUsu.ChangeSlotItemAmount(I, Inventario.Amount(I))
 
             End If
 
-        Next i
+        Next I
         
         ' Fill Npc inventory
-        For i = 1 To 20
+        For I = 1 To 20
 
             ' Compraron la totalidad de un item, o vendieron un item que el npc no tenia
-            If NPCInventory(i).OBJIndex <> InvComNpc.OBJIndex(i) Then
+            If NPCInventory(I).OBJIndex <> InvComNpc.OBJIndex(I) Then
 
-                With NPCInventory(i)
-                    Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
+                With NPCInventory(I)
+                    Call InvComNpc.SetItem(I, .OBJIndex, .Amount, 0, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
                 End With
 
                 ' Compraron o vendieron cierta cantidad (no su totalidad)
-            ElseIf NPCInventory(i).Amount <> InvComNpc.Amount(i) Then
-                Call InvComNpc.ChangeSlotItemAmount(i, NPCInventory(i).Amount)
+            ElseIf NPCInventory(I).Amount <> InvComNpc.Amount(I) Then
+                Call InvComNpc.ChangeSlotItemAmount(I, NPCInventory(I).Amount)
 
             End If
 
-        Next i
+        Next I
 
     End If
 
@@ -5998,18 +6002,18 @@ Private Sub HandleBankOK()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim i As Long
+    Dim I As Long
     
     If frmBancoObj.Visible Then
         
-        For i = 1 To Inventario.MaxObjs
+        For I = 1 To Inventario.MaxObjs
 
             With Inventario
-                Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), 0)
+                Call InvBanco(1).SetItem(I, .OBJIndex(I), .Amount(I), .Equipped(I), .GrhIndex(I), .ObjType(I), .MaxHit(I), .MinHit(I), .MaxDef(I), .MinDef(I), .Valor(I), .ItemName(I), 0)
 
             End With
 
-        Next i
+        Next I
         
         'Alter order according to if we bought or sold so the labels and grh remain the same
         If frmBancoObj.LasActionBuy Then
@@ -6116,13 +6120,13 @@ Private Sub HandleSpawnList()
     
     Dim creatureList() As String
 
-    Dim i              As Long
+    Dim I              As Long
     
     creatureList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
-    For i = 0 To UBound(creatureList())
-        Call frmSpawnList.lstCriaturas.AddItem(creatureList(i))
-    Next i
+    For I = 0 To UBound(creatureList())
+        Call frmSpawnList.lstCriaturas.AddItem(creatureList(I))
+    Next I
 
     frmSpawnList.Show , frmMain
     
@@ -6172,13 +6176,13 @@ Private Sub HandleShowSOSForm()
     
     Dim sosList() As String
 
-    Dim i         As Long
+    Dim I         As Long
     
     sosList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
-    For i = 0 To UBound(sosList())
-        Call frmMSG.List1.AddItem(sosList(i))
-    Next i
+    For I = 0 To UBound(sosList())
+        Call frmMSG.List1.AddItem(sosList(I))
+    Next I
     
     frmMSG.Show , frmMain
     
@@ -6291,16 +6295,16 @@ Private Sub HandleUserNameList()
     
     Dim userList() As String
 
-    Dim i          As Long
+    Dim I          As Long
     
     userList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     If frmPanelGm.Visible Then
         frmPanelGm.cboListaUsus.Clear
 
-        For i = 0 To UBound(userList())
-            Call frmPanelGm.cboListaUsus.AddItem(userList(i))
-        Next i
+        For I = 0 To UBound(userList())
+            Call frmPanelGm.cboListaUsus.AddItem(userList(I))
+        Next I
 
         If frmPanelGm.cboListaUsus.ListCount > 0 Then frmPanelGm.cboListaUsus.ListIndex = 0
 
@@ -7101,11 +7105,11 @@ Private Sub HandlePicInRender()
     'Remove packet ID
     Call incomingData.ReadByte
 
-    Dim picType As Byte
+    Dim PicType As Byte
 
-    picType = incomingData.ReadByte()
+    PicType = incomingData.ReadByte()
   
-    Select Case picType
+    Select Case PicType
 
         Case ePicRenderType.BloodDie
             AlphaBloodUserDie = 255
@@ -7182,7 +7186,7 @@ Public Sub WriteLoginExistingChar()
     'Last Modification: 05/17/06
     'Writes the "LoginExistingChar" message to the outgoing data buffer
     '***************************************************
-    Dim i As Long
+    Dim I As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginExistingChar)
@@ -7210,7 +7214,7 @@ Public Sub WriteOpenAccount()
     'Last Modification: 05/17/06
     'Writes the "LoginExistingChar" message to the outgoing data buffer
     '***************************************************
-    Dim i As Long
+    Dim I As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.OpenAccount)
@@ -7243,7 +7247,7 @@ Public Sub WriteLoginNewChar()
     'Last Modification: 05/17/06
     'Writes the "LoginNewChar" message to the outgoing data buffer
     '***************************************************
-    Dim i As Long
+    Dim I As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginNewChar)
@@ -7277,7 +7281,7 @@ Public Sub WriteLoginNewAccount()
     'Last Modification: 05/17/06
     'Writes the "LoginNewChar" message to the outgoing data buffer
     '***************************************************
-    Dim i As Long
+    Dim I As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.LoginNewAccount)
@@ -7939,7 +7943,7 @@ End Sub
 ' @param    codex   Array of all rules of the guild.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteCreateNewGuild(ByVal desc As String, _
+Public Sub WriteCreateNewGuild(ByVal Desc As String, _
                                ByVal Name As String, _
                                ByVal Site As String, _
                                ByRef Codex() As String)
@@ -7951,18 +7955,18 @@ Public Sub WriteCreateNewGuild(ByVal desc As String, _
     '***************************************************
     Dim temp As String
 
-    Dim i    As Long
+    Dim I    As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.CreateNewGuild)
         
-        Call .WriteASCIIString(desc)
+        Call .WriteASCIIString(Desc)
         Call .WriteASCIIString(Name)
         Call .WriteASCIIString(Site)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
-        Next i
+        For I = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(I) & SEPARATOR
+        Next I
         
         If Len(temp) Then temp = Left$(temp, Len(temp) - 1)
         
@@ -8051,14 +8055,14 @@ Public Sub WriteModifySkills(ByRef skillEdt() As Byte)
     'Last Modification: 05/17/06
     'Writes the "ModifySkills" message to the outgoing data buffer
     '***************************************************
-    Dim i As Long
+    Dim I As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.ModifySkills)
         
-        For i = 1 To NUMSKILLS
-            Call .WriteByte(skillEdt(i))
-        Next i
+        For I = 1 To NUMSKILLS
+            Call .WriteByte(skillEdt(I))
+        Next I
 
     End With
 
@@ -8237,7 +8241,7 @@ End Sub
 ' @param    codex New codex of the clan.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
+Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8246,16 +8250,16 @@ Public Sub WriteClanCodexUpdate(ByVal desc As String, ByRef Codex() As String)
     '***************************************************
     Dim temp As String
 
-    Dim i    As Long
+    Dim I    As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.ClanCodexUpdate)
         
-        Call .WriteASCIIString(desc)
+        Call .WriteASCIIString(Desc)
         
-        For i = LBound(Codex()) To UBound(Codex())
-            temp = temp & Codex(i) & SEPARATOR
-        Next i
+        For I = LBound(Codex()) To UBound(Codex())
+            temp = temp & Codex(I) & SEPARATOR
+        Next I
         
         If Len(temp) Then temp = Left$(temp, Len(temp) - 1)
         
@@ -9339,7 +9343,7 @@ End Sub
 ' @param    desc The new description of the user's character.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChangeDescription(ByVal desc As String)
+Public Sub WriteChangeDescription(ByVal Desc As String)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9349,7 +9353,7 @@ Public Sub WriteChangeDescription(ByVal desc As String)
     With outgoingData
         Call .WriteByte(ClientPacketID.ChangeDescription)
         
-        Call .WriteASCIIString(desc)
+        Call .WriteASCIIString(Desc)
 
     End With
 
@@ -10091,7 +10095,7 @@ End Sub
 ' @param    time The time (in minutes) the user will have to spend there.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteJail(ByVal UserName As String, ByVal reason As String, ByVal time As Byte)
+Public Sub WriteJail(ByVal UserName As String, ByVal reason As String, ByVal Time As Byte)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10105,7 +10109,7 @@ Public Sub WriteJail(ByVal UserName As String, ByVal reason As String, ByVal tim
         Call .WriteASCIIString(UserName)
         Call .WriteASCIIString(reason)
         
-        Call .WriteByte(time)
+        Call .WriteByte(Time)
 
     End With
 
@@ -10675,15 +10679,15 @@ Public Sub WriteIPToNick(ByRef Ip() As Byte)
     '***************************************************
     If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
-    Dim i As Long
+    Dim I As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.gm)
         Call .WriteByte(ClientPacketIDGM.IPToNick)
         
-        For i = LBound(Ip()) To UBound(Ip())
-            Call .WriteByte(Ip(i))
-        Next i
+        For I = LBound(Ip()) To UBound(Ip())
+            Call .WriteByte(Ip(I))
+        Next I
 
     End With
 
@@ -10780,7 +10784,7 @@ End Sub
 ' @param    desc The description to set to players.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteSetCharDescription(ByVal desc As String)
+Public Sub WriteSetCharDescription(ByVal Desc As String)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10791,7 +10795,7 @@ Public Sub WriteSetCharDescription(ByVal desc As String)
         Call .WriteByte(ClientPacketID.gm)
         Call .WriteByte(ClientPacketIDGM.SetCharDescription)
         
-        Call .WriteASCIIString(desc)
+        Call .WriteASCIIString(Desc)
 
     End With
 
@@ -11251,7 +11255,7 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, _
     '***************************************************
     If byIp And UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
-    Dim i As Long
+    Dim I As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.gm)
@@ -11261,9 +11265,9 @@ Public Sub WriteBanIP(ByVal byIp As Boolean, _
         
         If byIp Then
 
-            For i = LBound(Ip()) To UBound(Ip())
-                Call .WriteByte(Ip(i))
-            Next i
+            For I = LBound(Ip()) To UBound(Ip())
+                Call .WriteByte(Ip(I))
+            Next I
 
         Else
             Call .WriteASCIIString(Nick)
@@ -11291,15 +11295,15 @@ Public Sub WriteUnbanIP(ByRef Ip() As Byte)
     '***************************************************
     If UBound(Ip()) - LBound(Ip()) + 1 <> 4 Then Exit Sub   'Invalid IP
     
-    Dim i As Long
+    Dim I As Long
     
     With outgoingData
         Call .WriteByte(ClientPacketID.gm)
         Call .WriteByte(ClientPacketIDGM.UnbanIP)
         
-        For i = LBound(Ip()) To UBound(Ip())
-            Call .WriteByte(Ip(i))
-        Next i
+        For I = LBound(Ip()) To UBound(Ip())
+            Call .WriteByte(Ip(I))
+        Next I
 
     End With
 
@@ -12215,7 +12219,7 @@ End Sub
 ' @param    b The blue component of the new chat color.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteChatColor(ByVal R As Byte, ByVal G As Byte, ByVal B As Byte)
+Public Sub WriteChatColor(ByVal R As Byte, ByVal G As Byte, ByVal b As Byte)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -12228,7 +12232,7 @@ Public Sub WriteChatColor(ByVal R As Byte, ByVal G As Byte, ByVal B As Byte)
         
         Call .WriteByte(R)
         Call .WriteByte(G)
-        Call .WriteByte(B)
+        Call .WriteByte(b)
 
     End With
 
@@ -12443,18 +12447,18 @@ Public Sub DataCorrect(ByRef CodeKey() As Byte, _
                        ByRef DataIn() As Byte, _
                        ByRef varI As Integer)
 
-    Dim i            As Long
+    Dim I            As Long
 
     Dim intXOrValue2 As Integer
 
     Exit Sub
 
-    For i = 0 To UBound(DataIn)
+    For I = 0 To UBound(DataIn)
         varI = (varI + 1) Mod UBound(CodeKey)
         intXOrValue2 = CodeKey(varI)
-        DataIn(i) = DataIn(i) Xor intXOrValue2
+        DataIn(I) = DataIn(I) Xor intXOrValue2
         
-    Next i
+    Next I
 
 End Sub
 'quest
@@ -12512,7 +12516,7 @@ Private Sub HandleQuestDetails()
 
     Dim QuestEmpezada As Boolean
 
-    Dim i             As Integer
+    Dim I             As Integer
     
     Dim cantidadnpc   As Integer
 
@@ -12570,10 +12574,10 @@ Private Sub HandleQuestDetails()
             QuestRequerida = .ReadInteger
            
             If QuestRequerida <> 0 Then
-                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf & "Quest:" & QuestList(QuestRequerida).RequiredQuest
+                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf & "Quest:" & QuestList(QuestRequerida).RequiredQuest
             Else
             
-                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
+                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
             
             
             End If
@@ -12590,7 +12594,7 @@ Private Sub HandleQuestDetails()
            
                 End If
 
-                For i = 1 To tmpByte
+                For I = 1 To tmpByte
                     cantidadnpc = .ReadInteger
                     NpcIndex = .ReadInteger
                
@@ -12610,7 +12614,7 @@ Private Sub HandleQuestDetails()
 
                     End If
 
-                Next i
+                Next I
 
             End If
            
@@ -12618,7 +12622,7 @@ Private Sub HandleQuestDetails()
 
             If tmpByte Then 'Hay OBJs
 
-                For i = 1 To tmpByte
+                For I = 1 To tmpByte
                
                     cantidadobj = .ReadInteger
                     OBJIndex = .ReadInteger
@@ -12629,7 +12633,7 @@ Private Sub HandleQuestDetails()
                     subelemento.SubItems(1) = AmountHave & "/" & cantidadobj
                     subelemento.SubItems(2) = OBJIndex
                     subelemento.SubItems(3) = 1
-                Next i
+                Next I
 
             End If
     
@@ -12653,7 +12657,7 @@ Private Sub HandleQuestDetails()
 
             If tmpByte Then
 
-                For i = 1 To tmpByte
+                For I = 1 To tmpByte
                     'tmpStr = tmpStr & "*) " & .ReadInteger & " " & .ReadInteger & vbCrLf
                    
                     Dim cantidadobjs As Integer
@@ -12675,7 +12679,7 @@ Private Sub HandleQuestDetails()
                     ' subelemento.SubItems(2) = 0
                     ' subelemento.SubItems(3) = 1
            
-                Next i
+                Next I
 
             End If
 
@@ -12688,7 +12692,7 @@ Private Sub HandleQuestDetails()
             LevelRequerido = .ReadByte
             QuestRequerida = .ReadInteger
            
-            FrmQuests.detalle.Text = QuestList(QuestIndex).desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
+            FrmQuests.detalle.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
             If QuestRequerida <> 0 Then
                  FrmQuests.detalle.Text = FrmQuests.detalle.Text & vbCrLf & "Quest: " & QuestList(QuestRequerida).nombre
             End If
@@ -12702,7 +12706,7 @@ Private Sub HandleQuestDetails()
 
             If tmpByte Then 'Hay NPCs
 
-                For i = 1 To tmpByte
+                For I = 1 To tmpByte
                     cantidadnpc = .ReadInteger
                     NpcIndex = .ReadInteger
                
@@ -12727,7 +12731,7 @@ Private Sub HandleQuestDetails()
                     subelemento.SubItems(2) = NpcIndex
                     subelemento.SubItems(3) = 0
                     'End If
-                Next i
+                Next I
 
             End If
            
@@ -12735,7 +12739,7 @@ Private Sub HandleQuestDetails()
 
             If tmpByte Then 'Hay OBJs
 
-                For i = 1 To tmpByte
+                For I = 1 To tmpByte
                
                     cantidadobj = .ReadInteger
                     OBJIndex = .ReadInteger
@@ -12746,7 +12750,7 @@ Private Sub HandleQuestDetails()
                     subelemento.SubItems(1) = AmountHave & "/" & cantidadobj
                     subelemento.SubItems(2) = OBJIndex
                     subelemento.SubItems(3) = 1
-                Next i
+                Next I
 
             End If
     
@@ -12781,7 +12785,7 @@ Private Sub HandleQuestDetails()
 
             If tmpByte Then
 
-                For i = 1 To tmpByte
+                For I = 1 To tmpByte
                     'tmpStr = tmpStr & "*) " & .ReadInteger & " " & .ReadInteger & vbCrLf
                    
                     cantidadobjs = .ReadInteger
@@ -12799,7 +12803,7 @@ Private Sub HandleQuestDetails()
                     ' subelemento.SubItems(2) = 0
                     ' subelemento.SubItems(3) = 1
            
-                Next i
+                Next I
 
             End If
         
@@ -12859,7 +12863,7 @@ Public Sub HandleQuestListSend()
 
     Call buffer.CopyBuffer(incomingData)
     
-    Dim i       As Integer
+    Dim I       As Integer
 
     Dim tmpByte As Byte
 
@@ -12881,9 +12885,9 @@ Public Sub HandleQuestListSend()
         tmpStr = buffer.ReadASCIIString
         
         'Agregamos los items
-        For i = 1 To tmpByte
-            FrmQuests.lstQuests.AddItem ReadField(i, tmpStr, 45)
-        Next i
+        For I = 1 To tmpByte
+            FrmQuests.lstQuests.AddItem ReadField(I, tmpStr, 45)
+        Next I
 
     End If
     
@@ -12963,7 +12967,7 @@ Public Sub HandleNpcQuestListSend()
 
     Dim QuestEmpezada As Boolean
 
-    Dim i             As Integer
+    Dim I             As Integer
     
     Dim J             As Byte
     
@@ -13028,10 +13032,10 @@ Public Sub HandleNpcQuestListSend()
                     
                     ReDim QuestList(QuestIndex).RequiredNPC(1 To tmpByte)
                     
-                    For i = 1 To tmpByte
+                    For I = 1 To tmpByte
                                                 
-                        QuestList(QuestIndex).RequiredNPC(i).Amount = .ReadInteger
-                        QuestList(QuestIndex).RequiredNPC(i).NpcIndex = .ReadInteger
+                        QuestList(QuestIndex).RequiredNPC(I).Amount = .ReadInteger
+                        QuestList(QuestIndex).RequiredNPC(I).NpcIndex = .ReadInteger
 
                           '
     
@@ -13042,7 +13046,7 @@ Public Sub HandleNpcQuestListSend()
                           '  subelemento.SubItems(3) = 0
 
     
-                    Next i
+                    Next I
                 Else
                     ReDim QuestList(QuestIndex).RequiredNPC(0)
                 End If
@@ -13053,17 +13057,17 @@ Public Sub HandleNpcQuestListSend()
                 If tmpByte Then 'Hay OBJs
                     ReDim QuestList(QuestIndex).RequiredOBJ(1 To tmpByte)
     
-                    For i = 1 To tmpByte
+                    For I = 1 To tmpByte
                    
-                        QuestList(QuestIndex).RequiredOBJ(i).Amount = .ReadInteger
-                        QuestList(QuestIndex).RequiredOBJ(i).OBJIndex = .ReadInteger
+                        QuestList(QuestIndex).RequiredOBJ(I).Amount = .ReadInteger
+                        QuestList(QuestIndex).RequiredOBJ(I).OBJIndex = .ReadInteger
 
                        
                        ' Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , ObjData(QuestList(QuestIndex).RequiredOBJ(i).OBJIndex).Name)
                        ' subelemento.SubItems(1) = QuestList(QuestIndex).RequiredOBJ(i).Amount
                        ' subelemento.SubItems(2) = QuestList(QuestIndex).RequiredOBJ(i).OBJIndex
                        ' subelemento.SubItems(3) = 1
-                    Next i
+                    Next I
                 Else
                      ReDim QuestList(QuestIndex).RequiredOBJ(0)
                 
@@ -13093,11 +13097,11 @@ Public Sub HandleNpcQuestListSend()
                 
                     ReDim QuestList(QuestIndex).RewardOBJ(1 To tmpByte)
     
-                    For i = 1 To tmpByte
+                    For I = 1 To tmpByte
 
                                               
-                        QuestList(QuestIndex).RewardOBJ(i).Amount = .ReadInteger
-                        QuestList(QuestIndex).RewardOBJ(i).OBJIndex = .ReadInteger
+                        QuestList(QuestIndex).RewardOBJ(I).Amount = .ReadInteger
+                        QuestList(QuestIndex).RewardOBJ(I).OBJIndex = .ReadInteger
                        
                         'Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , ObjData(QuestList(QuestIndex).RewardOBJ(i).OBJIndex).Name)
                            
@@ -13106,7 +13110,7 @@ Public Sub HandleNpcQuestListSend()
                         'subelemento.SubItems(3) = 1
                                
                
-                    Next i
+                    Next I
                 Else
                     ReDim QuestList(QuestIndex).RewardOBJ(0)
                 
@@ -13228,3 +13232,41 @@ HandleUpdateNPCSimbolo_Err:
     
 End Sub
 
+'aura
+Private Sub HandleSendAura()
+On Error GoTo Err
+    Dim charindexx As Integer
+ 
+    Call incomingData.ReadByte   'packetid
+    charindexx = incomingData.ReadInteger
+ 
+    With charlist(charindexx)
+        Dim parte As UpdateAuras, aura1 As Byte
+        parte = incomingData.ReadByte
+        aura1 = incomingData.ReadByte
+     
+        If Not aura1 = 0 Then
+            .aura(parte).AuraGrh = Auras(aura1).AuraGrh
+            .aura(parte).R = Auras(aura1).R
+            .aura(parte).G = Auras(aura1).G
+            .aura(parte).b = Auras(aura1).b
+            .aura(parte).Giratoria = Auras(aura1).Giratoria
+            .aura(parte).OffSetX = Auras(aura1).OffSetX
+            .aura(parte).OffSetY = Auras(aura1).OffSetY
+        Else
+            .aura(parte).AuraGrh = 0
+            .aura(parte).R = 0
+            .aura(parte).G = 0
+            .aura(parte).b = 0
+            .aura(parte).Giratoria = 0
+            .aura(parte).OffSetX = 0
+            .aura(parte).OffSetY = 0
+        End If
+        .aura(parte).color = D3DColorXRGB(.aura(parte).R, .aura(parte).G, .aura(parte).b)
+    End With
+ 
+Exit Sub
+Err:
+MsgBox "Error en HandleAura: (" & Err.Number & ") " & Err.Description
+End Sub
+'aura

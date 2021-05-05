@@ -268,6 +268,12 @@ Begin VB.Form frmMain
       TabIndex        =   2
       Top             =   135
       Width           =   11820
+      Begin VB.Timer tRelampago 
+         Enabled         =   0   'False
+         Interval        =   7500
+         Left            =   0
+         Top             =   0
+      End
       Begin VB.PictureBox BarraConsola 
          Appearance      =   0  'Flat
          AutoRedraw      =   -1  'True
@@ -634,12 +640,14 @@ Begin VB.Form frmMain
       Style           =   1
    End
    Begin VB.Label QuestBoton 
-      Caption         =   "Misiones"
-      Height          =   375
-      Left            =   1080
+      BackStyle       =   0  'Transparent
+      Height          =   255
+      Left            =   12840
+      MouseIcon       =   "frmMainN.frx":11629C
+      MousePointer    =   99  'Custom
       TabIndex        =   43
-      Top             =   11280
-      Width           =   735
+      Top             =   10440
+      Width           =   1455
    End
    Begin VB.Label lbStats 
       Appearance      =   0  'Flat
@@ -703,8 +711,8 @@ Begin VB.Form frmMain
    Begin VB.Image Menu 
       Height          =   2940
       Left            =   12000
-      Picture         =   "frmMainN.frx":11629C
-      Top             =   7950
+      Picture         =   "frmMainN.frx":116F66
+      Top             =   7995
       Visible         =   0   'False
       Width           =   3360
    End
@@ -995,7 +1003,7 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       Caption         =   "Sensui"
       BeginProperty Font 
-         Name            =   "Tahoma"
+         Name            =   "Augusta"
          Size            =   9.75
          Charset         =   0
          Weight          =   700
@@ -1003,7 +1011,7 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      ForeColor       =   &H000000FF&
+      ForeColor       =   &H00E0E0E0&
       Height          =   315
       Left            =   13140
       TabIndex        =   6
@@ -1185,7 +1193,7 @@ End Sub
 
 Private Sub Client_CloseSck()
 
-    Dim i As Long
+    Dim I As Long
 
     Client.CloseSck
     
@@ -1862,7 +1870,7 @@ End Sub
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If y < 24 And NoRes Then
-        MoverVentana (Me.hwnd)
+        MoverVentana (Me.hWnd)
 
     End If
 
@@ -2097,7 +2105,7 @@ Private Sub picInv_MouseDown(Button As Integer, _
                              x As Single, _
                              y As Single)
 
-    If InvX >= Inventario.OFFSETX And InvY >= Inventario.OFFSETY Then
+    If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
         Call Audio.PlayWave(SND_CLICK)
 
     End If
@@ -2506,21 +2514,21 @@ End Sub
 Public Sub ReDrawConsola()
     pConsola.Cls
 
-    Dim i As Long
+    Dim I As Long
 
-    For i = OffSetConsola To OffSetConsola + 6
+    For I = OffSetConsola To OffSetConsola + 6
 
-        If i >= 0 And i <= LineasConsola Then
+        If I >= 0 And I <= LineasConsola Then
             pConsola.CurrentX = 0
-            pConsola.CurrentY = (i - OffSetConsola - 1) * 14
-            pConsola.ForeColor = Consola(i).color
-            pConsola.FontBold = CBool(Consola(i).bold)
-            pConsola.FontItalic = CBool(Consola(i).italic)
-            pConsola.Print Consola(i).Texto
+            pConsola.CurrentY = (I - OffSetConsola - 1) * 14
+            pConsola.ForeColor = Consola(I).color
+            pConsola.FontBold = CBool(Consola(I).bold)
+            pConsola.FontItalic = CBool(Consola(I).italic)
+            pConsola.Print Consola(I).Texto
 
         End If
 
-    Next i
+    Next I
 
 End Sub
 
@@ -2575,6 +2583,20 @@ Private Sub Form_Load()
         Debug.Print "Precarga"
 
     End If
+    OpcionesPath = App.path & "\init\Config.ini"
+    ActivarAuras = GetVar(OpcionesPath, "AURAS", "AuraActiva")
+    RotarActivado = GetVar(OpcionesPath, "AURAS", "rotacion")
+   If ActivarAuras = "1" Then
+   frmOpciones.ActAura.Value = vbChecked
+   Else
+   frmOpciones.ActAura.Value = vbUnchecked
+   End If
+   
+   If RotarActivado = "1" Then
+   frmOpciones.RotaAura.Value = vbChecked
+   Else
+   frmOpciones.RotaAura.Value = vbUnchecked
+   End If
 
 End Sub
 
@@ -2651,7 +2673,7 @@ End Sub
 
 Private Sub picInv_DblClick()
 
-    If InvX >= Inventario.OFFSETX And InvY >= Inventario.OFFSETY Then
+    If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
         If frmCarp.Visible Or frmHerrero.Visible Then Exit Sub
     
         If Not MainTimer.Check(TimersIndex.PuedeUsarDobleClick) Then Exit Sub
@@ -2719,7 +2741,7 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
     End If
 
     If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
-        If x >= Inventario.OFFSETX And y >= Inventario.OFFSETY And x <= picInv.Width And y <= picInv.Height Then
+        If x >= Inventario.OffSetX And y >= Inventario.OffSetY And x <= picInv.Width And y <= picInv.Height Then
 
             Dim NewPosInv As Integer
 
@@ -2794,21 +2816,21 @@ Private Sub SendTxt_Change()
     Else
 
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i         As Long
+        Dim I         As Long
 
         Dim tempstr   As String
 
         Dim CharAscii As Integer
         
-        For i = 1 To Len(SendTxt.Text)
-            CharAscii = Asc(mid$(SendTxt.Text, i, 1))
+        For I = 1 To Len(SendTxt.Text)
+            CharAscii = Asc(mid$(SendTxt.Text, I, 1))
 
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
 
             End If
 
-        Next i
+        Next I
 
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -2862,21 +2884,21 @@ Private Sub SendCMSTXT_Change()
     Else
 
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i         As Long
+        Dim I         As Long
 
         Dim tempstr   As String
 
         Dim CharAscii As Integer
         
-        For i = 1 To Len(SendCMSTXT.Text)
-            CharAscii = Asc(mid$(SendCMSTXT.Text, i, 1))
+        For I = 1 To Len(SendCMSTXT.Text)
+            CharAscii = Asc(mid$(SendCMSTXT.Text, I, 1))
 
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
 
             End If
 
-        Next i
+        Next I
         
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -2899,7 +2921,7 @@ Private Sub AbrirMenuViewPort()
             If MapData(tX, tY).CharIndex > 0 Then
                 If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-                    Dim i As Long
+                    Dim I As Long
 
                     Dim m As New frmMenuseFashion
             
@@ -3012,6 +3034,10 @@ Private Sub tPass_LostFocus()
 End Sub
 
 
+
+Private Sub tRelampago_Timer()
+Call DoRelampago
+End Sub
 
 Private Sub tUser_KeyDown(KeyCode As Integer, Shift As Integer)
 

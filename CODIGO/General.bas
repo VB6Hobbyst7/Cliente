@@ -169,20 +169,20 @@ Sub CargarColores()
 
     End If
     
-    Dim i As Long
+    Dim I As Long
     
-    For i = 0 To 48 '49 y 50 reservados para ciudadano y criminal
-        ColoresPJ(i).R = CByte(GetVar(archivoC, CStr(i), "R"))
-        ColoresPJ(i).G = CByte(GetVar(archivoC, CStr(i), "G"))
-        ColoresPJ(i).B = CByte(GetVar(archivoC, CStr(i), "B"))
-    Next i
+    For I = 0 To 48 '49 y 50 reservados para ciudadano y criminal
+        ColoresPJ(I).R = CByte(GetVar(archivoC, CStr(I), "R"))
+        ColoresPJ(I).G = CByte(GetVar(archivoC, CStr(I), "G"))
+        ColoresPJ(I).b = CByte(GetVar(archivoC, CStr(I), "B"))
+    Next I
     
     ColoresPJ(50).R = CByte(GetVar(archivoC, "CR", "R"))
     ColoresPJ(50).G = CByte(GetVar(archivoC, "CR", "G"))
-    ColoresPJ(50).B = CByte(GetVar(archivoC, "CR", "B"))
+    ColoresPJ(50).b = CByte(GetVar(archivoC, "CR", "B"))
     ColoresPJ(49).R = CByte(GetVar(archivoC, "CI", "R"))
     ColoresPJ(49).G = CByte(GetVar(archivoC, "CI", "G"))
-    ColoresPJ(49).B = CByte(GetVar(archivoC, "CI", "B"))
+    ColoresPJ(49).b = CByte(GetVar(archivoC, "CI", "B"))
 
 End Sub
 
@@ -201,7 +201,7 @@ Sub CargarZonas()
 
     End If
     
-    Dim i As Integer
+    Dim I As Integer
 
     Dim e As Integer
     
@@ -209,33 +209,33 @@ Sub CargarZonas()
     
     ReDim Zonas(1 To NumZonas)
 
-    For i = 1 To NumZonas
+    For I = 1 To NumZonas
 
-        With Zonas(i)
-            .nombre = GetVar(archivoC, "Zona" & CStr(i), "Nombre")
-            .Mapa = CByte(GetVar(archivoC, "Zona" & CStr(i), "Mapa"))
-            .X1 = CInt(GetVar(archivoC, "Zona" & CStr(i), "X1"))
-            .Y1 = CInt(GetVar(archivoC, "Zona" & CStr(i), "Y1"))
-            .X2 = CInt(GetVar(archivoC, "Zona" & CStr(i), "X2"))
-            .Y2 = CInt(GetVar(archivoC, "Zona" & CStr(i), "Y2"))
-            .Segura = CByte(GetVar(archivoC, "Zona" & CStr(i), "Segura"))
-            .Acoplar = CByte(Val(GetVar(archivoC, "Zona" & CStr(i), "Acoplar")))
-            .Terreno = CByte(Val(GetVar(archivoC, "Zona" & CStr(i), "Terreno")))
-            .Niebla = CByte(Val(GetVar(archivoC, "Zona" & CStr(i), "Niebla")))
-            .NieblaR = CByte(Val(GetVar(archivoC, "Zona" & CStr(i), "NieblaR")))
-            .NieblaG = CByte(Val(GetVar(archivoC, "Zona" & CStr(i), "NieblaG")))
-            .NieblaB = CByte(Val(GetVar(archivoC, "Zona" & CStr(i), "NieblaB")))
-            .Musica(1) = Val(GetVar(archivoC, "Zona" & CStr(i), "Musica1"))
-            .Musica(2) = Val(GetVar(archivoC, "Zona" & CStr(i), "Musica2"))
-            .Musica(3) = Val(GetVar(archivoC, "Zona" & CStr(i), "Musica3"))
-            .Musica(4) = Val(GetVar(archivoC, "Zona" & CStr(i), "Musica4"))
-            .Musica(5) = Val(GetVar(archivoC, "Zona" & CStr(i), "Musica5"))
+        With Zonas(I)
+            .nombre = GetVar(archivoC, "Zona" & CStr(I), "Nombre")
+            .Mapa = CByte(GetVar(archivoC, "Zona" & CStr(I), "Mapa"))
+            .X1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X1"))
+            .Y1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y1"))
+            .X2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X2"))
+            .Y2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y2"))
+            .Segura = CByte(GetVar(archivoC, "Zona" & CStr(I), "Segura"))
+            .Acoplar = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "Acoplar")))
+            .Terreno = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "Terreno")))
+            .Niebla = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "Niebla")))
+            .NieblaR = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "NieblaR")))
+            .NieblaG = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "NieblaG")))
+            .NieblaB = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "NieblaB")))
+            .Musica(1) = Val(GetVar(archivoC, "Zona" & CStr(I), "Musica1"))
+            .Musica(2) = Val(GetVar(archivoC, "Zona" & CStr(I), "Musica2"))
+            .Musica(3) = Val(GetVar(archivoC, "Zona" & CStr(I), "Musica3"))
+            .Musica(4) = Val(GetVar(archivoC, "Zona" & CStr(I), "Musica4"))
+            .Musica(5) = Val(GetVar(archivoC, "Zona" & CStr(I), "Musica5"))
             
-            .Sonido(1) = Val(GetVar(archivoC, "Zona" & CStr(i), "Sonido1"))
-            .Sonido(2) = Val(GetVar(archivoC, "Zona" & CStr(i), "Sonido2"))
-            .Sonido(3) = Val(GetVar(archivoC, "Zona" & CStr(i), "Sonido3"))
-            .Sonido(4) = Val(GetVar(archivoC, "Zona" & CStr(i), "Sonido4"))
-            .Sonido(5) = Val(GetVar(archivoC, "Zona" & CStr(i), "Sonido5"))
+            .Sonido(1) = Val(GetVar(archivoC, "Zona" & CStr(I), "Sonido1"))
+            .Sonido(2) = Val(GetVar(archivoC, "Zona" & CStr(I), "Sonido2"))
+            .Sonido(3) = Val(GetVar(archivoC, "Zona" & CStr(I), "Sonido3"))
+            .Sonido(4) = Val(GetVar(archivoC, "Zona" & CStr(I), "Sonido4"))
+            .Sonido(5) = Val(GetVar(archivoC, "Zona" & CStr(I), "Sonido5"))
                        
             If .NieblaR = 0 And .NieblaG = 0 And .NieblaB = 0 Then
                 .NieblaR = 255
@@ -252,7 +252,7 @@ Sub CargarZonas()
 
         End With
 
-    Next i
+    Next I
 
 End Sub
 
@@ -336,19 +336,19 @@ Function AsciiValidos(ByVal cad As String) As Boolean
 
     Dim car As Byte
 
-    Dim i   As Long
+    Dim I   As Long
     
     cad = LCase$(cad)
     
-    For i = 1 To Len(cad)
-        car = Asc(mid$(cad, i, 1))
+    For I = 1 To Len(cad)
+        car = Asc(mid$(cad, I, 1))
         
         If ((car < 97 Or car > 122) Or car = Asc("º")) And (car <> 255) And (car <> 32) Then
             Exit Function
 
         End If
 
-    Next i
+    Next I
     
     AsciiValidos = True
 
@@ -706,7 +706,7 @@ Sub CargarMap(ByVal Map As Integer)
 
     Dim tmpInt As Integer
 
-    Dim i      As Integer
+    Dim I      As Integer
     
     If Map = 1 Then
         Pos = 0
@@ -725,15 +725,15 @@ Sub CargarMap(ByVal Map As Integer)
             tmpInt = (DataMap1(Pos + 1) And &H7F) * &H100 Or DataMap1(Pos) Or -(DataMap1(Pos + 1) > &H7F) * &H8000
             Pos = Pos + 2
 
-            For i = Pos To Pos + tmpInt - 1
-                MapInfo.Name = MapInfo.Name & Chr(DataMap1(i))
-            Next i
+            For I = Pos To Pos + tmpInt - 1
+                MapInfo.Name = MapInfo.Name & Chr(DataMap1(I))
+            Next I
 
             Pos = Pos + tmpInt
             
-            For i = Pos To Pos + 9
-                MapInfo.Date = MapInfo.Date & Chr(DataMap1(i))
-            Next i
+            For I = Pos To Pos + 9
+                MapInfo.Date = MapInfo.Date & Chr(DataMap1(I))
+            Next I
             
             Pos = Pos + 10
                     
@@ -758,15 +758,15 @@ Sub CargarMap(ByVal Map As Integer)
             tmpInt = (DataMap2(Pos + 1) And &H7F) * &H100 Or DataMap2(Pos) Or -(DataMap2(Pos + 1) > &H7F) * &H8000
             Pos = Pos + 2
 
-            For i = Pos To Pos + tmpInt - 1
-                MapInfo.Name = MapInfo.Name & Chr(DataMap2(i))
-            Next i
+            For I = Pos To Pos + tmpInt - 1
+                MapInfo.Name = MapInfo.Name & Chr(DataMap2(I))
+            Next I
 
             Pos = Pos + tmpInt
             
-            For i = Pos To Pos + 9
-                MapInfo.Date = MapInfo.Date & Chr(DataMap2(i))
-            Next i
+            For I = Pos To Pos + 9
+                MapInfo.Date = MapInfo.Date & Chr(DataMap2(I))
+            Next I
             
             Pos = Pos + 10
                     
@@ -818,7 +818,7 @@ Sub AddtoRichPicture(ByVal Text As String, _
 
     Dim Lineas() As String
 
-    Dim i        As Integer
+    Dim I        As Integer
 
     Dim l        As Integer
 
@@ -832,9 +832,9 @@ Sub AddtoRichPicture(ByVal Text As String, _
 
         If nId = 601 Then
 
-            For i = 0 To 500
-                Consola(i) = Consola(i + 100)
-            Next i
+            For I = 0 To 500
+                Consola(I) = Consola(I + 100)
+            Next I
 
             nId = 501
 
@@ -859,13 +859,13 @@ Sub AddtoRichPicture(ByVal Text As String, _
         If frmMain.pConsola.TextWidth(Text) > frmMain.pConsola.Width Then
             LastEsp = 0
 
-            For i = 1 To Len(Text)
+            For I = 1 To Len(Text)
 
-                If mid(Text, i, 1) = " " Then LastEsp = i
-                If frmMain.pConsola.TextWidth(Left$(Text, i)) > frmMain.pConsola.Width Then Exit For
-            Next i
+                If mid(Text, I, 1) = " " Then LastEsp = I
+                If frmMain.pConsola.TextWidth(Left$(Text, I)) > frmMain.pConsola.Width Then Exit For
+            Next I
 
-            If LastEsp = 0 Then LastEsp = i
+            If LastEsp = 0 Then LastEsp = I
             AText = Right$(Text, Len(Text) - LastEsp)
             Text = Left$(Text, LastEsp)
             Consola(nId).Texto = Text
@@ -888,7 +888,7 @@ Function ReadField(ByVal Pos As Integer, _
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
     'Last Modify Date: 11/15/2004
     '*****************************************************************
-    Dim i          As Long
+    Dim I          As Long
 
     Dim LastPos    As Long
 
@@ -898,10 +898,10 @@ Function ReadField(ByVal Pos As Integer, _
     
     delimiter = Chr$(SepASCII)
     
-    For i = 1 To Pos
+    For I = 1 To Pos
         LastPos = CurrentPos
         CurrentPos = InStr(LastPos + 1, Text, delimiter, vbBinaryCompare)
-    Next i
+    Next I
     
     If CurrentPos = 0 Then
         ReadField = mid$(Text, LastPos + 1, Len(Text) - LastPos)
@@ -947,17 +947,17 @@ End Function
 
 Public Function IsIp(ByVal Ip As String) As Boolean
 
-    Dim i As Long
+    Dim I As Long
     
-    For i = 1 To UBound(ServersLst)
+    For I = 1 To UBound(ServersLst)
 
-        If ServersLst(i).Ip = Ip Then
+        If ServersLst(I).Ip = Ip Then
             IsIp = True
             Exit Function
 
         End If
 
-    Next i
+    Next I
 
 End Function
 
@@ -993,8 +993,8 @@ Sub Main()
     curProyectil.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\Mira.ani"
     curProyectilPequena.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\MiraPequena.ani"
  
-    curGeneral.CursorOn frmMain.hwnd
-    curGeneral.CursorOn frmMain.pRender.hwnd
+    curGeneral.CursorOn frmMain.hWnd
+    curGeneral.CursorOn frmMain.pRender.hWnd
    
     frmMain.picHechiz.MouseIcon = picMouseIcon
     frmMain.CmdLanzar.MouseIcon = picMouseIcon
@@ -1011,7 +1011,9 @@ Sub Main()
     'frmMain.Image1(4).MouseIcon = picMousePointIcon 'Party
     'Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Espada.ico")
     'frmMain.btnInventario.MouseIcon = picMousePointIcon
-
+'aura
+ CargarAuras
+'aura
     Call InitDebug
 
     'Load ao.dat config file
@@ -1090,7 +1092,7 @@ Sub Main()
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.25
     DoEvents
         
-    If Not InitTileEngine(frmMain.hwnd, 125, 2, 32, 32, 19, 25, 9, 9, 9, 0.018) Then
+    If Not InitTileEngine(frmMain.hWnd, 125, 2, 32, 32, 19, 25, 9, 9, 9, 0.018) Then
         Call CloseClient
 
     End If
@@ -1116,7 +1118,7 @@ Call CargarObjetos
     DoEvents
 
     'Inicializamos el sonido
-    Call Audio.Initialize(dX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
+    Call Audio.Initialize(dX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
     
     'Audio
@@ -1387,7 +1389,7 @@ Public Sub LeerLineaComandos()
     '*************************************************
     Dim T()      As String
 
-    Dim i        As Long
+    Dim I        As Long
     
     Dim UpToDate As Boolean
 
@@ -1396,9 +1398,9 @@ Public Sub LeerLineaComandos()
     'Parseo los comandos
     T = Split(Command, " ")
 
-    For i = LBound(T) To UBound(T)
+    For I = LBound(T) To UBound(T)
 
-        Select Case UCase$(T(i))
+        Select Case UCase$(T(I))
 
             Case "/NORES" 'no cambiar la resolucion
                 NoRes = True
@@ -1408,7 +1410,7 @@ Public Sub LeerLineaComandos()
 
         End Select
 
-    Next i
+    Next I
 
     NoRes = True
     UpToDate = True
@@ -1469,7 +1471,7 @@ Reintentar:
 
 Error:
 
-    If err.Number = 75 Then 'Si el archivo AoUpdateTMP.exe está en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
+    If Err.Number = 75 Then 'Si el archivo AoUpdateTMP.exe está en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
         Reintentos = Reintentos + 1
 
         If Reintentos = 3 Then
@@ -1482,7 +1484,7 @@ Error:
         End If
         
     Else
-        MsgBox err.Description & vbCrLf, vbInformation, "[ " & err.Number & " ]" & " Error "
+        MsgBox Err.Description & vbCrLf, vbInformation, "[ " & Err.Number & " ]" & " Error "
         End
 
     End If
@@ -1690,7 +1692,7 @@ End Sub
 
 Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
 
-    Dim i        As Integer
+    Dim I        As Integer
 
     Dim Encontro As Boolean
 
@@ -1698,21 +1700,21 @@ Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
 
     Encontro = False
 
-    For i = 1 To NumZonas
+    For I = 1 To NumZonas
 
-        If UserMap = Zonas(i).Mapa And x >= Zonas(i).X1 And x <= Zonas(i).X2 And y >= Zonas(i).Y1 And y <= Zonas(i).Y2 Then
-            BuscarZona = i
+        If UserMap = Zonas(I).Mapa And x >= Zonas(I).X1 And x <= Zonas(I).X2 And y >= Zonas(I).Y1 And y <= Zonas(I).Y2 Then
+            BuscarZona = I
             Encontro = True
 
-            If Zonas(i).Acoplar = 0 Then Exit For
+            If Zonas(I).Acoplar = 0 Then Exit For
 
         End If
 
-    Next i
+    Next I
 
     If Not Encontro And UserMap > 0 Then
-        i = IIf(HayAgua(x, y), 24, 23)
-        BuscarZona = i
+        I = IIf(HayAgua(x, y), 24, 23)
+        BuscarZona = I
 
     End If
 
@@ -1720,7 +1722,7 @@ End Function
 
 Public Sub CheckZona()
 
-    Dim i        As Integer
+    Dim I        As Integer
 
     Dim Encontro As Boolean
 
@@ -1728,12 +1730,12 @@ Public Sub CheckZona()
 
     Encontro = False
 
-    For i = 1 To NumZonas
+    For I = 1 To NumZonas
 
-        If UserMap = Zonas(i).Mapa And UserPos.x >= Zonas(i).X1 And UserPos.x <= Zonas(i).X2 And UserPos.y >= Zonas(i).Y1 And UserPos.y <= Zonas(i).Y2 Then
-            If ZonaActual <> i Then
+        If UserMap = Zonas(I).Mapa And UserPos.x >= Zonas(I).X1 And UserPos.x <= Zonas(I).X2 And UserPos.y >= Zonas(I).Y1 And UserPos.y <= Zonas(I).Y2 Then
+            If ZonaActual <> I Then
                 If ZonaActual > 0 Then
-                    If Zonas(ZonaActual).Segura <> Zonas(i).Segura Then
+                    If Zonas(ZonaActual).Segura <> Zonas(I).Segura Then
                         CambioSegura = True
                     Else
                         CambioSegura = False
@@ -1745,23 +1747,23 @@ Public Sub CheckZona()
 
                 End If
 
-                ZonaActual = i
+                ZonaActual = I
             
             End If
 
             Encontro = True
 
-            If Zonas(i).Acoplar = 0 Then Exit For
+            If Zonas(I).Acoplar = 0 Then Exit For
 
         End If
 
-    Next i
+    Next I
 
     If Not Encontro And UserMap > 0 Then
-        i = IIf(HayAgua(UserPos.x, UserPos.y), 24, 23)
+        I = IIf(HayAgua(UserPos.x, UserPos.y), 24, 23)
 
-        If ZonaActual <> i Then
-            ZonaActual = i
+        If ZonaActual <> I Then
+            ZonaActual = I
 
         End If
 
@@ -1806,7 +1808,7 @@ End Sub
 Sub ClosePj()
 
     'Stop audio
-    Dim i As Integer
+    Dim I As Integer
 
     Call Audio.StopWave
     frmMain.IsPlaying = PlayLoop.plNone
@@ -1842,14 +1844,14 @@ Sub ClosePj()
     ZoomLevel = 0
     'D3DDevice.SetRenderTarget pBackbuffer, DeviceStencil, 0
     
-    For i = 0 To Forms.count - 1
+    For I = 0 To Forms.count - 1
 
-        If Forms(i).Name <> frmMain.Name And Forms(i).Name <> frmCrearPersonaje.Name And Forms(i).Name <> frmMensaje.Name Then
-            Unload Forms(i)
+        If Forms(I).Name <> frmMain.Name And Forms(I).Name <> frmCrearPersonaje.Name And Forms(I).Name <> frmMensaje.Name Then
+            Unload Forms(I)
 
         End If
 
-    Next i
+    Next I
 
     'Show connection form
     If Not frmCrearPersonaje.Visible And Not Conectar Then
@@ -1875,13 +1877,13 @@ Sub ClosePj()
     SkillPoints = 0
     TiempoRetos = 0
     
-    For i = 1 To NUMSKILLS
-        UserSkills(i) = 0
-    Next i
+    For I = 1 To NUMSKILLS
+        UserSkills(I) = 0
+    Next I
 
-    For i = 1 To NUMATRIBUTOS
-        UserAtributos(i) = 0
-    Next i
+    For I = 1 To NUMATRIBUTOS
+        UserAtributos(I) = 0
+    Next I
     
     frmMain.macrotrabajo.Enabled = False
     
@@ -1889,9 +1891,9 @@ Sub ClosePj()
     Call CleanDialogs
     
     'Reset some char variables...
-    For i = 1 To LastChar
-        charlist(i).invisible = False
-    Next i
+    For I = 1 To LastChar
+        charlist(I).invisible = False
+    Next I
     
     'Unload all forms except frmMain
     Dim frm As Form
@@ -1943,16 +1945,16 @@ Public Sub mOpciones_Default()
     Select Case UserFaccion
 
         Case 2
-            curGeneralCiuda.CursorOn frmMain.hwnd
-            curGeneralCiuda.CursorOn frmMain.pRender.hwnd
+            curGeneralCiuda.CursorOn frmMain.hWnd
+            curGeneralCiuda.CursorOn frmMain.pRender.hWnd
 
         Case 1
-            curGeneralCrimi.CursorOn frmMain.hwnd
-            curGeneralCrimi.CursorOn frmMain.pRender.hwnd
+            curGeneralCrimi.CursorOn frmMain.hWnd
+            curGeneralCrimi.CursorOn frmMain.pRender.hWnd
 
         Case Else
-            curGeneral.CursorOn frmMain.hwnd
-            curGeneral.CursorOn frmMain.pRender.hwnd
+            curGeneral.CursorOn frmMain.hWnd
+            curGeneral.CursorOn frmMain.pRender.hWnd
 
     End Select
         
@@ -2009,33 +2011,33 @@ Public Sub SetCursor(ByVal tCursor As eCursor)
         Case eCursor.General
 
             If mOpciones.CursorFaccionario = False Then
-                curGeneral.CursorOn frmMain.hwnd
-                curGeneral.CursorOn frmMain.pRender.hwnd
+                curGeneral.CursorOn frmMain.hWnd
+                curGeneral.CursorOn frmMain.pRender.hWnd
             Else
 
                 Select Case UserFaccion
 
                     Case 2
-                        curGeneralCiuda.CursorOn frmMain.hwnd
-                        curGeneralCiuda.CursorOn frmMain.pRender.hwnd
+                        curGeneralCiuda.CursorOn frmMain.hWnd
+                        curGeneralCiuda.CursorOn frmMain.pRender.hWnd
 
                     Case 1
-                        curGeneralCrimi.CursorOn frmMain.hwnd
-                        curGeneralCrimi.CursorOn frmMain.pRender.hwnd
+                        curGeneralCrimi.CursorOn frmMain.hWnd
+                        curGeneralCrimi.CursorOn frmMain.pRender.hWnd
 
                     Case Else
-                        curGeneral.CursorOn frmMain.hwnd
-                        curGeneral.CursorOn frmMain.pRender.hwnd
+                        curGeneral.CursorOn frmMain.hWnd
+                        curGeneral.CursorOn frmMain.pRender.hWnd
 
                 End Select
 
             End If
 
         Case eCursor.proyectil
-            curProyectil.CursorOn frmMain.pRender.hwnd
+            curProyectil.CursorOn frmMain.pRender.hWnd
 
         Case eCursor.ProyectilPequena
-            curProyectilPequena.CursorOn frmMain.pRender.hwnd
+            curProyectilPequena.CursorOn frmMain.pRender.hWnd
 
     End Select
 
@@ -2195,16 +2197,16 @@ Public Sub Engine_Init_ParticleEngine()
 'done for any reason in particular, they just use so little memory since they are so small
 '*****************************************************************
  
-Dim i As Byte
+Dim I As Byte
  
 'Set the particles texture
  
     NumEffects = 20
     ReDim Effect(1 To NumEffects)
  
-    For i = 1 To UBound(ParticleTexture())
-        Set ParticleTexture(i) = D3DX.CreateTextureFromFileEx(D3DDevice, App.path & "\Recursos\" & "p" & i & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, &HFF000000, ByVal 0, ByVal 0)
-    Next i
+    For I = 1 To UBound(ParticleTexture())
+        Set ParticleTexture(I) = D3DX.CreateTextureFromFileEx(D3DDevice, App.path & "\Recursos\" & "p" & I & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, &HFF000000, ByVal 0, ByVal 0)
+    Next I
  
 End Sub
  
