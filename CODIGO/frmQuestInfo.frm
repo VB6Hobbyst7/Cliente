@@ -543,7 +543,7 @@ Public Sub ListView2_Click()
     If ListView2.SelectedItem.SubItems(2) <> "" Then
  
        'Call Grh_Render_To_Hdc(picture1, ObjData(ListView2.SelectedItem.SubItems(2)).GrhIndex, 0, 0, False, RGB(19, 14, 11))
-       picture1.Picture = StdPictureEx.LoadPicture("C:\Users\waalter\Desktop\ques\" & ObjData(ListView2.SelectedItem.SubItems(2)).Name & ".png")
+       picture1.Picture = StdPictureEx.LoadPicture("C:\Users\waalter\Desktop\ques\" & ObjData(ListView2.SelectedItem.SubItems(2)).Name & ".gif")
     
     End If
     

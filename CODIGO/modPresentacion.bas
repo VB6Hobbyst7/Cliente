@@ -506,6 +506,7 @@ Sub RenderConectar()
     If GTCPres < 4000 Then
         color = D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 0, 220, 15))
         Call Engine_Render_Rectangle(255 + 412, 255 + 284, 200, 200, 0, 0, 400, 400, , , 0, 14705, color, color, color, color)
+             Call Engine_Render_Rectangle(255 + 390, 255 + 340, 262, 402, 0, 0, 262, 402, , , 0, 14785, color, color, color, color)
 
     End If
 

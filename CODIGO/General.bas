@@ -123,7 +123,7 @@ Sub CargarAnimArmas()
 
     On Error Resume Next
 
-    Dim LoopC      As Long
+    Dim loopc      As Long
 
     Dim N          As Integer
 
@@ -141,14 +141,14 @@ Sub CargarAnimArmas()
     ReDim WeaponAnimData(1 To NumWeaponAnims) As WeaponAnimData
     ReDim MisArmas(1 To NumWeaponAnims) As tIndiceArma
     
-    For LoopC = 1 To NumWeaponAnims
-        Get #N, , MisArmas(LoopC)
+    For loopc = 1 To NumWeaponAnims
+        Get #N, , MisArmas(loopc)
     
-        InitGrh WeaponAnimData(LoopC).WeaponWalk(1), MisArmas(LoopC).Arma(1), 0
-        InitGrh WeaponAnimData(LoopC).WeaponWalk(2), MisArmas(LoopC).Arma(2), 0
-        InitGrh WeaponAnimData(LoopC).WeaponWalk(3), MisArmas(LoopC).Arma(3), 0
-        InitGrh WeaponAnimData(LoopC).WeaponWalk(4), MisArmas(LoopC).Arma(4), 0
-    Next LoopC
+        InitGrh WeaponAnimData(loopc).WeaponWalk(1), MisArmas(loopc).Arma(1), 0
+        InitGrh WeaponAnimData(loopc).WeaponWalk(2), MisArmas(loopc).Arma(2), 0
+        InitGrh WeaponAnimData(loopc).WeaponWalk(3), MisArmas(loopc).Arma(3), 0
+        InitGrh WeaponAnimData(loopc).WeaponWalk(4), MisArmas(loopc).Arma(4), 0
+    Next loopc
     
     Close #N
     
@@ -280,7 +280,7 @@ Sub CargarAnimEscudos()
 
     On Error Resume Next
 
-    Dim LoopC        As Long
+    Dim loopc        As Long
 
     Dim N            As Integer
 
@@ -298,14 +298,14 @@ Sub CargarAnimEscudos()
     ReDim ShieldAnimData(1 To NumEscudosAnims) As ShieldAnimData
     ReDim MisEscudos(1 To NumEscudosAnims) As tIndiceArma
     
-    For LoopC = 1 To NumEscudosAnims
-        Get #N, , MisEscudos(LoopC)
+    For loopc = 1 To NumEscudosAnims
+        Get #N, , MisEscudos(loopc)
         
-        InitGrh ShieldAnimData(LoopC).ShieldWalk(1), MisEscudos(LoopC).Arma(1), 0
-        InitGrh ShieldAnimData(LoopC).ShieldWalk(2), MisEscudos(LoopC).Arma(2), 0
-        InitGrh ShieldAnimData(LoopC).ShieldWalk(3), MisEscudos(LoopC).Arma(3), 0
-        InitGrh ShieldAnimData(LoopC).ShieldWalk(4), MisEscudos(LoopC).Arma(4), 0
-    Next LoopC
+        InitGrh ShieldAnimData(loopc).ShieldWalk(1), MisEscudos(loopc).Arma(1), 0
+        InitGrh ShieldAnimData(loopc).ShieldWalk(2), MisEscudos(loopc).Arma(2), 0
+        InitGrh ShieldAnimData(loopc).ShieldWalk(3), MisEscudos(loopc).Arma(3), 0
+        InitGrh ShieldAnimData(loopc).ShieldWalk(4), MisEscudos(loopc).Arma(4), 0
+    Next loopc
     
     Close #N
 
@@ -319,16 +319,16 @@ Public Sub RefreshAllChars()
     'Goes through the charlist and replots all the characters on the map
     'Used to make sure everyone is visible
     '*****************************************************************
-    Dim LoopC As Long
+    Dim loopc As Long
     
-    For LoopC = 1 To LastChar
+    For loopc = 1 To LastChar
 
-        If charlist(LoopC).ACTIVE = 1 Then
-            MapData(charlist(LoopC).Pos.x, charlist(LoopC).Pos.y).CharIndex = LoopC
+        If charlist(loopc).ACTIVE = 1 Then
+            MapData(charlist(loopc).Pos.x, charlist(loopc).Pos.y).CharIndex = loopc
 
         End If
 
-    Next LoopC
+    Next loopc
 
 End Sub
 
@@ -357,7 +357,7 @@ End Function
 Function CheckUserData(ByVal checkemail As Boolean) As Boolean
 
     'Validamos los datos del user
-    Dim LoopC     As Long
+    Dim loopc     As Long
 
     Dim CharAscii As Integer
     
@@ -373,8 +373,8 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
 
     End If
     
-    For LoopC = 1 To Len(UserPassword)
-        CharAscii = Asc(mid$(UserPassword, LoopC, 1))
+    For loopc = 1 To Len(UserPassword)
+        CharAscii = Asc(mid$(UserPassword, loopc, 1))
 
         If Not LegalCharacter(CharAscii) Then
             MessageBox ("Password inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
@@ -382,7 +382,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
 
         End If
 
-    Next LoopC
+    Next loopc
     
     If UserName = "" Then
         MessageBox ("Ingrese un nombre de personaje.")
@@ -396,8 +396,8 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
 
     End If
     
-    For LoopC = 1 To Len(UserName)
-        CharAscii = Asc(mid$(UserName, LoopC, 1))
+    For loopc = 1 To Len(UserName)
+        CharAscii = Asc(mid$(UserName, loopc, 1))
 
         If Not LegalCharacter(CharAscii) Then
             MessageBox ("Nombre inválido. El caractér " & Chr$(CharAscii) & " no está permitido.")
@@ -405,7 +405,7 @@ Function CheckUserData(ByVal checkemail As Boolean) As Boolean
 
         End If
 
-    Next LoopC
+    Next loopc
     
     CheckUserData = True
 
