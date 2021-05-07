@@ -1576,11 +1576,11 @@ Sub DrawGrhLuz(ByRef Grh As Grh, _
 
 Error:
 
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
         End
 
     End If
@@ -1680,11 +1680,11 @@ Sub DrawGrhShadow(ByRef Grh As Grh, _
 
 Error:
 
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
         End
 
     End If
@@ -1746,11 +1746,11 @@ Sub DrawGrhShadowOff(ByRef Grh As Grh, _
 
 Error:
 
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
         End
 
     End If
@@ -1839,11 +1839,11 @@ Sub DrawGrh(ByRef Grh As Grh, _
 
 Error:
 
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
         End
 
     End If
@@ -2255,7 +2255,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                     If .CharIndex <> UserCharIndex And UserPos.x = charlist(.CharIndex).Pos.x And UserPos.y = charlist(.CharIndex).Pos.y Then
                         Debug.Print "ME PISO CHEEE ******************************************************************************"
-
+                        'verr post de los bost
+                        charlist(.CharIndex).Pos.x = charlist(.CharIndex).Pos.x + 1
+                        charlist(.CharIndex).Pos.y = charlist(.CharIndex).Pos.y + 1
+                        'ver post de los bots
                     End If
 
                 End If
@@ -2280,7 +2283,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                     If ((SupIndex >= 7000 And SupIndex <= 7008) Or (SupIndex >= 1261 And SupIndex <= 1287) Or SupIndex = 648 Or SupIndex = 645) Then
                         If mOpciones.TransparencyTree = True And UserPos.x >= x - 3 And UserPos.x <= x + 3 And UserPos.y >= y - 5 And UserPos.y <= y Then
-                            Call DrawGrh(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 180))
+                            Call DrawGrh(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 180))
                         Else
                             Call DrawGrhLuz(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, MapData(x, y).Light_Value)
 
@@ -2356,7 +2359,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If bAlpha < 255 Then
             If tTick < (GetTickCount() And &H7FFFFFFF) - 30 Then
                 bAlpha = bAlpha + IIf(bAlpha + 8 < 255, 8, 255 - bAlpha)
-                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
+                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, bAlpha)
                 tTick = (GetTickCount() And &H7FFFFFFF)
 
             End If
@@ -2368,7 +2371,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If bAlpha > 0 Then
             If tTick < (GetTickCount() And &H7FFFFFFF) - 30 Then
                 bAlpha = bAlpha - IIf(bAlpha - 8 > 0, 8, bAlpha)
-                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
+                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, bAlpha)
                 tTick = (GetTickCount() And &H7FFFFFFF)
 
             End If
@@ -2415,7 +2418,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                 End If
 
-                ColorLluvia = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 140)
+                ColorLluvia = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 140)
 
                 For y = 0 To 5
                     For x = 0 To 6
@@ -2428,41 +2431,41 @@ Sub RenderScreen(ByVal TileX As Integer, _
         End If
 
     End If
-     If ZonaActual = 62 Then
-     NieveOn = True
-  Else
-     NieveOn = False
-  End If
+    If ZonaActual = 62 Then
+        NieveOn = True
+    Else
+        NieveOn = False
+    End If
 
-  'NIEBLA EN BOSQUE DORK BLANCA Y EN INFIERNO ROJA
+    'NIEBLA EN BOSQUE DORK BLANCA Y EN INFIERNO ROJA
     'If ZonaActual = 11 Or ZonaActual = 31 Then
-   
-     '   Dim Mueve As Single
-      '  Dim tmpColor As Long
-       ' Dim t As Single
-        'GTCPres = Abs((GetTickCount() And &H7FFFFFFF) - GTCInicial)
-        't = (GTCPres - 4000) / 1000
-        'For t = 1 To 512
-       ' Mueve = (t * 20) Mod 512
-        ' Mueve = t
-        'If ZonaActual = 11 Then
 
-         '   tmpColor = D3DColorRGBA(253, 255, 255, CalcAlpha(GTCPres, 4000, 150, 15))
-        'Else
-         '   tmpColor = D3DColorRGBA(251, 83, 108, CalcAlpha(GTCPres, 4000, 150, 15))
-        'End If
-        'Call Engine_Render_D3DXSprite(255, 255, 512 - Mueve, 512, Mueve, 0, tmpColor, 14706, 0)
-        'Call Engine_Render_D3DXSprite(255, 767, 512 - Mueve, 256, Mueve, 0, tmpColor, 14706, 0)
+    '   Dim Mueve As Single
+    '  Dim tmpColor As Long
+    ' Dim t As Single
+    'GTCPres = Abs((GetTickCount() And &H7FFFFFFF) - GTCInicial)
+    't = (GTCPres - 4000) / 1000
+    'For t = 1 To 512
+    ' Mueve = (t * 20) Mod 512
+    ' Mueve = t
+    'If ZonaActual = 11 Then
 
-        'Call Engine_Render_D3DXSprite(767 - Mueve, 255, 512, 512, 0, 0, tmpColor, 14706, 0)
-        'Call Engine_Render_D3DXSprite(767 - Mueve, 767, 512, 256, 0, 0, tmpColor, 14706, 0)
+    '   tmpColor = D3DColorRGBA(253, 255, 255, CalcAlpha(GTCPres, 4000, 150, 15))
+    'Else
+    '   tmpColor = D3DColorRGBA(251, 83, 108, CalcAlpha(GTCPres, 4000, 150, 15))
+    'End If
+    'Call Engine_Render_D3DXSprite(255, 255, 512 - Mueve, 512, Mueve, 0, tmpColor, 14706, 0)
+    'Call Engine_Render_D3DXSprite(255, 767, 512 - Mueve, 256, Mueve, 0, tmpColor, 14706, 0)
 
-'        Call Engine_Render_D3DXSprite(1279 - Mueve, 255, Mueve, 512, 0, 0, tmpColor, 14706, 0)
- '       Call Engine_Render_D3DXSprite(1279 - Mueve, 767, Mueve, 256, 0, 0, tmpColor, 14706, 0)
-        'Next t
+    'Call Engine_Render_D3DXSprite(767 - Mueve, 255, 512, 512, 0, 0, tmpColor, 14706, 0)
+    'Call Engine_Render_D3DXSprite(767 - Mueve, 767, 512, 256, 0, 0, tmpColor, 14706, 0)
 
- '   End If
-'
+    '        Call Engine_Render_D3DXSprite(1279 - Mueve, 255, Mueve, 512, 0, 0, tmpColor, 14706, 0)
+    '       Call Engine_Render_D3DXSprite(1279 - Mueve, 767, Mueve, 256, 0, 0, tmpColor, 14706, 0)
+    'Next t
+
+    '   End If
+    '
 
 
     Call Dialogos.Render
@@ -2753,9 +2756,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
     End If
 
     If mOpciones.Niebla = True Then
-       
+
         Call RenderNiebla
-        
+
 
     End If
 
@@ -2778,7 +2781,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         Call RenderTextKills
 
     End If
-    
+
     If bRain = True Then
         Call RenderRelampago
 
@@ -3517,7 +3520,7 @@ Public Sub CharRender(ByRef rChar As Char, _
          If .simbolo <> 0 Then
                            'frmMain.TimerSimbolo.Enabled = True
                            'Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 61 + SimboloY + 5, 1, D3DColorRGBA(255, 0, 0, 255))
-                           Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+                           Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255))
                             
 Else
 'frmMain.TimerSimbolo.Enabled = False
@@ -3530,6 +3533,7 @@ Else
 
             If .Quieto >= FPS / 35 Then    'Esto es para que las animacion sean continuas mientras se camine, por ejemplo sin esto el andar del golum se ve feo
                 .Quieto = 0
+                If .Heading = 0 Then Exit Sub
                 .Body.Walk(.Heading).Started = 0
                 .Body.Walk(.Heading).FrameCounter = 1
 
@@ -3593,8 +3597,8 @@ Else
 
         End If
 
-        ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, .Alpha)
-
+        ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, .Alpha)
+If .Heading = 0 Then Exit Sub
         If .Head.Head(.Heading).GrhIndex Then
             If .invisible Then
                 If ShowPJ = 2 Or ShowPJ = 3 Then
@@ -3670,7 +3674,7 @@ Else
                 If .priv = 9 Then
                     ColorPj = D3DColorRGBA(10, 10, 10, 255)
                 Else
-                    ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, .Alpha)
+                    ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, .Alpha)
 
                     If .congelado = True Then
                         ColorPj = D3DColorRGBA(0, 175, 255, 225)
@@ -3762,14 +3766,14 @@ Else
                         ElseIf .priv = 0 Then
 
                             If .Criminal Then
-                                color = D3DColorRGBA(ColoresPJ(50).R, ColoresPJ(50).G, ColoresPJ(50).b, 200)
+                                color = D3DColorRGBA(ColoresPJ(50).R, ColoresPJ(50).G, ColoresPJ(50).B, 200)
                             Else
-                                color = D3DColorRGBA(ColoresPJ(49).R, ColoresPJ(49).G, ColoresPJ(49).b, 200)
+                                color = D3DColorRGBA(ColoresPJ(49).R, ColoresPJ(49).G, ColoresPJ(49).B, 200)
 
                             End If
 
                         Else
-                            color = D3DColorRGBA(ColoresPJ(.priv).R, ColoresPJ(.priv).G, ColoresPJ(.priv).b, 200)
+                            color = D3DColorRGBA(ColoresPJ(.priv).R, ColoresPJ(.priv).G, ColoresPJ(.priv).B, 200)
 
                         End If
 
@@ -3949,7 +3953,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffSetX As Int
 '****************************************************
 ' Renderizamos el char reflejado en el agua
 '****************************************************
-    On Error GoTo Err
+    On Error GoTo err
     With charlist(CharIndex)
     
         Movement_Speed = 0.5
@@ -4041,7 +4045,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffSetX As Int
         End If
         
     End With
-Err:
+err:
 End Sub
 
 
@@ -4107,7 +4111,7 @@ On Error GoTo Error
 Exit Sub
 
 Error:
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
@@ -4139,7 +4143,7 @@ Public Sub Grh_Render_To_Hdc(ByRef pic As PictureBox, ByVal GrhIndex As Long, By
     Call D3DDevice.BeginScene
     Call D3DDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, ClearColor, 1#, 0)
     
-    DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)
+    DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255)
     
    Call D3DDevice.EndScene
     Call D3DDevice.Present(Picture, ByVal 0, pic.hWnd, ByVal 0)
