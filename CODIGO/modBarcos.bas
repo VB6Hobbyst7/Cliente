@@ -66,19 +66,19 @@ Public Sub RenderBarcos(ByVal x As Integer, _
                         ByVal PixelOffSetX As Single, _
                         ByVal PixelOffSetY As Single)
 
-    Dim i As Byte
+    Dim I As Byte
+If Zonas(ZonaActual).Mapa > 1 Then Exit Sub
+    For I = 0 To 1
 
-    For i = 0 To 1
-
-        If Not Barco(i) Is Nothing Then
-            If Barco(i).x = x And Barco(i).y = y Then
-                Call Barco(i).Render(TileX, TileY, PixelOffSetX, PixelOffSetY)
+        If Not Barco(I) Is Nothing Then
+            If Barco(I).x = x And Barco(I).y = y Then
+                Call Barco(I).Render(TileX, TileY, PixelOffSetX, PixelOffSetY)
 
             End If
 
         End If
 
-    Next i
+    Next I
 
     Exit Sub
 
@@ -86,15 +86,15 @@ End Sub
 
 Public Sub CalcularBarcos()
 
-    Dim i As Byte
+    Dim I As Byte
 
-    For i = 0 To 1
+    For I = 0 To 1
 
-        If Not Barco(i) Is Nothing Then
-            Call Barco(i).Calcular
+        If Not Barco(I) Is Nothing Then
+            Call Barco(I).Calcular
 
         End If
 
-    Next i
+    Next I
 
 End Sub

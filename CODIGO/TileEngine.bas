@@ -499,7 +499,7 @@ Sub CargarCabezas()
 
     Dim N            As Integer
 
-    Dim I            As Long
+    Dim i            As Long
 
     Dim Numheads     As Integer
 
@@ -518,18 +518,18 @@ Sub CargarCabezas()
     ReDim HeadData(0 To Numheads) As HeadData
     ReDim Miscabezas(0 To Numheads) As tIndiceCabeza
     
-    For I = 1 To Numheads
-        Get #N, , Miscabezas(I)
+    For i = 1 To Numheads
+        Get #N, , Miscabezas(i)
         
-        If Miscabezas(I).Head(1) Then
-            Call InitGrh(HeadData(I).Head(1), Miscabezas(I).Head(1), 0)
-            Call InitGrh(HeadData(I).Head(2), Miscabezas(I).Head(2), 0)
-            Call InitGrh(HeadData(I).Head(3), Miscabezas(I).Head(3), 0)
-            Call InitGrh(HeadData(I).Head(4), Miscabezas(I).Head(4), 0)
+        If Miscabezas(i).Head(1) Then
+            Call InitGrh(HeadData(i).Head(1), Miscabezas(i).Head(1), 0)
+            Call InitGrh(HeadData(i).Head(2), Miscabezas(i).Head(2), 0)
+            Call InitGrh(HeadData(i).Head(3), Miscabezas(i).Head(3), 0)
+            Call InitGrh(HeadData(i).Head(4), Miscabezas(i).Head(4), 0)
 
         End If
 
-    Next I
+    Next i
     
     Close #N
 
@@ -539,7 +539,7 @@ Sub CargarCascos()
 
     Dim N            As Integer
 
-    Dim I            As Long
+    Dim i            As Long
 
     Dim NumCascos    As Integer
 
@@ -558,18 +558,18 @@ Sub CargarCascos()
     ReDim CascoAnimData(0 To NumCascos) As HeadData
     ReDim Miscabezas(0 To NumCascos) As tIndiceCabeza
     
-    For I = 1 To NumCascos
-        Get #N, , Miscabezas(I)
+    For i = 1 To NumCascos
+        Get #N, , Miscabezas(i)
         
-        If Miscabezas(I).Head(1) Then
-            Call InitGrh(CascoAnimData(I).Head(1), Miscabezas(I).Head(1), 0)
-            Call InitGrh(CascoAnimData(I).Head(2), Miscabezas(I).Head(2), 0)
-            Call InitGrh(CascoAnimData(I).Head(3), Miscabezas(I).Head(3), 0)
-            Call InitGrh(CascoAnimData(I).Head(4), Miscabezas(I).Head(4), 0)
+        If Miscabezas(i).Head(1) Then
+            Call InitGrh(CascoAnimData(i).Head(1), Miscabezas(i).Head(1), 0)
+            Call InitGrh(CascoAnimData(i).Head(2), Miscabezas(i).Head(2), 0)
+            Call InitGrh(CascoAnimData(i).Head(3), Miscabezas(i).Head(3), 0)
+            Call InitGrh(CascoAnimData(i).Head(4), Miscabezas(i).Head(4), 0)
 
         End If
 
-    Next I
+    Next i
     
     Close #N
 
@@ -579,7 +579,7 @@ Sub CargarCuerpos()
 
     Dim N            As Integer
 
-    Dim I            As Long
+    Dim i            As Long
 
     Dim NumCuerpos   As Integer
 
@@ -598,21 +598,21 @@ Sub CargarCuerpos()
     ReDim BodyData(0 To NumCuerpos) As BodyData
     ReDim MisCuerpos(0 To NumCuerpos) As tIndiceCuerpo
     
-    For I = 1 To NumCuerpos
-        Get #N, , MisCuerpos(I)
+    For i = 1 To NumCuerpos
+        Get #N, , MisCuerpos(i)
         
-        If MisCuerpos(I).Body(1) Then
-            InitGrh BodyData(I).Walk(1), MisCuerpos(I).Body(1), 0
-            InitGrh BodyData(I).Walk(2), MisCuerpos(I).Body(2), 0
-            InitGrh BodyData(I).Walk(3), MisCuerpos(I).Body(3), 0
-            InitGrh BodyData(I).Walk(4), MisCuerpos(I).Body(4), 0
+        If MisCuerpos(i).Body(1) Then
+            InitGrh BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0
+            InitGrh BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0
+            InitGrh BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0
+            InitGrh BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0
             
-            BodyData(I).HeadOffset.x = MisCuerpos(I).HeadOffsetX
-            BodyData(I).HeadOffset.y = MisCuerpos(I).HeadOffsetY
+            BodyData(i).HeadOffset.x = MisCuerpos(i).HeadOffsetX
+            BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
 
         End If
 
-    Next I
+    Next i
     
     Close #N
 
@@ -622,7 +622,7 @@ Sub CargarFxs()
 
     Dim N      As Integer
 
-    Dim I      As Long
+    Dim i      As Long
 
     Dim NumFxs As Integer
     
@@ -638,9 +638,9 @@ Sub CargarFxs()
     'Resize array
     ReDim FxData(1 To NumFxs) As tIndiceFx
     
-    For I = 1 To NumFxs
-        Get #N, , FxData(I)
-    Next I
+    For i = 1 To NumFxs
+        Get #N, , FxData(i)
+    Next i
     
     Close #N
 
@@ -1940,7 +1940,7 @@ Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
 
     Dim Rango   As Byte
 
-    Dim I       As Integer
+    Dim i       As Integer
 
     Dim tmpInt  As Integer
 
@@ -1961,11 +1961,11 @@ Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
 
     MapData(x, y).Trigger = ByFlags
 
-    For I = 1 To 4
+    For i = 1 To 4
         tmpInt = (DataMap(Pos + 1) And &H7F) * &H100 Or DataMap(Pos) Or -(DataMap(Pos + 1) > &H7F) * &H8000
         Pos = Pos + 2
 
-        Select Case I
+        Select Case i
 
             Case 1
                 MapData(x, y).Graphic(1).GrhIndex = (tmpInt Xor (y + 301) Xor (x + 721)) - x
@@ -1981,12 +1981,12 @@ Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
 
         End Select
     
-        If MapData(x, y).Graphic(I).GrhIndex > 0 Then
-            InitGrh MapData(x, y).Graphic(I), MapData(x, y).Graphic(I).GrhIndex
+        If MapData(x, y).Graphic(i).GrhIndex > 0 Then
+            InitGrh MapData(x, y).Graphic(i), MapData(x, y).Graphic(i).GrhIndex
 
         End If
 
-    Next I
+    Next i
 
     'Get ArchivoMapa, , Rango
     Rango = DataMap(Pos)
@@ -2060,7 +2060,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
     Dim ByFlags As Byte
 
-    Dim I As Integer
+    Dim i As Integer
 
     Dim color As Long
 
@@ -2142,9 +2142,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                 If MapData(x, y).Hora <> Hora And UserMap = 1 Then
 
-                    For I = 0 To 3
-                        MapData(x, y).Light_Value(I) = Iluminacion
-                    Next I
+                    For i = 0 To 3
+                        MapData(x, y).Light_Value(i) = Iluminacion
+                    Next i
 
                     MapData(x, y).Hora = Hora
 
@@ -2161,6 +2161,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
     'Draw floor layer
     For y = screenminY To screenmaxY
         For x = screenminX To screenmaxX
+        
 
             If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
                 'Layer 1 **********************************
@@ -2209,17 +2210,17 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Eliminados = 0
     Cant = NPCMuertos.count
 
-    For I = 1 To Cant
-        Set mNPCMuerto = NPCMuertos(I - Eliminados)
+    For i = 1 To Cant
+        Set mNPCMuerto = NPCMuertos(i - Eliminados)
         Call mNPCMuerto.Update    '(TileX, TileY, PixelOffSetX, PixelOffSetY)
 
         If mNPCMuerto.KillMe Then
-            NPCMuertos.Remove (I - Eliminados)
+            NPCMuertos.Remove (i - Eliminados)
             Eliminados = Eliminados + 1
 
         End If
 
-    Next I
+    Next i
 
     'Draw Transparent Layers
     ScreenY = minYOffset
@@ -2331,17 +2332,17 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Eliminados = 0
     Cant = Tooltips.count
 
-    For I = 1 To Cant
-        Set mTooltip = Tooltips(I - Eliminados)
+    For i = 1 To Cant
+        Set mTooltip = Tooltips(i - Eliminados)
         Call mTooltip.Render(TileX - 1, TileY, PixelOffSetX, PixelOffSetY)
 
         If mTooltip.Alpha = 0 Then
-            Tooltips.Remove (I - Eliminados)
+            Tooltips.Remove (i - Eliminados)
             Eliminados = Eliminados + 1
 
         End If
 
-    Next I
+    Next i
 
     'Particulas
     '**************
@@ -2634,10 +2635,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
             If x > 1 And x < 1100 And y > 1 And y < 1500 Then
                 Call DrawFont("(" & x & "," & y & ")", frmMain.MouseX + 266, frmMain.MouseY + 266, D3DColorRGBA(255, 255, 255, 200))
-                I = BuscarZona(x, y)
+                i = BuscarZona(x, y)
 
-                If I > 0 Then
-                    Call DrawFont(Zonas(I).nombre, frmMain.MouseX + 246, frmMain.MouseY + 266 + 13, D3DColorRGBA(255, 255, 255, 200))
+                If i > 0 Then
+                    Call DrawFont(Zonas(i).nombre, frmMain.MouseX + 246, frmMain.MouseY + 266 + 13, D3DColorRGBA(255, 255, 255, 200))
 
                 End If
 
@@ -2798,7 +2799,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
     End If
     FrameTime = (timeGetTime() And &H7FFFFFFF)
     If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
-
+   
 End Sub
 
 ''*********************
@@ -4146,7 +4147,7 @@ Public Sub Grh_Render_To_Hdc(ByRef pic As PictureBox, ByVal GrhIndex As Long, By
     DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255)
     
    Call D3DDevice.EndScene
-    Call D3DDevice.Present(Picture, ByVal 0, pic.hWnd, ByVal 0)
+    Call D3DDevice.Present(Picture, ByVal 0, pic.hwnd, ByVal 0)
     
     
     Exit Sub

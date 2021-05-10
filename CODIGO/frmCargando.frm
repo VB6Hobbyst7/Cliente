@@ -12,6 +12,7 @@ Begin VB.Form frmCargando
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmCargando.frx":0000
    ScaleHeight     =   600
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   800
@@ -22,15 +23,15 @@ Begin VB.Form frmCargando
       BackColor       =   &H80000005&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
-      Height          =   2295
-      Left            =   2370
-      Picture         =   "frmCargando.frx":0000
-      ScaleHeight     =   153
+      Height          =   1215
+      Left            =   1185
+      Picture         =   "frmCargando.frx":7D89E
+      ScaleHeight     =   81
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   8
+      ScaleWidth      =   21
       TabIndex        =   1
-      Top             =   4905
-      Width           =   120
+      Top             =   6060
+      Width           =   315
    End
    Begin VB.PictureBox BBProg 
       Appearance      =   0  'Flat
@@ -43,7 +44,7 @@ Begin VB.Form frmCargando
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   465
       TabIndex        =   0
-      Top             =   6000
+      Top             =   5400
       Visible         =   0   'False
       Width           =   6975
    End
@@ -57,7 +58,7 @@ Attribute VB_Exposed = False
 Dim f As Integer
 
 Private Sub Form_Load()
-Me.Picture = LoadPictureEX("cargando.jpg")
+'Me.Picture = LoadPictureEX("cargando.jpg")
 End Sub
 
 

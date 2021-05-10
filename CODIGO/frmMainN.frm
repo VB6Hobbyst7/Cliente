@@ -111,14 +111,14 @@ Begin VB.Form frmMain
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
-      Height          =   9093
+      Height          =   11610
       Left            =   0
-      ScaleHeight     =   606
+      ScaleHeight     =   774
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   800
+      ScaleWidth      =   792
       TabIndex        =   5
-      Top             =   1917
-      Width           =   12000
+      Top             =   0
+      Width           =   11880
       Begin VB.TextBox tRePass 
          Appearance      =   0  'Flat
          BackColor       =   &H00FFFFFF&
@@ -480,11 +480,11 @@ Begin VB.Form frmMain
    End
    Begin MBProgressBar.ProgressBar Experiencia 
       Height          =   135
-      Left            =   0
+      Left            =   13365
       TabIndex        =   29
-      Top             =   11011
-      Width           =   11940
-      _ExtentX        =   21061
+      Top             =   1545
+      Width           =   1230
+      _ExtentX        =   2170
       _ExtentY        =   238
       BorderStyle     =   0
       Value           =   50
@@ -1193,7 +1193,7 @@ End Sub
 
 Private Sub Client_CloseSck()
 
-    Dim I As Long
+    Dim i As Long
 
     Client.CloseSck
     
@@ -1870,7 +1870,7 @@ End Sub
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If y < 24 And NoRes Then
-        MoverVentana (Me.hWnd)
+        MoverVentana (Me.hwnd)
 
     End If
 
@@ -2514,21 +2514,21 @@ End Sub
 Public Sub ReDrawConsola()
     pConsola.Cls
 
-    Dim I As Long
+    Dim i As Long
 
-    For I = OffSetConsola To OffSetConsola + 6
+    For i = OffSetConsola To OffSetConsola + 6
 
-        If I >= 0 And I <= LineasConsola Then
+        If i >= 0 And i <= LineasConsola Then
             pConsola.CurrentX = 0
-            pConsola.CurrentY = (I - OffSetConsola - 1) * 14
-            pConsola.ForeColor = Consola(I).color
-            pConsola.FontBold = CBool(Consola(I).bold)
-            pConsola.FontItalic = CBool(Consola(I).italic)
-            pConsola.Print Consola(I).Texto
+            pConsola.CurrentY = (i - OffSetConsola - 1) * 14
+            pConsola.ForeColor = Consola(i).color
+            pConsola.FontBold = CBool(Consola(i).bold)
+            pConsola.FontItalic = CBool(Consola(i).italic)
+            pConsola.Print Consola(i).Texto
 
         End If
 
-    Next I
+    Next i
 
 End Sub
 
@@ -2816,21 +2816,21 @@ Private Sub SendTxt_Change()
     Else
 
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim I         As Long
+        Dim i         As Long
 
         Dim tempstr   As String
 
         Dim CharAscii As Integer
         
-        For I = 1 To Len(SendTxt.Text)
-            CharAscii = Asc(mid$(SendTxt.Text, I, 1))
+        For i = 1 To Len(SendTxt.Text)
+            CharAscii = Asc(mid$(SendTxt.Text, i, 1))
 
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
 
             End If
 
-        Next I
+        Next i
 
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -2884,21 +2884,21 @@ Private Sub SendCMSTXT_Change()
     Else
 
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim I         As Long
+        Dim i         As Long
 
         Dim tempstr   As String
 
         Dim CharAscii As Integer
         
-        For I = 1 To Len(SendCMSTXT.Text)
-            CharAscii = Asc(mid$(SendCMSTXT.Text, I, 1))
+        For i = 1 To Len(SendCMSTXT.Text)
+            CharAscii = Asc(mid$(SendCMSTXT.Text, i, 1))
 
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
 
             End If
 
-        Next I
+        Next i
         
         If tempstr <> SendCMSTXT.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -2921,7 +2921,7 @@ Private Sub AbrirMenuViewPort()
             If MapData(tX, tY).CharIndex > 0 Then
                 If charlist(MapData(tX, tY).CharIndex).invisible = False Then
         
-                    Dim I As Long
+                    Dim i As Long
 
                     Dim m As New frmMenuseFashion
             

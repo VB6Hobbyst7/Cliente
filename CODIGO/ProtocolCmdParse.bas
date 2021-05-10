@@ -37,7 +37,7 @@ Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
 
     If LenB(UserName) = 0 Then Exit Sub
     
-    Dim i          As Long
+    Dim I          As Long
 
     Dim nameLength As Long
     
@@ -49,21 +49,21 @@ Public Sub AuxWriteWhisper(ByVal UserName As String, ByVal Mensaje As String)
     UserName = UCase$(UserName)
     nameLength = Len(UserName)
     
-    i = 1
+    I = 1
 
-    Do While i <= LastChar
+    Do While I <= LastChar
 
-        If UCase$(charlist(i).nombre) = UserName Or UCase$(Left$(charlist(i).nombre, nameLength + 2)) = UserName & " <" Then
+        If UCase$(charlist(I).nombre) = UserName Or UCase$(Left$(charlist(I).nombre, nameLength + 2)) = UserName & " <" Then
             Exit Do
         Else
-            i = i + 1
+            I = I + 1
 
         End If
 
     Loop
     
-    If i <= LastChar Then
-        Call WriteWhisper(i, Mensaje)
+    If I <= LastChar Then
+        Call WriteWhisper(I, Mensaje)
 
     End If
 
@@ -1853,13 +1853,28 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
 
         Case "/PING"
             Call WritePing
-  'quest
+            'quest
         Case "/QUEST"
             Call WriteQuest
 
         Case "/INFOQUEST"
             Call WriteQuestListRequest
-'quest
+            'quest
+            ' eventos
+        Case "/PARTICIPAR"
+            If notNullArguments Then
+                Call WriteParticipeEvent(ArgumentosRaw)
+            Else
+                'Avisar que falta el parametro
+                With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                    Call ShowConsoleMsg("Escribe /PARTICIPAR y separado el nombre del evento que aparece en consola. /INFOEVENTO si tenes dudas.", .red, .green, .blue, .bold, .italic)
+                End With
+            End If
+
+        Case "/SALIREVENTO"
+            Call WriteAbandonateEvent
+            'eventos
+
         Case "/HOGAR"
             Call WriteHome
 
@@ -2110,44 +2125,44 @@ End Function
 
 Private Function NombreLugar(ByVal nombre As String) As WorldPos
 
-    Dim P As WorldPos
+    Dim p As WorldPos
 
     nombre = UCase(nombre)
 
     Select Case nombre
 
         Case "ULLA", "ULLATHORPE"
-            P.x = 304
-            P.y = 854
-            P.Map = 1
+            p.x = 304
+            p.y = 854
+            p.Map = 1
 
         Case "NIX"
-            P.x = 194
-            P.y = 1252
-            P.Map = 1
+            p.x = 194
+            p.y = 1252
+            p.Map = 1
         
         Case "BANDER", "BANDERBILL"
-            P.x = 300
-            P.y = 220
-            P.Map = 1
+            p.x = 300
+            p.y = 220
+            p.Map = 1
         
         Case "ARK", "ARKHEIN"
-            P.x = 550
-            P.y = 1415
-            P.Map = 1
+            p.x = 550
+            p.y = 1415
+            p.Map = 1
         
         Case "ARGHAL"
-            P.x = 694
-            P.y = 338
-            P.Map = 1
+            p.x = 694
+            p.y = 338
+            p.Map = 1
         
         Case "LINDOS"
-            P.x = 949
-            P.y = 951
-            P.Map = 1
+            p.x = 949
+            p.y = 951
+            p.Map = 1
         
     End Select
 
-    NombreLugar = P
+    NombreLugar = p
 
 End Function

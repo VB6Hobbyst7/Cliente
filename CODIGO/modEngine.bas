@@ -296,8 +296,9 @@ Public Function IniciarDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS) As Boolean
 
     RectJuego.X1 = 0
     RectJuego.Y1 = 0
-    RectJuego.X2 = 800
+  RectJuego.X2 = 800
     RectJuego.Y2 = 608
+
 
     If Not D3DDevice Is Nothing Then Set D3DDevice = Nothing
     Set D3DDevice = D3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.pRender.hwnd, D3DCREATEFLAGS, D3DWindow)

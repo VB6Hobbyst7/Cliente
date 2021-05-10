@@ -174,15 +174,15 @@ Sub CargarColores()
     For I = 0 To 48 '49 y 50 reservados para ciudadano y criminal
         ColoresPJ(I).R = CByte(GetVar(archivoC, CStr(I), "R"))
         ColoresPJ(I).G = CByte(GetVar(archivoC, CStr(I), "G"))
-        ColoresPJ(I).b = CByte(GetVar(archivoC, CStr(I), "B"))
+        ColoresPJ(I).B = CByte(GetVar(archivoC, CStr(I), "B"))
     Next I
     
     ColoresPJ(50).R = CByte(GetVar(archivoC, "CR", "R"))
     ColoresPJ(50).G = CByte(GetVar(archivoC, "CR", "G"))
-    ColoresPJ(50).b = CByte(GetVar(archivoC, "CR", "B"))
+    ColoresPJ(50).B = CByte(GetVar(archivoC, "CR", "B"))
     ColoresPJ(49).R = CByte(GetVar(archivoC, "CI", "R"))
     ColoresPJ(49).G = CByte(GetVar(archivoC, "CI", "G"))
-    ColoresPJ(49).b = CByte(GetVar(archivoC, "CI", "B"))
+    ColoresPJ(49).B = CByte(GetVar(archivoC, "CI", "B"))
 
 End Sub
 
@@ -1471,7 +1471,7 @@ Reintentar:
 
 Error:
 
-    If Err.Number = 75 Then 'Si el archivo AoUpdateTMP.exe está en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
+    If err.Number = 75 Then 'Si el archivo AoUpdateTMP.exe está en uso, entonces esperamos 5 ms y volvemos a intentarlo hasta que nos deje.
         Reintentos = Reintentos + 1
 
         If Reintentos = 3 Then
@@ -1484,7 +1484,7 @@ Error:
         End If
         
     Else
-        MsgBox Err.Description & vbCrLf, vbInformation, "[ " & Err.Number & " ]" & " Error "
+        MsgBox err.Description & vbCrLf, vbInformation, "[ " & err.Number & " ]" & " Error "
         End
 
     End If

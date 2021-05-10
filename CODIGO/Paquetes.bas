@@ -89,8 +89,8 @@ Public Enum ClientPacketIDGM
     CriminalMessage         '/CRIMSG
     TalkAsNPC               '/TALKAS
     DestroyAllItemsInArea   '/MASSDEST
-    AcceptRoyalCouncilMember '/ACEPTCONSE
-    AcceptChaosCouncilMember '/ACEPTCONSECAOS
+    AcceptRoyalCouncilMember    '/ACEPTCONSE
+    AcceptChaosCouncilMember    '/ACEPTCONSECAOS
     ItemsInTheFloor         '/PISO
     MakeDumb                '/ESTUPIDO
     MakeDumbNoMore          '/NOESTUPIDO
@@ -122,7 +122,7 @@ Public Enum ClientPacketIDGM
     ImperialArmour          '/AI1 - 4
     ChaosArmour             '/AC1 - 4
     NavigateToggle          '/NAVE
-    ServerOpenToUsersToggle '/HABILITAR
+    ServerOpenToUsersToggle    '/HABILITAR
     TurnOffServer           '/APAGAR
     TurnCriminal            '/CONDEN
     ResetFactions           '/RAJAR
@@ -131,7 +131,7 @@ Public Enum ClientPacketIDGM
     AlterPassword           '/APASS
     AlterMail               '/AEMAIL
     AlterName               '/ANAME
-    ToggleCentinelActivated '/CENTINELAACTIVADO
+    ToggleCentinelActivated    '/CENTINELAACTIVADO
     DoBackUp                '/DOBACKUP
     ShowGuildMessages       '/SHOWCMSG
     SaveMap                 '/GUARDAMAPA
@@ -155,7 +155,6 @@ Public Enum ClientPacketIDGM
 End Enum
 
 Public Enum ServerPacketID
-
     OpenAccount
     logged                  ' LOGGED
     ChangeHour
@@ -171,9 +170,7 @@ Public Enum ServerPacketID
     UserCommerceEnd         ' FINCOMUSUOK
     UserOfferConfirm
     CancelOfferItem
-    'aura
     SendAura                ' Auras
-    'aura
     ShowBlacksmithForm      ' SFH
     ShowCarpenterForm       ' SFC
     NPCSwing                ' N1
@@ -271,6 +268,10 @@ Public Enum ServerPacketID
     StopWorking
     RetosAbre
     RetosRespuesta
+    QuestDetails
+    QuestListSend
+    NpcQuestListSend
+    UpdateNPCSimbolo
     SetEquitando            'MONTAR
     SetCongelado            'Congelado
     SetChiquito             'Chiquito
@@ -278,16 +279,11 @@ Public Enum ServerPacketID
     PalabrasMagicas         'Palabras magicas
     UserSpellNPC            'US2
     SetNadando
-    
     MultiMessage            'Messages in client
-    
     FirstInfo               'Primera informacion
     CuentaRegresiva         'Cuenta
     PicInRender             'PicInRender
-    
     Quit                    'Quit
-    
-    'GM messages
     SpawnList               ' SPL
     ShowSOSForm             ' MSOS
     ShowMOTDEditionForm     ' ZMOTD
@@ -300,16 +296,18 @@ Public Enum ServerPacketID
     GoHome
     GotHome
     Tooltip
-  'quest
-   QuestDetails
-    QuestListSend
-    NpcQuestListSend
-    UpdateNPCSimbolo
-    'quest
+    UserInEvent
+    EventPacketSv
 End Enum
+'eventos
+Public Enum SvEventPacketID
+    SendListEvent = 1
+    SendDataEvent = 2
+
+End Enum
+'eventos
 
 Public Enum ClientPacketID
-
     BorrarPJ                'Borrar
     OpenAccount             'ALOGIN
     LoginExistingChar       'OLOGIN
@@ -416,8 +414,11 @@ Public Enum ClientPacketID
     RetosCrear
     RetosDecide
     IntercambiarInv
-    
-    'GM messages
+    Quest                   '/QUEST
+    QuestAccept
+    QuestListRequest
+    QuestDetailsRequest
+    QuestAbandon
     gm
     WarpMeToTarget          '/TELEPLOC
     Home
@@ -426,18 +427,18 @@ Public Enum ClientPacketID
     CreateEfectoClient           'Creamos efecto desde el cliente
     CreateEfectoClientAction     'Luego hacemos la accion (daño, etc)
     AnclarEmbarcacion            'Ancla la embarcacion
-
-    'DesAnclarEmbarcacion            'DesAncla la embarcacion
-    
-    'quest
-    Quest                   '/QUEST
-    QuestAccept
-    QuestListRequest
-    QuestDetailsRequest
-    QuestAbandon
-    newPacketID
-    'quest
+    EventPacket
 End Enum
+'eventos
+Public Enum EventPacketID
+    NewEvent = 1
+    CloseEvent = 2
+    RequiredEvents = 3
+    RequiredDataEvent = 4
+    ParticipeEvent = 5
+    AbandonateEvent = 6
+End Enum
+'eventos
 
 Public Enum FontTypeNames
 
@@ -593,5 +594,5 @@ Public Sub InitDebug()
     PaqueteName(120) = "GoHome"
     PaqueteName(121) = "GotHome"
     PaqueteName(122) = "Tooltip"
-
+    
 End Sub
