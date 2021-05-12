@@ -27,6 +27,27 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1024
    StartUpPosition =   2  'CenterScreen
+   Begin VB.PictureBox picHechiz 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      AutoSize        =   -1  'True
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      CausesValidation=   0   'False
+      ClipControls    =   0   'False
+      DrawStyle       =   3  'Dash-Dot
+      ForeColor       =   &H00FFFFFF&
+      Height          =   3416
+      Left            =   12360
+      MousePointer    =   99  'Custom
+      ScaleHeight     =   228
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   156
+      TabIndex        =   10
+      Top             =   3041
+      Visible         =   0   'False
+      Width           =   2340
+   End
    Begin VB.PictureBox picarmadura 
       Appearance      =   0  'Flat
       BackColor       =   &H80000007&
@@ -35,7 +56,7 @@ Begin VB.Form frmMain
       Left            =   2610
       ScaleHeight     =   450
       ScaleWidth      =   450
-      TabIndex        =   42
+      TabIndex        =   39
       TabStop         =   0   'False
       Top             =   11175
       Visible         =   0   'False
@@ -63,7 +84,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   173
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   16
-      TabIndex        =   33
+      TabIndex        =   30
       TabStop         =   0   'False
       Top             =   3480
       Visible         =   0   'False
@@ -90,7 +111,7 @@ Begin VB.Form frmMain
          ScaleHeight     =   7
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   14
-         TabIndex        =   34
+         TabIndex        =   31
          TabStop         =   0   'False
          Top             =   240
          Width           =   210
@@ -101,24 +122,421 @@ Begin VB.Form frmMain
       Enabled         =   0   'False
       Height          =   315
       Left            =   12615
-      TabIndex        =   27
+      TabIndex        =   26
       Top             =   10815
       Visible         =   0   'False
       Width           =   975
+   End
+   Begin VB.Timer macrotrabajo 
+      Enabled         =   0   'False
+      Left            =   9120
+      Top             =   240
+   End
+   Begin VB.Timer Macro 
+      Interval        =   750
+      Left            =   7680
+      Top             =   240
+   End
+   Begin VB.Timer Second 
+      Enabled         =   0   'False
+      Interval        =   1050
+      Left            =   8160
+      Top             =   240
+   End
+   Begin VB.Timer SpoofCheck 
+      Enabled         =   0   'False
+      Interval        =   60000
+      Left            =   9600
+      Top             =   240
+   End
+   Begin VB.PictureBox imgMiniMapa 
+      BorderStyle     =   0  'None
+      Height          =   1498
+      Left            =   11640
+      ScaleHeight     =   1500
+      ScaleMode       =   0  'User
+      ScaleWidth      =   1100
+      TabIndex        =   25
+      Top             =   75
+      Visible         =   0   'False
+      Width           =   1500
+      Begin VB.Shape shpMiniMapaUser 
+         BackColor       =   &H000000FF&
+         BackStyle       =   1  'Opaque
+         BorderColor     =   &H000000C0&
+         FillColor       =   &H000000FF&
+         Height          =   45
+         Left            =   695
+         Top             =   750
+         Width           =   45
+      End
+      Begin VB.Shape shpMiniMapaVision 
+         Height          =   315
+         Left            =   520
+         Top             =   614
+         Width           =   375
+      End
+   End
+   Begin VB.TextBox SendTxt 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00E0E0E0&
+      Height          =   240
+      Left            =   240
+      MaxLength       =   160
+      MultiLine       =   -1  'True
+      TabIndex        =   3
+      TabStop         =   0   'False
+      ToolTipText     =   "Chat"
+      Top             =   1513
+      Visible         =   0   'False
+      Width           =   11820
+   End
+   Begin VB.TextBox SendCMSTXT 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00E0E0E0&
+      Height          =   240
+      Left            =   240
+      MaxLength       =   160
+      MultiLine       =   -1  'True
+      TabIndex        =   2
+      TabStop         =   0   'False
+      ToolTipText     =   "Chat"
+      Top             =   1513
+      Visible         =   0   'False
+      Width           =   11820
+   End
+   Begin VB.PictureBox picInv 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      AutoSize        =   -1  'True
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      CausesValidation=   0   'False
+      ClipControls    =   0   'False
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   6.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   3595
+      Left            =   12345
+      ScaleHeight     =   240
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   180
+      TabIndex        =   11
+      Top             =   2996
+      Width           =   2700
+      Begin VB.Label lblItem 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         ForeColor       =   &H00E0E0E0&
+         Height          =   495
+         Left            =   120
+         TabIndex        =   12
+         Top             =   4080
+         Width           =   2175
+      End
+   End
+   Begin MBProgressBar.ProgressBar Experiencia 
+      Height          =   135
+      Left            =   13365
+      TabIndex        =   28
+      Top             =   1545
+      Width           =   1230
+      _ExtentX        =   2170
+      _ExtentY        =   238
+      BorderStyle     =   0
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":C6B32
+      BarPicture      =   "frmMainN.frx":CBF7A
+      TextAfterCaption=   "%"
+      Style           =   1
+   End
+   Begin MBProgressBar.ProgressBar bar_salud 
+      Height          =   225
+      Left            =   720
+      TabIndex        =   32
+      Top             =   360
+      Width           =   2370
+      _ExtentX        =   4180
+      _ExtentY        =   397
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":D13C2
+      BarPicture      =   "frmMainN.frx":DE11C
+      Style           =   1
+   End
+   Begin MBProgressBar.ProgressBar Bar_Mana 
+      Height          =   225
+      Left            =   720
+      TabIndex        =   33
+      Top             =   720
+      Width           =   2370
+      _ExtentX        =   4180
+      _ExtentY        =   397
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":DEECC
+      BarPicture      =   "frmMainN.frx":EBC26
+      Style           =   1
+   End
+   Begin MBProgressBar.ProgressBar bar_sta 
+      Height          =   225
+      Left            =   12420
+      TabIndex        =   34
+      Top             =   9960
+      Width           =   2370
+      _ExtentX        =   4180
+      _ExtentY        =   397
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":EC9D6
+      BarPicture      =   "frmMainN.frx":F9730
+      Style           =   1
+   End
+   Begin MBProgressBar.ProgressBar Bar_Agua 
+      Height          =   150
+      Left            =   13980
+      TabIndex        =   35
+      Top             =   10545
+      Width           =   1080
+      _ExtentX        =   1905
+      _ExtentY        =   265
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":FA4E0
+      BarPicture      =   "frmMainN.frx":10723A
+      Style           =   1
+   End
+   Begin MBProgressBar.ProgressBar bar_comida 
+      Height          =   150
+      Left            =   12240
+      TabIndex        =   36
+      Top             =   10545
+      Width           =   1080
+      _ExtentX        =   1905
+      _ExtentY        =   265
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":1078B6
+      BarPicture      =   "frmMainN.frx":114610
+      Style           =   1
    End
    Begin VB.PictureBox pRender 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
-      Height          =   11610
+      Height          =   11730
       Left            =   0
-      ScaleHeight     =   774
+      ScaleHeight     =   782
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   792
-      TabIndex        =   5
+      ScaleWidth      =   1024
+      TabIndex        =   4
       Top             =   0
-      Width           =   11880
+      Width           =   15360
+      Begin VB.PictureBox pConsola 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   1348
+         Left            =   0
+         ScaleHeight     =   90
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   788
+         TabIndex        =   41
+         Top             =   0
+         Visible         =   0   'False
+         Width           =   11820
+         Begin VB.Timer tMouse 
+            Enabled         =   0   'False
+            Interval        =   1
+            Left            =   8400
+            Top             =   0
+         End
+         Begin VB.PictureBox BarraConsola 
+            Appearance      =   0  'Flat
+            AutoRedraw      =   -1  'True
+            AutoSize        =   -1  'True
+            BackColor       =   &H80000005&
+            BorderStyle     =   0  'None
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H80000008&
+            Height          =   1367
+            Left            =   11550
+            Picture         =   "frmMainN.frx":114CFC
+            ScaleHeight     =   91
+            ScaleMode       =   3  'Pixel
+            ScaleWidth      =   18
+            TabIndex        =   42
+            TabStop         =   0   'False
+            Top             =   15
+            Width           =   270
+            Begin VB.PictureBox BarritaConsola 
+               Appearance      =   0  'Flat
+               AutoRedraw      =   -1  'True
+               AutoSize        =   -1  'True
+               BackColor       =   &H80000005&
+               BorderStyle     =   0  'None
+               BeginProperty Font 
+                  Name            =   "MS Sans Serif"
+                  Size            =   8.25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
+               ForeColor       =   &H80000008&
+               Height          =   105
+               Left            =   30
+               Picture         =   "frmMainN.frx":116126
+               ScaleHeight     =   7
+               ScaleMode       =   3  'Pixel
+               ScaleWidth      =   14
+               TabIndex        =   43
+               TabStop         =   0   'False
+               Top             =   1020
+               Width           =   210
+            End
+         End
+         Begin VB.Timer tRelampago 
+            Enabled         =   0   'False
+            Interval        =   7500
+            Left            =   0
+            Top             =   0
+         End
+         Begin MSWinsockLib.Winsock WSock 
+            Left            =   6960
+            Top             =   0
+            _ExtentX        =   741
+            _ExtentY        =   741
+            _Version        =   393216
+         End
+      End
       Begin VB.TextBox tRePass 
          Appearance      =   0  'Flat
          BackColor       =   &H00FFFFFF&
@@ -138,7 +556,7 @@ Begin VB.Form frmMain
          Left            =   6360
          MaxLength       =   160
          PasswordChar    =   "*"
-         TabIndex        =   25
+         TabIndex        =   24
          TabStop         =   0   'False
          ToolTipText     =   "Chat"
          Top             =   3120
@@ -163,7 +581,7 @@ Begin VB.Form frmMain
          IMEMode         =   3  'DISABLE
          Left            =   6360
          MaxLength       =   160
-         TabIndex        =   24
+         TabIndex        =   23
          TabStop         =   0   'False
          ToolTipText     =   "Chat"
          Top             =   2280
@@ -222,430 +640,13 @@ Begin VB.Form frmMain
          Width           =   2700
       End
    End
-   Begin VB.Timer macrotrabajo 
-      Enabled         =   0   'False
-      Left            =   9120
-      Top             =   240
-   End
-   Begin VB.Timer Macro 
-      Interval        =   750
-      Left            =   7680
-      Top             =   240
-   End
-   Begin VB.Timer Second 
-      Enabled         =   0   'False
-      Interval        =   1050
-      Left            =   8160
-      Top             =   240
-   End
-   Begin VB.Timer SpoofCheck 
-      Enabled         =   0   'False
-      Interval        =   60000
-      Left            =   9600
-      Top             =   240
-   End
-   Begin VB.PictureBox pConsola 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      AutoSize        =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   1348
-      Left            =   240
-      ScaleHeight     =   90
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   788
-      TabIndex        =   2
-      Top             =   135
-      Width           =   11820
-      Begin VB.Timer tRelampago 
-         Enabled         =   0   'False
-         Interval        =   7500
-         Left            =   0
-         Top             =   0
-      End
-      Begin VB.PictureBox BarraConsola 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         AutoSize        =   -1  'True
-         BackColor       =   &H80000005&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   1367
-         Left            =   11550
-         Picture         =   "frmMainN.frx":C6B32
-         ScaleHeight     =   91
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   18
-         TabIndex        =   30
-         TabStop         =   0   'False
-         Top             =   15
-         Width           =   270
-         Begin VB.PictureBox BarritaConsola 
-            Appearance      =   0  'Flat
-            AutoRedraw      =   -1  'True
-            AutoSize        =   -1  'True
-            BackColor       =   &H80000005&
-            BorderStyle     =   0  'None
-            BeginProperty Font 
-               Name            =   "MS Sans Serif"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H80000008&
-            Height          =   105
-            Left            =   30
-            Picture         =   "frmMainN.frx":C7F5C
-            ScaleHeight     =   7
-            ScaleMode       =   3  'Pixel
-            ScaleWidth      =   14
-            TabIndex        =   31
-            TabStop         =   0   'False
-            Top             =   1020
-            Width           =   210
-         End
-      End
-      Begin MSWinsockLib.Winsock WSock 
-         Left            =   6960
-         Top             =   0
-         _ExtentX        =   741
-         _ExtentY        =   741
-         _Version        =   393216
-      End
-      Begin VB.Timer tMouse 
-         Enabled         =   0   'False
-         Interval        =   1
-         Left            =   8400
-         Top             =   0
-      End
-   End
-   Begin VB.PictureBox imgMiniMapa 
-      BorderStyle     =   0  'None
-      Height          =   1498
-      Left            =   11640
-      ScaleHeight     =   1500
-      ScaleMode       =   0  'User
-      ScaleWidth      =   1100
-      TabIndex        =   26
-      Top             =   75
-      Visible         =   0   'False
-      Width           =   1500
-      Begin VB.Shape shpMiniMapaUser 
-         BackColor       =   &H000000FF&
-         BackStyle       =   1  'Opaque
-         BorderColor     =   &H000000C0&
-         FillColor       =   &H000000FF&
-         Height          =   45
-         Left            =   695
-         Top             =   750
-         Width           =   45
-      End
-      Begin VB.Shape shpMiniMapaVision 
-         Height          =   315
-         Left            =   520
-         Top             =   614
-         Width           =   375
-      End
-   End
-   Begin VB.TextBox SendTxt 
-      Appearance      =   0  'Flat
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00E0E0E0&
-      Height          =   240
-      Left            =   240
-      MaxLength       =   160
-      MultiLine       =   -1  'True
-      TabIndex        =   4
-      TabStop         =   0   'False
-      ToolTipText     =   "Chat"
-      Top             =   1513
-      Visible         =   0   'False
-      Width           =   11820
-   End
-   Begin VB.TextBox SendCMSTXT 
-      Appearance      =   0  'Flat
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00E0E0E0&
-      Height          =   240
-      Left            =   240
-      MaxLength       =   160
-      MultiLine       =   -1  'True
-      TabIndex        =   3
-      TabStop         =   0   'False
-      ToolTipText     =   "Chat"
-      Top             =   1513
-      Visible         =   0   'False
-      Width           =   11820
-   End
-   Begin VB.PictureBox picHechiz 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      AutoSize        =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      CausesValidation=   0   'False
-      ClipControls    =   0   'False
-      DrawStyle       =   3  'Dash-Dot
-      ForeColor       =   &H00FFFFFF&
-      Height          =   3416
-      Left            =   12360
-      MousePointer    =   99  'Custom
-      ScaleHeight     =   228
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   156
-      TabIndex        =   11
-      Top             =   3041
-      Visible         =   0   'False
-      Width           =   2340
-   End
-   Begin VB.PictureBox picInv 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      AutoSize        =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      CausesValidation=   0   'False
-      ClipControls    =   0   'False
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   6.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   3595
-      Left            =   12345
-      ScaleHeight     =   240
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   180
-      TabIndex        =   12
-      Top             =   2996
-      Width           =   2700
-      Begin VB.Label lblItem 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         ForeColor       =   &H00E0E0E0&
-         Height          =   495
-         Left            =   120
-         TabIndex        =   13
-         Top             =   4080
-         Width           =   2175
-      End
-   End
-   Begin MBProgressBar.ProgressBar Experiencia 
-      Height          =   135
-      Left            =   13365
-      TabIndex        =   29
-      Top             =   1545
-      Width           =   1230
-      _ExtentX        =   2170
-      _ExtentY        =   238
-      BorderStyle     =   0
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN.frx":C80D2
-      BarPicture      =   "frmMainN.frx":CD51A
-      TextAfterCaption=   "%"
-      Style           =   1
-   End
-   Begin MBProgressBar.ProgressBar bar_salud 
-      Height          =   225
-      Left            =   12420
-      TabIndex        =   35
-      Top             =   8790
-      Width           =   2370
-      _ExtentX        =   4180
-      _ExtentY        =   397
-      BorderStyle     =   0
-      CaptionType     =   2
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      TextColor       =   16777215
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Palatino Linotype"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN.frx":D2962
-      BarPicture      =   "frmMainN.frx":DF6BC
-      Style           =   1
-   End
-   Begin MBProgressBar.ProgressBar Bar_Mana 
-      Height          =   225
-      Left            =   12420
-      TabIndex        =   36
-      Top             =   9375
-      Width           =   2370
-      _ExtentX        =   4180
-      _ExtentY        =   397
-      BorderStyle     =   0
-      CaptionType     =   2
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      TextColor       =   16777215
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Palatino Linotype"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN.frx":E046C
-      BarPicture      =   "frmMainN.frx":ED1C6
-      Style           =   1
-   End
-   Begin MBProgressBar.ProgressBar bar_sta 
-      Height          =   225
-      Left            =   12420
-      TabIndex        =   37
-      Top             =   9960
-      Width           =   2370
-      _ExtentX        =   4180
-      _ExtentY        =   397
-      BorderStyle     =   0
-      CaptionType     =   2
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      TextColor       =   16777215
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Palatino Linotype"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN.frx":EDF76
-      BarPicture      =   "frmMainN.frx":FACD0
-      Style           =   1
-   End
-   Begin MBProgressBar.ProgressBar Bar_Agua 
-      Height          =   150
-      Left            =   13980
-      TabIndex        =   38
-      Top             =   10545
-      Width           =   1080
-      _ExtentX        =   1905
-      _ExtentY        =   265
-      BorderStyle     =   0
-      CaptionType     =   2
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      TextColor       =   16777215
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Palatino Linotype"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN.frx":FBA80
-      BarPicture      =   "frmMainN.frx":1087DA
-      Style           =   1
-   End
-   Begin MBProgressBar.ProgressBar bar_comida 
-      Height          =   150
-      Left            =   12240
-      TabIndex        =   39
-      Top             =   10545
-      Width           =   1080
-      _ExtentX        =   1905
-      _ExtentY        =   265
-      BorderStyle     =   0
-      CaptionType     =   2
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      TextColor       =   16777215
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Palatino Linotype"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN.frx":108E56
-      BarPicture      =   "frmMainN.frx":115BB0
-      Style           =   1
-   End
    Begin VB.Label QuestBoton 
       BackStyle       =   0  'Transparent
       Height          =   255
       Left            =   12840
       MouseIcon       =   "frmMainN.frx":11629C
       MousePointer    =   99  'Custom
-      TabIndex        =   43
+      TabIndex        =   40
       Top             =   10440
       Width           =   1455
    End
@@ -657,7 +658,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   270
       Left            =   12300
-      TabIndex        =   41
+      TabIndex        =   38
       Top             =   7485
       Width           =   1035
    End
@@ -668,7 +669,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H80000008&
       Height          =   195
       Left            =   13980
-      TabIndex        =   40
+      TabIndex        =   37
       Top             =   7515
       Width           =   1005
    End
@@ -732,7 +733,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H8000000E&
       Height          =   210
       Left            =   5835
-      TabIndex        =   32
+      TabIndex        =   29
       Top             =   11010
       Visible         =   0   'False
       Width           =   765
@@ -740,7 +741,7 @@ Begin VB.Form frmMain
    Begin VB.Label lblDIATEST 
       Height          =   495
       Left            =   6225
-      TabIndex        =   28
+      TabIndex        =   27
       Top             =   5580
       Visible         =   0   'False
       Width           =   5535
@@ -758,7 +759,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   735
       Left            =   3240
-      TabIndex        =   23
+      TabIndex        =   22
       Top             =   10260
       Width           =   1935
    End
@@ -769,7 +770,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   495
       Left            =   12135
-      TabIndex        =   22
+      TabIndex        =   21
       Top             =   2730
       Width           =   3135
    End
@@ -788,7 +789,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   6030
-      TabIndex        =   21
+      TabIndex        =   20
       Top             =   11355
       Width           =   1095
    End
@@ -799,7 +800,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   5055
-      TabIndex        =   20
+      TabIndex        =   19
       Top             =   11355
       Width           =   1095
    End
@@ -810,7 +811,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   4005
-      TabIndex        =   19
+      TabIndex        =   18
       Top             =   11370
       Width           =   1095
    End
@@ -821,7 +822,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   255
       Left            =   2910
-      TabIndex        =   18
+      TabIndex        =   17
       Top             =   11355
       Width           =   1095
    End
@@ -853,7 +854,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   8550
-      TabIndex        =   17
+      TabIndex        =   16
       Top             =   11355
       Width           =   210
    End
@@ -864,7 +865,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00000000&
       Height          =   255
       Left            =   7770
-      TabIndex        =   16
+      TabIndex        =   15
       Top             =   10575
       Width           =   210
    End
@@ -875,7 +876,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00E0E0E0&
       Height          =   255
       Left            =   13455
-      TabIndex        =   15
+      TabIndex        =   14
       Top             =   11400
       Width           =   570
    End
@@ -896,7 +897,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   240
       Left            =   13275
-      TabIndex        =   10
+      TabIndex        =   9
       Top             =   6960
       Width           =   780
    End
@@ -931,7 +932,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00FFFFFF&
       Height          =   345
       Left            =   12660
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   1155
       Width           =   360
    End
@@ -968,7 +969,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H0000C0C0&
       Height          =   195
       Left            =   13155
-      TabIndex        =   8
+      TabIndex        =   7
       Top             =   8040
       Width           =   840
    End
@@ -994,7 +995,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H000000FF&
       Height          =   120
       Left            =   9000
-      TabIndex        =   7
+      TabIndex        =   6
       Top             =   2400
       Width           =   30
    End
@@ -1014,7 +1015,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00E0E0E0&
       Height          =   315
       Left            =   13140
-      TabIndex        =   6
+      TabIndex        =   5
       Top             =   1290
       Width           =   1545
    End
@@ -1041,7 +1042,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H00000000&
       Height          =   180
       Left            =   14055
-      TabIndex        =   14
+      TabIndex        =   13
       Top             =   10560
       Visible         =   0   'False
       Width           =   495
@@ -1100,6 +1101,7 @@ Attribute VB_Exposed = False
 'Pablo Ignacio Márquez
 
 Option Explicit
+
 
 Public tX                As Integer
 
@@ -1534,6 +1536,7 @@ End Sub
 
 
 
+
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 
     Select Case KeyCode
@@ -1587,14 +1590,14 @@ End Sub
 
 Public Sub SetRender(Full As Boolean)
 
-    If Full Then
+    'If Full Then
         pRender.Move 0, 0, 1024, 782
-    Else
-        pRender.Move 2, 125, 800, 608
+    'Else
+       ' pRender.Move 2, 125, 800, 608
 
         'pRender.Move 13, 169, 768, 576
         'pRender.Move 11, 133, Render_Width, Render_Height
-    End If
+   ' End If
 
 End Sub
 
@@ -2525,7 +2528,7 @@ Public Sub ReDrawConsola()
             pConsola.FontBold = CBool(Consola(i).bold)
             pConsola.FontItalic = CBool(Consola(i).italic)
             pConsola.Print Consola(i).Texto
-
+    Call setConsoleText(Consola(i).Texto, PCred(i), PCgreen(i), PCblue(i))
         End If
 
     Next i
@@ -2597,6 +2600,7 @@ Private Sub Form_Load()
    Else
    frmOpciones.RotaAura.Value = vbUnchecked
    End If
+   
 
 End Sub
 

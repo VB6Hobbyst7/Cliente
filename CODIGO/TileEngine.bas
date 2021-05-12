@@ -33,6 +33,21 @@ Attribute VB_Name = "Mod_TileEngine"
 
 Option Explicit
 
+Public OffSetConsola As Byte
+Public Const ComienzoY As Integer = 800
+Public UltimaLineavisible As Boolean
+Public Const MaxLineas As Byte = 6
+ 
+Type TConsola
+    T As String
+ '   Color As Long
+    R As Byte
+    G As Byte
+    B As Byte
+End Type
+ 
+Public Con(1 To MaxLineas) As TConsola
+
 Public Declare Function TransparentBlt _
                Lib "msimg32.dll" (ByVal hDCDest As Long, _
                                   ByVal nXOriginDest As Long, _
@@ -1206,18 +1221,18 @@ Function NextOpenChar() As Integer
     '*****************************************************************
     'Finds next open char slot in CharList
     '*****************************************************************
-    Dim loopc As Long
+    Dim loopC As Long
 
     Dim Dale  As Boolean
     
-    loopc = 1
+    loopC = 1
 
-    Do While charlist(loopc).ACTIVE And Dale
-        loopc = loopc + 1
-        Dale = (loopc <= UBound(charlist))
+    Do While charlist(loopC).ACTIVE And Dale
+        loopC = loopC + 1
+        Dale = (loopC <= UBound(charlist))
     Loop
     
-    NextOpenChar = loopc
+    NextOpenChar = loopC
 
 End Function
 
@@ -2159,8 +2174,8 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Light_Render_Area
 
     'Draw floor layer
-    For y = screenminY To screenmaxY
-        For x = screenminX To screenmaxX
+    For y = screenminY To screenmaxY + 10
+        For x = screenminX To screenmaxX + 10
         
 
             If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
@@ -2799,7 +2814,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
     End If
     FrameTime = (timeGetTime() And &H7FFFFFFF)
     If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
-   
+  
 End Sub
 
 ''*********************
@@ -3332,7 +3347,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             '    Call CleanViewPort
         Else
             Call RenderScreen(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
-
+            RenderConsola
         End If
 
         'End the rendering (scene)
@@ -4156,4 +4171,24 @@ Grh_Render_To_Hdc_Err:
    ' Call RegistrarError(Err.Number, Err.Description, "TileEngine.Grh_Render_To_Hdc", Erl)
     Resume Next
     
+End Sub
+
+Sub RenderConsola()
+Dim i As Byte
+ 
+If OffSetConsola > 0 Then OffSetConsola = OffSetConsola - 1
+If OffSetConsola = 0 Then UltimaLineavisible = True
+ 
+For i = 1 To MaxLineas - 1
+ 
+RenderText 300, ComienzoY + (i * 15) + OffSetConsola, Con(i).T, D3DColorRGBA(Con(i).R, Con(i).G, Con(i).B, i * (255 / MaxLineas))
+
+        
+Next i
+ 
+If UltimaLineavisible = True Then _
+RenderText 300, ComienzoY + (MaxLineas * 15) + OffSetConsola, Con(i).T, D3DColorRGBA(Con(MaxLineas).R, Con(MaxLineas).G, Con(i).B, 255)
+
+
+ 
 End Sub

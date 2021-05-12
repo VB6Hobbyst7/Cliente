@@ -34,8 +34,7 @@ Attribute VB_Name = "Protocol"
 
 Option Explicit
 
-
- 
+Private Const MAX_LENGTH   As Byte = 120
 
 
 Public NotEnoughData    As Boolean
@@ -985,7 +984,7 @@ Private Sub HandleCommerceInit()
         If Inventario.OBJIndex(i) <> 0 Then
 
             With Inventario
-                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
 
             End With
 
@@ -999,7 +998,7 @@ Private Sub HandleCommerceInit()
         If NPCInventory(i).OBJIndex <> 0 Then
 
             With NPCInventory(i)
-                Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
+                Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
             End With
 
@@ -1040,7 +1039,7 @@ Private Sub HandleBankInit()
     For i = 1 To Inventario.MaxObjs
 
         With Inventario
-            Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+            Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
 
         End With
 
@@ -1049,7 +1048,7 @@ Private Sub HandleBankInit()
     For i = 1 To MAX_BANCOINVENTORY_SLOTS
 
         With UserBancoInventory(i)
-            Call InvBanco(0).SetItem(i, .OBJIndex, .Amount, .Equipped, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
+            Call InvBanco(0).SetItem(i, .OBJIndex, .Amount, .Equipped, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
         End With
 
@@ -1158,7 +1157,7 @@ Private Sub HandleUserCommerceInit()
         If Inventario.OBJIndex(i) <> 0 Then
 
             With Inventario
-                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+                Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
 
             End With
 
@@ -2547,42 +2546,42 @@ End Sub
 
 Private Sub HandleConsoleMessage()
 
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 05/17/06
-    '
-    '***************************************************
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'
+'***************************************************
     If incomingData.Length < 4 Then
         NotEnoughData = True
         Exit Sub
 
     End If
-    
+
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim buffer As New clsByteQueue
 
     Call buffer.CopyBuffer(incomingData)
-    
+
     'Remove packet ID
     Call buffer.ReadByte
-    
-    Dim chat      As String
+
+    Dim chat As String
 
     Dim FontIndex As Integer
 
-    Dim str       As String
+    Dim str As String
 
-    Dim R         As Byte
+    Dim R As Byte
 
-    Dim G         As Byte
+    Dim G As Byte
 
-    Dim B         As Byte
-    
+    Dim B As Byte
+
     chat = buffer.ReadASCIIString()
     FontIndex = buffer.ReadByte()
-    
+
     If InStr(1, chat, "~") Then
         str = ReadField(2, chat, 126)
 
@@ -2592,7 +2591,7 @@ Private Sub HandleConsoleMessage()
             R = Val(str)
 
         End If
-            
+
         str = ReadField(3, chat, 126)
 
         If Val(str) > 255 Then
@@ -2601,7 +2600,7 @@ Private Sub HandleConsoleMessage()
             G = Val(str)
 
         End If
-            
+
         str = ReadField(4, chat, 126)
 
         If Val(str) > 255 Then
@@ -2610,38 +2609,58 @@ Private Sub HandleConsoleMessage()
             B = Val(str)
 
         End If
-            
+
         Call AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), R, G, B, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
 
         With FontTypes(FontIndex)
-            Call AddtoRichPicture(chat, .red, .green, .blue, .bold, .italic)
 
-        End With
+            Dim cantidad As Integer
+            Dim TEXTOX() As String
+            Dim j As Integer
+            TEXTOX = FormatChat(chat)
+            cantidad = UBound(TEXTOX())
+            If cantidad = 0 Then
+                'Call RenderTextCentered(.x, .y, Trim$(.textLine(0)), .color)
 
-    End If
-    
-    If mOpciones.ScreenShooterNivelSuperior = True Then
-        Call checkText(chat)
+                Call AddtoRichPicture(Trim$(TEXTOX(0)), .red, .green, .blue, .bold, .italic)
+            Else
 
-    End If
-    
-    'If we got here then packet is complete, copy data back to original queue
-    Call incomingData.CopyBuffer(buffer)
-    
+                For j = 0 To cantidad
+                    'Call RenderText(.x - 50, .y + offset, Trim$(.textLine(J)), .color)
+                    Call AddtoRichPicture(Trim$(TEXTOX(j)), .red, .green, .blue, .bold, .italic)
+                    'offset = offset + usedFont.Size + 5
+                Next j
+
+            End If
+
+
+        
+    End With
+
+End If
+
+If mOpciones.ScreenShooterNivelSuperior = True Then
+    Call checkText(chat)
+
+End If
+
+'If we got here then packet is complete, copy data back to original queue
+Call incomingData.CopyBuffer(buffer)
+
 ErrHandler:
 
-    Dim Error As Long
+Dim Error As Long
 
-    Error = err.Number
+Error = err.Number
 
-    On Error GoTo 0
-    
-    'Destroy auxiliar buffer
-    Set buffer = Nothing
+On Error GoTo 0
 
-    ' If error <> 0 Then _
-    '   Err.Raise error
+'Destroy auxiliar buffer
+Set buffer = Nothing
+
+' If error <> 0 Then _
+      '   Err.Raise error
 End Sub
 
 ''
@@ -3887,7 +3906,7 @@ Private Sub HandleChangeInventorySlot()
 
     Dim GrhIndex      As Integer
 
-    Dim ObjType       As Byte
+    Dim OBJType       As Byte
 
     Dim MaxHit        As Integer
 
@@ -3907,7 +3926,7 @@ Private Sub HandleChangeInventorySlot()
     Amount = buffer.ReadInteger()
     Equipped = buffer.ReadBoolean()
     GrhIndex = buffer.ReadInteger()
-    ObjType = buffer.ReadByte()
+    OBJType = buffer.ReadByte()
     MaxHit = buffer.ReadInteger()
     MinHit = buffer.ReadInteger()
     MinDef = buffer.ReadInteger()
@@ -3917,7 +3936,7 @@ Private Sub HandleChangeInventorySlot()
     
     If Equipped Then
 
-        Select Case ObjType
+        Select Case OBJType
 
             Case eObjType.otWeapon
                 frmMain.lblArma = MinHit & "/" & MaxHit
@@ -3939,9 +3958,9 @@ Private Sub HandleChangeInventorySlot()
 
     Else
 
-        If ObjType > 0 Then
+        If OBJType > 0 Then
 
-            Select Case ObjType
+            Select Case OBJType
 
                 Case eObjType.otWeapon
                     frmMain.lblArma = "N/A"
@@ -3965,7 +3984,7 @@ Private Sub HandleChangeInventorySlot()
 
     End If
     
-    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, ObjType, MaxHit, MinHit, MinDef, MaxDef, Value, Name, PuedeUsarItem)
+    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, OBJType, MaxHit, MinHit, MinDef, MaxDef, Value, Name, PuedeUsarItem)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(buffer)
@@ -4020,7 +4039,7 @@ Private Sub HandleChangeBankSlot()
         .Name = buffer.ReadASCIIString()
         .Amount = buffer.ReadInteger()
         .GrhIndex = buffer.ReadInteger()
-        .ObjType = buffer.ReadByte()
+        .OBJType = buffer.ReadByte()
         .MaxHit = buffer.ReadInteger()
         .MinHit = buffer.ReadInteger()
         .MaxDef = buffer.ReadInteger()
@@ -4029,7 +4048,7 @@ Private Sub HandleChangeBankSlot()
         .PuedeUsarItem = buffer.ReadByte()
         
         If Comerciando Then
-            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, .Equipped, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
+            Call InvBanco(0).SetItem(slot, .OBJIndex, .Amount, .Equipped, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
         End If
 
@@ -4181,20 +4200,20 @@ Private Sub HandleBlacksmithWeapons()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim count As Integer
+    Dim Count As Integer
 
     Dim i     As Long
 
-    Dim J     As Long
+    Dim j     As Long
 
     Dim k     As Long
     
-    count = buffer.ReadInteger()
+    Count = buffer.ReadInteger()
     
-    ReDim ArmasHerrero(count) As tItemsConstruibles
+    ReDim ArmasHerrero(Count) As tItemsConstruibles
     ReDim HerreroMejorar(0) As tItemsConstruibles
     
-    For i = 1 To count
+    For i = 1 To Count
 
         With ArmasHerrero(i)
             .Name = buffer.ReadASCIIString()    'Get the object's name
@@ -4216,32 +4235,32 @@ Private Sub HandleBlacksmithWeapons()
         Call InvLingosHerreria(3).Initialize(.picLingotes2, 0, 0, 3, False, , , , , , False)
         Call InvLingosHerreria(4).Initialize(.picLingotes3, 0, 0, 3, False, , , , , , False)
         
-        Call .HideExtraControls(count)
+        Call .HideExtraControls(Count)
         Call .RenderList(1, True)
 
     End With
     
-    For i = 1 To count
+    For i = 1 To Count
 
         With ArmasHerrero(i)
 
             If .Upgrade Then
 
-                For k = 1 To count
+                For k = 1 To Count
 
                     If .Upgrade = ArmasHerrero(k).OBJIndex Then
-                        J = J + 1
+                        j = j + 1
                 
-                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
                         
-                        HerreroMejorar(J).Name = .Name
-                        HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).OBJIndex = .OBJIndex
-                        HerreroMejorar(J).UpgradeName = ArmasHerrero(k).Name
-                        HerreroMejorar(J).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
-                        HerreroMejorar(J).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(J).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(J).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(j).Name = .Name
+                        HerreroMejorar(j).GrhIndex = .GrhIndex
+                        HerreroMejorar(j).OBJIndex = .OBJIndex
+                        HerreroMejorar(j).UpgradeName = ArmasHerrero(k).Name
+                        HerreroMejorar(j).UpgradeGrhIndex = ArmasHerrero(k).GrhIndex
+                        HerreroMejorar(j).LinH = ArmasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(j).LinP = ArmasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(j).LinO = ArmasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
 
@@ -4299,19 +4318,19 @@ Private Sub HandleBlacksmithArmors()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim count As Integer
+    Dim Count As Integer
 
     Dim i     As Long
 
-    Dim J     As Long
+    Dim j     As Long
 
     Dim k     As Long
     
-    count = buffer.ReadInteger()
+    Count = buffer.ReadInteger()
     
-    ReDim ArmadurasHerrero(count) As tItemsConstruibles
+    ReDim ArmadurasHerrero(Count) As tItemsConstruibles
     
-    For i = 1 To count
+    For i = 1 To Count
 
         With ArmadurasHerrero(i)
             .Name = buffer.ReadASCIIString()    'Get the object's name
@@ -4326,29 +4345,29 @@ Private Sub HandleBlacksmithArmors()
 
     Next i
     
-    J = UBound(HerreroMejorar)
+    j = UBound(HerreroMejorar)
     
-    For i = 1 To count
+    For i = 1 To Count
 
         With ArmadurasHerrero(i)
 
             If .Upgrade Then
 
-                For k = 1 To count
+                For k = 1 To Count
 
                     If .Upgrade = ArmadurasHerrero(k).OBJIndex Then
-                        J = J + 1
+                        j = j + 1
                 
-                        ReDim Preserve HerreroMejorar(J) As tItemsConstruibles
+                        ReDim Preserve HerreroMejorar(j) As tItemsConstruibles
                         
-                        HerreroMejorar(J).Name = .Name
-                        HerreroMejorar(J).GrhIndex = .GrhIndex
-                        HerreroMejorar(J).OBJIndex = .OBJIndex
-                        HerreroMejorar(J).UpgradeName = ArmadurasHerrero(k).Name
-                        HerreroMejorar(J).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
-                        HerreroMejorar(J).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
-                        HerreroMejorar(J).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
-                        HerreroMejorar(J).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
+                        HerreroMejorar(j).Name = .Name
+                        HerreroMejorar(j).GrhIndex = .GrhIndex
+                        HerreroMejorar(j).OBJIndex = .OBJIndex
+                        HerreroMejorar(j).UpgradeName = ArmadurasHerrero(k).Name
+                        HerreroMejorar(j).UpgradeGrhIndex = ArmadurasHerrero(k).GrhIndex
+                        HerreroMejorar(j).LinH = ArmadurasHerrero(k).LinH - .LinH * 0.85
+                        HerreroMejorar(j).LinP = ArmadurasHerrero(k).LinP - .LinP * 0.85
+                        HerreroMejorar(j).LinO = ArmadurasHerrero(k).LinO - .LinO * 0.85
                         
                         Exit For
 
@@ -4406,20 +4425,20 @@ Private Sub HandleCarpenterObjects()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim count As Integer
+    Dim Count As Integer
 
     Dim i     As Long
 
-    Dim J     As Long
+    Dim j     As Long
 
     Dim k     As Long
     
-    count = buffer.ReadInteger()
+    Count = buffer.ReadInteger()
     
-    ReDim ObjCarpintero(count) As tItemsConstruibles
+    ReDim ObjCarpintero(Count) As tItemsConstruibles
     ReDim CarpinteroMejorar(0) As tItemsConstruibles
     
-    For i = 1 To count
+    For i = 1 To Count
 
         With ObjCarpintero(i)
             .Name = buffer.ReadASCIIString()        'Get the object's name
@@ -4440,31 +4459,31 @@ Private Sub HandleCarpenterObjects()
         Call InvMaderasCarpinteria(3).Initialize(.picMaderas2, 0, 0, 2, False, , , , , , False)
         Call InvMaderasCarpinteria(4).Initialize(.picMaderas3, 0, 0, 2, False, , , , , , False)
         
-        Call .HideExtraControls(count)
+        Call .HideExtraControls(Count)
         Call .RenderList(1)
 
     End With
     
-    For i = 1 To count
+    For i = 1 To Count
 
         With ObjCarpintero(i)
 
             If .Upgrade Then
 
-                For k = 1 To count
+                For k = 1 To Count
 
                     If .Upgrade = ObjCarpintero(k).OBJIndex Then
-                        J = J + 1
+                        j = j + 1
                 
-                        ReDim Preserve CarpinteroMejorar(J) As tItemsConstruibles
+                        ReDim Preserve CarpinteroMejorar(j) As tItemsConstruibles
                         
-                        CarpinteroMejorar(J).Name = .Name
-                        CarpinteroMejorar(J).GrhIndex = .GrhIndex
-                        CarpinteroMejorar(J).OBJIndex = .OBJIndex
-                        CarpinteroMejorar(J).UpgradeName = ObjCarpintero(k).Name
-                        CarpinteroMejorar(J).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
-                        CarpinteroMejorar(J).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
-                        CarpinteroMejorar(J).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
+                        CarpinteroMejorar(j).Name = .Name
+                        CarpinteroMejorar(j).GrhIndex = .GrhIndex
+                        CarpinteroMejorar(j).OBJIndex = .OBJIndex
+                        CarpinteroMejorar(j).UpgradeName = ObjCarpintero(k).Name
+                        CarpinteroMejorar(j).UpgradeGrhIndex = ObjCarpintero(k).GrhIndex
+                        CarpinteroMejorar(j).Madera = ObjCarpintero(k).Madera - .Madera * 0.85
+                        CarpinteroMejorar(j).MaderaElfica = ObjCarpintero(k).MaderaElfica - .MaderaElfica * 0.85
                         
                         Exit For
 
@@ -4682,7 +4701,7 @@ Private Sub HandleChangeNPCInventorySlot()
         .Valor = buffer.ReadSingle()
         .GrhIndex = buffer.ReadInteger()
         .OBJIndex = buffer.ReadInteger()
-        .ObjType = buffer.ReadByte()
+        .OBJType = buffer.ReadByte()
         .MaxHit = buffer.ReadInteger()
         .MinHit = buffer.ReadInteger()
         .MaxDef = buffer.ReadInteger()
@@ -5955,7 +5974,7 @@ Private Sub HandleTradeOK()
             If Inventario.OBJIndex(i) <> InvComUsu.OBJIndex(i) Then
 
                 With Inventario
-                    Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
+                    Call InvComUsu.SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), .PuedeUsarItem(i))
 
                 End With
 
@@ -5974,7 +5993,7 @@ Private Sub HandleTradeOK()
             If NPCInventory(i).OBJIndex <> InvComNpc.OBJIndex(i) Then
 
                 With NPCInventory(i)
-                    Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .ObjType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
+                    Call InvComNpc.SetItem(i, .OBJIndex, .Amount, 0, .GrhIndex, .OBJType, .MaxHit, .MinHit, .MaxDef, .MinDef, .Valor, .Name, .PuedeUsarItem)
 
                 End With
 
@@ -6009,7 +6028,7 @@ Private Sub HandleBankOK()
         For i = 1 To Inventario.MaxObjs
 
             With Inventario
-                Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .ObjType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), 0)
+                Call InvBanco(1).SetItem(i, .OBJIndex(i), .Amount(i), .Equipped(i), .GrhIndex(i), .OBJType(i), .MaxHit(i), .MinHit(i), .MaxDef(i), .MinDef(i), .Valor(i), .ItemName(i), 0)
 
             End With
 
@@ -12969,7 +12988,7 @@ Public Sub HandleNpcQuestListSend()
 
     Dim i             As Integer
     
-    Dim J             As Byte
+    Dim j             As Byte
     
     Dim cantidadnpc   As Integer
 
@@ -13003,7 +13022,7 @@ Public Sub HandleNpcQuestListSend()
             CantidadQuest = .ReadByte
         
             
-            For J = 1 To CantidadQuest
+            For j = 1 To CantidadQuest
         
                 QuestIndex = .ReadInteger
             
@@ -13159,7 +13178,7 @@ Public Sub HandleNpcQuestListSend()
                 
                 End Select
                 
-            Next J
+            Next j
         
         
 
@@ -13251,16 +13270,16 @@ On Error GoTo err
             .aura(parte).G = Auras(aura1).G
             .aura(parte).B = Auras(aura1).B
             .aura(parte).Giratoria = Auras(aura1).Giratoria
-            .aura(parte).OffSetX = Auras(aura1).OffSetX
-            .aura(parte).OffSetY = Auras(aura1).OffSetY
+            .aura(parte).OFFSETX = Auras(aura1).OFFSETX
+            .aura(parte).OFFSETY = Auras(aura1).OFFSETY
         Else
             .aura(parte).AuraGrh = 0
             .aura(parte).R = 0
             .aura(parte).G = 0
             .aura(parte).B = 0
             .aura(parte).Giratoria = 0
-            .aura(parte).OffSetX = 0
-            .aura(parte).OffSetY = 0
+            .aura(parte).OFFSETX = 0
+            .aura(parte).OFFSETY = 0
         End If
         .aura(parte).color = D3DColorXRGB(.aura(parte).R, .aura(parte).G, .aura(parte).B)
     End With
@@ -13412,3 +13431,86 @@ ErrHandler:
 
 End Sub
 
+
+
+Private Function FormatChat(ByRef chat As String) As String()
+
+    '**************************************************************
+    'Author: Juan Martín Sotuyo Dodero
+    'Last Modify Date: 07/28/07
+    'Formats a dialog into different text lines.
+    '**************************************************************
+    Dim word        As String
+
+    Dim curPos      As Long
+
+    Dim Length      As Long
+
+    Dim acumLength  As Long
+
+    Dim lineLength  As Long
+
+    Dim wordLength  As Long
+
+    Dim curLine     As Long
+
+    Dim chatLines() As String
+    
+    'Initialize variables
+    curLine = 0
+    curPos = 1
+    Length = Len(chat)
+    acumLength = 0
+    lineLength = -1
+    
+    ReDim chatLines(FieldCount(chat, 32)) As String
+    
+    'Start formating
+    Do While acumLength < Length
+        word = Trim(ReadField(curPos, chat, 32))
+        
+        wordLength = Len(word)
+        
+        ' Is the first word of the first line? (it's the only that can start at -1)
+        If lineLength = -1 Then
+            chatLines(curLine) = word
+            
+            lineLength = wordLength
+            acumLength = wordLength
+        Else
+
+            ' Is the word too long to fit in this line?
+            If lineLength + wordLength + 1 > MAX_LENGTH Then
+                'Put it in the next line
+                curLine = curLine + 1
+                chatLines(curLine) = word
+                
+                lineLength = wordLength
+            Else
+                'Add it to this line
+                chatLines(curLine) = chatLines(curLine) & " " & word
+                
+                lineLength = lineLength + wordLength + 1
+
+            End If
+            
+            acumLength = acumLength + wordLength + 1
+
+        End If
+        
+        'Increase to search for next word
+        curPos = curPos + 1
+    Loop
+    
+    ' If it's only one line, center text
+    If curLine = 0 And Length < MAX_LENGTH Then
+        chatLines(curLine) = String((MAX_LENGTH - Length) \ 2 + 1, " ") & chatLines(curLine)
+
+    End If
+    
+    'Resize array to fit
+    ReDim Preserve chatLines(curLine) As String
+    
+    FormatChat = chatLines
+
+End Function

@@ -273,6 +273,7 @@ Private Function FormatChat(ByRef chat As String) As String()
     Length = Len(chat)
     acumLength = 0
     lineLength = -1
+    
     ReDim chatLines(FieldCount(chat, 32)) As String
     
     'Start formating
@@ -370,7 +371,7 @@ Public Sub Render()
     '**************************************************************
     Dim i              As Long
 
-    Dim J              As Long
+    Dim j              As Long
 
     Dim offset         As Integer
 
@@ -411,10 +412,10 @@ Public Sub Render()
                     Call RenderTextCentered(.x, .y, Trim$(.textLine(0)), .color)
                 Else
 
-                    For J = 0 To cantidad
-                        Call RenderText(.x - 50, .y + offset, Trim$(.textLine(J)), .color)
+                    For j = 0 To cantidad
+                        Call RenderText(.x - 50, .y + offset, Trim$(.textLine(j)), .color)
                         offset = offset + usedFont.Size + 5
-                    Next J
+                    Next j
 
                 End If
                 
