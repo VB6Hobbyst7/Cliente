@@ -6,10 +6,10 @@ Begin VB.Form frmMain
    BackColor       =   &H80000005&
    BorderStyle     =   0  'None
    Caption         =   "AoYind 3"
-   ClientHeight    =   11730
+   ClientHeight    =   11880
    ClientLeft      =   0
    ClientTop       =   555
-   ClientWidth     =   15360
+   ClientWidth     =   16620
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -23,9 +23,9 @@ Begin VB.Form frmMain
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    Picture         =   "frmMainN.frx":0CCA
-   ScaleHeight     =   782
+   ScaleHeight     =   792
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   1024
+   ScaleWidth      =   1108
    StartUpPosition =   2  'CenterScreen
    Begin VB.PictureBox picHechiz 
       Appearance      =   0  'Flat
@@ -38,15 +38,43 @@ Begin VB.Form frmMain
       DrawStyle       =   3  'Dash-Dot
       ForeColor       =   &H00FFFFFF&
       Height          =   3416
-      Left            =   12360
+      Left            =   15000
       MousePointer    =   99  'Custom
       ScaleHeight     =   228
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   156
       TabIndex        =   10
-      Top             =   3041
+      Top             =   3720
       Visible         =   0   'False
       Width           =   2340
+   End
+   Begin VB.PictureBox imgMiniMapa 
+      BorderStyle     =   0  'None
+      Height          =   1498
+      Left            =   11640
+      ScaleHeight     =   1500
+      ScaleMode       =   0  'User
+      ScaleWidth      =   1100
+      TabIndex        =   25
+      Top             =   75
+      Visible         =   0   'False
+      Width           =   1500
+      Begin VB.Shape shpMiniMapaUser 
+         BackColor       =   &H000000FF&
+         BackStyle       =   1  'Opaque
+         BorderColor     =   &H000000C0&
+         FillColor       =   &H000000FF&
+         Height          =   45
+         Left            =   695
+         Top             =   750
+         Width           =   45
+      End
+      Begin VB.Shape shpMiniMapaVision 
+         Height          =   315
+         Left            =   520
+         Top             =   614
+         Width           =   375
+      End
    End
    Begin VB.PictureBox picarmadura 
       Appearance      =   0  'Flat
@@ -149,34 +177,6 @@ Begin VB.Form frmMain
       Left            =   9600
       Top             =   240
    End
-   Begin VB.PictureBox imgMiniMapa 
-      BorderStyle     =   0  'None
-      Height          =   1498
-      Left            =   11640
-      ScaleHeight     =   1500
-      ScaleMode       =   0  'User
-      ScaleWidth      =   1100
-      TabIndex        =   25
-      Top             =   75
-      Visible         =   0   'False
-      Width           =   1500
-      Begin VB.Shape shpMiniMapaUser 
-         BackColor       =   &H000000FF&
-         BackStyle       =   1  'Opaque
-         BorderColor     =   &H000000C0&
-         FillColor       =   &H000000FF&
-         Height          =   45
-         Left            =   695
-         Top             =   750
-         Width           =   45
-      End
-      Begin VB.Shape shpMiniMapaVision 
-         Height          =   315
-         Left            =   520
-         Top             =   614
-         Width           =   375
-      End
-   End
    Begin VB.TextBox SendTxt 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -192,13 +192,13 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00E0E0E0&
       Height          =   240
-      Left            =   240
+      Left            =   720
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   3
       TabStop         =   0   'False
       ToolTipText     =   "Chat"
-      Top             =   1513
+      Top             =   10995
       Visible         =   0   'False
       Width           =   11820
    End
@@ -291,13 +291,13 @@ Begin VB.Form frmMain
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar bar_salud 
-      Height          =   225
-      Left            =   720
+      Height          =   180
+      Left            =   3270
       TabIndex        =   32
-      Top             =   360
-      Width           =   2370
-      _ExtentX        =   4180
-      _ExtentY        =   397
+      Top             =   555
+      Width           =   1860
+      _ExtentX        =   3281
+      _ExtentY        =   318
       BorderStyle     =   0
       CaptionType     =   2
       Value           =   50
@@ -318,13 +318,13 @@ Begin VB.Form frmMain
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar Bar_Mana 
-      Height          =   225
-      Left            =   720
+      Height          =   180
+      Left            =   3270
       TabIndex        =   33
-      Top             =   720
-      Width           =   2370
-      _ExtentX        =   4180
-      _ExtentY        =   397
+      Top             =   840
+      Width           =   1875
+      _ExtentX        =   3307
+      _ExtentY        =   318
       BorderStyle     =   0
       CaptionType     =   2
       Value           =   50
@@ -345,13 +345,13 @@ Begin VB.Form frmMain
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar bar_sta 
-      Height          =   225
-      Left            =   12420
+      Height          =   105
+      Left            =   3270
       TabIndex        =   34
-      Top             =   9960
-      Width           =   2370
-      _ExtentX        =   4180
-      _ExtentY        =   397
+      Top             =   1140
+      Width           =   1890
+      _ExtentX        =   3334
+      _ExtentY        =   185
       BorderStyle     =   0
       CaptionType     =   2
       Value           =   50
@@ -436,7 +436,7 @@ Begin VB.Form frmMain
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   1024
       TabIndex        =   4
-      Top             =   0
+      Top             =   -360
       Width           =   15360
       Begin VB.PictureBox pConsola 
          Appearance      =   0  'Flat
@@ -639,6 +639,37 @@ Begin VB.Form frmMain
          Visible         =   0   'False
          Width           =   2700
       End
+      Begin VB.Label Label1 
+         BackStyle       =   0  'Transparent
+         Caption         =   "LVL"
+         ForeColor       =   &H000000FF&
+         Height          =   495
+         Left            =   3720
+         TabIndex        =   44
+         Top             =   1560
+         Width           =   1095
+      End
+   End
+   Begin VB.Label LvlLbl 
+      Alignment       =   2  'Center
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "55"
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00FFFFFF&
+      Height          =   345
+      Left            =   3000
+      TabIndex        =   8
+      Top             =   3900
+      Width           =   360
    End
    Begin VB.Label QuestBoton 
       BackStyle       =   0  'Transparent
@@ -914,27 +945,6 @@ Begin VB.Form frmMain
       Left            =   15120
       Top             =   0
       Width           =   375
-   End
-   Begin VB.Label LvlLbl 
-      Alignment       =   2  'Center
-      AutoSize        =   -1  'True
-      BackStyle       =   0  'Transparent
-      Caption         =   "55"
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   14.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H00FFFFFF&
-      Height          =   345
-      Left            =   12660
-      TabIndex        =   8
-      Top             =   1155
-      Width           =   360
    End
    Begin VB.Image cmdMoverHechi 
       Height          =   375

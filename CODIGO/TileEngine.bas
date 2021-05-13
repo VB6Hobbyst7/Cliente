@@ -34,7 +34,7 @@ Attribute VB_Name = "Mod_TileEngine"
 Option Explicit
 
 Public OffSetConsola As Byte
-Public Const ComienzoY As Integer = 800
+Public Const ComienzoY As Integer = 860
 Public UltimaLineavisible As Boolean
 Public Const MaxLineas As Byte = 6
  
@@ -499,7 +499,7 @@ Private Declare Function BitBlt _
 'Text width computation. Needed to center text.
 Private Declare Function GetTextExtentPoint32 _
                 Lib "gdi32" _
-                Alias "GetTextExtentPoint32A" (ByVal hDC As Long, _
+                Alias "GetTextExtentPoint32A" (ByVal hdc As Long, _
                                                ByVal lpsz As String, _
                                                ByVal cbString As Long, _
                                                lpSize As Size) As Long
@@ -1221,18 +1221,18 @@ Function NextOpenChar() As Integer
     '*****************************************************************
     'Finds next open char slot in CharList
     '*****************************************************************
-    Dim loopC As Long
+    Dim loopc As Long
 
     Dim Dale  As Boolean
     
-    loopC = 1
+    loopc = 1
 
-    Do While charlist(loopC).ACTIVE And Dale
-        loopC = loopC + 1
-        Dale = (loopC <= UBound(charlist))
+    Do While charlist(loopc).ACTIVE And Dale
+        loopc = loopc + 1
+        Dale = (loopc <= UBound(charlist))
     Loop
     
-    NextOpenChar = loopC
+    NextOpenChar = loopc
 
 End Function
 
@@ -1251,34 +1251,34 @@ Private Function LoadGrhData() As Boolean
 
     Dim grhCount    As Long
 
-    Dim Handle      As Integer
+    Dim handle      As Integer
 
     Dim fileVersion As Long
     
     'Open files
-    Handle = FreeFile()
+    handle = FreeFile()
     
-    Open IniPath & GraphicsFile For Binary Access Read As Handle
+    Open IniPath & GraphicsFile For Binary Access Read As handle
     Seek #1, 1
     
     'Get file version
-    Get Handle, , fileVersion
+    Get handle, , fileVersion
     
     'Get number of grhs
-    Get Handle, , grhCount
+    Get handle, , grhCount
     
     'Resize arrays
     ReDim GrhData(1 To grhCount) As GrhData
     
-    While Not EOF(Handle)
+    While Not EOF(handle)
 
-        Get Handle, , Grh
+        Get handle, , Grh
 
         If Grh > 0 Then
 
             With GrhData(Grh)
                 'Get number of frames
-                Get Handle, , .NumFrames
+                Get handle, , .NumFrames
 
                 If .NumFrames <= 0 Then GoTo ErrorHandler
             
@@ -1288,7 +1288,7 @@ Private Function LoadGrhData() As Boolean
 
                     'Read a animation GRH set
                     For Frame = 1 To .NumFrames
-                        Get Handle, , .Frames(Frame)
+                        Get handle, , .Frames(Frame)
 
                         If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then
                             GoTo ErrorHandler
@@ -1297,7 +1297,7 @@ Private Function LoadGrhData() As Boolean
 
                     Next Frame
                 
-                    Get Handle, , .Speed
+                    Get handle, , .Speed
                 
                     If .Speed <= 0 Then GoTo ErrorHandler
                 
@@ -1315,23 +1315,23 @@ Private Function LoadGrhData() As Boolean
                     'If .TileHeight <= 0 Then GoTo ErrorHandler
                 Else
                     'Read in normal GRH data
-                    Get Handle, , .FileNum
+                    Get handle, , .FileNum
 
                     If .FileNum <= 0 Then GoTo ErrorHandler
                 
-                    Get Handle, , GrhData(Grh).sX
+                    Get handle, , GrhData(Grh).sX
 
                     If .sX < 0 Then GoTo ErrorHandler
                 
-                    Get Handle, , .sY
+                    Get handle, , .sY
 
                     If .sY < 0 Then GoTo ErrorHandler
                 
-                    Get Handle, , .PixelWidth
+                    Get handle, , .PixelWidth
 
                     If .PixelWidth <= 0 Then GoTo ErrorHandler
                 
-                    Get Handle, , .PixelHeight
+                    Get handle, , .PixelHeight
 
                     If .PixelHeight <= 0 Then GoTo ErrorHandler
                 
@@ -1349,7 +1349,7 @@ Private Function LoadGrhData() As Boolean
 
     Wend
     
-    Close Handle
+    Close handle
     
     LoadGrhData = True
     Exit Function
@@ -1591,11 +1591,11 @@ Sub DrawGrhLuz(ByRef Grh As Grh, _
 
 Error:
 
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
         End
 
     End If
@@ -1695,11 +1695,11 @@ Sub DrawGrhShadow(ByRef Grh As Grh, _
 
 Error:
 
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
         End
 
     End If
@@ -1761,11 +1761,11 @@ Sub DrawGrhShadowOff(ByRef Grh As Grh, _
 
 Error:
 
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
         End
 
     End If
@@ -1854,11 +1854,11 @@ Sub DrawGrh(ByRef Grh As Grh, _
 
 Error:
 
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
         End
 
     End If
@@ -1937,7 +1937,7 @@ Function GetBitmapDimensions(ByVal BmpFile As String, _
 
 End Function
 
-Sub DrawGrhtoHdc(ByVal hDC As Long, _
+Sub DrawGrhtoHdc(ByVal hdc As Long, _
                  ByVal GrhIndex As Integer, _
                  ByRef SourceRect As RECT, _
                  ByRef destRect As RECT)
@@ -1945,7 +1945,7 @@ Sub DrawGrhtoHdc(ByVal hDC As Long, _
     'Draws a Grh's portion to the given area of any Device Context
     '*****************************************************************
     'Call SurfaceDB.Surface(GrhData(GrhIndex).FileNum).BltToDC(hDC, SourceRect, destRect)
-    Call TransparentBlt(hDC, 0, 0, 32, 32, Inventario.Grafico(GrhData(GrhIndex).FileNum), 0, 0, 32, 32, vbMagenta)
+    Call TransparentBlt(hdc, 0, 0, 32, 32, Inventario.Grafico(GrhData(GrhIndex).FileNum), 0, 0, 32, 32, vbMagenta)
 
 End Sub
 
@@ -2223,7 +2223,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Dim mNPCMuerto As clsNPCMuerto
 
     Eliminados = 0
-    Cant = NPCMuertos.count
+    Cant = NPCMuertos.Count
 
     For i = 1 To Cant
         Set mNPCMuerto = NPCMuertos(i - Eliminados)
@@ -2345,7 +2345,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Dim mTooltip As clsToolTip
 
     Eliminados = 0
-    Cant = Tooltips.count
+    Cant = Tooltips.Count
 
     For i = 1 To Cant
         Set mTooltip = Tooltips(i - Eliminados)
@@ -2814,7 +2814,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
     End If
     FrameTime = (timeGetTime() And &H7FFFFFFF)
     If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
-  
+         Call Engine_Render_Rectangle(400, 270, 205, 80, 0, 0, 205, 80, , , 0, 14937)
+                               Call Engine_Render_Rectangle(400, 270, 205, 80, 0, 0, 205, 80, , , 0, 14936)
+                            
+                      Call DrawFont(CStr(UserLvl), 451, 328, D3DColorRGBA(255, 255, 0, 160))
 End Sub
 
 ''*********************
@@ -3969,7 +3972,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffSetX As Int
 '****************************************************
 ' Renderizamos el char reflejado en el agua
 '****************************************************
-    On Error GoTo err
+    On Error GoTo Err
     With charlist(CharIndex)
     
         Movement_Speed = 0.5
@@ -4061,7 +4064,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffSetX As Int
         End If
         
     End With
-err:
+Err:
 End Sub
 
 
@@ -4127,7 +4130,7 @@ On Error GoTo Error
 Exit Sub
 
 Error:
-    If err.Number = 9 And Grh.FrameCounter < 1 Then
+    If Err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
@@ -4138,7 +4141,7 @@ Error:
 End Sub
 
 
-Public Sub Grh_Render_To_Hdc(ByRef pic As PictureBox, ByVal GrhIndex As Long, ByVal screen_x As Integer, ByVal screen_y As Integer, Optional ByVal Alpha As Integer = False, Optional ByVal ClearColor As Long = &O0)
+Public Sub Grh_Render_To_Hdc(ByRef Pic As PictureBox, ByVal GrhIndex As Long, ByVal screen_x As Integer, ByVal screen_y As Integer, Optional ByVal Alpha As Integer = False, Optional ByVal ClearColor As Long = &O0)
     
     On Error GoTo Grh_Render_To_Hdc_Err
     
@@ -4151,8 +4154,8 @@ Public Sub Grh_Render_To_Hdc(ByRef pic As PictureBox, ByVal GrhIndex As Long, By
         .Left = 0
         .Top = 0
 
-        .Bottom = pic.ScaleHeight
-        .Right = pic.ScaleWidth
+        .Bottom = Pic.ScaleHeight
+        .Right = Pic.ScaleWidth
 
     End With
 
@@ -4162,7 +4165,7 @@ Public Sub Grh_Render_To_Hdc(ByRef pic As PictureBox, ByVal GrhIndex As Long, By
     DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255)
     
    Call D3DDevice.EndScene
-    Call D3DDevice.Present(Picture, ByVal 0, pic.hwnd, ByVal 0)
+    Call D3DDevice.Present(Picture, ByVal 0, Pic.hwnd, ByVal 0)
     
     
     Exit Sub
