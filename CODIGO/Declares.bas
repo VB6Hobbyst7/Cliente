@@ -324,7 +324,7 @@ Public Type tColor
 
     R As Byte
     G As Byte
-    b As Byte
+    B As Byte
 
 End Type
 
@@ -494,7 +494,7 @@ End Enum
 
 Public Enum eSkill
 
-    Magia = 1
+    magia = 1
     Robar = 2
     Tacticas = 3
     Armas = 4
@@ -1182,8 +1182,8 @@ Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 Public Const SW_SHOWNORMAL As Long = 1
 
 Public Declare Function ShellExecute _
-               Lib "Shell32.dll" _
-               Alias "ShellExecuteA" (ByVal hWnd As Long, _
+               Lib "shell32.dll" _
+               Alias "ShellExecuteA" (ByVal hwnd As Long, _
                                       ByVal lpOperation As String, _
                                       ByVal lpFile As String, _
                                       ByVal lpParameters As String, _
@@ -1328,3 +1328,6 @@ Public Function EsNPC(ByVal CharIndex As Integer) As Boolean
     EsNPC = False
 End If
 End Function
+
+
+

@@ -68,22 +68,22 @@ Private WithEvents InventoryWindow As PictureBox    'Placeholder where to render
 Attribute InventoryWindow.VB_VarHelpID = -1
     
 Private Declare Function SelectObject _
-                Lib "gdi32.dll" (ByVal hdc As Long, _
+                Lib "gdi32.dll" (ByVal hDC As Long, _
                                  ByVal hObject As Long) As Long
 
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 
-Private Declare Function CreateCompatibleDC Lib "gdi32.dll" (ByVal hdc As Long) As Long
+Private Declare Function CreateCompatibleDC Lib "gdi32.dll" (ByVal hDC As Long) As Long
 
-Private Declare Function DeleteDC Lib "gdi32.dll" (ByVal hdc As Long) As Long
+Private Declare Function DeleteDC Lib "gdi32.dll" (ByVal hDC As Long) As Long
 
 Private Declare Function CreateCompatibleBitmap _
-                Lib "gdi32.dll" (ByVal hdc As Long, _
+                Lib "gdi32.dll" (ByVal hDC As Long, _
                                  ByVal nWidth As Long, _
                                  ByVal nHeight As Long) As Long
 
 Private Declare Function FillRect _
-                Lib "user32" (ByVal hdc As Long, _
+                Lib "user32" (ByVal hDC As Long, _
                               lppvRECT As pvRECT, _
                               ByVal hBrush As Long) As Long
 
@@ -97,9 +97,9 @@ Private Graficos             As Dictionary
 
 Private FONDO                As Long
 
-Public OFFSETX               As Integer
+Public OffSetX               As Integer
 
-Public OFFSETY               As Integer
+Public OffSetY               As Integer
 
 Public DropX                 As Integer
 
@@ -122,11 +122,11 @@ Private Sub Class_Terminate()
     'Last Modify Date: 27/07/04
     '
     '***************************************************
-    Dim i As Integer
+    Dim I As Integer
 
-    For i = 1 To Graficos.Count
-        DeleteDC (Graficos(i))
-    Next i
+    For I = 1 To Graficos.count
+        DeleteDC (Graficos(I))
+    Next I
 
     If FONDO <> 0 Then
         DeleteDC (FONDO)
@@ -325,13 +325,13 @@ Public Property Get OBJIndex(ByVal slot As Byte) As Integer
 
 End Property
 
-Public Property Get OBJType(ByVal slot As Byte) As Integer
+Public Property Get ObjType(ByVal slot As Byte) As Integer
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
     'Last Modify Date: 27/07/04
     'Retrieves the selected item's object type
     '***************************************************
-    OBJType = Inventory(slot).OBJType
+    ObjType = Inventory(slot).ObjType
 
 End Property
 
@@ -341,7 +341,7 @@ Public Property Get ItemName(ByVal slot As Byte) As String
     'Last Modify Date: 27/07/04
     'Retrieves the selected item's name
     '***************************************************
-    ItemName = Inventory(slot).name
+    ItemName = Inventory(slot).Name
 
 End Property
 
@@ -434,9 +434,9 @@ Public Sub SetItem(ByVal slot As Byte, _
         .GrhIndex = eGrhIndex
         .MaxHit = eMaxHit
         .MinHit = eMinHit
-        .name = eName
+        .Name = eName
         .OBJIndex = eOBJIndex
-        .OBJType = eObjType
+        .ObjType = eObjType
         .Valor = eValor
         .PuedeUsarItem = ePuedeUsarItem
 
@@ -464,11 +464,11 @@ Public Function ClickItem(ByVal x As Long, ByVal y As Long) As Long
 
     Dim temp_y   As Long
 
-    If y >= OFFSETY And x >= OFFSETX Then
-        temp_x = (x - OFFSETX) \ ownTilePixelWidth
-        temp_y = (y - OFFSETY) \ ownTilePixelHeight
+    If y >= OffSetY And x >= OffSetX Then
+        temp_x = (x - OffSetX) \ ownTilePixelWidth
+        temp_y = (y - OffSetY) \ ownTilePixelHeight
         
-        TempItem = temp_x + (temp_y + InventoryOffset) * ((InventoryWindow.ScaleWidth - OFFSETX) \ ownTilePixelWidth) + 1
+        TempItem = temp_x + (temp_y + InventoryOffset) * ((InventoryWindow.ScaleWidth - OffSetX) \ ownTilePixelWidth) + 1
         
         'Make sure it's within limits
         If TempItem <= UBound(Inventory) Then
@@ -498,7 +498,7 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
 
     On Error Resume Next
 
-    Dim SrcRect     As RECT
+    Dim srcRect     As RECT
 
     Dim TempRect    As RECT
 
@@ -524,8 +524,8 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
     If slot < upperLeftSlot Then Exit Sub
     
     With destRect
-        .Top = ((slot - upperLeftSlot) \ ((InventoryWindow.ScaleWidth - OFFSETX) \ ownTilePixelWidth)) * ownTilePixelHeight + OFFSETY
-        .Left = ((slot - 1) Mod ((InventoryWindow.ScaleWidth - OFFSETX) \ ownTilePixelWidth)) * ownTilePixelWidth + OFFSETX
+        .Top = ((slot - upperLeftSlot) \ ((InventoryWindow.ScaleWidth - OffSetX) \ ownTilePixelWidth)) * ownTilePixelHeight + OffSetY
+        .Left = ((slot - 1) Mod ((InventoryWindow.ScaleWidth - OffSetX) \ ownTilePixelWidth)) * ownTilePixelWidth + OffSetX
         .Bottom = ownTilePixelHeight
         .Right = ownTilePixelWidth
 
@@ -534,16 +534,16 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
     'Clear the slot area
     'Call InvSurface.BltColorFill(TempRect, InventoryWindow.BackColor)
     If EsMain Then
-        Call TransparentBlt(InventoryWindow.hdc, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, vbRed)
+        Call TransparentBlt(InventoryWindow.hDC, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, vbRed)
     Else
-        Call TransparentBlt(InventoryWindow.hdc, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, 0, 0, 32, 32, vbRed)
+        Call TransparentBlt(InventoryWindow.hDC, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, 0, 0, 32, 32, vbRed)
 
     End If
     
     If Inventory(slot).GrhIndex Then
      
         'Get source rect
-        With SrcRect
+        With srcRect
             .Left = GrhData(Inventory(slot).GrhIndex).sX
             .Top = GrhData(Inventory(slot).GrhIndex).sY
             .Right = .Left + TilePixelWidth
@@ -555,7 +555,7 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
             
         BufferBMP = Grafico(fileIndex)
         
-        Call TransparentBlt(InventoryWindow.hdc, destRect.Left, destRect.Top, destRect.Right, destRect.Bottom, BufferBMP, SrcRect.Left, SrcRect.Top, SrcRect.Right, SrcRect.Bottom, ColorTransparente)
+        Call TransparentBlt(InventoryWindow.hDC, destRect.Left, destRect.Top, destRect.Right, destRect.Bottom, BufferBMP, srcRect.Left, srcRect.Top, srcRect.Right, srcRect.Bottom, ColorTransparente)
             
         If ShowValue Then
             'Render the item grh and the amount
@@ -654,7 +654,7 @@ Public Sub Initialize(ByRef InvPic As PictureBox, _
 
     Dim Ifnt As IFont
     
-    font.name = "Verdana"
+    font.Name = "Verdana"
     font.bold = True
     font.italic = False
     font.Size = FontSize
@@ -667,12 +667,12 @@ Public Sub Initialize(ByRef InvPic As PictureBox, _
     
     InventoryWindow.Cls
     
-    FONDO = CreateCompatibleDC(InventoryWindow.hdc)
+    FONDO = CreateCompatibleDC(InventoryWindow.hDC)
 
     EsMain = bEsMain
 
     If EsMain Then
-        Call SelectObject(FONDO, LoadPictureEX("VentanaPrincipalInv.jpg").handle)
+        Call SelectObject(FONDO, LoadPictureEX("VentanaPrincipalInv.jpg").Handle)
     Else
         Call SelectObject(FONDO, Grafico(1))
 
@@ -682,7 +682,7 @@ Public Sub Initialize(ByRef InvPic As PictureBox, _
 
         R.Bottom = 32
         R.Right = 32
-        TmpBMP = CreateCompatibleBitmap(InventoryWindow.hdc, 32, 32)
+        TmpBMP = CreateCompatibleBitmap(InventoryWindow.hDC, 32, 32)
         SelectObject FONDO, TmpBMP
         
         hBr = CreateSolidBrush(&H0)
@@ -691,8 +691,8 @@ Public Sub Initialize(ByRef InvPic As PictureBox, _
 
     End If
 
-    OFFSETX = mOffX
-    OFFSETY = mOffY
+    OffSetX = mOffX
+    OffSetY = mOffY
 
 End Sub
 
@@ -711,7 +711,7 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, _
     Dim prevSelItem As Long
     
     'Exit if it got outside the control's area
-    If x < OFFSETX Or y < OFFSETY Or x > InventoryWindow.Width Or y > InventoryWindow.Height Then Exit Sub
+    If x < OffSetX Or y < OffSetY Or x > InventoryWindow.Width Or y > InventoryWindow.Height Then Exit Sub
     
     prevSelItem = InvSelectedItem
 
@@ -735,12 +735,12 @@ End Sub
 Private Sub UpdatelblItem()
 
     If InvSelectedItem > 0 And InvSelectedItem <= 20 Then
-        frmMain.lblItemInfo.Caption = Inventory(InvSelectedItem).name
+        frmMain.lblItemInfo.Caption = Inventory(InvSelectedItem).Name
 
         If Inventory(InvSelectedItem).MaxHit > 0 Then
             frmMain.lblItem.Caption = frmMain.lblItem.Caption & " [" & Inventory(InvSelectedItem).MinHit & "/" & Inventory(InvSelectedItem).MaxHit & "]"
         ElseIf Inventory(InvSelectedItem).MaxDef > 0 Then
-            frmMain.lblItem.Caption = frmMain.lblItem.Caption & " [" & Inventory(InvSelectedItem).MinDef & "/" & Inventory(InvSelectedItem).MaxDef & "]"
+           frmMain.lblItem.Caption = frmMain.lblItem.Caption & " [" & Inventory(InvSelectedItem).MinDef & "/" & Inventory(InvSelectedItem).MaxDef & "]"
 
         End If
 
@@ -774,7 +774,7 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, _
     TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
     
     If TempItem <= UBound(Inventory) Then
-        InventoryWindow.ToolTipText = Inventory(TempItem).name
+        InventoryWindow.ToolTipText = Inventory(TempItem).Name
 
     End If
 
@@ -790,29 +790,29 @@ Public Function Grafico(ByVal fileIndex As Integer) As Long
 
     Dim Data()    As Byte
 
-    Dim hdc       As Long
+    Dim hDC       As Long
 
     If Not Graficos.Exists("G" & fileIndex) Then
 
         'get Bitmap
-        Dim mRECT As RECT
+        Dim mRect As RECT
 
-        mRECT.Left = 0
-        mRECT.Top = 0
-        mRECT.Bottom = 32
-        mRECT.Right = 32
+        mRect.Left = 0
+        mRect.Top = 0
+        mRect.Bottom = 32
+        mRect.Right = 32
     
-        Call Get_Bitmap(DirRecursos & "Graphics.AO", CStr(fileIndex) & ".png", bmpInfo, hdc)
+        Call Get_Bitmap(DirRecursos & "Graphics.AO", CStr(fileIndex) & ".png", bmpInfo, hDC)
             
         'hdc = CreateCompatibleDC()
 
         ' hPrev = SelectObject(hdc, hBitmap)
 
-        BufferBMP = CreateCompatibleDC(InventoryWindow.hdc)
+        BufferBMP = CreateCompatibleDC(InventoryWindow.hDC)
         'buffer = CreateCompatibleBitmap(InventoryWindow.hdc, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight)
     
         'SelectObject(hdc, hBitmap)
-        SelectObject BufferBMP, hdc
+        SelectObject BufferBMP, hDC
         'Call SetDIBitsToDevice(BufferBMP, 0, 0, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight, 0, 0, 0, bmpInfo.bmiHeader.biHeight, Data(0), bmpInfo, DIB_RGB_COLORS)
     
         'hdc = DrawGrhtoHdc2(InventoryWindow.hdc, fileIndex, mRECT, mRECT)

@@ -43,7 +43,7 @@ Type TConsola
  '   Color As Long
     R As Byte
     G As Byte
-    B As Byte
+    b As Byte
 End Type
  
 Public Con(1 To MaxLineas) As TConsola
@@ -499,7 +499,7 @@ Private Declare Function BitBlt _
 'Text width computation. Needed to center text.
 Private Declare Function GetTextExtentPoint32 _
                 Lib "gdi32" _
-                Alias "GetTextExtentPoint32A" (ByVal hdc As Long, _
+                Alias "GetTextExtentPoint32A" (ByVal hDC As Long, _
                                                ByVal lpsz As String, _
                                                ByVal cbString As Long, _
                                                lpSize As Size) As Long
@@ -514,7 +514,7 @@ Sub CargarCabezas()
 
     Dim N            As Integer
 
-    Dim i            As Long
+    Dim I            As Long
 
     Dim Numheads     As Integer
 
@@ -533,18 +533,18 @@ Sub CargarCabezas()
     ReDim HeadData(0 To Numheads) As HeadData
     ReDim Miscabezas(0 To Numheads) As tIndiceCabeza
     
-    For i = 1 To Numheads
-        Get #N, , Miscabezas(i)
+    For I = 1 To Numheads
+        Get #N, , Miscabezas(I)
         
-        If Miscabezas(i).Head(1) Then
-            Call InitGrh(HeadData(i).Head(1), Miscabezas(i).Head(1), 0)
-            Call InitGrh(HeadData(i).Head(2), Miscabezas(i).Head(2), 0)
-            Call InitGrh(HeadData(i).Head(3), Miscabezas(i).Head(3), 0)
-            Call InitGrh(HeadData(i).Head(4), Miscabezas(i).Head(4), 0)
+        If Miscabezas(I).Head(1) Then
+            Call InitGrh(HeadData(I).Head(1), Miscabezas(I).Head(1), 0)
+            Call InitGrh(HeadData(I).Head(2), Miscabezas(I).Head(2), 0)
+            Call InitGrh(HeadData(I).Head(3), Miscabezas(I).Head(3), 0)
+            Call InitGrh(HeadData(I).Head(4), Miscabezas(I).Head(4), 0)
 
         End If
 
-    Next i
+    Next I
     
     Close #N
 
@@ -554,7 +554,7 @@ Sub CargarCascos()
 
     Dim N            As Integer
 
-    Dim i            As Long
+    Dim I            As Long
 
     Dim NumCascos    As Integer
 
@@ -573,18 +573,18 @@ Sub CargarCascos()
     ReDim CascoAnimData(0 To NumCascos) As HeadData
     ReDim Miscabezas(0 To NumCascos) As tIndiceCabeza
     
-    For i = 1 To NumCascos
-        Get #N, , Miscabezas(i)
+    For I = 1 To NumCascos
+        Get #N, , Miscabezas(I)
         
-        If Miscabezas(i).Head(1) Then
-            Call InitGrh(CascoAnimData(i).Head(1), Miscabezas(i).Head(1), 0)
-            Call InitGrh(CascoAnimData(i).Head(2), Miscabezas(i).Head(2), 0)
-            Call InitGrh(CascoAnimData(i).Head(3), Miscabezas(i).Head(3), 0)
-            Call InitGrh(CascoAnimData(i).Head(4), Miscabezas(i).Head(4), 0)
+        If Miscabezas(I).Head(1) Then
+            Call InitGrh(CascoAnimData(I).Head(1), Miscabezas(I).Head(1), 0)
+            Call InitGrh(CascoAnimData(I).Head(2), Miscabezas(I).Head(2), 0)
+            Call InitGrh(CascoAnimData(I).Head(3), Miscabezas(I).Head(3), 0)
+            Call InitGrh(CascoAnimData(I).Head(4), Miscabezas(I).Head(4), 0)
 
         End If
 
-    Next i
+    Next I
     
     Close #N
 
@@ -594,7 +594,7 @@ Sub CargarCuerpos()
 
     Dim N            As Integer
 
-    Dim i            As Long
+    Dim I            As Long
 
     Dim NumCuerpos   As Integer
 
@@ -613,21 +613,21 @@ Sub CargarCuerpos()
     ReDim BodyData(0 To NumCuerpos) As BodyData
     ReDim MisCuerpos(0 To NumCuerpos) As tIndiceCuerpo
     
-    For i = 1 To NumCuerpos
-        Get #N, , MisCuerpos(i)
+    For I = 1 To NumCuerpos
+        Get #N, , MisCuerpos(I)
         
-        If MisCuerpos(i).Body(1) Then
-            InitGrh BodyData(i).Walk(1), MisCuerpos(i).Body(1), 0
-            InitGrh BodyData(i).Walk(2), MisCuerpos(i).Body(2), 0
-            InitGrh BodyData(i).Walk(3), MisCuerpos(i).Body(3), 0
-            InitGrh BodyData(i).Walk(4), MisCuerpos(i).Body(4), 0
+        If MisCuerpos(I).Body(1) Then
+            InitGrh BodyData(I).Walk(1), MisCuerpos(I).Body(1), 0
+            InitGrh BodyData(I).Walk(2), MisCuerpos(I).Body(2), 0
+            InitGrh BodyData(I).Walk(3), MisCuerpos(I).Body(3), 0
+            InitGrh BodyData(I).Walk(4), MisCuerpos(I).Body(4), 0
             
-            BodyData(i).HeadOffset.x = MisCuerpos(i).HeadOffsetX
-            BodyData(i).HeadOffset.y = MisCuerpos(i).HeadOffsetY
+            BodyData(I).HeadOffset.x = MisCuerpos(I).HeadOffsetX
+            BodyData(I).HeadOffset.y = MisCuerpos(I).HeadOffsetY
 
         End If
 
-    Next i
+    Next I
     
     Close #N
 
@@ -637,7 +637,7 @@ Sub CargarFxs()
 
     Dim N      As Integer
 
-    Dim i      As Long
+    Dim I      As Long
 
     Dim NumFxs As Integer
     
@@ -653,9 +653,9 @@ Sub CargarFxs()
     'Resize array
     ReDim FxData(1 To NumFxs) As tIndiceFx
     
-    For i = 1 To NumFxs
-        Get #N, , FxData(i)
-    Next i
+    For I = 1 To NumFxs
+        Get #N, , FxData(I)
+    Next I
     
     Close #N
 
@@ -1221,18 +1221,18 @@ Function NextOpenChar() As Integer
     '*****************************************************************
     'Finds next open char slot in CharList
     '*****************************************************************
-    Dim loopc As Long
+    Dim LoopC As Long
 
     Dim Dale  As Boolean
     
-    loopc = 1
+    LoopC = 1
 
-    Do While charlist(loopc).ACTIVE And Dale
-        loopc = loopc + 1
-        Dale = (loopc <= UBound(charlist))
+    Do While charlist(LoopC).ACTIVE And Dale
+        LoopC = LoopC + 1
+        Dale = (LoopC <= UBound(charlist))
     Loop
     
-    NextOpenChar = loopc
+    NextOpenChar = LoopC
 
 End Function
 
@@ -1251,34 +1251,34 @@ Private Function LoadGrhData() As Boolean
 
     Dim grhCount    As Long
 
-    Dim handle      As Integer
+    Dim Handle      As Integer
 
     Dim fileVersion As Long
     
     'Open files
-    handle = FreeFile()
+    Handle = FreeFile()
     
-    Open IniPath & GraphicsFile For Binary Access Read As handle
+    Open IniPath & GraphicsFile For Binary Access Read As Handle
     Seek #1, 1
     
     'Get file version
-    Get handle, , fileVersion
+    Get Handle, , fileVersion
     
     'Get number of grhs
-    Get handle, , grhCount
+    Get Handle, , grhCount
     
     'Resize arrays
     ReDim GrhData(1 To grhCount) As GrhData
     
-    While Not EOF(handle)
+    While Not EOF(Handle)
 
-        Get handle, , Grh
+        Get Handle, , Grh
 
         If Grh > 0 Then
 
             With GrhData(Grh)
                 'Get number of frames
-                Get handle, , .NumFrames
+                Get Handle, , .NumFrames
 
                 If .NumFrames <= 0 Then GoTo ErrorHandler
             
@@ -1288,7 +1288,7 @@ Private Function LoadGrhData() As Boolean
 
                     'Read a animation GRH set
                     For Frame = 1 To .NumFrames
-                        Get handle, , .Frames(Frame)
+                        Get Handle, , .Frames(Frame)
 
                         If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then
                             GoTo ErrorHandler
@@ -1297,7 +1297,7 @@ Private Function LoadGrhData() As Boolean
 
                     Next Frame
                 
-                    Get handle, , .Speed
+                    Get Handle, , .Speed
                 
                     If .Speed <= 0 Then GoTo ErrorHandler
                 
@@ -1315,23 +1315,23 @@ Private Function LoadGrhData() As Boolean
                     'If .TileHeight <= 0 Then GoTo ErrorHandler
                 Else
                     'Read in normal GRH data
-                    Get handle, , .FileNum
+                    Get Handle, , .FileNum
 
                     If .FileNum <= 0 Then GoTo ErrorHandler
                 
-                    Get handle, , GrhData(Grh).sX
+                    Get Handle, , GrhData(Grh).sX
 
                     If .sX < 0 Then GoTo ErrorHandler
                 
-                    Get handle, , .sY
+                    Get Handle, , .sY
 
                     If .sY < 0 Then GoTo ErrorHandler
                 
-                    Get handle, , .PixelWidth
+                    Get Handle, , .PixelWidth
 
                     If .PixelWidth <= 0 Then GoTo ErrorHandler
                 
-                    Get handle, , .PixelHeight
+                    Get Handle, , .PixelHeight
 
                     If .PixelHeight <= 0 Then GoTo ErrorHandler
                 
@@ -1349,7 +1349,7 @@ Private Function LoadGrhData() As Boolean
 
     Wend
     
-    Close handle
+    Close Handle
     
     LoadGrhData = True
     Exit Function
@@ -1591,11 +1591,11 @@ Sub DrawGrhLuz(ByRef Grh As Grh, _
 
 Error:
 
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
         End
 
     End If
@@ -1695,11 +1695,11 @@ Sub DrawGrhShadow(ByRef Grh As Grh, _
 
 Error:
 
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
         End
 
     End If
@@ -1761,11 +1761,11 @@ Sub DrawGrhShadowOff(ByRef Grh As Grh, _
 
 Error:
 
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
         End
 
     End If
@@ -1854,11 +1854,11 @@ Sub DrawGrh(ByRef Grh As Grh, _
 
 Error:
 
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
-        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & Err.Description, vbExclamation, "[ " & Err.Number & " ] Error"
+        MsgBox "Ocurrió un error inesperado, por favor comuniquelo a los administradores del juego." & vbCrLf & "Descripción del error: " & vbCrLf & err.Description, vbExclamation, "[ " & err.Number & " ] Error"
         End
 
     End If
@@ -1937,7 +1937,7 @@ Function GetBitmapDimensions(ByVal BmpFile As String, _
 
 End Function
 
-Sub DrawGrhtoHdc(ByVal hdc As Long, _
+Sub DrawGrhtoHdc(ByVal hDC As Long, _
                  ByVal GrhIndex As Integer, _
                  ByRef SourceRect As RECT, _
                  ByRef destRect As RECT)
@@ -1945,7 +1945,7 @@ Sub DrawGrhtoHdc(ByVal hdc As Long, _
     'Draws a Grh's portion to the given area of any Device Context
     '*****************************************************************
     'Call SurfaceDB.Surface(GrhData(GrhIndex).FileNum).BltToDC(hDC, SourceRect, destRect)
-    Call TransparentBlt(hdc, 0, 0, 32, 32, Inventario.Grafico(GrhData(GrhIndex).FileNum), 0, 0, 32, 32, vbMagenta)
+    Call TransparentBlt(hDC, 0, 0, 32, 32, Inventario.Grafico(GrhData(GrhIndex).FileNum), 0, 0, 32, 32, vbMagenta)
 
 End Sub
 
@@ -1955,7 +1955,7 @@ Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
 
     Dim Rango   As Byte
 
-    Dim i       As Integer
+    Dim I       As Integer
 
     Dim tmpInt  As Integer
 
@@ -1976,11 +1976,11 @@ Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
 
     MapData(x, y).Trigger = ByFlags
 
-    For i = 1 To 4
+    For I = 1 To 4
         tmpInt = (DataMap(Pos + 1) And &H7F) * &H100 Or DataMap(Pos) Or -(DataMap(Pos + 1) > &H7F) * &H8000
         Pos = Pos + 2
 
-        Select Case i
+        Select Case I
 
             Case 1
                 MapData(x, y).Graphic(1).GrhIndex = (tmpInt Xor (y + 301) Xor (x + 721)) - x
@@ -1996,12 +1996,12 @@ Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
 
         End Select
     
-        If MapData(x, y).Graphic(i).GrhIndex > 0 Then
-            InitGrh MapData(x, y).Graphic(i), MapData(x, y).Graphic(i).GrhIndex
+        If MapData(x, y).Graphic(I).GrhIndex > 0 Then
+            InitGrh MapData(x, y).Graphic(I), MapData(x, y).Graphic(I).GrhIndex
 
         End If
 
-    Next i
+    Next I
 
     'Get ArchivoMapa, , Rango
     Rango = DataMap(Pos)
@@ -2075,7 +2075,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
     Dim ByFlags As Byte
 
-    Dim i As Integer
+    Dim I As Integer
 
     Dim color As Long
 
@@ -2157,9 +2157,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                 If MapData(x, y).Hora <> Hora And UserMap = 1 Then
 
-                    For i = 0 To 3
-                        MapData(x, y).Light_Value(i) = Iluminacion
-                    Next i
+                    For I = 0 To 3
+                        MapData(x, y).Light_Value(I) = Iluminacion
+                    Next I
 
                     MapData(x, y).Hora = Hora
 
@@ -2223,19 +2223,19 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Dim mNPCMuerto As clsNPCMuerto
 
     Eliminados = 0
-    Cant = NPCMuertos.Count
+    Cant = NPCMuertos.count
 
-    For i = 1 To Cant
-        Set mNPCMuerto = NPCMuertos(i - Eliminados)
+    For I = 1 To Cant
+        Set mNPCMuerto = NPCMuertos(I - Eliminados)
         Call mNPCMuerto.Update    '(TileX, TileY, PixelOffSetX, PixelOffSetY)
 
         If mNPCMuerto.KillMe Then
-            NPCMuertos.Remove (i - Eliminados)
+            NPCMuertos.Remove (I - Eliminados)
             Eliminados = Eliminados + 1
 
         End If
 
-    Next i
+    Next I
 
     'Draw Transparent Layers
     ScreenY = minYOffset
@@ -2299,7 +2299,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                     If ((SupIndex >= 7000 And SupIndex <= 7008) Or (SupIndex >= 1261 And SupIndex <= 1287) Or SupIndex = 648 Or SupIndex = 645) Then
                         If mOpciones.TransparencyTree = True And UserPos.x >= x - 3 And UserPos.x <= x + 3 And UserPos.y >= y - 5 And UserPos.y <= y Then
-                            Call DrawGrh(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 180))
+                            Call DrawGrh(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 180))
                         Else
                             Call DrawGrhLuz(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, MapData(x, y).Light_Value)
 
@@ -2345,19 +2345,19 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Dim mTooltip As clsToolTip
 
     Eliminados = 0
-    Cant = Tooltips.Count
+    Cant = Tooltips.count
 
-    For i = 1 To Cant
-        Set mTooltip = Tooltips(i - Eliminados)
+    For I = 1 To Cant
+        Set mTooltip = Tooltips(I - Eliminados)
         Call mTooltip.Render(TileX - 1, TileY, PixelOffSetX, PixelOffSetY)
 
         If mTooltip.Alpha = 0 Then
-            Tooltips.Remove (i - Eliminados)
+            Tooltips.Remove (I - Eliminados)
             Eliminados = Eliminados + 1
 
         End If
 
-    Next i
+    Next I
 
     'Particulas
     '**************
@@ -2375,7 +2375,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If bAlpha < 255 Then
             If tTick < (GetTickCount() And &H7FFFFFFF) - 30 Then
                 bAlpha = bAlpha + IIf(bAlpha + 8 < 255, 8, 255 - bAlpha)
-                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, bAlpha)
+                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
                 tTick = (GetTickCount() And &H7FFFFFFF)
 
             End If
@@ -2387,7 +2387,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If bAlpha > 0 Then
             If tTick < (GetTickCount() And &H7FFFFFFF) - 30 Then
                 bAlpha = bAlpha - IIf(bAlpha - 8 > 0, 8, bAlpha)
-                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, bAlpha)
+                ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
                 tTick = (GetTickCount() And &H7FFFFFFF)
 
             End If
@@ -2434,7 +2434,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                 End If
 
-                ColorLluvia = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 140)
+                ColorLluvia = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 140)
 
                 For y = 0 To 5
                     For x = 0 To 6
@@ -2505,11 +2505,11 @@ Sub RenderScreen(ByVal TileX As Integer, _
         End If
 
         'Mensaje al cambiar de zona
-        Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 10, 814, 220), DT_CENTER)
-        Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(5, 15, 814, 220), DT_CENTER)
+        Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(160, 140, 814, 220), DT_CENTER)
+        Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(160, 145, 814, 220), DT_CENTER)
 
         If CambioSegura Then
-            Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 574, 345, D3DColorRGBA(255, 0, 0, tmpInt))
+            Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 660, 470, D3DColorRGBA(255, 0, 0, tmpInt))
 
         End If
 
@@ -2650,10 +2650,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
             If x > 1 And x < 1100 And y > 1 And y < 1500 Then
                 Call DrawFont("(" & x & "," & y & ")", frmMain.MouseX + 266, frmMain.MouseY + 266, D3DColorRGBA(255, 255, 255, 200))
-                i = BuscarZona(x, y)
+                I = BuscarZona(x, y)
 
-                If i > 0 Then
-                    Call DrawFont(Zonas(i).nombre, frmMain.MouseX + 246, frmMain.MouseY + 266 + 13, D3DColorRGBA(255, 255, 255, 200))
+                If I > 0 Then
+                    Call DrawFont(Zonas(I).nombre, frmMain.MouseX + 246, frmMain.MouseY + 266 + 13, D3DColorRGBA(255, 255, 255, 200))
 
                 End If
 
@@ -2814,10 +2814,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
     End If
     FrameTime = (timeGetTime() And &H7FFFFFFF)
     If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
-         Call Engine_Render_Rectangle(400, 270, 205, 80, 0, 0, 205, 80, , , 0, 14937)
-                               Call Engine_Render_Rectangle(400, 270, 205, 80, 0, 0, 205, 80, , , 0, 14936)
-                            
-                      Call DrawFont(CStr(UserLvl), 451, 328, D3DColorRGBA(255, 255, 0, 160))
+         Call Engine_Render_Rectangle(270, 270, 205, 80, 0, 0, 205, 80, , , 0, 14937)
+                               Call Engine_Render_Rectangle(270, 270, 205, 80, 0, 0, 205, 80, , , 0, 14936)
+                            Call Engine_Render_Rectangle(1125, 258, 155, 160, 0, 0, 155, 160, , , 0, 14938)
+                      Call DrawFont(CStr(UserLvl), 320, 328, D3DColorRGBA(255, 255, 0, 160))
 End Sub
 
 ''*********************
@@ -3539,7 +3539,7 @@ Public Sub CharRender(ByRef rChar As Char, _
          If .simbolo <> 0 Then
                            'frmMain.TimerSimbolo.Enabled = True
                            'Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 61 + SimboloY + 5, 1, D3DColorRGBA(255, 0, 0, 255))
-                           Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255))
+                           Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
                             
 Else
 'frmMain.TimerSimbolo.Enabled = False
@@ -3616,7 +3616,7 @@ Else
 
         End If
 
-        ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, .Alpha)
+        ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, .Alpha)
 If .Heading = 0 Then Exit Sub
         If .Head.Head(.Heading).GrhIndex Then
             If .invisible Then
@@ -3693,7 +3693,7 @@ If .Heading = 0 Then Exit Sub
                 If .priv = 9 Then
                     ColorPj = D3DColorRGBA(10, 10, 10, 255)
                 Else
-                    ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, .Alpha)
+                    ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, .Alpha)
 
                     If .congelado = True Then
                         ColorPj = D3DColorRGBA(0, 175, 255, 225)
@@ -3785,14 +3785,14 @@ If .Heading = 0 Then Exit Sub
                         ElseIf .priv = 0 Then
 
                             If .Criminal Then
-                                color = D3DColorRGBA(ColoresPJ(50).R, ColoresPJ(50).G, ColoresPJ(50).B, 200)
+                                color = D3DColorRGBA(ColoresPJ(50).R, ColoresPJ(50).G, ColoresPJ(50).b, 200)
                             Else
-                                color = D3DColorRGBA(ColoresPJ(49).R, ColoresPJ(49).G, ColoresPJ(49).B, 200)
+                                color = D3DColorRGBA(ColoresPJ(49).R, ColoresPJ(49).G, ColoresPJ(49).b, 200)
 
                             End If
 
                         Else
-                            color = D3DColorRGBA(ColoresPJ(.priv).R, ColoresPJ(.priv).G, ColoresPJ(.priv).B, 200)
+                            color = D3DColorRGBA(ColoresPJ(.priv).R, ColoresPJ(.priv).G, ColoresPJ(.priv).b, 200)
 
                         End If
 
@@ -3972,7 +3972,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffSetX As Int
 '****************************************************
 ' Renderizamos el char reflejado en el agua
 '****************************************************
-    On Error GoTo Err
+    On Error GoTo err
     With charlist(CharIndex)
     
         Movement_Speed = 0.5
@@ -4064,7 +4064,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, ByVal PixelOffSetX As Int
         End If
         
     End With
-Err:
+err:
 End Sub
 
 
@@ -4130,7 +4130,7 @@ On Error GoTo Error
 Exit Sub
 
 Error:
-    If Err.Number = 9 And Grh.FrameCounter < 1 Then
+    If err.Number = 9 And Grh.FrameCounter < 1 Then
         Grh.FrameCounter = 1
         Resume
     Else
@@ -4162,10 +4162,10 @@ Public Sub Grh_Render_To_Hdc(ByRef Pic As PictureBox, ByVal GrhIndex As Long, By
     Call D3DDevice.BeginScene
     Call D3DDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, ClearColor, 1#, 0)
     
-    DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, 255)
+    DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)
     
    Call D3DDevice.EndScene
-    Call D3DDevice.Present(Picture, ByVal 0, Pic.hwnd, ByVal 0)
+    Call D3DDevice.Present(Picture, ByVal 0, Pic.hWnd, ByVal 0)
     
     
     Exit Sub
@@ -4177,20 +4177,20 @@ Grh_Render_To_Hdc_Err:
 End Sub
 
 Sub RenderConsola()
-Dim i As Byte
+Dim I As Byte
  
 If OffSetConsola > 0 Then OffSetConsola = OffSetConsola - 1
 If OffSetConsola = 0 Then UltimaLineavisible = True
  
-For i = 1 To MaxLineas - 1
+For I = 1 To MaxLineas - 1
  
-RenderText 300, ComienzoY + (i * 15) + OffSetConsola, Con(i).T, D3DColorRGBA(Con(i).R, Con(i).G, Con(i).B, i * (255 / MaxLineas))
+RenderText 300, ComienzoY + (I * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(I).R, Con(I).G, Con(I).b, I * (255 / MaxLineas))
 
         
-Next i
+Next I
  
 If UltimaLineavisible = True Then _
-RenderText 300, ComienzoY + (MaxLineas * 15) + OffSetConsola, Con(i).T, D3DColorRGBA(Con(MaxLineas).R, Con(MaxLineas).G, Con(i).B, 255)
+RenderText 300, ComienzoY + (MaxLineas * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(MaxLineas).R, Con(MaxLineas).G, Con(I).b, 255)
 
 
  

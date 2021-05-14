@@ -143,20 +143,20 @@ End Sub
 
 Private Sub Dibujar()
 
-    Dim i    As Integer
+    Dim I    As Integer
 
     Dim PosY As Integer
 
     ListPic.Cls
 
-    For i = p_Scroll To p_Scroll + Int(ListPic.Height / p_Pixel_Alto)
+    For I = p_Scroll To p_Scroll + Int(ListPic.Height / p_Pixel_Alto)
 
-        If i < p_ListCount Then
-            PosY = (i - p_Scroll) * p_Pixel_Alto + 4
+        If I < p_ListCount Then
+            PosY = (I - p_Scroll) * p_Pixel_Alto + 4
 
-            If i = p_ListIndex Then
+            If I = p_ListIndex Then
                 ListPic.ForeColor = RGB(211, 120, 20)
-                ListPic.Line (1, PosY - 1)-(ListPic.Width - 2, PosY + p_Pixel_Alto + 1), , B
+                ListPic.Line (1, PosY - 1)-(227.733 - 2, PosY + p_Pixel_Alto + 1), , B
                 ListPic.ForeColor = RGB(130, 130, 130)
             Else
                 ListPic.ForeColor = p_ForeColor
@@ -166,10 +166,10 @@ Private Sub Dibujar()
             ListPic.CurrentX = 4
             ListPic.CurrentY = PosY
        
-            ListPic.Print lista(i)
+            ListPic.Print lista(I)
 
         End If
 
-    Next i
+    Next I
 
 End Sub
