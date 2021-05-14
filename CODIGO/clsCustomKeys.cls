@@ -123,6 +123,7 @@ Public Enum eKeyType
     mKeyVerMapa
     mKeyMontar
     mKeyAnclar
+    mKeySalir
     
     
     
@@ -254,7 +255,7 @@ Public Sub LoadCustomKeys()
 'Last Modification: 08/21/07
 '
 '***************************************************
-    Dim i As Long
+    Dim I As Long
     Dim FileNum As Integer
     FileNum = FreeFile()
     
@@ -263,16 +264,16 @@ Public Sub LoadCustomKeys()
     If Dir(PathInit & KEY_CONFIG_FILE) <> "" Then
     Open PathInit & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
     
-    For i = 1 To NUM_CUSTOM_KEYS
+    For I = 1 To NUM_CUSTOM_KEYS
         If Not EOF(FileNum) Then
-            Get FileNum, , mappedKeys(i)
-            If LenB(ReadableName(mappedKeys(i))) = 0 Then
+            Get FileNum, , mappedKeys(I)
+            If LenB(ReadableName(mappedKeys(I))) = 0 Then
                 Close FileNum
-                Call Err.Raise(ERROR_NO_KEY_FILE)
+                Call err.Raise(ERROR_NO_KEY_FILE)
                 Exit Sub
             End If
         End If
-    Next i
+    Next I
     
     Close FileNum
     End If
@@ -288,14 +289,14 @@ Public Sub SaveCustomKeys()
 '
 '***************************************************
     Dim FileNum As Integer
-    Dim i As Long
+    Dim I As Long
     FileNum = FreeFile()
     
     Open PathInit & KEY_CONFIG_FILE For Binary Access Write As FileNum
     
-    For i = 1 To NUM_CUSTOM_KEYS
-        Put FileNum, , mappedKeys(i)
-    Next i
+    For I = 1 To NUM_CUSTOM_KEYS
+        Put FileNum, , mappedKeys(I)
+    Next I
     
     Close #FileNum
 End Sub
@@ -306,14 +307,14 @@ End Sub
 '@param index Index of the key code to retrieve
 '@return The Key code that belongs to index
 
-Public Property Get BindedKey(ByVal Index As eKeyType) As Integer
+Public Property Get BindedKey(ByVal index As eKeyType) As Integer
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 08/04/07
 '
 '***************************************************
-    If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
-    BindedKey = mappedKeys(Index)
+    If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
+    BindedKey = mappedKeys(index)
 End Property
 
 ''
@@ -322,13 +323,13 @@ End Property
 '@param index Index of the key to change
 '@param NewVal New key code
 
-Public Property Let BindedKey(ByVal Index As eKeyType, ByVal NewVal As Integer)
+Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
 '***************************************************
 'Author: Rapsodius
 'Last Modification: 08/05/07
 '
 '***************************************************
-    If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
+    If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
     
     If LenB(ReadableName(NewVal)) = 0 Then 'If key is not valid...
         Exit Property                      'Rejects the new assignment
@@ -338,7 +339,7 @@ Public Property Let BindedKey(ByVal Index As eKeyType, ByVal NewVal As Integer)
         Exit Property
     End If
     
-    mappedKeys(Index) = NewVal
+    mappedKeys(index) = NewVal
 End Property
 
 ''
@@ -377,6 +378,7 @@ Public Sub LoadDefaults()
     mappedKeys(eKeyType.mKeyVerMapa) = KeyCodeConstants.vbKeyQ
     mappedKeys(eKeyType.mKeyMontar) = KeyCodeConstants.vbKeyF7
     mappedKeys(eKeyType.mKeyAnclar) = KeyCodeConstants.vbKeyB
+    mappedKeys(eKeyType.mKeySalir) = KeyCodeConstants.vbKeyEscape
     
     
     'GMS
@@ -475,7 +477,7 @@ On Error GoTo ErrHand:
     Exit Sub
     
 ErrHand:
-    If Err.Number = ERROR_NO_KEY_FILE Then
+    If err.Number = ERROR_NO_KEY_FILE Then
         Call LoadDefaults
         Call SaveCustomKeys
         Resume Next

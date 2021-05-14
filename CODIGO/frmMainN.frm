@@ -127,6 +127,7 @@ Begin VB.Form frmMain
       Left            =   840
       TabIndex        =   23
       Top             =   1680
+      Visible         =   0   'False
       Width           =   2775
       _ExtentX        =   4895
       _ExtentY        =   238
@@ -153,6 +154,7 @@ Begin VB.Form frmMain
       Left            =   1350
       TabIndex        =   25
       Top             =   555
+      Visible         =   0   'False
       Width           =   1860
       _ExtentX        =   3281
       _ExtentY        =   318
@@ -180,6 +182,7 @@ Begin VB.Form frmMain
       Left            =   1350
       TabIndex        =   26
       Top             =   840
+      Visible         =   0   'False
       Width           =   1875
       _ExtentX        =   3307
       _ExtentY        =   318
@@ -207,6 +210,7 @@ Begin VB.Form frmMain
       Left            =   1350
       TabIndex        =   27
       Top             =   1140
+      Visible         =   0   'False
       Width           =   1890
       _ExtentX        =   3334
       _ExtentY        =   185
@@ -234,6 +238,7 @@ Begin VB.Form frmMain
       Left            =   840
       TabIndex        =   28
       Top             =   2040
+      Visible         =   0   'False
       Width           =   1080
       _ExtentX        =   1905
       _ExtentY        =   265
@@ -261,6 +266,7 @@ Begin VB.Form frmMain
       Left            =   2520
       TabIndex        =   29
       Top             =   2040
+      Visible         =   0   'False
       Width           =   1080
       _ExtentX        =   1905
       _ExtentY        =   265
@@ -289,7 +295,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   11805
-      Left            =   120
+      Left            =   -2160
       ScaleHeight     =   787
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   1032
@@ -362,13 +368,14 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          ForeColor       =   &H80000008&
-         Height          =   3540
+         Height          =   2940
          Left            =   12240
-         ScaleHeight     =   236
+         ScaleHeight     =   196
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   172
          TabIndex        =   41
          Top             =   4680
+         Visible         =   0   'False
          Width           =   2580
          Begin VB.Label lblItem 
             Alignment       =   2  'Center
@@ -446,6 +453,7 @@ Begin VB.Form frmMain
          ScaleWidth      =   3030
          TabIndex        =   37
          Top             =   3600
+         Visible         =   0   'False
          Width           =   3030
          Begin VB.Image CmdLanzar 
             Height          =   600
@@ -1270,14 +1278,14 @@ End Sub
 
 Private Sub BarraConsola_MouseDown(Button As Integer, _
                                    Shift As Integer, _
-                                   x As Single, _
-                                   y As Single)
+                                   X As Single, _
+                                   Y As Single)
 
     Dim TempY  As Integer
 
     Dim TamCon As Integer
 
-    TempY = y - 3
+    TempY = Y - 3
     TamCon = (LineasConsola - 6)
 
     If TamCon > 0 Then
@@ -1307,14 +1315,14 @@ End Sub
 
 Private Sub BarraHechiz_MouseDown(Button As Integer, _
                                   Shift As Integer, _
-                                  x As Single, _
-                                  y As Single)
+                                  X As Single, _
+                                  Y As Single)
 
     Dim TempY  As Integer
 
     Dim TamCon As Integer
 
-    TempY = y - 3
+    TempY = Y - 3
 
     Dim MaxItems As Integer
 
@@ -1347,11 +1355,11 @@ End Sub
 
 Private Sub BarritaConsola_MouseDown(Button As Integer, _
                                      Shift As Integer, _
-                                     x As Single, _
-                                     y As Single)
+                                     X As Single, _
+                                     Y As Single)
 
     If Button = 1 Then
-        OldYConsola = y
+        OldYConsola = Y
 
     End If
 
@@ -1359,14 +1367,14 @@ End Sub
 
 Private Sub BarritaConsola_MouseMove(Button As Integer, _
                                      Shift As Integer, _
-                                     x As Single, _
-                                     y As Single)
+                                     X As Single, _
+                                     Y As Single)
 
     If Button = 1 Then
 
         Dim TempY As Integer
 
-        TempY = BarritaConsola.Top + (y - OldYConsola)
+        TempY = BarritaConsola.Top + (Y - OldYConsola)
 
         If TempY < 16 Then TempY = 16
         If TempY > 68 Then TempY = 68
@@ -1381,11 +1389,11 @@ End Sub
 
 Private Sub BarritaHechiz_MouseDown(Button As Integer, _
                                     Shift As Integer, _
-                                    x As Single, _
-                                    y As Single)
+                                    X As Single, _
+                                    Y As Single)
 
     If Button = 1 Then
-        hlst.OldY = y
+        hlst.OldY = Y
 
     End If
 
@@ -1393,8 +1401,8 @@ End Sub
 
 Private Sub BarritaHechiz_MouseMove(Button As Integer, _
                                     Shift As Integer, _
-                                    x As Single, _
-                                    y As Single)
+                                    X As Single, _
+                                    Y As Single)
 
     If Button = 1 Then
 
@@ -1403,7 +1411,7 @@ Private Sub BarritaHechiz_MouseMove(Button As Integer, _
         Dim MaxItems As Integer
 
         MaxItems = Int(picHechiz.Height / hlst.Pixel_Alto)
-        TempY = BarritaHechiz.Top + (y - hlst.OldY)
+        TempY = BarritaHechiz.Top + (Y - hlst.OldY)
 
         If TempY < 16 Then TempY = 16
         If TempY > 150 Then TempY = 150
@@ -1475,13 +1483,13 @@ Private Sub cmdEfecto_Click()
     'AlphaCeguera = 255
 End Sub
 
-Private Sub cmdMoverHechi_Click(Index As Integer)
+Private Sub cmdMoverHechi_Click(index As Integer)
 
     If hlst.ListIndex = -1 Then Exit Sub
 
     Dim sTemp As String
 
-    Select Case Index
+    Select Case index
 
         Case 1 'subir
 
@@ -1493,9 +1501,9 @@ Private Sub cmdMoverHechi_Click(Index As Integer)
 
     End Select
 
-    Call WriteMoveSpell(Index, hlst.ListIndex + 1)
+    Call WriteMoveSpell(index, hlst.ListIndex + 1)
     
-    Select Case Index
+    Select Case index
 
         Case 1 'subir
             sTemp = hlst.List(hlst.ListIndex - 1)
@@ -1879,16 +1887,16 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
-    If y < 24 And NoRes Then
-        MoverVentana (Me.hWnd)
+    If Y < 24 And NoRes Then
+        MoverVentana (Me.hwnd)
 
     End If
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If UserPasarNivel > 0 Then
         frmMain.exp.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
@@ -1924,8 +1932,8 @@ End Sub
 
 Private Sub lblEXP_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
     frmMain.exp.Caption = UserExp & "/" & UserPasarNivel
     frmMain.exp.Caption = UserExp & "/" & UserPasarNivel
 
@@ -1935,7 +1943,331 @@ End Sub
 
 
 
-Private Sub QuestBoton_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub pRender_KeyDown(KeyCode As Integer, Shift As Integer)
+Select Case KeyCode
+
+        Case CustomKeys.BindedKey(eKeyType.mKeyVerMapa)
+
+            If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
+                VerMapa = True
+
+            End If
+   
+        Case vbKeyEscape
+
+            If Conectar Then
+                If GTCPres < 10000 Then
+                    GTCInicial = GTCInicial - (10000 - GTCPres)
+                    Call Audio.PlayBackgroundMusic("10", MusicTypes.Mp3)
+                
+                ElseIf MostrarEntrar > 0 Then
+
+                    If GTCPres - MostrarEntrar > 1000 Then
+                        MostrarEntrar = -GTCPres
+                        tUser.Visible = False
+                        tPass.Visible = False
+                        tEmail.Visible = False
+                        tRePass.Visible = False
+                        Call Audio.PlayWave(SND_CADENAS)
+                    
+                        If MostrarCrearCuenta = True Then
+                            If mOpciones.Recordar = True Then
+                                tPass.Text = mOpciones.RecordarPassword
+                                tUser.Text = mOpciones.RecordarUsuario
+
+                            End If
+
+                        End If
+
+                    End If
+                
+                Else
+                    prgRun = False
+                    Audio.StopMidi
+
+                End If
+
+            End If
+
+    End Select
+
+End Sub
+
+Private Sub pRender_KeyUp(KeyCode As Integer, Shift As Integer)
+If Conectar Then Exit Sub
+
+    #If SeguridadAlkon Then
+
+        If LOGGING Then Call CheatingDeath.StoreKey(KeyCode, False)
+    #End If
+    
+    If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
+        
+        'Checks if the key is valid
+        If LenB(CustomKeys.ReadableName(KeyCode)) > 0 Then
+
+            Select Case KeyCode
+
+                Case CustomKeys.BindedKey(eKeyType.mKeyToggleMusic)
+                    mOpciones.Music = Not mOpciones.Music
+                    Audio.MusicActivated = mOpciones.Music
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyGetObject)
+                    Call AgarrarItem
+
+                Case CustomKeys.BindedKey(eKeyType.mKeyEquipObject)
+                    Call EquiparItem
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyToggleNames)
+                    Nombres = Not Nombres
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
+
+                    If UserEstado = 1 Then
+
+                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+                        End With
+
+                    Else
+                        Call WriteWork(eSkill.Domar)
+
+                    End If
+                    
+                Case CustomKeys.BindedKey(eKeyType.mKeySteal)
+
+                    If UserEstado = 1 Then
+
+                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+                        End With
+
+                    Else
+                        Call WriteWork(eSkill.Robar)
+
+                    End If
+                    
+                Case CustomKeys.BindedKey(eKeyType.mKeyHide)
+
+                    If UserEstado = 1 Then
+
+                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+                        End With
+
+                    Else
+
+                        If MainTimer.Check(TimersIndex.Hide) Then
+                            Call WriteWork(eSkill.Ocultarse)
+
+                        End If
+
+                    End If
+                                    
+                Case CustomKeys.BindedKey(eKeyType.mKeyDropObject)
+                    Call TirarItem
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyUseObject)
+
+                    If macrotrabajo.Enabled Then DesactivarMacroTrabajo
+                        
+                    If MainTimer.Check(TimersIndex.PuedeUsar) Then
+                        Call UsarItem
+                        
+                        If InStr(Inventario.ItemName(Inventario.SelectedItem), "Bala") > 0 Then
+                            If Inventario.Equipped(Inventario.SelectedItem) Then
+                                UsingSecondSkill = 1
+
+                            End If
+
+                        End If
+                        
+                    End If
+                
+                Case CustomKeys.BindedKey(eKeyType.mKeyRequestRefresh)
+
+                    If UserMoving = 1 Then
+
+                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                            Call ShowConsoleMsg("¡¡Para actualizar la posición debes estar quieto!!", .red, .green, .blue, .bold, .italic)
+
+                        End With
+
+                        Exit Sub
+
+                    End If
+
+                    If MainTimer.Check(TimersIndex.SendRPU) And Not UserEmbarcado Then
+                        Call WriteRequestPositionUpdate
+                        Beep
+
+                    End If
+
+                Case CustomKeys.BindedKey(eKeyType.mKeyToggleResuscitationSafe)
+                    Call WriteResuscitationToggle
+
+            End Select
+
+        Else
+
+            Select Case KeyCode
+
+                    'Custom messages!
+                Case vbKey0 To vbKey9
+
+                    If LenB(CustomMessages.Message((KeyCode - 39) Mod 10)) <> 0 Then
+                        Call WriteTalk(CustomMessages.Message((KeyCode - 39) Mod 10))
+
+                    End If
+
+            End Select
+
+        End If
+
+    End If
+    
+    Select Case KeyCode
+
+        Case CustomKeys.BindedKey(eKeyType.mKeyTalkWithGuild)
+
+            If SendTxt.Visible Then Exit Sub
+            
+            If (Not frmComerciar.Visible) And (Not frmComerciarUsu.Visible) And (Not frmBancoObj.Visible) And (Not frmMSG.Visible) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
+                SendCMSTXT.Visible = True
+                SendCMSTXT.SetFocus
+
+            End If
+
+        Case CustomKeys.BindedKey(eKeyType.mKeyVerMapa)
+            VerMapa = False
+
+        Case CustomKeys.BindedKey(eKeyType.mKeyTakeScreenShot)
+            Call ScreenCapture
+        
+        Case CustomKeys.BindedKey(eKeyType.mKeyToggleFPS)
+        
+        
+            FPSFLAG = Not FPSFLAG
+            
+             Case CustomKeys.BindedKey(eKeyType.mKeySalir)
+                  prgRun = False
+             
+        Case CustomKeys.BindedKey(eKeyType.mKeyShowOptions)
+            Call frmOpciones.Show(vbModeless, frmMain)
+        
+        Case CustomKeys.BindedKey(eKeyType.mKeyMeditate)
+
+            If UserMinMAN = UserMaxMAN Then Exit Sub
+            
+            If UserEstado = 1 Then
+
+                With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                    Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+                End With
+
+                Exit Sub
+
+            End If
+                
+            If Not PuedeMacrear Then
+                AddtoRichPicture "¡No puedes usar el macro tan rápido!", 255, 255, 255, True, False, False
+            ElseIf charlist(UserCharIndex).Moving = 0 Then
+                Call WriteMeditate
+                PuedeMacrear = False
+
+            End If
+
+        Case CustomKeys.BindedKey(eKeyType.mKeyWorkMacro)
+
+            If UserEstado = 1 Then
+
+                With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                    Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+                End With
+
+                Exit Sub
+
+            End If
+            
+            If macrotrabajo.Enabled Then
+                DesactivarMacroTrabajo
+            Else
+                ActivarMacroTrabajo
+
+            End If
+        
+        Case CustomKeys.BindedKey(eKeyType.mKeyExitGame)
+
+            If frmMain.macrotrabajo.Enabled Then DesactivarMacroTrabajo
+            Call WriteQuit
+            
+        Case CustomKeys.BindedKey(eKeyType.mKeyAttack)
+
+            If Shift <> 0 Then Exit Sub
+         
+            If Not MainTimer.Check(TimersIndex.PuedeGolpe) Or UserDescansar Or UserMeditar Then Exit Sub
+            
+            If macrotrabajo.Enabled Then DesactivarMacroTrabajo
+            Call WriteAttack
+                    
+        Case CustomKeys.BindedKey(eKeyType.mKeyTalk)
+
+            If SendCMSTXT.Visible Then Exit Sub
+            
+            If (Not frmComerciar.Visible) And (Not frmComerciarUsu.Visible) And (Not frmBancoObj.Visible) And (Not frmMSG.Visible) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
+                SendTxt.Visible = True
+                SendTxt.SetFocus
+
+            End If
+            
+        Case CustomKeys.BindedKey(eKeyType.mKeyMontar)
+
+            If SendCMSTXT.Visible Then Exit Sub
+            If SendTxt.Visible Then Exit Sub
+        
+            If MainTimer.Check(TimersIndex.Montar) Then
+                Call WriteEquitar
+
+            End If
+        
+        Case CustomKeys.BindedKey(eKeyType.mKeyAnclar)
+
+            If SendCMSTXT.Visible Then Exit Sub
+            If SendTxt.Visible Then Exit Sub
+            If UserMoving = 1 Then
+
+                With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                    Call ShowConsoleMsg("¡¡Debes detener la embarcación para saltar al agua!!", .red, .green, .blue, .bold, .italic)
+
+                End With
+
+                Exit Sub
+
+            End If
+            
+            If MainTimer.Check(TimersIndex.Anclar) Then
+                Call WriteAnclarEmbarcacion
+
+            End If
+            
+        Case CustomKeys.BindedKey(eKeyType.mKeyPanelGM)
+
+            If SendCMSTXT.Visible Then Exit Sub
+            If SendTxt.Visible Then Exit Sub
+        
+            frmPanelGm.Show
+            
+    End Select
+
+End Sub
+
+
+Private Sub QuestBoton_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     
     On Error GoTo QuestBoton_MouseMove_Err
     
@@ -1955,7 +2287,7 @@ QuestBoton_MouseMove_Err:
     
 End Sub
 
-Private Sub QuestBoton_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub QuestBoton_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     
     On Error GoTo QuestBoton_MouseUp_Err
     
@@ -2088,26 +2420,26 @@ Image1(3).Visible = False
 End Sub
 Private Sub picHechiz_MouseDown(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
     
     Call Audio.PlayWave(SND_CLICK)
 
-    If y < 0 Then y = 0
-    If y > 228 Then y = 228
-    hlst.ListIndex = Int(y / hlst.Pixel_Alto) + hlst.Scroll
+    If Y < 0 Then Y = 0
+    If Y > 228 Then Y = 228
+    hlst.ListIndex = Int(Y / hlst.Pixel_Alto) + hlst.Scroll
 
 End Sub
 
 Private Sub picHechiz_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
 
     If Button = 1 Then
-        If y < 0 Then y = 0
-        If y > 228 Then y = 228
-        hlst.ListIndex = Int(y / hlst.Pixel_Alto) + hlst.Scroll
+        If Y < 0 Then Y = 0
+        If Y > 228 Then Y = 228
+        hlst.ListIndex = Int(Y / hlst.Pixel_Alto) + hlst.Scroll
 
     End If
 
@@ -2115,8 +2447,8 @@ End Sub
 
 Private Sub picInv_MouseDown(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
 
     If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
         Call Audio.PlayWave(SND_CLICK)
@@ -2127,10 +2459,10 @@ End Sub
 
 Private Sub PicInv_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
-    InvX = x
-    InvY = y
+                             X As Single, _
+                             Y As Single)
+    InvX = X
+    InvY = Y
 
     If Button = 2 And Not Comerciando Then
         If Inventario.GrhIndex(Inventario.SelectedItem) > 0 Then
@@ -2360,8 +2692,8 @@ End Sub
 
 Private Sub pRender_MouseDown(Button As Integer, _
                               Shift As Integer, _
-                              x As Single, _
-                              y As Single)
+                              X As Single, _
+                              Y As Single)
     MouseBoton = Button
     MouseShift = Shift
 
@@ -2369,10 +2701,10 @@ End Sub
 
 Private Sub pRender_MouseMove(Button As Integer, _
                               Shift As Integer, _
-                              x As Single, _
-                              y As Single)
-    MouseX = x
-    MouseY = y
+                              X As Single, _
+                              Y As Single)
+    MouseX = X
+    MouseY = Y
     
     'Trim to fit screen
     If MouseX < 0 Then
@@ -2390,15 +2722,15 @@ Private Sub pRender_MouseMove(Button As Integer, _
 
     End If
     
-    If Conectar Then Call MouseAction(x, y, 0)
+    If Conectar Then Call MouseAction(X, Y, 0)
 
 End Sub
 
-Private Sub pRender_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
-    clicX = x
-    clicY = y
+Private Sub pRender_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    clicX = X
+    clicY = Y
 
-    If Conectar Then Call MouseAction(x, y, 1)
+    If Conectar Then Call MouseAction(X, Y, 1)
 
 End Sub
 
@@ -2508,8 +2840,8 @@ End Sub
 
 Private Sub CmdLanzar_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
     UsaMacro = False
     CnTd = 0
 
@@ -2534,7 +2866,7 @@ Public Sub ReDrawConsola()
         If I >= 0 And I <= LineasConsola Then
             pConsola.CurrentX = 0
             pConsola.CurrentY = (I - OffSetConsola - 1) * 14
-            pConsola.ForeColor = Consola(I).color
+            pConsola.ForeColor = Consola(I).Color
             pConsola.FontBold = CBool(Consola(I).bold)
             pConsola.FontItalic = CBool(Consola(I).italic)
             pConsola.Print Consola(I).Texto
@@ -2629,10 +2961,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
 
 End Sub
 
-Private Sub Image1_Click(Index As Integer)
+Private Sub Image1_Click(index As Integer)
     'Call Audio.PlayWave(SND_CLICK)
 
-    Select Case Index
+    Select Case index
 
         Case 0
             Call frmOpciones.Show(vbModeless, frmMain)
@@ -2669,9 +3001,9 @@ Private Sub Image1_Click(Index As Integer)
 
 End Sub
 
-Private Sub Image3_Click(Index As Integer)
+Private Sub Image3_Click(index As Integer)
 
-    Select Case Index
+    Select Case index
 
         Case 0
             Inventario.SelectGold
@@ -2745,7 +3077,7 @@ Private Sub picInv_DblClick()
 
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If DragAndDrop Then
         frmMain.MouseIcon = Nothing
@@ -2755,11 +3087,11 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
     End If
 
     If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
-        If x >= Inventario.OffSetX And y >= Inventario.OffSetY And x <= picInv.Width And y <= picInv.Height Then
+        If X >= Inventario.OffSetX And Y >= Inventario.OffSetY And X <= picInv.Width And Y <= picInv.Height Then
 
             Dim NewPosInv As Integer
 
-            NewPosInv = Inventario.ClickItem(x, y)
+            NewPosInv = Inventario.ClickItem(X, Y)
 
             If NewPosInv > 0 Then
                 Call WriteIntercambiarInv(Inventario.SelectedItem, NewPosInv, False)
@@ -2773,25 +3105,25 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
 
             Dim DropY As Integer, tmpY As Integer
 
-            tmpX = x + picInv.Left - pRender.Left
-            tmpY = y + picInv.Top - pRender.Top
+            tmpX = X + picInv.Left - pRender.Left
+            tmpY = Y + picInv.Top - pRender.Top
         
             If tmpX > 0 And tmpX < pRender.Width And tmpY > 0 And tmpY < pRender.Height Then
                 Call ConvertCPtoTP(tmpX, tmpY, DropX, DropY)
         
                 'Solo tira a un tilde de distancia...
-                If DropX < UserPos.x - 1 Then
-                    DropX = UserPos.x - 1
-                    DropY = UserPos.y
-                ElseIf DropX > UserPos.x + 1 Then
-                    DropX = UserPos.x + 1
-                    DropY = UserPos.y
-                ElseIf DropY < UserPos.y - 1 Then
-                    DropY = UserPos.y - 1
-                    DropX = UserPos.x
-                ElseIf DropY > UserPos.y + 1 Then
-                    DropY = UserPos.y + 1
-                    DropX = UserPos.x
+                If DropX < UserPos.X - 1 Then
+                    DropX = UserPos.X - 1
+                    DropY = UserPos.Y
+                ElseIf DropX > UserPos.X + 1 Then
+                    DropX = UserPos.X + 1
+                    DropY = UserPos.Y
+                ElseIf DropY < UserPos.Y - 1 Then
+                    DropY = UserPos.Y - 1
+                    DropX = UserPos.X
+                ElseIf DropY > UserPos.Y + 1 Then
+                    DropY = UserPos.Y + 1
+                    DropX = UserPos.X
 
                 End If
             
@@ -3180,28 +3512,28 @@ Private Sub WSock_Error(ByVal Number As Integer, _
 End Sub
 
 Public Sub RefreshMiniMap()
-    frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
+    frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
 
-    Me.shpMiniMapaUser.Left = UserPos.x
-    Me.shpMiniMapaUser.Top = UserPos.y
-    Me.shpMiniMapaVision.Left = UserPos.x - 135
-    Me.shpMiniMapaVision.Top = UserPos.y - 135
+    Me.shpMiniMapaUser.Left = UserPos.X
+    Me.shpMiniMapaUser.Top = UserPos.Y
+    Me.shpMiniMapaVision.Left = UserPos.X - 135
+    Me.shpMiniMapaVision.Top = UserPos.Y - 135
     Me.imgMiniMapa.Refresh
 
 End Sub
 
 Private Sub imgMiniMapa_MouseDown(Button As Integer, _
                                   Shift As Integer, _
-                                  x As Single, _
-                                  y As Single)
+                                  X As Single, _
+                                  Y As Single)
 
-    If x > 1077 Then x = 1077
-    If x < 23 Then x = 23
-    If y > 1477 Then y = 1477
-    If y < 23 Then y = 23
+    If X > 1077 Then X = 1077
+    If X < 23 Then X = 23
+    If Y > 1477 Then Y = 1477
+    If Y < 23 Then Y = 23
 
     If Button = vbRightButton Then
-        Call WriteWarpChar("YO", UserMap, CInt(x - 1), CInt(y - 1))
+        Call WriteWarpChar("YO", UserMap, CInt(X - 1), CInt(Y - 1))
         Call RefreshMiniMap
 
     End If

@@ -37,17 +37,6 @@ Private Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long)
 'Particulas
 '***************************
 Option Explicit
-Private Declare Function ShellExecute Lib "Shell32.dll" Alias "ShellExecuteA" (ByVal hWnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
-Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long) As Long
-Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
-Private Declare Function ReleaseCapture Lib "user32.dll" () As Long
-Private Declare Function SendMessage Lib "user32.dll" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
-Private Declare Function SetLayeredWindowAttributes Lib "user32.dll" (ByVal hWnd As Long, ByVal crKey As Long, ByVal bAlpha As Byte, ByVal dwFlags As Long) As Long
-Const LW_KEY = &H1
-Const G_E = (-20)
-Const W_E = &H80000
-Private Const WM_NCLBUTTONDOWN = &HA1
-Private Const HTCAPTION = 2
 
 Public PCred() As Integer
 Public PCgreen() As Integer
@@ -76,7 +65,7 @@ Public PathInit As String
 Private Type TConsola
 
     Texto As String
-    color As Long
+    Color As Long
     bold As Byte
     italic As Byte
 
@@ -228,10 +217,10 @@ Sub CargarZonas()
         With Zonas(I)
             .nombre = GetVar(archivoC, "Zona" & CStr(I), "Nombre")
             .Mapa = CByte(GetVar(archivoC, "Zona" & CStr(I), "Mapa"))
-            .X1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X1"))
-            .Y1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y1"))
-            .X2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X2"))
-            .Y2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y2"))
+            .x1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X1"))
+            .y1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y1"))
+            .x2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X2"))
+            .y2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y2"))
             .Segura = CByte(GetVar(archivoC, "Zona" & CStr(I), "Segura"))
             .Acoplar = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "Acoplar")))
             .Terreno = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "Terreno")))
@@ -338,7 +327,7 @@ Public Sub RefreshAllChars()
     For LoopC = 1 To LastChar
 
         If charlist(LoopC).ACTIVE = 1 Then
-            MapData(charlist(LoopC).Pos.x, charlist(LoopC).Pos.y).CharIndex = LoopC
+            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
 
         End If
 
@@ -535,16 +524,16 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     Select Case Direccion
 
         Case E_Heading.north
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y - 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
 
         Case E_Heading.east
-            LegalOk = MoveToLegalPos(UserPos.x + 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
 
         Case E_Heading.south
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y + 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
 
         Case E_Heading.west
-            LegalOk = MoveToLegalPos(UserPos.x - 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
 
     End Select
     
@@ -573,7 +562,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     Call frmMain.RefreshMiniMap
     
     ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.x, UserPos.y)
+    Call Audio.MoveListener(UserPos.X, UserPos.Y)
     
     CheckZona
 
@@ -649,7 +638,7 @@ Private Sub CheckKeys()
             End If
                         
             ' We haven't moved - Update 3D sounds!
-            Call Audio.MoveListener(UserPos.x, UserPos.y)
+            Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
 
             Dim kp As Boolean
@@ -660,11 +649,11 @@ Private Sub CheckKeys()
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
-                Call Audio.MoveListener(UserPos.x, UserPos.y)
+                Call Audio.MoveListener(UserPos.X, UserPos.Y)
 
             End If
             
-            frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
+            frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
             CheckZona
 
         End If
@@ -681,15 +670,15 @@ Sub CargarMap(ByVal Map As Integer)
     'Formato de mapas optimizado para reducir el espacio que ocupan.
     'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
     '**************************************************************
-    Dim y       As Long
+    Dim Y       As Long
 
-    Dim x       As Long
+    Dim X       As Long
 
     Dim tempint As Integer
 
     Dim ByFlags As Byte
 
-    Dim Handle  As Integer
+    Dim handle  As Integer
     
     'If ArchivoMapa > 0 Then
        
@@ -790,18 +779,18 @@ Sub CargarMap(ByVal Map As Integer)
 
     End If
     
-    For y = 1 To YMaxMapSize
-        For x = 1 To XMaxMapSize
+    For Y = 1 To YMaxMapSize
+        For X = 1 To XMaxMapSize
 
-            If MapData(x, y).CharIndex > 0 Then
-                Call EraseChar(MapData(x, y).CharIndex)
+            If MapData(X, Y).CharIndex > 0 Then
+                Call EraseChar(MapData(X, Y).CharIndex)
 
             End If
 
             'Erase OBJs
-            MapData(x, y).ObjGrh.GrhIndex = 0
-        Next x
-    Next y
+            MapData(X, Y).ObjGrh.GrhIndex = 0
+        Next X
+    Next Y
     
 End Sub
 
@@ -891,7 +880,7 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
     'Last Modify Date: 07/29/2007
     '*****************************************************************
-    Dim count     As Long
+    Dim Count     As Long
 
     Dim curPos    As Long
 
@@ -905,10 +894,10 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     
     Do
         curPos = InStr(curPos + 1, Text, delimiter)
-        count = count + 1
+        Count = Count + 1
     Loop While curPos <> 0
     
-    FieldCount = count
+    FieldCount = Count
 
 End Function
 
@@ -965,8 +954,8 @@ Sub Main()
     curProyectil.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\Mira.ani"
     curProyectilPequena.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\MiraPequena.ani"
  
-    curGeneral.CursorOn frmMain.hWnd
-    curGeneral.CursorOn frmMain.pRender.hWnd
+    curGeneral.CursorOn frmMain.hwnd
+    curGeneral.CursorOn frmMain.pRender.hwnd
    
     frmMain.picHechiz.MouseIcon = picMouseIcon
     frmMain.CmdLanzar.MouseIcon = picMouseIcon
@@ -1066,7 +1055,7 @@ Sub Main()
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.25
     DoEvents
        
-    If Not InitTileEngine(frmMain.hWnd, frmMain.Top, frmMain.pRender.Left, 32, 32, Round(frmMain.pRender.Height / 32), Round(frmMain.pRender.Width / 32), 9, 9, 9, 0.018) Then
+    If Not InitTileEngine(frmMain.hwnd, frmMain.Top, frmMain.pRender.Left, 32, 32, Round(frmMain.pRender.Height / 32), Round(frmMain.pRender.Width / 32), 9, 9, 9, 0.018) Then
       
         Call CloseClient
 
@@ -1093,7 +1082,7 @@ Call CargarObjetos
     DoEvents
 
     'Inicializamos el sonido
-    Call Audio.Initialize(dX, frmMain.hWnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
+    Call Audio.Initialize(dX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
     
     'Audio
@@ -1325,8 +1314,8 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer acá....
-Function HayAgua(ByVal x As Integer, ByVal y As Integer) As Boolean
-    HayAgua = ((MapData(x, y).Graphic(1).GrhIndex >= 1505 And MapData(x, y).Graphic(1).GrhIndex <= 1520) Or (MapData(x, y).Graphic(1).GrhIndex >= 5665 And MapData(x, y).Graphic(1).GrhIndex <= 5680) Or (MapData(x, y).Graphic(1).GrhIndex >= 13547 And MapData(x, y).Graphic(1).GrhIndex <= 13562)) And MapData(x, y).Graphic(2).GrhIndex = 0
+Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And MapData(X, Y).Graphic(2).GrhIndex = 0
                 
 End Function
 
@@ -1665,7 +1654,7 @@ Public Sub CloseClient()
 
 End Sub
 
-Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
+Public Function BuscarZona(ByVal X As Integer, ByVal Y As Integer) As Integer
 
     Dim I        As Integer
 
@@ -1677,7 +1666,7 @@ Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And x >= Zonas(I).X1 And x <= Zonas(I).X2 And y >= Zonas(I).Y1 And y <= Zonas(I).Y2 Then
+        If UserMap = Zonas(I).Mapa And X >= Zonas(I).x1 And X <= Zonas(I).x2 And Y >= Zonas(I).y1 And Y <= Zonas(I).y2 Then
             BuscarZona = I
             Encontro = True
 
@@ -1688,7 +1677,7 @@ Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
     Next I
 
     If Not Encontro And UserMap > 0 Then
-        I = IIf(HayAgua(x, y), 24, 23)
+        I = IIf(HayAgua(X, Y), 24, 23)
         BuscarZona = I
 
     End If
@@ -1707,7 +1696,7 @@ Public Sub CheckZona()
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And UserPos.x >= Zonas(I).X1 And UserPos.x <= Zonas(I).X2 And UserPos.y >= Zonas(I).Y1 And UserPos.y <= Zonas(I).Y2 Then
+        If UserMap = Zonas(I).Mapa And UserPos.X >= Zonas(I).x1 And UserPos.X <= Zonas(I).x2 And UserPos.Y >= Zonas(I).y1 And UserPos.Y <= Zonas(I).y2 Then
             If ZonaActual <> I Then
                 If ZonaActual > 0 Then
                     If Zonas(ZonaActual).Segura <> Zonas(I).Segura Then
@@ -1735,7 +1724,7 @@ Public Sub CheckZona()
     Next I
 
     If Not Encontro And UserMap > 0 Then
-        I = IIf(HayAgua(UserPos.x, UserPos.y), 24, 23)
+        I = IIf(HayAgua(UserPos.X, UserPos.Y), 24, 23)
 
         If ZonaActual <> I Then
             ZonaActual = I
@@ -1788,23 +1777,23 @@ Sub ClosePj()
     Call Audio.StopWave
     frmMain.IsPlaying = PlayLoop.plNone
     
-    Dim x As Integer
+    Dim X As Integer
 
-    Dim y As Integer
+    Dim Y As Integer
 
-    For x = 1 To XMaxMapSize
-        For y = 1 To YMaxMapSize
-            MapData(x, y).CharIndex = 0
+    For X = 1 To XMaxMapSize
+        For Y = 1 To YMaxMapSize
+            MapData(X, Y).CharIndex = 0
 
-            If MapData(x, y).ObjGrh.GrhIndex = GrhFogata Then
-                MapData(x, y).Graphic(3).GrhIndex = 0
-                Call Light_Destroy_ToMap(x, y)
+            If MapData(X, Y).ObjGrh.GrhIndex = GrhFogata Then
+                MapData(X, Y).Graphic(3).GrhIndex = 0
+                Call Light_Destroy_ToMap(X, Y)
 
             End If
 
-            MapData(x, y).ObjGrh.GrhIndex = 0
-        Next y
-    Next x
+            MapData(X, Y).ObjGrh.GrhIndex = 0
+        Next Y
+    Next X
 
     On Local Error Resume Next
     frmMain.SendTxt.Visible = False
@@ -1819,7 +1808,7 @@ Sub ClosePj()
     ZoomLevel = 0
     'D3DDevice.SetRenderTarget pBackbuffer, DeviceStencil, 0
     
-    For I = 0 To Forms.count - 1
+    For I = 0 To Forms.Count - 1
 
         If Forms(I).Name <> frmMain.Name And Forms(I).Name <> frmCrearPersonaje.Name And Forms(I).Name <> frmMensaje.Name Then
             Unload Forms(I)
@@ -1886,14 +1875,14 @@ Sub ClosePj()
 
 End Sub
 
-Public Function General_Distance_Get(ByVal X1 As Integer, _
-                                     ByVal Y1 As Integer, _
-                                     X2 As Integer, _
-                                     Y2 As Integer) As Integer
+Public Function General_Distance_Get(ByVal x1 As Integer, _
+                                     ByVal y1 As Integer, _
+                                     x2 As Integer, _
+                                     y2 As Integer) As Integer
 
     Dim Dist As Long
 
-    Dist = Sqr((X1 - X2) ^ 2 + (Y1 - Y2) ^ 2)
+    Dist = Sqr((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
     General_Distance_Get = Dist
 
 End Function
@@ -1920,16 +1909,16 @@ Public Sub mOpciones_Default()
     Select Case UserFaccion
 
         Case 2
-            curGeneralCiuda.CursorOn frmMain.hWnd
-            curGeneralCiuda.CursorOn frmMain.pRender.hWnd
+            curGeneralCiuda.CursorOn frmMain.hwnd
+            curGeneralCiuda.CursorOn frmMain.pRender.hwnd
 
         Case 1
-            curGeneralCrimi.CursorOn frmMain.hWnd
-            curGeneralCrimi.CursorOn frmMain.pRender.hWnd
+            curGeneralCrimi.CursorOn frmMain.hwnd
+            curGeneralCrimi.CursorOn frmMain.pRender.hwnd
 
         Case Else
-            curGeneral.CursorOn frmMain.hWnd
-            curGeneral.CursorOn frmMain.pRender.hWnd
+            curGeneral.CursorOn frmMain.hwnd
+            curGeneral.CursorOn frmMain.pRender.hwnd
 
     End Select
         
@@ -1986,33 +1975,33 @@ Public Sub SetCursor(ByVal tCursor As eCursor)
         Case eCursor.General
 
             If mOpciones.CursorFaccionario = False Then
-                curGeneral.CursorOn frmMain.hWnd
-                curGeneral.CursorOn frmMain.pRender.hWnd
+                curGeneral.CursorOn frmMain.hwnd
+                curGeneral.CursorOn frmMain.pRender.hwnd
             Else
 
                 Select Case UserFaccion
 
                     Case 2
-                        curGeneralCiuda.CursorOn frmMain.hWnd
-                        curGeneralCiuda.CursorOn frmMain.pRender.hWnd
+                        curGeneralCiuda.CursorOn frmMain.hwnd
+                        curGeneralCiuda.CursorOn frmMain.pRender.hwnd
 
                     Case 1
-                        curGeneralCrimi.CursorOn frmMain.hWnd
-                        curGeneralCrimi.CursorOn frmMain.pRender.hWnd
+                        curGeneralCrimi.CursorOn frmMain.hwnd
+                        curGeneralCrimi.CursorOn frmMain.pRender.hwnd
 
                     Case Else
-                        curGeneral.CursorOn frmMain.hWnd
-                        curGeneral.CursorOn frmMain.pRender.hWnd
+                        curGeneral.CursorOn frmMain.hwnd
+                        curGeneral.CursorOn frmMain.pRender.hwnd
 
                 End Select
 
             End If
 
         Case eCursor.proyectil
-            curProyectil.CursorOn frmMain.pRender.hWnd
+            curProyectil.CursorOn frmMain.pRender.hwnd
 
         Case eCursor.ProyectilPequena
-            curProyectilPequena.CursorOn frmMain.pRender.hWnd
+            curProyectilPequena.CursorOn frmMain.pRender.hwnd
 
     End Select
 
@@ -2185,27 +2174,27 @@ Dim I As Byte
  
 End Sub
  
-Function Engine_PixelPosX(ByVal x As Long) As Long
+Function Engine_PixelPosX(ByVal X As Long) As Long
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX]http://www.vbgore.com/GameClient.TileEn ... _PixelPosX[/url]
 '*****************************************************************
  
-    Engine_PixelPosX = (x - 1) * TilePixelWidth
+    Engine_PixelPosX = (X - 1) * TilePixelWidth
  
 End Function
  
-Function Engine_PixelPosY(ByVal y As Long) As Long
+Function Engine_PixelPosY(ByVal Y As Long) As Long
 '*****************************************************************
 'Converts a tile position to a screen position
 'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY]http://www.vbgore.com/GameClient.TileEn ... _PixelPosY[/url]
 '*****************************************************************
  
-    Engine_PixelPosY = (y - 1) * TilePixelHeight
+    Engine_PixelPosY = (Y - 1) * TilePixelHeight
  
 End Function
  
-Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
+Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
  
 '************************************************************
 'Tile Position to Screen Position
@@ -2216,7 +2205,7 @@ Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
  
 End Function
  
-Public Function Engine_TPtoSPY(ByVal y As Byte) As Long
+Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
  
 '************************************************************
 'Tile Position to Screen Position
@@ -2228,16 +2217,3 @@ Public Function Engine_TPtoSPY(ByVal y As Byte) As Long
 End Function
 'Particulas
 'Particulas *********************
-Public Sub Auto_Drag(ByVal hWnd As Long)
-Call ReleaseCapture
-Call SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, ByVal 0&)
-End Sub
-
-Sub Skin(Frm As Form, color As Long)
-Frm.BackColor = color
-Dim Ret As Long
-Ret = GetWindowLong(Frm.hWnd, G_E)
-Ret = Ret Or W_E
-SetWindowLong Frm.hWnd, G_E, Ret
-SetLayeredWindowAttributes Frm.hWnd, color, 0, LW_KEY
-End Sub
