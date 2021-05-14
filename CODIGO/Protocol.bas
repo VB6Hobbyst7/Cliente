@@ -1558,13 +1558,19 @@ Private Sub HandleUpdateMana()
     UserMinMAN = incomingData.ReadInteger()
     
    If UserMaxMAN > 0 Then
-        frmMain.Bar_Mana.max = UserMaxMAN
-        frmMain.Bar_Mana.Value = UserMinMAN
-        frmMain.Bar_Mana.TextAfterCaption = " / " & UserMaxMAN
+        frmMain.Bar_Mana(0).max = UserMaxMAN
+        frmMain.Bar_Mana(0).Value = UserMinMAN
+        frmMain.Bar_Mana(0).TextAfterCaption = " / " & UserMaxMAN
+        frmMain.Bar_Mana(1).max = UserMaxMAN
+        frmMain.Bar_Mana(1).Value = UserMinMAN
+        frmMain.Bar_Mana(1).TextAfterCaption = " / " & UserMaxMAN
     Else
-        frmMain.Bar_Mana.max = 1
-        frmMain.Bar_Mana.Value = 0
-        frmMain.Bar_Mana.TextAfterCaption = " / 0"
+        frmMain.Bar_Mana(0).max = 1
+        frmMain.Bar_Mana(0).Value = 0
+        frmMain.Bar_Mana(0).TextAfterCaption = " / 0"
+         frmMain.Bar_Mana(1).max = 1
+        frmMain.Bar_Mana(1).Value = 0
+        frmMain.Bar_Mana(1).TextAfterCaption = " / 0"
 
     End If
     
@@ -1918,10 +1924,13 @@ Private Sub HandleUpdateHP()
     'Get data and update form
     UserMinHP = incomingData.ReadInteger()
     
-     frmMain.bar_salud.max = UserMaxHP
-    frmMain.bar_salud.Value = UserMinHP
+     frmMain.bar_salud(0).max = UserMaxHP
+    frmMain.bar_salud(0).Value = UserMinHP
+     frmMain.bar_salud(1).max = UserMaxHP
+    frmMain.bar_salud(1).Value = UserMinHP
     
-    frmMain.bar_salud.TextAfterCaption = " / " & UserMaxHP
+    frmMain.bar_salud(0).TextAfterCaption = " / " & UserMaxHP
+     frmMain.bar_salud(1).TextAfterCaption = " / " & UserMaxHP
     ' frmMain.HpshpV.Value = (((UserMinHP / 100) / (UserMaxHP / 100)) * 100)
     
 '    frmMain.lblVidaN.Caption = UserMinHP & "/" & UserMaxHP
@@ -3687,21 +3696,29 @@ Private Sub HandleUpdateUserStats()
     
     frmMain.Experiencia.Value = UserExp
     'Form1.BarraCir.Value = UserExp
-    frmMain.bar_salud.max = UserMaxHP
-    frmMain.bar_salud.Value = UserMinHP
+    frmMain.bar_salud(0).max = UserMaxHP
+    frmMain.bar_salud(0).Value = UserMinHP
+     frmMain.bar_salud(1).max = UserMaxHP
+    frmMain.bar_salud(1).Value = UserMinHP
     
-    frmMain.bar_salud.TextAfterCaption = " / " & UserMaxHP
-
+    frmMain.bar_salud(0).TextAfterCaption = " / " & UserMaxHP
+ frmMain.bar_salud(1).TextAfterCaption = " / " & UserMaxHP
     'frmMain.HpshpV.Value = (((UserMinHP / 100) / (UserMaxHP / 100)) * 100)
     
     If UserMaxMAN > 0 Then
-        frmMain.Bar_Mana.max = UserMaxMAN
-        frmMain.Bar_Mana.Value = UserMinMAN
-        frmMain.Bar_Mana.TextAfterCaption = " / " & UserMaxMAN
+        frmMain.Bar_Mana(0).max = UserMaxMAN
+        frmMain.Bar_Mana(0).Value = UserMinMAN
+        frmMain.Bar_Mana(0).TextAfterCaption = " / " & UserMaxMAN
+        frmMain.Bar_Mana(1).max = UserMaxMAN
+        frmMain.Bar_Mana(1).Value = UserMinMAN
+        frmMain.Bar_Mana(1).TextAfterCaption = " / " & UserMaxMAN
     Else
-        frmMain.Bar_Mana.max = 1
-        frmMain.Bar_Mana.Value = 0
-        frmMain.Bar_Mana.TextAfterCaption = " / 0"
+        frmMain.Bar_Mana(0).max = 1
+        frmMain.Bar_Mana(0).Value = 0
+        frmMain.Bar_Mana(0).TextAfterCaption = " / 0"
+         frmMain.Bar_Mana(1).max = 1
+        frmMain.Bar_Mana(1).Value = 0
+        frmMain.Bar_Mana(1).TextAfterCaption = " / 0"
 
     End If
     
@@ -4202,7 +4219,7 @@ Private Sub HandleBlacksmithWeapons()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim Count As Integer
+    Dim count As Integer
 
     Dim I     As Long
 
@@ -4210,12 +4227,12 @@ Private Sub HandleBlacksmithWeapons()
 
     Dim k     As Long
     
-    Count = buffer.ReadInteger()
+    count = buffer.ReadInteger()
     
-    ReDim ArmasHerrero(Count) As tItemsConstruibles
+    ReDim ArmasHerrero(count) As tItemsConstruibles
     ReDim HerreroMejorar(0) As tItemsConstruibles
     
-    For I = 1 To Count
+    For I = 1 To count
 
         With ArmasHerrero(I)
             .Name = buffer.ReadASCIIString()    'Get the object's name
@@ -4237,18 +4254,18 @@ Private Sub HandleBlacksmithWeapons()
         Call InvLingosHerreria(3).Initialize(.picLingotes2, 0, 0, 3, False, , , , , , False)
         Call InvLingosHerreria(4).Initialize(.picLingotes3, 0, 0, 3, False, , , , , , False)
         
-        Call .HideExtraControls(Count)
+        Call .HideExtraControls(count)
         Call .RenderList(1, True)
 
     End With
     
-    For I = 1 To Count
+    For I = 1 To count
 
         With ArmasHerrero(I)
 
             If .Upgrade Then
 
-                For k = 1 To Count
+                For k = 1 To count
 
                     If .Upgrade = ArmasHerrero(k).OBJIndex Then
                         J = J + 1
@@ -4320,7 +4337,7 @@ Private Sub HandleBlacksmithArmors()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim Count As Integer
+    Dim count As Integer
 
     Dim I     As Long
 
@@ -4328,11 +4345,11 @@ Private Sub HandleBlacksmithArmors()
 
     Dim k     As Long
     
-    Count = buffer.ReadInteger()
+    count = buffer.ReadInteger()
     
-    ReDim ArmadurasHerrero(Count) As tItemsConstruibles
+    ReDim ArmadurasHerrero(count) As tItemsConstruibles
     
-    For I = 1 To Count
+    For I = 1 To count
 
         With ArmadurasHerrero(I)
             .Name = buffer.ReadASCIIString()    'Get the object's name
@@ -4349,13 +4366,13 @@ Private Sub HandleBlacksmithArmors()
     
     J = UBound(HerreroMejorar)
     
-    For I = 1 To Count
+    For I = 1 To count
 
         With ArmadurasHerrero(I)
 
             If .Upgrade Then
 
-                For k = 1 To Count
+                For k = 1 To count
 
                     If .Upgrade = ArmadurasHerrero(k).OBJIndex Then
                         J = J + 1
@@ -4427,7 +4444,7 @@ Private Sub HandleCarpenterObjects()
     'Remove packet ID
     Call buffer.ReadByte
     
-    Dim Count As Integer
+    Dim count As Integer
 
     Dim I     As Long
 
@@ -4435,12 +4452,12 @@ Private Sub HandleCarpenterObjects()
 
     Dim k     As Long
     
-    Count = buffer.ReadInteger()
+    count = buffer.ReadInteger()
     
-    ReDim ObjCarpintero(Count) As tItemsConstruibles
+    ReDim ObjCarpintero(count) As tItemsConstruibles
     ReDim CarpinteroMejorar(0) As tItemsConstruibles
     
-    For I = 1 To Count
+    For I = 1 To count
 
         With ObjCarpintero(I)
             .Name = buffer.ReadASCIIString()        'Get the object's name
@@ -4461,18 +4478,18 @@ Private Sub HandleCarpenterObjects()
         Call InvMaderasCarpinteria(3).Initialize(.picMaderas2, 0, 0, 2, False, , , , , , False)
         Call InvMaderasCarpinteria(4).Initialize(.picMaderas3, 0, 0, 2, False, , , , , , False)
         
-        Call .HideExtraControls(Count)
+        Call .HideExtraControls(count)
         Call .RenderList(1)
 
     End With
     
-    For I = 1 To Count
+    For I = 1 To count
 
         With ObjCarpintero(I)
 
             If .Upgrade Then
 
-                For k = 1 To Count
+                For k = 1 To count
 
                     If .Upgrade = ObjCarpintero(k).OBJIndex Then
                         J = J + 1
@@ -7126,11 +7143,11 @@ Private Sub HandlePicInRender()
     'Remove packet ID
     Call incomingData.ReadByte
 
-    Dim picType As Byte
+    Dim PicType As Byte
 
-    picType = incomingData.ReadByte()
+    PicType = incomingData.ReadByte()
   
-    Select Case picType
+    Select Case PicType
 
         Case ePicRenderType.BloodDie
             AlphaBloodUserDie = 255
@@ -13283,7 +13300,7 @@ On Error GoTo err
             .aura(parte).OffSetX = 0
             .aura(parte).OffSetY = 0
         End If
-        .aura(parte).Color = D3DColorXRGB(.aura(parte).R, .aura(parte).G, .aura(parte).b)
+        .aura(parte).color = D3DColorXRGB(.aura(parte).R, .aura(parte).G, .aura(parte).b)
     End With
  
 Exit Sub

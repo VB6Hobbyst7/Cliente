@@ -26,6 +26,150 @@ Begin VB.Form frmMain
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1025
    StartUpPosition =   2  'CenterScreen
+   Begin MBProgressBar.ProgressBar bar_sta 
+      Height          =   105
+      Left            =   1350
+      TabIndex        =   27
+      Top             =   1140
+      Visible         =   0   'False
+      Width           =   1890
+      _ExtentX        =   3334
+      _ExtentY        =   185
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":0CCA
+      BarPicture      =   "frmMainN.frx":DA24
+      Style           =   1
+   End
+   Begin MBProgressBar.ProgressBar Bar_Mana 
+      Height          =   180
+      Index           =   0
+      Left            =   1320
+      TabIndex        =   26
+      Top             =   840
+      Visible         =   0   'False
+      Width           =   1875
+      _ExtentX        =   3307
+      _ExtentY        =   318
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":E7D4
+      BarPicture      =   "frmMainN.frx":1B52E
+      Style           =   1
+   End
+   Begin MBProgressBar.ProgressBar bar_salud 
+      Height          =   180
+      Index           =   0
+      Left            =   1320
+      TabIndex        =   25
+      Top             =   570
+      Visible         =   0   'False
+      Width           =   1860
+      _ExtentX        =   3281
+      _ExtentY        =   318
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":1C2DE
+      BarPicture      =   "frmMainN.frx":29038
+      Style           =   1
+   End
+   Begin MBProgressBar.ProgressBar bar_salud 
+      Height          =   180
+      Index           =   1
+      Left            =   7380
+      TabIndex        =   45
+      Top             =   6600
+      Visible         =   0   'False
+      Width           =   1020
+      _ExtentX        =   1799
+      _ExtentY        =   318
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":29DE8
+      BarPicture      =   "frmMainN.frx":36B42
+      Style           =   1
+   End
+   Begin MBProgressBar.ProgressBar Bar_Mana 
+      Height          =   180
+      Index           =   1
+      Left            =   7380
+      TabIndex        =   46
+      Top             =   6840
+      Visible         =   0   'False
+      Width           =   1035
+      _ExtentX        =   1826
+      _ExtentY        =   318
+      BorderStyle     =   0
+      CaptionType     =   2
+      Value           =   50
+      Percentage      =   50
+      Smooth          =   -1  'True
+      TextColor       =   16777215
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Palatino Linotype"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BackPicture     =   "frmMainN.frx":378F2
+      BarPicture      =   "frmMainN.frx":4464C
+      Style           =   1
+   End
    Begin VB.PictureBox picarmadura 
       Appearance      =   0  'Flat
       BackColor       =   &H80000007&
@@ -144,93 +288,9 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN.frx":0CCA
-      BarPicture      =   "frmMainN.frx":6112
+      BackPicture     =   "frmMainN.frx":453FC
+      BarPicture      =   "frmMainN.frx":4A844
       TextAfterCaption=   "%"
-      Style           =   1
-   End
-   Begin MBProgressBar.ProgressBar bar_salud 
-      Height          =   180
-      Left            =   1350
-      TabIndex        =   25
-      Top             =   555
-      Visible         =   0   'False
-      Width           =   1860
-      _ExtentX        =   3281
-      _ExtentY        =   318
-      BorderStyle     =   0
-      CaptionType     =   2
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      TextColor       =   16777215
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Palatino Linotype"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN.frx":B55A
-      BarPicture      =   "frmMainN.frx":182B4
-      Style           =   1
-   End
-   Begin MBProgressBar.ProgressBar Bar_Mana 
-      Height          =   180
-      Left            =   1350
-      TabIndex        =   26
-      Top             =   840
-      Visible         =   0   'False
-      Width           =   1875
-      _ExtentX        =   3307
-      _ExtentY        =   318
-      BorderStyle     =   0
-      CaptionType     =   2
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      TextColor       =   16777215
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Palatino Linotype"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN.frx":19064
-      BarPicture      =   "frmMainN.frx":25DBE
-      Style           =   1
-   End
-   Begin MBProgressBar.ProgressBar bar_sta 
-      Height          =   105
-      Left            =   1350
-      TabIndex        =   27
-      Top             =   1140
-      Visible         =   0   'False
-      Width           =   1890
-      _ExtentX        =   3334
-      _ExtentY        =   185
-      BorderStyle     =   0
-      CaptionType     =   2
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      TextColor       =   16777215
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Palatino Linotype"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN.frx":26B6E
-      BarPicture      =   "frmMainN.frx":338C8
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar Bar_Agua 
@@ -257,8 +317,8 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN.frx":34678
-      BarPicture      =   "frmMainN.frx":413D2
+      BackPicture     =   "frmMainN.frx":4FC8C
+      BarPicture      =   "frmMainN.frx":5C9E6
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar bar_comida 
@@ -285,8 +345,8 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN.frx":41A4E
-      BarPicture      =   "frmMainN.frx":4E7A8
+      BackPicture     =   "frmMainN.frx":5D062
+      BarPicture      =   "frmMainN.frx":69DBC
       Style           =   1
    End
    Begin VB.PictureBox pRender 
@@ -295,7 +355,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   11805
-      Left            =   -2160
+      Left            =   -240
       ScaleHeight     =   787
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   1032
@@ -406,7 +466,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000008&
          Height          =   2595
          Left            =   15000
-         Picture         =   "frmMainN.frx":4EE94
+         Picture         =   "frmMainN.frx":6A4A8
          ScaleHeight     =   173
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   16
@@ -433,7 +493,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H80000008&
             Height          =   105
             Left            =   15
-            Picture         =   "frmMainN.frx":50F46
+            Picture         =   "frmMainN.frx":6C55A
             ScaleHeight     =   7
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   14
@@ -448,7 +508,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   4875
          Left            =   12000
-         Picture         =   "frmMainN.frx":510BC
+         Picture         =   "frmMainN.frx":6C6D0
          ScaleHeight     =   4875
          ScaleWidth      =   3030
          TabIndex        =   37
@@ -539,7 +599,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H80000008&
             Height          =   1367
             Left            =   11550
-            Picture         =   "frmMainN.frx":5C599
+            Picture         =   "frmMainN.frx":77BAD
             ScaleHeight     =   91
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   18
@@ -565,7 +625,7 @@ Begin VB.Form frmMain
                ForeColor       =   &H80000008&
                Height          =   105
                Left            =   30
-               Picture         =   "frmMainN.frx":5D9C3
+               Picture         =   "frmMainN.frx":78FD7
                ScaleHeight     =   7
                ScaleMode       =   3  'Pixel
                ScaleWidth      =   14
@@ -717,7 +777,7 @@ Begin VB.Form frmMain
       BackStyle       =   0  'Transparent
       Height          =   255
       Left            =   12840
-      MouseIcon       =   "frmMainN.frx":5DB39
+      MouseIcon       =   "frmMainN.frx":7914D
       MousePointer    =   99  'Custom
       TabIndex        =   33
       Top             =   10440
@@ -785,7 +845,7 @@ Begin VB.Form frmMain
    Begin VB.Image Menu 
       Height          =   2940
       Left            =   12000
-      Picture         =   "frmMainN.frx":5E803
+      Picture         =   "frmMainN.frx":79E17
       Top             =   7995
       Visible         =   0   'False
       Width           =   3360
@@ -1161,6 +1221,51 @@ Dim InvY                 As Integer
 Public WithEvents Client As CSocketMaster
 Attribute Client.VB_VarHelpID = -1
 
+Private Sub Bar_Mana_Click(Index As Integer)
+  If UserMinMAN = UserMaxMAN Then Exit Sub
+            
+            If UserEstado = 1 Then
+
+                With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                    Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+                End With
+
+                Exit Sub
+
+            End If
+                
+            If Not PuedeMacrear Then
+                AddtoRichPicture "¡No puedes usar el macro tan rápido!", 255, 255, 255, True, False, False
+            ElseIf charlist(UserCharIndex).Moving = 0 Then
+                Call WriteMeditate
+                PuedeMacrear = False
+
+            End If
+End Sub
+
+Private Sub Bar_Mana_DblClick(Index As Integer)
+If Index = 0 Then
+If Bar_Mana(1).Visible = True Then
+Bar_Mana(1).Visible = False
+Else
+Bar_Mana(1).Visible = True
+End If
+
+End If
+End Sub
+
+Private Sub bar_salud_DblClick(Index As Integer)
+If Index = 0 Then
+If bar_salud(1).Visible = True Then
+bar_salud(1).Visible = False
+Else
+bar_salud(1).Visible = True
+End If
+
+End If
+End Sub
+
 Private Sub Client_Connect()
     'Clean input and output buffers
     Call incomingData.ReadASCIIStringFixed(incomingData.Length)
@@ -1483,13 +1588,13 @@ Private Sub cmdEfecto_Click()
     'AlphaCeguera = 255
 End Sub
 
-Private Sub cmdMoverHechi_Click(index As Integer)
+Private Sub cmdMoverHechi_Click(Index As Integer)
 
     If hlst.ListIndex = -1 Then Exit Sub
 
     Dim sTemp As String
 
-    Select Case index
+    Select Case Index
 
         Case 1 'subir
 
@@ -1501,9 +1606,9 @@ Private Sub cmdMoverHechi_Click(index As Integer)
 
     End Select
 
-    Call WriteMoveSpell(index, hlst.ListIndex + 1)
+    Call WriteMoveSpell(Index, hlst.ListIndex + 1)
     
-    Select Case index
+    Select Case Index
 
         Case 1 'subir
             sTemp = hlst.List(hlst.ListIndex - 1)
@@ -1890,7 +1995,7 @@ End Sub
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Y < 24 And NoRes Then
-        MoverVentana (Me.hwnd)
+        MoverVentana (Me.hWnd)
 
     End If
 
@@ -2392,8 +2497,9 @@ End Sub
 
 Private Sub MenuF_Click()
 Menu.Visible = True
-bar_salud.Visible = False
-Bar_Mana.Visible = False
+bar_salud(0).Visible = False
+Bar_Mana(0).Visible = False
+
 bar_sta.Visible = False
 bar_comida.Visible = False
 Bar_Agua.Visible = False
@@ -2406,8 +2512,8 @@ Image1(3).Visible = True
 End Sub
 Private Sub lbStats_Click()
 Menu.Visible = False
-bar_salud.Visible = True
-Bar_Mana.Visible = True
+bar_salud(0).Visible = True
+Bar_Mana(0).Visible = True
 bar_sta.Visible = True
 bar_comida.Visible = True
 Bar_Agua.Visible = True
@@ -2866,7 +2972,7 @@ Public Sub ReDrawConsola()
         If I >= 0 And I <= LineasConsola Then
             pConsola.CurrentX = 0
             pConsola.CurrentY = (I - OffSetConsola - 1) * 14
-            pConsola.ForeColor = Consola(I).Color
+            pConsola.ForeColor = Consola(I).color
             pConsola.FontBold = CBool(Consola(I).bold)
             pConsola.FontItalic = CBool(Consola(I).italic)
             pConsola.Print Consola(I).Texto
@@ -2961,10 +3067,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
 
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
     'Call Audio.PlayWave(SND_CLICK)
 
-    Select Case index
+    Select Case Index
 
         Case 0
             Call frmOpciones.Show(vbModeless, frmMain)
@@ -3001,9 +3107,9 @@ Private Sub Image1_Click(index As Integer)
 
 End Sub
 
-Private Sub Image3_Click(index As Integer)
+Private Sub Image3_Click(Index As Integer)
 
-    Select Case index
+    Select Case Index
 
         Case 0
             Inventario.SelectGold

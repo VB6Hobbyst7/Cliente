@@ -107,7 +107,6 @@ Module=ModAura; CODIGO\ModAura.bas
 Form=CODIGO\frmPanelTorneo.frm
 Module=EventosAoyind; CODIGO\EventosAoyind.bas
 Form=CODIGO\mochila.frm
-UserControl=..\..\..\Desktop\ucRadialProgress\ucRadialProgress.ctl
 Module=modVarios; CODIGO\modVarios.bas
 IconForm="frmMain"
 Startup="Sub Main"
