@@ -449,8 +449,8 @@ Public AperturaPergamino                           As Single
 ' Used by GetTextExtentPoint32
 Private Type Size
 
-    cx As Long
-    cy As Long
+    Cx As Long
+    Cy As Long
 
 End Type
 
@@ -499,7 +499,7 @@ Private Declare Function BitBlt _
 'Text width computation. Needed to center text.
 Private Declare Function GetTextExtentPoint32 _
                 Lib "gdi32" _
-                Alias "GetTextExtentPoint32A" (ByVal hDC As Long, _
+                Alias "GetTextExtentPoint32A" (ByVal hdc As Long, _
                                                ByVal lpsz As String, _
                                                ByVal cbString As Long, _
                                                lpSize As Size) As Long
@@ -1251,34 +1251,34 @@ Private Function LoadGrhData() As Boolean
 
     Dim grhCount    As Long
 
-    Dim Handle      As Integer
+    Dim handle      As Integer
 
     Dim fileVersion As Long
     
     'Open files
-    Handle = FreeFile()
+    handle = FreeFile()
     
-    Open IniPath & GraphicsFile For Binary Access Read As Handle
+    Open IniPath & GraphicsFile For Binary Access Read As handle
     Seek #1, 1
     
     'Get file version
-    Get Handle, , fileVersion
+    Get handle, , fileVersion
     
     'Get number of grhs
-    Get Handle, , grhCount
+    Get handle, , grhCount
     
     'Resize arrays
     ReDim GrhData(1 To grhCount) As GrhData
     
-    While Not EOF(Handle)
+    While Not EOF(handle)
 
-        Get Handle, , Grh
+        Get handle, , Grh
 
         If Grh > 0 Then
 
             With GrhData(Grh)
                 'Get number of frames
-                Get Handle, , .NumFrames
+                Get handle, , .NumFrames
 
                 If .NumFrames <= 0 Then GoTo ErrorHandler
             
@@ -1288,7 +1288,7 @@ Private Function LoadGrhData() As Boolean
 
                     'Read a animation GRH set
                     For Frame = 1 To .NumFrames
-                        Get Handle, , .Frames(Frame)
+                        Get handle, , .Frames(Frame)
 
                         If .Frames(Frame) <= 0 Or .Frames(Frame) > grhCount Then
                             GoTo ErrorHandler
@@ -1297,7 +1297,7 @@ Private Function LoadGrhData() As Boolean
 
                     Next Frame
                 
-                    Get Handle, , .Speed
+                    Get handle, , .Speed
                 
                     If .Speed <= 0 Then GoTo ErrorHandler
                 
@@ -1315,23 +1315,23 @@ Private Function LoadGrhData() As Boolean
                     'If .TileHeight <= 0 Then GoTo ErrorHandler
                 Else
                     'Read in normal GRH data
-                    Get Handle, , .FileNum
+                    Get handle, , .FileNum
 
                     If .FileNum <= 0 Then GoTo ErrorHandler
                 
-                    Get Handle, , GrhData(Grh).sX
+                    Get handle, , GrhData(Grh).sX
 
                     If .sX < 0 Then GoTo ErrorHandler
                 
-                    Get Handle, , .sY
+                    Get handle, , .sY
 
                     If .sY < 0 Then GoTo ErrorHandler
                 
-                    Get Handle, , .PixelWidth
+                    Get handle, , .PixelWidth
 
                     If .PixelWidth <= 0 Then GoTo ErrorHandler
                 
-                    Get Handle, , .PixelHeight
+                    Get handle, , .PixelHeight
 
                     If .PixelHeight <= 0 Then GoTo ErrorHandler
                 
@@ -1349,7 +1349,7 @@ Private Function LoadGrhData() As Boolean
 
     Wend
     
-    Close Handle
+    Close handle
     
     LoadGrhData = True
     Exit Function
@@ -1937,7 +1937,7 @@ Function GetBitmapDimensions(ByVal BmpFile As String, _
 
 End Function
 
-Sub DrawGrhtoHdc(ByVal hDC As Long, _
+Sub DrawGrhtoHdc(ByVal hdc As Long, _
                  ByVal GrhIndex As Integer, _
                  ByRef SourceRect As RECT, _
                  ByRef destRect As RECT)
@@ -1945,7 +1945,7 @@ Sub DrawGrhtoHdc(ByVal hDC As Long, _
     'Draws a Grh's portion to the given area of any Device Context
     '*****************************************************************
     'Call SurfaceDB.Surface(GrhData(GrhIndex).FileNum).BltToDC(hDC, SourceRect, destRect)
-    Call TransparentBlt(hDC, 0, 0, 32, 32, Inventario.Grafico(GrhData(GrhIndex).FileNum), 0, 0, 32, 32, vbMagenta)
+    Call TransparentBlt(hdc, 0, 0, 32, 32, Inventario.Grafico(GrhData(GrhIndex).FileNum), 0, 0, 32, 32, vbMagenta)
 
 End Sub
 
@@ -2174,9 +2174,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Light_Render_Area
 
     'Draw floor layer
-    For Y = screenminY To screenmaxY + 10
-        For X = screenminX To screenmaxX + 10
-        
+    For Y = screenminY To screenmaxY
+        For X = screenminX To screenmaxX
+
 
             If X > 0 And Y > 0 And X <= MapInfo.Width And Y <= MapInfo.Height Then
                 'Layer 1 **********************************
@@ -2223,7 +2223,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Dim mNPCMuerto As clsNPCMuerto
 
     Eliminados = 0
-    Cant = NPCMuertos.count
+    Cant = NPCMuertos.Count
 
     For I = 1 To Cant
         Set mNPCMuerto = NPCMuertos(I - Eliminados)
@@ -2345,12 +2345,16 @@ Sub RenderScreen(ByVal TileX As Integer, _
     Dim mTooltip As clsToolTip
 
     Eliminados = 0
-    Cant = Tooltips.count
+    Cant = Tooltips.Count
 
     For I = 1 To Cant
         Set mTooltip = Tooltips(I - Eliminados)
-        Call mTooltip.Render(TileX - 1, TileY, PixelOffSetX, PixelOffSetY)
+        #If RenderFull = 0 Then
+            Call mTooltip.Render(TileX - 5, TileY - 3, PixelOffSetX, PixelOffSetY)
+        #Else
+            Call mTooltip.Render(TileX - 1, TileY, PixelOffSetX, PixelOffSetY)
 
+        #End If
         If mTooltip.Alpha = 0 Then
             Tooltips.Remove (I - Eliminados)
             Eliminados = Eliminados + 1
@@ -2505,13 +2509,23 @@ Sub RenderScreen(ByVal TileX As Integer, _
         End If
 
         'Mensaje al cambiar de zona
-        Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(160, 140, 814, 220), DT_CENTER)
-        Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(160, 145, 814, 220), DT_CENTER)
+        #If RenderFull = 0 Then
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(160, 140, 814, 220), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(160, 145, 814, 220), DT_CENTER)
 
-        If CambioSegura Then
-            Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 660, 470, D3DColorRGBA(255, 0, 0, tmpInt))
+            If CambioSegura Then
+                Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 660, 470, D3DColorRGBA(255, 0, 0, tmpInt))
 
-        End If
+            End If
+        #Else
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 10, 814, 220), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(5, 15, 814, 220), DT_CENTER)
+
+            If CambioSegura Then
+                Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 574, 345, D3DColorRGBA(255, 0, 0, tmpInt))
+
+            End If
+        #End If
 
     End If
 
@@ -2813,11 +2827,27 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
     End If
     FrameTime = (timeGetTime() And &H7FFFFFFF)
-    If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
-         Call Engine_Render_Rectangle(270, 270, 205, 80, 0, 0, 205, 80, , , 0, 14937)
-                               Call Engine_Render_Rectangle(270, 270, 205, 80, 0, 0, 205, 80, , , 0, 14936)
-                            Call Engine_Render_Rectangle(1125, 258, 155, 160, 0, 0, 155, 160, , , 0, 14938)
-                      Call DrawFont(CStr(UserLvl), 320, 328, D3DColorRGBA(255, 255, 0, 160))
+   
+    #If RenderFull = 0 Then
+     If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
+     Call Engine_Render_Rectangle(257, 257, 1024, 782, 0, 0, 1024, 782, , , 0, 14941)
+        Call Engine_Render_Rectangle(270, 270, 205, 80, 0, 0, 205, 80, , , 0, 14937)
+        Call Engine_Render_Rectangle(270, 270, 205, 80, 0, 0, 205, 80, , , 0, 14936)
+        Call Engine_Render_Rectangle(1125, 258, 155, 160, 0, 0, 155, 160, , , 0, 14938)
+         Call Engine_Render_Rectangle(262, 800, 50, 45, 0, 0, 50, 45, , , 0, 14939)
+          Call Engine_Render_Rectangle(262, 740, 41, 50, 0, 0, 41, 50, , , 0, 14940)
+           Call Engine_Render_Rectangle(262, 690, 50, 39, 0, 0, 50, 39, , , 0, 14942)
+           
+        Call DrawFont(CStr(UserLvl), 320, 328, D3DColorRGBA(255, 255, 0, 160))
+          If Zonas(ZonaActual).Segura = 1 Then
+          Call DrawFont(Zonas(ZonaActual).nombre, 1128, 410, D3DColorRGBA(0, 255, 0, 160))
+         Else
+         Call DrawFont(Zonas(ZonaActual).nombre, 1128, 410, D3DColorRGBA(255, 0, 0, 160))
+         End If
+        Call DrawFont("Mapa: " & Zonas(ZonaActual).Mapa & "(X:" & UserPos.X & ", Y:" & UserPos.Y & ")", 1127, 425, D3DColorRGBA(255, 255, 255, 160))
+    #Else
+ If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
+    #End If
 End Sub
 
 ''*********************
@@ -3243,24 +3273,24 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                   Optional ByVal X As Integer = 0, _
                   Optional ByVal Y As Integer = 0)
 
-    '***************************************************
-    'Author: Arron Perkins
-    'Last Modification: 08/14/07
-    'Last modified by: Juan Martín Sotuyo Dodero (Maraxus)
-    'Updates the game's model and renders everything.
-    '***************************************************
+'***************************************************
+'Author: Arron Perkins
+'Last Modification: 08/14/07
+'Last modified by: Juan Martín Sotuyo Dodero (Maraxus)
+'Updates the game's model and renders everything.
+'***************************************************
     Static OffsetCounterX As Single
 
     Static OffsetCounterY As Single
-    
+
     '****** Set main view rectangle ******
     MainViewRect.Left = (DisplayFormLeft / Screen.TwipsPerPixelX) + MainViewLeft
     MainViewRect.Top = (DisplayFormTop / Screen.TwipsPerPixelY) + MainViewTop
     MainViewRect.Right = MainViewRect.Left + MainViewWidth
     MainViewRect.Bottom = MainViewRect.Top + MainViewHeight
-    
+
     If EngineRun Then
-    
+
         If Update = True Then
             ' D3DDevice.BeginScene
             Debug.Print " UPDATE SCREEEN"
@@ -3269,7 +3299,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             Exit Sub
 
         End If
-    
+
         If UserEmbarcado Then
             OffsetCounterX = -BarcoOffSetX
             OffsetCounterY = -BarcoOffSetY
@@ -3287,7 +3317,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 End If
 
             End If
-            
+
             '****** Move screen Up and Down if needed ******
             If AddtoUserPos.Y <> 0 Then
                 OffsetCounterY = OffsetCounterY - ScrollPixelsPerFrameY * AddtoUserPos.Y * timerTicksPerFrame * 1.2
@@ -3302,17 +3332,17 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             End If
 
         End If
-        
+
         'Update mouse position within view area
         Call ConvertCPtoTP(MouseViewX, MouseViewY, MouseTileX, MouseTileY)
-           
+
         If GoingHome = 1 Or GoingHome = 2 Then
             BlurIntensity = 5
         Else
             BlurIntensity = 0
 
         End If
-        
+
         'Set the motion blur if needed
         If UseMotionBlur Then
             If BlurIntensity > 0 And BlurIntensity < 255 Or ZoomLevel > 0 Then
@@ -3324,7 +3354,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             End If
 
         End If
-        
+
         If UseMotionBlur Then
             If BlurIntensity < 255 Then
                 BlurIntensity = BlurIntensity + (timerElapsedTime * 0.01)
@@ -3334,64 +3364,86 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             End If
 
         End If
-                
+
         D3DDevice.BeginScene
-        
+
         'Clear the screen with a solid color (to prevent artifacts)
         If Not FrameUseMotionBlur Then
             D3DDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0
 
         End If
-        
+
         '****** Update screen ******
-        If Conectar Then
-        
-        frmMain.Menu.Visible = False
-        frmMain.bar_salud(0).Visible = False
-         frmMain.bar_salud(1).Visible = False
-        frmMain.Bar_Mana(0).Visible = False
-        frmMain.Bar_Mana(1).Visible = False
-        frmMain.bar_sta.Visible = False
-        frmMain.bar_comida.Visible = False
-        frmMain.picfondoinve.Visible = False
-        frmMain.Bar_Agua.Visible = False
-        frmMain.Experiencia.Visible = False
-        frmMain.picInv.Visible = False
-        frmMain.imgMiniMapa.Visible = False
-        
-            Call RenderConectar
-            'ElseIf UserCiego Then
-            '    Call CleanViewPort
-        Else
-        frmMain.picInv.Visible = True
-        frmMain.imgMiniMapa.Visible = True
-        
-        frmMain.Experiencia.Visible = True
-        frmMain.Menu.Visible = False
-        frmMain.bar_salud(0).Visible = True
-        frmMain.Bar_Mana(0).Visible = True
-        
-        frmMain.bar_sta.Visible = True
-        frmMain.bar_comida.Visible = True
-        frmMain.picfondoinve.Visible = True
-        frmMain.Bar_Agua.Visible = True
-    
-            Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
-            RenderConsola
-           ' Form1.BarraCir.ChangeDefaults UserPasarNivel, RGB(200, 15, 19), 0.25, 0.8, &H777777, "Times New Roman", RGB(255, 255, 255)
-        End If
+        #If RenderFull = 0 Then
+            If Conectar Then
 
-        'End the rendering (scene)
-        D3DDevice.EndScene
-               
-        'Flip the backbuffer to the screen
-        If Conectar Then
-            D3DDevice.Present ByVal 0, ByVal 0, 0, ByVal 0
-        Else
-            D3DDevice.Present RectJuego, ByVal 0, 0, ByVal 0
+                'frmMain.Menu.Visible = False
+                frmMain.bar_salud(0).Visible = False
+                frmMain.bar_salud(1).Visible = False
+                frmMain.Bar_Mana(0).Visible = False
+                frmMain.Bar_Mana(1).Visible = False
+                frmMain.bar_sta.Visible = False
+                frmMain.bar_comida.Visible = False
+               ' frmMain.picfondoinve.Visible = False
+                frmMain.Bar_Agua.Visible = False
+                frmMain.Experiencia.Visible = False
+                'frmMain.picInv.Visible = False
+                frmMain.imgMiniMapa.Visible = False
 
-        End If
+                Call RenderConectar
+                'ElseIf UserCiego Then
+                '    Call CleanViewPort
+            Else
+                'frmMain.picInv.Visible = True
+                frmMain.imgMiniMapa.Visible = True
 
+                frmMain.Experiencia.Visible = True
+               ' frmMain.Menu.Visible = False
+                frmMain.bar_salud(0).Visible = True
+                frmMain.Bar_Mana(0).Visible = True
+
+                frmMain.bar_sta.Visible = True
+                frmMain.bar_comida.Visible = True
+               ' frmMain.picfondoinve.Visible = True
+                frmMain.Bar_Agua.Visible = True
+
+                Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+                RenderConsola
+                ' Form1.BarraCir.ChangeDefaults UserPasarNivel, RGB(200, 15, 19), 0.25, 0.8, &H777777, "Times New Roman", RGB(255, 255, 255)
+            End If
+
+            'End the rendering (scene)
+            D3DDevice.EndScene
+
+            'Flip the backbuffer to the screen
+            If Conectar Then
+                D3DDevice.Present ByVal 0, ByVal 0, 0, ByVal 0
+            Else
+                D3DDevice.Present RectJuego, ByVal 0, 0, ByVal 0
+
+            End If
+        #Else
+            If Conectar Then
+                Call RenderConectar
+                'ElseIf UserCiego Then
+                '    Call CleanViewPort
+            Else
+                Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+
+            End If
+
+            'End the rendering (scene)
+            D3DDevice.EndScene
+
+            'Flip the backbuffer to the screen
+            If Conectar Then
+                D3DDevice.Present ByVal 0, ByVal 0, 0, ByVal 0
+            Else
+                D3DDevice.Present RectJuego, ByVal 0, 0, ByVal 0
+
+            End If
+
+        #End If
         'Screen
         If ScreenShooterCapturePending Then
             DoEvents
@@ -3399,14 +3451,14 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             ScreenShooterCapturePending = False
 
         End If
-    
+
         'Limit FPS to 60 (an easy number higher than monitor's vertical refresh rates)
         'While General_Get_Elapsed_Time2() < 15.5
         '    DoEvents
         'Wend
-        
+
         'timer_ticks_per_frame = General_Get_Elapsed_Time() * 0.029
-        
+
         'FPS update
         If fpsLastCheck + 1000 < (GetTickCount() And &H7FFFFFFF) Then
             FPS = FramesPerSecCounter
@@ -3416,7 +3468,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             FramesPerSecCounter = FramesPerSecCounter + 1
 
         End If
-        
+
         'Get timing info
         timerElapsedTime = GetElapsedTime()
 
@@ -4193,7 +4245,7 @@ Public Sub Grh_Render_To_Hdc(ByRef Pic As PictureBox, ByVal GrhIndex As Long, By
     DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)
     
    Call D3DDevice.EndScene
-    Call D3DDevice.Present(Picture, ByVal 0, Pic.hWnd, ByVal 0)
+    Call D3DDevice.Present(Picture, ByVal 0, Pic.hwnd, ByVal 0)
     
     
     Exit Sub
@@ -4205,21 +4257,21 @@ Grh_Render_To_Hdc_Err:
 End Sub
 
 Sub RenderConsola()
-Dim I As Byte
- 
-If OffSetConsola > 0 Then OffSetConsola = OffSetConsola - 1
-If OffSetConsola = 0 Then UltimaLineavisible = True
- 
-For I = 1 To MaxLineas - 1
- 
-RenderText 300, ComienzoY + (I * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(I).R, Con(I).G, Con(I).b, I * (255 / MaxLineas))
+    Dim I As Byte
 
-        
-Next I
- 
-If UltimaLineavisible = True Then _
-RenderText 300, ComienzoY + (MaxLineas * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(MaxLineas).R, Con(MaxLineas).G, Con(I).b, 255)
+    If OffSetConsola > 0 Then OffSetConsola = OffSetConsola - 1
+    If OffSetConsola = 0 Then UltimaLineavisible = True
+
+    For I = 1 To MaxLineas - 1
+
+        RenderText 300, ComienzoY + (I * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(I).R, Con(I).G, Con(I).b, I * (255 / MaxLineas))
 
 
- 
+    Next I
+
+    If UltimaLineavisible = True Then _
+       RenderText 300, ComienzoY + (MaxLineas * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(MaxLineas).R, Con(MaxLineas).G, Con(I).b, 255)
+
+
+
 End Sub

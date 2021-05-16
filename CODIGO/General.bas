@@ -30,13 +30,21 @@ Attribute VB_Name = "Mod_General"
 'La Plata - Pcia, Buenos Aires - Republica Argentina
 'Código Postal 1900
 'Pablo Ignacio Márquez
+
+
 'Particulas
 '********************************
+
 Public Declare Function timeGetTime Lib "winmm.dll" () As Long
 Private Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) As Long
 'Particulas
 '***************************
 Option Explicit
+#If RenderFull = 0 Then
+Public frmMain As frmMain2
+#Else
+Public frmMain As frmMain1
+#End If
 
 Public PCred() As Integer
 Public PCgreen() As Integer
@@ -65,7 +73,7 @@ Public PathInit As String
 Private Type TConsola
 
     Texto As String
-    Color As Long
+    color As Long
     bold As Byte
     italic As Byte
 
@@ -815,29 +823,96 @@ Sub AddtoRichPicture(ByVal Text As String, _
                      Optional ByVal italic As Boolean = False, _
                      Optional ByVal bCrLf As Boolean = False)
 
- 'lo pongo aca, para q no tengan q andar cambiando todo
+'lo pongo aca, para q no tengan q andar cambiando todo
 'osea, si tienen consola de arriba, el richtextbox, no agan esto
- 
-If Left(Text, 1) = " " Then Exit Sub
- 
-Dim I As Byte
- 
-For I = 2 To MaxLineas
-Con(I - 1).T = Con(I).T
-'Con(i - 1).Color = Con(i).Color
-Con(I - 1).b = Con(I).b
-Con(I - 1).G = Con(I).G
-Con(I - 1).R = Con(I).R
-Next I
- 
-Con(MaxLineas).T = Text
-Con(MaxLineas).b = blue
-Con(MaxLineas).G = green
-Con(MaxLineas).R = red
-OffSetConsola = 16
- 
-UltimaLineavisible = False
+    #If RenderFull = 0 Then
+        If Left(Text, 1) = " " Then Exit Sub
 
+        Dim I As Byte
+
+        For I = 2 To MaxLineas
+            Con(I - 1).T = Con(I).T
+            'Con(i - 1).Color = Con(i).Color
+            Con(I - 1).b = Con(I).b
+            Con(I - 1).G = Con(I).G
+            Con(I - 1).R = Con(I).R
+        Next I
+
+        Con(MaxLineas).T = Text
+        Con(MaxLineas).b = blue
+        Con(MaxLineas).G = green
+        Con(MaxLineas).R = red
+        OffSetConsola = 16
+
+        UltimaLineavisible = False
+    #Else
+
+        Dim nId As Long
+
+        Dim AText As String
+
+        Dim Lineas() As String
+
+        Dim I As Integer
+
+        Dim l As Integer
+
+        Dim LastEsp As Integer
+
+        Lineas = Split(Text, vbCrLf)
+
+        For l = 0 To UBound(Lineas)
+            Text = Lineas(l)
+            nId = LineasConsola + 1
+
+            If nId = 601 Then
+
+                For I = 0 To 500
+                    Consola(I) = Consola(I + 100)
+                Next I
+
+                nId = 501
+
+                If OffSetConsola > 101 Then OffSetConsola = OffSetConsola - 100
+
+            End If
+
+            LineasConsola = nId
+            frmMain.pConsola.FontBold = bold
+            frmMain.pConsola.FontItalic = italic
+            Consola(nId).Texto = Text
+            Consola(nId).color = RGB(red, green, blue)
+            Consola(nId).bold = bold
+            Consola(nId).italic = italic
+
+            If LineasConsola > 6 Then
+                OffSetConsola = LineasConsola - 6
+                frmMain.BarritaConsola.Top = 68
+
+            End If
+
+            If frmMain.pConsola.TextWidth(Text) > frmMain.pConsola.Width Then
+                LastEsp = 0
+
+                For I = 1 To Len(Text)
+
+                    If mid(Text, I, 1) = " " Then LastEsp = I
+                    If frmMain.pConsola.TextWidth(Left$(Text, I)) > frmMain.pConsola.Width Then Exit For
+                Next I
+
+                If LastEsp = 0 Then LastEsp = I
+                AText = Right$(Text, Len(Text) - LastEsp)
+                Text = Left$(Text, LastEsp)
+                Consola(nId).Texto = Text
+                Call AddtoRichPicture(AText, red, green, blue, bold, italic)
+            Else
+                frmMain.ReDrawConsola
+
+            End If
+
+        Next l
+
+    #End If
 End Sub
 
 Function ReadField(ByVal Pos As Integer, _
@@ -923,58 +998,63 @@ Public Function IsIp(ByVal Ip As String) As Boolean
 End Function
 
 Sub Main()
-        
+
+    #If RenderFull = 0 Then
+        Set frmMain = frmMain2
+    #Else
+        Set frmMain = frmMain1
+    #End If
     If FileExist(App.path & "\Init\Config.ini", vbNormal) Then
         Call ReadConfig
     Else
         Call mOpciones_Default
 
     End If
-    
+
     'Load config file
     If FileExist(PathInit & "\Inicio.con", vbNormal) Then
         Config_Inicio = LeerGameIni()
 
     End If
-    
+
     WAIT_ACTION = 0
-    
+
     AlphaSalir = 255
-    
+
     Set curGeneral = New clsAniCursor
     Set curGeneralCrimi = New clsAniCursor
     Set curGeneralCiuda = New clsAniCursor
     Set curProyectil = New clsAniCursor
     Set curProyectilPequena = New clsAniCursor
-    
+
     Set picMouseIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Baston.ico")
     curGeneral.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\General.ani"
     curGeneralCrimi.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\GeneralCrimi.ani"
     curGeneralCiuda.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\GeneralCiuda.ani"
     curProyectil.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\Mira.ani"
     curProyectilPequena.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\MiraPequena.ani"
- 
+
     curGeneral.CursorOn frmMain.hwnd
     curGeneral.CursorOn frmMain.pRender.hwnd
-   
+
     frmMain.picHechiz.MouseIcon = picMouseIcon
     frmMain.CmdLanzar.MouseIcon = picMouseIcon
-    frmMain.btnHechizos.MouseIcon = picMouseIcon
-    frmMain.btnInventario.MouseIcon = picMouseIcon
-    
+    'frmMain.btnHechizos.MouseIcon = picMouseIcon
+    'frmMain.btnInventario.MouseIcon = picMouseIcon
+
     Dim picMousePointIcon As Picture
 
     Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Point.ico")
-    frmMain.Image1(0).MouseIcon = picMousePointIcon 'Opciones
-    frmMain.Image1(1).MouseIcon = picMousePointIcon 'Stats
-    frmMain.Image1(2).MouseIcon = picMousePointIcon 'Clanes
-    frmMain.Image1(3).MouseIcon = picMousePointIcon 'Quests
+    frmMain.Image1(0).MouseIcon = picMousePointIcon    'Opciones
+    frmMain.Image1(1).MouseIcon = picMousePointIcon    'Stats
+    frmMain.Image1(2).MouseIcon = picMousePointIcon    'Clanes
+    frmMain.Image1(3).MouseIcon = picMousePointIcon    'Quests
     'frmMain.Image1(4).MouseIcon = picMousePointIcon 'Party
     'Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Espada.ico")
     'frmMain.btnInventario.MouseIcon = picMousePointIcon
-'aura
- CargarAuras
-'aura
+    'aura
+    CargarAuras
+    'aura
     Call InitDebug
 
     'Load ao.dat config file
@@ -993,16 +1073,16 @@ Sub Main()
         Set SurfaceDB = New clsSurfaceManDyn
 
     End If
-    
+
     'If FindPreviousInstance Then
     '    Call MsgBox("AoYind ya esta corriendo! No es posible correr otra instancia del juego. Haga click en Aceptar para salir.", vbApplicationModal + vbInformation + vbOKOnly, "Error al ejecutar")
     'End
     'End If
-    
+
     Call LeerLineaComandos
     'Read command line. Do it AFTER config file is loaded to prevent this from
     'canceling the effects of "/nores" option.
-   
+
     ReDim SurfaceSize(15000)
     ReDim Consola(600)
     ReDim PCred(600)
@@ -1010,7 +1090,7 @@ Sub Main()
     ReDim PCblue(600)
     'usaremos esto para ayudar en los parches
     Call SaveSetting("ArgentumOnlineCliente", "Init", "Path", App.path & "\")
-    
+
     ChDrive App.path
     ChDir App.path
 
@@ -1018,54 +1098,60 @@ Sub Main()
 
         'Obtener el HushMD5
         Dim fMD5HushYo As String * 32
-    
+
         fMD5HushYo = MD5.GetMD5File(App.path & "\" & App.EXEName & ".exe")
         Call MD5.MD5Reset
         MD5HushYo = txtOffset(hexMd52Asc(fMD5HushYo), 55)
-    
+
         Debug.Print fMD5HushYo
     #Else
         MD5HushYo = "0123456789abcdef"  'We aren't using a real MD5
     #End If
-    
+
     tipf = Config_Inicio.tip
-    
+
     'Set resolution BEFORE the loading form is displayed, therefore it will be centered.
     Call Resolution.SetResolution(1024, 768)
-    
+
     'Set picMouseIcon = LoadPicture(DirRecursos & "Hand.ico")
-    
+
     frmCargando.Show
     frmCargando.Refresh
-    
+
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.05
     DoEvents
 
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.2
     DoEvents
-    
+
     'TODO : esto de ServerRecibidos no se podría sacar???
     ServersRecibidos = True
 
     Call InicializarNombres
-    
+
     ' Initialize FONTTYPES
     Call Protocol.InitFonts
-       
+
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.25
     DoEvents
-       
-    If Not InitTileEngine(frmMain.hwnd, frmMain.Top, frmMain.pRender.Left, 32, 32, Round(frmMain.pRender.Height / 32), Round(frmMain.pRender.Width / 32), 9, 9, 9, 0.018) Then
-      
-        Call CloseClient
+    #If RenderFull = 0 Then
+        If Not InitTileEngine(frmMain.hwnd, frmMain.Top, frmMain.pRender.Left, 32, 32, Round(frmMain.pRender.Height / 32), Round(frmMain.pRender.Width / 32), 9, 9, 9, 0.018) Then
 
-    End If
-    
+            Call CloseClient
+
+        End If
+    #Else
+        If Not InitTileEngine(frmMain.hwnd, 125, 2, 32, 32, 19, 25, 9, 9, 9, 0.018) Then
+            Call CloseClient
+
+        End If
+    #End If
+
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.4
     DoEvents
 
     UserMap = 0
-    
+
     Call CargarAnimArmas
     Call CargarAnimEscudos
     Call CargarColores
@@ -1074,63 +1160,63 @@ Sub Main()
     Call CargarTutorial
     'quest
     Call CargarNpc
-Call CargarQuests
-Call CargarObjetos
+    Call CargarQuests
+    Call CargarObjetos
     'quest
-    
+
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.45
     DoEvents
 
     'Inicializamos el sonido
     Call Audio.Initialize(dX, frmMain.hwnd, App.path & "\" & Config_Inicio.DirSonidos & "\", App.path & "\" & Config_Inicio.DirMusica & "\", App.path & "\" & Config_Inicio.DirMusica & "\")
     'Enable / Disable audio
-    
+
     'Audio
     Audio.MusicActivated = mOpciones.Music
     Audio.SoundActivated = mOpciones.sound
     Audio.SoundEffectsActivated = mOpciones.SoundEffects
     Audio.MusicVolume = mOpciones.VolMusic
     Audio.SoundVolume = mOpciones.VolSound
-    
+
     SinMidi = False
-    
+
     'Guilds
     DialogosClanes.CantidadDialogos = mOpciones.DialogCantMessages
-        
+
     'Inicializamos el inventario gráfico
     Call Inventario.Initialize(frmMain.picInv, 10, 5, MAX_INVENTORY_SLOTS, True)
-    
+
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.55
     DoEvents
-    
+
     Call CargarMap(1)
     'Call CargarMap(2)
-    
+
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 1
     DoEvents
-    
+
     UserSeguroResu = True
     UserSeguro = True
-    
+
     #If SeguridadAlkon Then
         CualMI = 0
         Call InitMI
     #End If
 
     Unload frmCargando
-    
+
     Call Audio.PlayMIDI(MIdi_Inicio & ".mid")
 
     Set frmMain.Client = New CSocketMaster
 
     frmMain.SetRender (True)
     frmMain.Show
-    
+
     'Inicialización de variables globales
     PrimeraVez = True
     prgRun = True
     pausa = False
-    
+
     'Set the intervals of timers
     Call MainTimer.SetInterval(TimersIndex.PuedeGolpe, INT_PUEDE_GOLPE)
     Call MainTimer.SetInterval(TimersIndex.HabilitaLanzarHechizo, INT_HABILITA_ICONO_LANZAR_HECHIZO)
@@ -1151,10 +1237,10 @@ Call CargarObjetos
     Call MainTimer.SetInterval(TimersIndex.PuedeMover, INT_PUEDE_MOVER)
     Call MainTimer.SetInterval(TimersIndex.PuedeMoverEquitando, INT_PUEDE_MOVER_EQUITANDO)
     Call MainTimer.SetInterval(TimersIndex.PuedeRPUMover, INT_PUEDE_RPU_MOVER)
-    
+
     frmMain.macrotrabajo.Interval = INT_MACRO_TRABAJO
     frmMain.macrotrabajo.Enabled = False
-    
+
     'Init timers
     Call MainTimer.Start(TimersIndex.PuedeGolpe)
     Call MainTimer.Start(TimersIndex.HabilitaLanzarHechizo)
@@ -1175,41 +1261,41 @@ Call CargarObjetos
     Call MainTimer.Start(TimersIndex.PuedeMover)
     Call MainTimer.Start(TimersIndex.PuedeMoverEquitando)
     Call MainTimer.Start(TimersIndex.PuedeRPUMover)
-    
+
     'Set the dialog's font
     Dialogos.font = frmMain.font
     DialogosClanes.font = frmMain.font
-    
+
     ' Load the form for screenshots
     Call Load(frmScreenshots)
-  
+
     'Call Audio.PlayingMusic("9.mp3")
-    
+
     Call InitBarcos
-    
+
     GTCInicial = (GetTickCount() And &H7FFFFFFF)
-    
+
     Conectar = True
     EngineRun = True
-    
+
     Nombres = True
-    
+
     If mOpciones.Recordar = True Then
         frmMain.tUser.Text = mOpciones.RecordarUsuario
         frmMain.tPass.Text = mOpciones.RecordarPassword
 
     End If
-    
+
     Do While prgRun
         'Sólo dibujamos si la ventana no está minimizada
-    
+
         If frmMain.WindowState <> 1 And frmMain.Visible Then
             Call CalcularBarcos
             Call ShowNextFrame(frmMain.Top, frmMain.Left, frmMain.MouseX, frmMain.MouseY)
-            
+
             'Play ambient sounds
             Call RenderSounds
-            
+
             Call CheckKeys
         Else
             Call CalcularBarcos
@@ -1221,17 +1307,17 @@ Call CargarObjetos
             lFrameTimer = (GetTickCount() And &H7FFFFFFF)
 
         End If
-        
+
         #If SeguridadAlkon Then
             Call CheckSecurity
         #End If
-        
+
         ' If there is anything to be sent, we send it
         Call FlushBuffer
-        
+
         DoEvents
     Loop
-    
+
     Call CloseClient
 
 End Sub
