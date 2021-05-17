@@ -33688,3 +33688,15 @@ Linea: 0
 Componente: clsAudio.LoadWave
 Fecha y Hora: 05-16-2021-09:50:09
 
+Error: 432
+Descripcion: No se encontró el nombre del archivo o de la clase durante la operación de Automatización
+Linea: 0
+Componente: clsAudio.LoadWave
+Fecha y Hora: 05-17-2021-16:51:10
+
+Error: 432
+Descripcion: No se encontró el nombre del archivo o de la clase durante la operación de Automatización
+Linea: 0
+Componente: clsAudio.LoadWave
+Fecha y Hora: 05-17-2021-16:51:53
+
