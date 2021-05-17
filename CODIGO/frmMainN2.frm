@@ -1545,8 +1545,8 @@ Private Sub btnHechizos_Click()
     cmdMoverHechi(0).Enabled = True
     cmdMoverHechi(1).Enabled = True
     
-    btnInventario.Visible = True
-    btnHechizos.Visible = False
+    'btnInventario.Visible = True
+    'btnHechizos.Visible = False
     
     'btnHechizos.Picture = LoadPictureEX("btnHechizos_R.jpg")
     'btnInventario.Picture = LoadPictureEX("btnInventario.jpg")
@@ -1568,8 +1568,8 @@ Private Sub btnInventario_Click()
     cmdMoverHechi(0).Enabled = False
     cmdMoverHechi(1).Enabled = False
     
-    btnInventario.Visible = False
-    btnHechizos.Visible = True
+    'btnInventario.Visible = False
+    'btnHechizos.Visible = True
     
     'btnInventario.Picture = LoadPictureEX("btnInventario_R.jpg")
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
