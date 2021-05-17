@@ -3376,18 +3376,20 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         '****** Update screen ******
         #If RenderFull = 0 Then
             If Conectar Then
-
-                'frmMain.Menu.Visible = False
+               frmMain.picHechiz.Visible = False
+               frmMain.BarraHechiz.Visible = False
+                frmMain.invHechisos.Visible = False
+                frmMain.Menu.Visible = False
                 frmMain.bar_salud(0).Visible = False
                 frmMain.bar_salud(1).Visible = False
                 frmMain.Bar_Mana(0).Visible = False
                 frmMain.Bar_Mana(1).Visible = False
                 frmMain.bar_sta.Visible = False
                 frmMain.bar_comida.Visible = False
-               ' frmMain.picfondoinve.Visible = False
+                frmMain.picfondoinve.Visible = False
                 frmMain.Bar_Agua.Visible = False
                 frmMain.Experiencia.Visible = False
-                'frmMain.picInv.Visible = False
+                frmMain.picInv.Visible = False
                 frmMain.imgMiniMapa.Visible = False
 
                 Call RenderConectar
