@@ -30,19 +30,19 @@ Public Sub CargarTutorial()
 
     End If
     
-    Dim i As Integer
+    Dim I As Integer
     
     CantTutoriales = GetVar(archivoC, "Config", "Cantidad")
     
     ReDim Tutoriales(1 To CantTutoriales)
     
-    For i = 1 To CantTutoriales
-        Tutoriales(i).Evento = CByte(GetVar(archivoC, "Tutorial" & CStr(i), "Evento"))
-        Tutoriales(i).Linea1 = GetVar(archivoC, "Tutorial" & CStr(i), "Linea1")
-        Tutoriales(i).Linea2 = GetVar(archivoC, "Tutorial" & CStr(i), "Linea2")
-        Tutoriales(i).Linea3 = GetVar(archivoC, "Tutorial" & CStr(i), "Linea3")
-        Tutoriales(i).Funcion = Val(GetVar(archivoC, "Tutorial" & CStr(i), "Funcion"))
-    Next i
+    For I = 1 To CantTutoriales
+        Tutoriales(I).Evento = CByte(GetVar(archivoC, "Tutorial" & CStr(I), "Evento"))
+        Tutoriales(I).Linea1 = GetVar(archivoC, "Tutorial" & CStr(I), "Linea1")
+        Tutoriales(I).Linea2 = GetVar(archivoC, "Tutorial" & CStr(I), "Linea2")
+        Tutoriales(I).Linea3 = GetVar(archivoC, "Tutorial" & CStr(I), "Linea3")
+        Tutoriales(I).Funcion = Val(GetVar(archivoC, "Tutorial" & CStr(I), "Funcion"))
+    Next I
 
 End Sub
 
@@ -70,16 +70,16 @@ Public Sub DrawTextPergamino(ByVal Texto As String, _
     D3DDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0
     Call D3DX.DrawText(FontCartel, D3DColorRGBA(40, 35, 20, 255), Texto, DDRect(IIf(Head = 0, 5, 70), 0, 480, 80), DT_LEFT)
 
-    Dim color As Long
+    Dim Color As Long
 
     Dim Grh   As GrhData
     
     If Head > 0 Then
         Grh = GrhData(HeadData(Head).Head(south).GrhIndex)
-        color = D3DColorRGBA(255, 255, 255, 210)
+        Color = D3DColorRGBA(255, 255, 255, 210)
     
-        Call Engine_Render_Rectangle(256 + 5, 256 + 5, 56, 56, 56, 0, 56, 56, , , , 14687, color, color, color, color)
-        Call Engine_Render_Rectangle(256 + 18, 256 + 19, 32, 32, Grh.sX, Grh.sY, Grh.PixelWidth, Grh.PixelHeight, , , , Grh.FileNum, color, color, color, color)
+        Call Engine_Render_Rectangle(256 + 5, 256 + 5, 56, 56, 56, 0, 56, 56, , , , 14687, Color, Color, Color, Color)
+        Call Engine_Render_Rectangle(256 + 18, 256 + 19, 32, 32, Grh.sX, Grh.sY, Grh.PixelWidth, Grh.PixelHeight, , , , Grh.FileNum, Color, Color, Color, Color)
 
     End If
     

@@ -136,13 +136,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -159,7 +159,7 @@ Private Sub imgEnviar_Click()
 
 End Sub
 
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub

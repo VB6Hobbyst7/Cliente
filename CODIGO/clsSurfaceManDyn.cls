@@ -109,14 +109,14 @@ Private Sub Class_Terminate()
     'Last Modify Date: 3/06/2006
     'Clean up
     '**************************************************************
-    Dim i As Long
+    Dim I As Long
 
     Dim J As Long
     
     'Destroy every surface in memory
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For I = 0 To HASH_TABLE_SIZE - 1
 
-        With surfaceList(i)
+        With surfaceList(I)
 
             For J = 1 To .surfaceCount
                 Set .SurfaceEntry(J).Surface = Nothing
@@ -125,13 +125,13 @@ Private Sub Class_Terminate()
                 .SurfaceEntry(J).Size = 0
             Next J
 
-            surfaceList(i).surfaceCount = 0
+            surfaceList(I).surfaceCount = 0
             'Destroy the arrays
             Erase .SurfaceEntry
 
         End With
 
-    Next i
+    Next I
 
 End Sub
 
@@ -142,14 +142,14 @@ Private Sub clsSurfaceManager_Limpiar()
     'Last Modify Date: 3/06/2006
     'Clean up
     '**************************************************************
-    Dim i As Long
+    Dim I As Long
 
     Dim J As Long
     
     'Destroy every surface in memory
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For I = 0 To HASH_TABLE_SIZE - 1
 
-        With surfaceList(i)
+        With surfaceList(I)
 
             For J = 1 To .surfaceCount
                 Set .SurfaceEntry(J).Surface = Nothing
@@ -158,13 +158,13 @@ Private Sub clsSurfaceManager_Limpiar()
                 .SurfaceEntry(J).Size = 0
             Next J
 
-            surfaceList(i).surfaceCount = 0
+            surfaceList(I).surfaceCount = 0
             'Destroy the arrays
             Erase .SurfaceEntry
 
         End With
 
-    Next i
+    Next I
 
 End Sub
 
@@ -203,21 +203,21 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
     'Last Modify Date: 3/06/2006
     'Retrieves the requested texture
     '**************************************************************
-    Dim i As Long
+    Dim I As Long
     
     ' Search the index on the list
     With surfaceList(fileIndex Mod HASH_TABLE_SIZE)
 
-        For i = 1 To .surfaceCount
+        For I = 1 To .surfaceCount
 
-            If .SurfaceEntry(i).fileIndex = fileIndex Then
-                .SurfaceEntry(i).lastAccess = (GetTickCount() And &H7FFFFFFF)
-                Set clsSurfaceManager_Surface = .SurfaceEntry(i).Surface
+            If .SurfaceEntry(I).fileIndex = fileIndex Then
+                .SurfaceEntry(I).lastAccess = (GetTickCount() And &H7FFFFFFF)
+                Set clsSurfaceManager_Surface = .SurfaceEntry(I).Surface
                 Exit Property
 
             End If
 
-        Next i
+        Next I
 
     End With
     
@@ -261,8 +261,8 @@ Private Function LoadSurface(ByVal fileIndex As Long) As Direct3DTexture8
         
         Set .Surface = DirectD3X.CreateTextureFromFileInMemoryEx(DeviceD3D, Data(0), Tamaño, 0, 0, D3DX_DEFAULT, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, ColorTransparenteDX, ByVal 0, ByVal 0)
         .Surface.GetLevelDesc 0, pDesc
-        SurfaceSize(fileIndex).x = pDesc.Width
-        SurfaceSize(fileIndex).y = pDesc.Height
+        SurfaceSize(fileIndex).X = pDesc.Width
+        SurfaceSize(fileIndex).Y = pDesc.Height
 
     End With
     
@@ -295,7 +295,7 @@ Private Function LoadSurface(ByVal fileIndex As Long) As Direct3DTexture8
 
 ErrHandler:
 
-    If Err.Number = 1 Then
+    If err.Number = 1 Then
 
         'Remove a surface and try again
         If RemoveLRU() Then
@@ -307,7 +307,7 @@ ErrHandler:
         End If
 
     Else
-        MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & "El código de error es " & CStr(Err.Number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", vbOKOnly Or vbCritical Or vbExclamation, "Error"
+        MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & "El código de error es " & CStr(err.Number) & " - " & err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", vbOKOnly Or vbCritical Or vbExclamation, "Error"
         End
 
     End If
@@ -327,7 +327,7 @@ Private Function RemoveLRU() As Boolean
 
     Dim LRUtime As Long
 
-    Dim i       As Long
+    Dim I       As Long
 
     Dim J       As Long
 
@@ -336,14 +336,14 @@ Private Function RemoveLRU() As Boolean
     LRUtime = (GetTickCount() And &H7FFFFFFF)
     
     'Check out through the whole list for the least recently used
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For I = 0 To HASH_TABLE_SIZE - 1
 
-        With surfaceList(i)
+        With surfaceList(I)
 
             For J = 1 To .surfaceCount
 
                 If LRUtime > .SurfaceEntry(J).lastAccess Then
-                    LRUi = i
+                    LRUi = I
                     LRUj = J
                     LRUtime = .SurfaceEntry(J).lastAccess
 
@@ -353,7 +353,7 @@ Private Function RemoveLRU() As Boolean
 
         End With
 
-    Next i
+    Next I
     
     If LRUj Then
         RemoveLRU = True

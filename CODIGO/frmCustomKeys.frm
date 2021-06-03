@@ -719,27 +719,27 @@ Option Explicit
 Private Sub Command1_Click()
     Call CustomKeys.LoadDefaults
 
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To CustomKeys.Count
-        Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
-    Next i
+    For I = 1 To CustomKeys.count
+        Text1(I).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(I))
+    Next I
 
 End Sub
 
 Private Sub Command2_Click()
 
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To CustomKeys.Count
+    For I = 1 To CustomKeys.count
 
-        If LenB(Text1(i).Text) = 0 Then
+        If LenB(Text1(I).Text) = 0 Then
             AddtoRichPicture "Hay teclas invalidas. Por favor revise y vuelva a intentarlo!", 200, 200, 200, False, False, False
             Exit Sub
 
         End If
 
-    Next i
+    Next I
 
     Call CustomKeys.SaveCustomKeys
 
@@ -752,51 +752,51 @@ Private Sub Form_Load()
     'imgCustomKeyAWSD.Picture = LoadPictureEX("frmKeysConfigurationSelectAlternativeKeyboard.jpg")
     Me.Picture = LoadPictureEX("VENTANACONFIGURARTECLAS.jpg")
 
-    Dim i As Long
+    Dim I As Long
     
-    For i = 1 To CustomKeys.Count
-        Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
-    Next i
+    For I = 1 To CustomKeys.count
+        Text1(I).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(I))
+    Next I
 
 End Sub
 
 Private Sub imgCustomKeyAWSD_Click()
     Call CustomKeys.LoadAWSD
 
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To CustomKeys.Count
-        Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
-    Next i
+    For I = 1 To CustomKeys.count
+        Text1(I).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(I))
+    Next I
 
 End Sub
 
 Private Sub imgCustomKeyNormal_Click()
     Call CustomKeys.LoadDefaults
 
-    Dim i As Long
+    Dim I As Long
     
-    For i = 1 To CustomKeys.Count
-        Text1(i).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(i))
-    Next i
+    For I = 1 To CustomKeys.count
+        Text1(I).Text = CustomKeys.ReadableName(CustomKeys.BindedKey(I))
+    Next I
 
 End Sub
 
-Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer)
+Private Sub Text1_KeyDown(index As Integer, KeyCode As Integer, Shift As Integer)
 
-    Dim i As Long
+    Dim I As Long
     
     If LenB(CustomKeys.ReadableName(KeyCode)) = 0 Then Exit Sub
     'If key is not valid, we exit
     
-    Text1(Index).Text = CustomKeys.ReadableName(KeyCode)
-    Text1(Index).SelStart = Len(Text1(Index).Text)
+    Text1(index).Text = CustomKeys.ReadableName(KeyCode)
+    Text1(index).SelStart = Len(Text1(index).Text)
     
-    For i = 1 To CustomKeys.Count
+    For I = 1 To CustomKeys.count
 
-        If i <> Index Then
-            If CustomKeys.BindedKey(i) = KeyCode Then
-                Text1(Index).Text = "" 'If the key is already assigned, simply reject it
+        If I <> index Then
+            If CustomKeys.BindedKey(I) = KeyCode Then
+                Text1(index).Text = "" 'If the key is already assigned, simply reject it
                 Call Beep 'Alert the user
                 KeyCode = 0
                 Exit Sub
@@ -805,18 +805,18 @@ Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer
 
         End If
 
-    Next i
+    Next I
     
-    CustomKeys.BindedKey(Index) = KeyCode
+    CustomKeys.BindedKey(index) = KeyCode
 
 End Sub
 
-Private Sub Text1_KeyPress(Index As Integer, KeyAscii As Integer)
+Private Sub Text1_KeyPress(index As Integer, KeyAscii As Integer)
     KeyAscii = 0
 
 End Sub
 
-Private Sub Text1_KeyUp(Index As Integer, KeyCode As Integer, Shift As Integer)
-    Call Text1_KeyDown(Index, KeyCode, Shift)
+Private Sub Text1_KeyUp(index As Integer, KeyCode As Integer, Shift As Integer)
+    Call Text1_KeyDown(index, KeyCode, Shift)
 
 End Sub

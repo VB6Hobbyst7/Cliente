@@ -315,42 +315,58 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Private Type GIFAnimator
+
     Frames As Long
     Frame As Long
     LoopCount As Long
     Intervals() As Long
+
 End Type
+
 Private myAnimator As GIFAnimator
+
 Private Sub aniTimer_Timer()
-On Error GoTo err
-  aniTimer.Enabled = False
+
+    On Error GoTo err
+
+    aniTimer.Enabled = False
+
     With myAnimator
+
         If .Frame = .Frames Then        ' loop occurred
             ' intervals(0) is number of loops before stopping animation. values < 1 indicate infinite looping
             .Frame = 0
+
             If .Intervals(0) > 0 Then
                 .LoopCount = .LoopCount + 1
+
                 If .LoopCount = .Intervals(0) Then
                     .LoopCount = 0 ' if loops terminated, stop on last frame or first frame. your choice
                     Exit Sub
+
                 End If
+
             End If
+
         End If
+
         .Frame = .Frame + 1&
+
     End With
+
     Set Imagen.Picture = StdPictureEx.SubImage(Imagen.Picture, myAnimator.Frame)
     Imagen.Refresh  ' note: form/picturebox picture property does not require a refresh; updated automatically
     aniTimer.Interval = myAnimator.Intervals(myAnimator.Frame) * 10
     aniTimer.Enabled = True
 err:
+
 End Sub
 
 Private Sub Form_Load()
     
     On Error GoTo Form_Load_Err
-    
- 
 
     Text1.BackColor = RGB(11, 11, 11)
    
@@ -363,16 +379,15 @@ Form_Load_Err:
     Resume Next
     
 End Sub
+
 Private Sub Form_KeyPress(KeyAscii As Integer)
     
     On Error GoTo Form_KeyPress_Err
-    
 
     If (KeyAscii = 27) Then
         Unload Me
 
     End If
-
     
     Exit Sub
 
@@ -382,7 +397,7 @@ Form_KeyPress_Err:
     
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     
     On Error GoTo Form_MouseMove_Err
     
@@ -390,7 +405,6 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y A
     Image1.Tag = 0
     Image2.Picture = Nothing
     Image2.Tag = 0
-
     
     Exit Sub
 
@@ -400,17 +414,18 @@ Form_MouseMove_Err:
     
 End Sub
 
-Private Sub Image1_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Image1_MouseMove(Button As Integer, _
+                             Shift As Integer, _
+                             X As Single, _
+                             Y As Single)
     
     On Error GoTo Image1_MouseMove_Err
-    
 
     If Image1.Tag = "0" Then
        
         Image1.Tag = "1"
 
     End If
-
     
     Exit Sub
 
@@ -420,12 +435,11 @@ Image1_MouseMove_Err:
     
 End Sub
 
-Private Sub Image1_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Image1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     
     On Error GoTo Image1_MouseUp_Err
     
     Unload Me
-
     
     Exit Sub
 
@@ -435,17 +449,18 @@ Image1_MouseUp_Err:
     
 End Sub
 
-Private Sub Image2_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Image2_MouseMove(Button As Integer, _
+                             Shift As Integer, _
+                             X As Single, _
+                             Y As Single)
     
     On Error GoTo Image2_MouseMove_Err
-    
 
     If Image2.Tag = "0" Then
        
         Image2.Tag = "1"
 
     End If
-
     
     Exit Sub
 
@@ -455,15 +470,14 @@ Image2_MouseMove_Err:
     
 End Sub
 
-Private Sub Image2_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Image2_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     
     On Error GoTo Image2_MouseUp_Err
-    
 
-
-    If ListViewQuest.SelectedItem.Index > 0 Then
-        Call WriteQuestAccept(ListViewQuest.SelectedItem.Index)
+    If ListViewQuest.SelectedItem.index > 0 Then
+        Call WriteQuestAccept(ListViewQuest.SelectedItem.index)
         Unload Me
+
     End If
     
     Exit Sub
@@ -478,7 +492,7 @@ Private Sub Image3_Click()
     
     On Error GoTo Image3_Click_Err
     
-Unload Me
+    Unload Me
     
     Exit Sub
 
@@ -491,15 +505,16 @@ End Sub
 Public Sub ListView1_Click()
     
     On Error GoTo ListView1_Click_Err
+
     aniTimer.Enabled = False
+
     If ListView1.SelectedItem Is Nothing Then Exit Sub
 
     If ListView1.SelectedItem.SubItems(2) <> "" Then
         If ListView1.SelectedItem.SubItems(3) = 0 Then
            
-          myAnimator.Frames = 0
-          Animacion Imagen
-                  
+            myAnimator.Frames = 0
+            Animacion Imagen
                    
             npclbl.Caption = NpcData(ListView1.SelectedItem.SubItems(2)).Name & " (" & ListView1.SelectedItem.SubItems(1) & ")"
     
@@ -512,7 +527,6 @@ Public Sub ListView1_Click()
         End If
 
     End If
-
     
     Exit Sub
 
@@ -522,20 +536,16 @@ ListView1_Click_Err:
     
 End Sub
 
-
-
 Public Sub ListView2_Click()
     
     On Error GoTo ListView2_Click_Err
-    
 
     If ListView2.SelectedItem.SubItems(2) <> "" Then
- picture1.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & GrhData(ObjData(ListView2.SelectedItem.SubItems(2)).GrhIndex).FileNum & ".png", , , , , True)
+        picture1.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & GrhData(ObjData(ListView2.SelectedItem.SubItems(2)).GrhIndex).FileNum & ".png", , , , , True)
     
     End If
     
     objetolbl.Caption = ObjData(ListView2.SelectedItem.SubItems(2)).Name & vbCrLf & " (" & ListView2.SelectedItem.SubItems(1) & ")"
-
     
     Exit Sub
 
@@ -544,7 +554,6 @@ ListView2_Click_Err:
     Resume Next
     
 End Sub
-
 
 Private Sub ListViewQuest_ItemClick(ByVal item As MSComctlLib.ListItem)
     
@@ -564,102 +573,85 @@ Private Sub ListViewQuest_ItemClick(ByVal item As MSComctlLib.ListItem)
         FrmQuestInfo.titulo.Caption = QuestList(QuestIndex).nombre
         
         FrmQuestInfo.Text1.Text = ""
-        
     
         picture1.BackColor = RGB(19, 14, 11)
         Imagen.Refresh
         picture1.Refresh
         npclbl.Caption = ""
         objetolbl.Caption = ""
-                
         
+        If QuestList(QuestIndex).RequiredQuest <> 0 Then
+            FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos: " & vbCrLf & "Nivel requerido: " & QuestList(QuestIndex).RequiredLevel & vbCrLf & "Quest: " & QuestList(QuestList(QuestIndex).RequiredQuest).nombre
+        Else
+            FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos: " & vbCrLf & "Nivel requerido: " & QuestList(QuestIndex).RequiredLevel & vbCrLf
                 
+        End If
                 
-        
-                  If QuestList(QuestIndex).RequiredQuest <> 0 Then
-                    FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos: " & vbCrLf & "Nivel requerido: " & QuestList(QuestIndex).RequiredLevel & vbCrLf & "Quest: " & QuestList(QuestList(QuestIndex).RequiredQuest).nombre
-                Else
-                    FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos: " & vbCrLf & "Nivel requerido: " & QuestList(QuestIndex).RequiredLevel & vbCrLf
-                
-                End If
+        If UBound(QuestList(QuestIndex).RequiredNPC) > 0 Then 'Hay NPCs
+            If UBound(QuestList(QuestIndex).RequiredNPC) > 5 Then
+                FrmQuestInfo.ListView1.FlatScrollBar = False
+            Else
+                FrmQuestInfo.ListView1.FlatScrollBar = True
                
-               
-
-                
-                
-                If UBound(QuestList(QuestIndex).RequiredNPC) > 0 Then 'Hay NPCs
-                    If UBound(QuestList(QuestIndex).RequiredNPC) > 5 Then
-                        FrmQuestInfo.ListView1.FlatScrollBar = False
-                    Else
-                        FrmQuestInfo.ListView1.FlatScrollBar = True
-               
-                    End If
+            End If
                     
-                    
-                    For I = 1 To UBound(QuestList(QuestIndex).RequiredNPC)
-                                                
+            For I = 1 To UBound(QuestList(QuestIndex).RequiredNPC)
 
-                            Dim subelemento As ListItem
+                Dim subelemento As ListItem
     
-                            Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , NpcData(QuestList(QuestIndex).RequiredNPC(I).NpcIndex).Name)
+                Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , NpcData(QuestList(QuestIndex).RequiredNPC(I).NpcIndex).Name)
                            
-                            subelemento.SubItems(1) = QuestList(QuestIndex).RequiredNPC(I).Amount
-                            subelemento.SubItems(2) = QuestList(QuestIndex).RequiredNPC(I).NpcIndex
-                            subelemento.SubItems(3) = 0
-
+                subelemento.SubItems(1) = QuestList(QuestIndex).RequiredNPC(I).Amount
+                subelemento.SubItems(2) = QuestList(QuestIndex).RequiredNPC(I).NpcIndex
+                subelemento.SubItems(3) = 0
     
-                    Next I
+            Next I
     
-                End If
-                    
+        End If
     
-                If LBound(QuestList(QuestIndex).RequiredOBJ) > 0 Then  'Hay OBJs
+        If LBound(QuestList(QuestIndex).RequiredOBJ) > 0 Then  'Hay OBJs
     
-                    For I = 1 To UBound(QuestList(QuestIndex).RequiredOBJ)
-                        Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , ObjData(QuestList(QuestIndex).RequiredOBJ(I).OBJIndex).Name)
-                        subelemento.SubItems(1) = QuestList(QuestIndex).RequiredOBJ(I).Amount
-                        subelemento.SubItems(2) = QuestList(QuestIndex).RequiredOBJ(I).OBJIndex
-                        subelemento.SubItems(3) = 1
-                    Next I
+            For I = 1 To UBound(QuestList(QuestIndex).RequiredOBJ)
+                Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , ObjData(QuestList(QuestIndex).RequiredOBJ(I).OBJIndex).Name)
+                subelemento.SubItems(1) = QuestList(QuestIndex).RequiredOBJ(I).Amount
+                subelemento.SubItems(2) = QuestList(QuestIndex).RequiredOBJ(I).OBJIndex
+                subelemento.SubItems(3) = 1
+            Next I
     
-                End If
-        
+        End If
                
-                If QuestList(QuestIndex).RewardGLD <> 0 Then
-                     Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Oro")
-                     subelemento.SubItems(1) = QuestList(QuestIndex).RewardGLD
-                     subelemento.SubItems(2) = 12
-                     subelemento.SubItems(3) = 0
-                End If
-                
-                
-                If QuestList(QuestIndex).RewardEXP <> 0 Then
-                    Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Experiencia")
-                    subelemento.SubItems(1) = QuestList(QuestIndex).RewardEXP
-                    subelemento.SubItems(2) = 608
-                    subelemento.SubItems(3) = 1
-                End If
-               
+        If QuestList(QuestIndex).RewardGLD <> 0 Then
+            Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Oro")
+            subelemento.SubItems(1) = QuestList(QuestIndex).RewardGLD
+            subelemento.SubItems(2) = 12
+            subelemento.SubItems(3) = 0
 
-                If UBound(QuestList(QuestIndex).RewardOBJ) > 0 Then
+        End If
                 
+        If QuestList(QuestIndex).RewardEXP <> 0 Then
+            Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Experiencia")
+            subelemento.SubItems(1) = QuestList(QuestIndex).RewardEXP
+            subelemento.SubItems(2) = 608
+            subelemento.SubItems(3) = 1
+
+        End If
+
+        If UBound(QuestList(QuestIndex).RewardOBJ) > 0 Then
                     
-                    For I = 1 To UBound(QuestList(QuestIndex).RewardOBJ)
-
+            For I = 1 To UBound(QuestList(QuestIndex).RewardOBJ)
                                                                    
-                        Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , ObjData(QuestList(QuestIndex).RewardOBJ(I).OBJIndex).Name)
+                Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , ObjData(QuestList(QuestIndex).RewardOBJ(I).OBJIndex).Name)
                            
-                        subelemento.SubItems(1) = QuestList(QuestIndex).RewardOBJ(I).Amount
-                        subelemento.SubItems(2) = QuestList(QuestIndex).RewardOBJ(I).OBJIndex
-                        subelemento.SubItems(3) = 1
-                               
+                subelemento.SubItems(1) = QuestList(QuestIndex).RewardOBJ(I).Amount
+                subelemento.SubItems(2) = QuestList(QuestIndex).RewardOBJ(I).OBJIndex
+                subelemento.SubItems(3) = 1
                
-                    Next I
+            Next I
     
-                End If
+        End If
                 
-    Call ListView1_Click
-    Call ListView2_Click
+        Call ListView1_Click
+        Call ListView2_Click
 
     End If
     
@@ -675,89 +667,75 @@ Private Sub lstQuests_Click()
     
     On Error GoTo lstQuests_Click_Err
     
-Dim QuestIndex As Byte
+    Dim QuestIndex As Byte
 
-QuestIndex = Val(ReadField(1, lstQuests.List(lstQuests.ListIndex), Asc("-")))
+    QuestIndex = Val(ReadField(1, lstQuests.List(lstQuests.ListIndex), Asc("-")))
 
-FrmQuestInfo.ListView2.ListItems.Clear
-FrmQuestInfo.ListView1.ListItems.Clear
+    FrmQuestInfo.ListView2.ListItems.Clear
+    FrmQuestInfo.ListView1.ListItems.Clear
             
-                FrmQuestInfo.titulo.Caption = QuestList(QuestIndex).nombre
-               
+    FrmQuestInfo.titulo.Caption = QuestList(QuestIndex).nombre
                 
-                FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & "Nivel requerido: " & QuestList(QuestIndex).RequiredLevel & vbCrLf
-                           
-                              
+    FrmQuestInfo.Text1.Text = QuestList(QuestIndex).Desc & vbCrLf & "Nivel requerido: " & QuestList(QuestIndex).RequiredLevel & vbCrLf
                 
-                If UBound(QuestList(QuestIndex).RequiredNPC) > 0 Then 'Hay NPCs
-                    If UBound(QuestList(QuestIndex).RequiredNPC) > 5 Then
-                        FrmQuestInfo.ListView1.FlatScrollBar = False
-                    Else
-                        FrmQuestInfo.ListView1.FlatScrollBar = True
+    If UBound(QuestList(QuestIndex).RequiredNPC) > 0 Then 'Hay NPCs
+        If UBound(QuestList(QuestIndex).RequiredNPC) > 5 Then
+            FrmQuestInfo.ListView1.FlatScrollBar = False
+        Else
+            FrmQuestInfo.ListView1.FlatScrollBar = True
                
-                    End If
+        End If
                     
-                    
-                    For I = 1 To UBound(QuestList(QuestIndex).RequiredNPC)
-                                                
+        For I = 1 To UBound(QuestList(QuestIndex).RequiredNPC)
 
-                            Dim subelemento As ListItem
+            Dim subelemento As ListItem
     
-                            Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , NpcData(QuestList(QuestIndex).RequiredNPC(I).NpcIndex).Name)
+            Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , NpcData(QuestList(QuestIndex).RequiredNPC(I).NpcIndex).Name)
                            
-                            subelemento.SubItems(1) = QuestList(QuestIndex).RequiredNPC(I).Amount
-                            subelemento.SubItems(2) = QuestList(QuestIndex).RequiredNPC(I).NpcIndex
-                            subelemento.SubItems(3) = 0
-
+            subelemento.SubItems(1) = QuestList(QuestIndex).RequiredNPC(I).Amount
+            subelemento.SubItems(2) = QuestList(QuestIndex).RequiredNPC(I).NpcIndex
+            subelemento.SubItems(3) = 0
     
-                    Next I
+        Next I
     
-                End If
-                    
+    End If
     
-                If LBound(QuestList(QuestIndex).RequiredOBJ) > 0 Then  'Hay OBJs
+    If LBound(QuestList(QuestIndex).RequiredOBJ) > 0 Then  'Hay OBJs
     
-                    For I = 1 To UBound(QuestList(QuestIndex).RequiredOBJ)
-                        Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , ObjData(QuestList(QuestIndex).RequiredOBJ(I).OBJIndex).Name)
-                        subelemento.SubItems(1) = QuestList(QuestIndex).RequiredOBJ(I).Amount
-                        subelemento.SubItems(2) = QuestList(QuestIndex).RequiredOBJ(I).OBJIndex
-                        subelemento.SubItems(3) = 1
-                    Next I
+        For I = 1 To UBound(QuestList(QuestIndex).RequiredOBJ)
+            Set subelemento = FrmQuestInfo.ListView1.ListItems.Add(, , ObjData(QuestList(QuestIndex).RequiredOBJ(I).OBJIndex).Name)
+            subelemento.SubItems(1) = QuestList(QuestIndex).RequiredOBJ(I).Amount
+            subelemento.SubItems(2) = QuestList(QuestIndex).RequiredOBJ(I).OBJIndex
+            subelemento.SubItems(3) = 1
+        Next I
     
-                End If
-        
+    End If
                
-                Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Oro")
+    Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Oro")
                            
-                subelemento.SubItems(1) = QuestList(QuestIndex).RewardGLD
-                subelemento.SubItems(2) = 12
-                subelemento.SubItems(3) = 0
+    subelemento.SubItems(1) = QuestList(QuestIndex).RewardGLD
+    subelemento.SubItems(2) = 12
+    subelemento.SubItems(3) = 0
                
-                Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Experiencia")
+    Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , "Experiencia")
                            
-                subelemento.SubItems(1) = QuestList(QuestIndex).RewardEXP
-                subelemento.SubItems(2) = 608
-                subelemento.SubItems(3) = 1
-               
+    subelemento.SubItems(1) = QuestList(QuestIndex).RewardEXP
+    subelemento.SubItems(2) = 608
+    subelemento.SubItems(3) = 1
 
-                If UBound(QuestList(QuestIndex).RewardOBJ) > 0 Then
-                
+    If UBound(QuestList(QuestIndex).RewardOBJ) > 0 Then
                     
-                    For I = 1 To UBound(QuestList(QuestIndex).RewardOBJ)
-
+        For I = 1 To UBound(QuestList(QuestIndex).RewardOBJ)
                                                                    
-                        Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , ObjData(QuestList(QuestIndex).RewardOBJ(I).OBJIndex).Name)
+            Set subelemento = FrmQuestInfo.ListView2.ListItems.Add(, , ObjData(QuestList(QuestIndex).RewardOBJ(I).OBJIndex).Name)
                            
-                        subelemento.SubItems(1) = QuestList(QuestIndex).RewardOBJ(I).Amount
-                        subelemento.SubItems(2) = QuestList(QuestIndex).RewardOBJ(I).OBJIndex
-                        subelemento.SubItems(3) = 1
-                               
+            subelemento.SubItems(1) = QuestList(QuestIndex).RewardOBJ(I).Amount
+            subelemento.SubItems(2) = QuestList(QuestIndex).RewardOBJ(I).OBJIndex
+            subelemento.SubItems(3) = 1
                
-                    Next I
+        Next I
     
-                End If
-
-
+    End If
     
     Exit Sub
 
@@ -768,12 +746,14 @@ lstQuests_Click_Err:
 End Sub
 
 Sub Animacion(imagen2 As Image)
+
     If aniTimer.Enabled Then
         aniTimer.Enabled = False
     ElseIf myAnimator.Frames = 0& Then
 
         Set imagen2.Picture = StdPictureEx.LoadPicture(App.path & "\recursos\ques\" & NpcData(ListView1.SelectedItem.SubItems(2)).Name & ".gif", , , , , True)  ' True=can change frames
         myAnimator.Frames = StdPictureEx.SubImageCount(imagen2.Picture)
+
         If myAnimator.Frames < 2 Or StdPictureEx.PictureType(imagen2.Picture) <> ptcGIF Then
             myAnimator.Frames = -1    ' flag indicating this image is not GIF or can't be animated
             aniTimer.Interval = 0
@@ -782,10 +762,13 @@ Sub Animacion(imagen2 As Image)
             Call StdPictureEx.GetGIFAnimationInfo(imagen2.Picture, myAnimator.Intervals)
             aniTimer.Interval = myAnimator.Intervals(1) * 10
             aniTimer.Enabled = True
+
         End If
 
     Else
         aniTimer.Enabled = True
+
     End If
+
 End Sub
 

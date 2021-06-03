@@ -164,7 +164,7 @@ Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long
 
 Private Declare Function ReleaseDC _
                 Lib "user32" (ByVal hwnd As Long, _
-                              ByVal hdc As Long) As Long
+                              ByVal hDC As Long) As Long
 
 Private Declare Sub CopyMemory _
                 Lib "kernel32" _
@@ -246,8 +246,8 @@ Private Const SRCCOPY = &HCC0020 ' (DWORD) dest = source
 'Good old bitblt
 Private Declare Function BitBlt _
                 Lib "gdi32" (ByVal hDestDC As Long, _
-                             ByVal x As Long, _
-                             ByVal y As Long, _
+                             ByVal X As Long, _
+                             ByVal Y As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long, _
                              ByVal hSrcDC As Long, _
@@ -611,7 +611,7 @@ Public Function SaveJPGToPtr(ByRef cDib As cDIBSection, _
          
         Else
             ' Throw error
-            Call Err.Raise(26001, App.EXEName & ".mIntelJPEGLibrary", "Failed to save to JPG " & lR, vbExclamation)
+            Call err.Raise(26001, App.EXEName & ".mIntelJPEGLibrary", "Failed to save to JPG " & lR, vbExclamation)
 
         End If
       
@@ -620,7 +620,7 @@ Public Function SaveJPGToPtr(ByRef cDib As cDIBSection, _
     Else
         
         ' Throw error:
-        Call Err.Raise(26001, App.EXEName & ".mIntelJPEGLibrary", "Failed to initialise the IJL library: " & lR)
+        Call err.Raise(26001, App.EXEName & ".mIntelJPEGLibrary", "Failed to initialise the IJL library: " & lR)
 
     End If
 
@@ -628,7 +628,7 @@ End Function
 
 Public Sub ScreenCapture(Optional ByVal AutoScreenShooter As Boolean = False)
 
-    On Error GoTo Err:
+    On Error GoTo err:
 
     Dim File As String
 
@@ -646,13 +646,13 @@ Public Sub ScreenCapture(Optional ByVal AutoScreenShooter As Boolean = False)
 
     FileName = Format$(Now, "DD-MM-YYYY hh-mm-ss") & ".jpg"
     
-    With frmScreenshots.Picture1
+    With frmScreenshots.picture1
         
         .AutoRedraw = True
         .Width = frmMain.Width
         .Height = frmMain.Height
 
-        Call BitBlt(.hdc, 0, 0, frmMain.Width, frmMain.Height, hdcc, 0, 0, SRCCOPY)
+        Call BitBlt(.hDC, 0, 0, frmMain.Width, frmMain.Height, hdcc, 0, 0, SRCCOPY)
         Call ReleaseDC(frmMain.hwnd, hdcc)
     
         hdcc = INVALID_HANDLE
@@ -691,8 +691,8 @@ Public Sub ScreenCapture(Optional ByVal AutoScreenShooter As Boolean = False)
     
     Exit Sub
 
-Err:
-    AddtoRichPicture Err.Number & "-" & Err.Description, 200, 200, 200, False, False, False
+err:
+    AddtoRichPicture err.Number & "-" & err.Description, 200, 200, 200, False, False, False
     
     If hdcc <> INVALID_HANDLE Then Call ReleaseDC(frmMain.hwnd, hdcc)
 
@@ -707,11 +707,11 @@ Public Function FullScreenCapture(ByVal File As String) As Boolean
 
     Dim hdcc   As Long
 
-    Dim handle As Long
+    Dim Handle As Long
     
-    hdcc = GetDC(handle)
+    hdcc = GetDC(Handle)
     
-    With frmScreenshots.Picture1
+    With frmScreenshots.picture1
     
         .AutoRedraw = True
     
@@ -719,16 +719,16 @@ Public Function FullScreenCapture(ByVal File As String) As Boolean
             .Width = Screen.Width
             .Height = Screen.Height
         
-            Call BitBlt(frmScreenshots.Picture1.hdc, 0, 0, Screen.Width / Screen.TwipsPerPixelX, Screen.Height / Screen.TwipsPerPixelY, hdcc, 0, 0, SRCCOPY)
+            Call BitBlt(frmScreenshots.picture1.hDC, 0, 0, Screen.Width / Screen.TwipsPerPixelX, Screen.Height / Screen.TwipsPerPixelY, hdcc, 0, 0, SRCCOPY)
         Else
             .Width = frmMain.Width
             .Height = frmMain.Height
         
-            Call BitBlt(.hdc, 0, 0, frmMain.Width, frmMain.Height, hdcc, 0, 0, SRCCOPY)
+            Call BitBlt(.hDC, 0, 0, frmMain.Width, frmMain.Height, hdcc, 0, 0, SRCCOPY)
 
         End If
     
-        Call ReleaseDC(handle, hdcc)
+        Call ReleaseDC(Handle, hdcc)
     
         hdcc = INVALID_HANDLE
     

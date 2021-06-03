@@ -93,9 +93,9 @@ Private cBotonCerrar As clsGraphicalButton
 
 Public LastPressed   As clsGraphicalButton
 
-Public Sub recievePeticion(ByVal P As String)
+Public Sub recievePeticion(ByVal p As String)
 
-    Text1 = Replace$(P, "º", vbCrLf)
+    Text1 = Replace$(p, "º", vbCrLf)
     Me.Show vbModeless, frmMain
 
 End Sub
@@ -118,13 +118,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -134,7 +134,7 @@ Private Sub imgCerrar_Click()
 
 End Sub
 
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub

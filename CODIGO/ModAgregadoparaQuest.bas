@@ -1,5 +1,7 @@
 Attribute VB_Name = "ModAgregadoParaQuest"
-Public ObjData()          As ObjDatas
+
+Public ObjData() As ObjDatas
+
 Public Type tQuestNpc
 
     NpcIndex As Integer
@@ -8,9 +10,12 @@ Public Type tQuestNpc
 End Type
 
 Public QuestList() As tQuest
+
 Public Type Obj
+
     OBJIndex As Integer
     Amount As Integer
+
 End Type
 
 Public Type tQuest
@@ -38,8 +43,8 @@ Public Type tQuest
 
 End Type
 
+Public NpcData() As NpcDatas
 
-Public NpcData()          As NpcDatas
 Public Type NpcDatas
 
     Name As String
@@ -56,9 +61,13 @@ Public Type NpcDatas
     ExpClan As Long
     
 End Type
-Dim Leer As New clsIniManager
-Public NumQuest  As Integer
-Public PosMap()           As Integer
+
+Dim Leer        As New clsIniManager
+
+Public NumQuest As Integer
+
+Public PosMap() As Integer
+
 Public Type ObjDatas
 
     GrhIndex As Long ' Indice del grafico que representa el obj
@@ -90,16 +99,16 @@ Public Type ObjDatas
 
 End Type
 
-
 Public Sub CargarNpc()
 
-ObjFile = PathInit & "\NPCs.dat"
-Call Leer.Initialize(ObjFile)
-NumNpcs = Val(Leer.GetValue("INIT", "NumNPCs"))
+    ObjFile = PathInit & "\NPCs.dat"
+    Call Leer.Initialize(ObjFile)
+    NumNpcs = Val(Leer.GetValue("INIT", "NumNPCs"))
 
     ReDim NpcData(0 To NumNpcs) As NpcDatas
-'NumQuest = Val(Leer.GetValue("INIT", "NUMQUESTS"))
-For npc = 1 To NumNpcs
+
+    'NumQuest = Val(Leer.GetValue("INIT", "NUMQUESTS"))
+    For npc = 1 To NumNpcs
         DoEvents
         
         NpcData(npc).Name = Leer.GetValue("NPC" & npc, "Name")
@@ -128,11 +137,11 @@ For npc = 1 To NumNpcs
             NpcData(npc).NumQuiza = Val(aux)
             ReDim NpcData(npc).QuizaDropea(1 To NpcData(npc).NumQuiza) As Integer
 
-            For loopc = 1 To NpcData(npc).NumQuiza
+            For LoopC = 1 To NpcData(npc).NumQuiza
                
-                NpcData(npc).QuizaDropea(loopc) = Val(Leer.GetValue("npc" & npc, "QuizaDropea" & loopc))
+                NpcData(npc).QuizaDropea(LoopC) = Val(Leer.GetValue("npc" & npc, "QuizaDropea" & LoopC))
                 ' Debug.Print NpcData(Npc).QuizaDropea(loopc)
-            Next loopc
+            Next LoopC
 
         End If
 
@@ -141,12 +150,13 @@ For npc = 1 To NumNpcs
 End Sub
 
 Public Sub CargarQuests()
-   ObjFile = PathInit & "\QUESTS.dat"
-Call Leer.Initialize(ObjFile)
-  NumQuest = Val(Leer.GetValue("INIT", "NumQuests"))
-  ReDim QuestList(1 To NumQuest)
-  ReDim PosMap(1 To NumQuest) As Integer
-  For Nquest = 1 To NumQuest
+    ObjFile = PathInit & "\QUESTS.dat"
+    Call Leer.Initialize(ObjFile)
+    NumQuest = Val(Leer.GetValue("INIT", "NumQuests"))
+    ReDim QuestList(1 To NumQuest)
+    ReDim PosMap(1 To NumQuest) As Integer
+
+    For Nquest = 1 To NumQuest
         DoEvents
         
         QuestList(Nquest).nombre = Leer.GetValue("QUEST" & Nquest, "Nombre")
@@ -157,15 +167,16 @@ Call Leer.Initialize(ObjFile)
         QuestList(Nquest).RequiredLevel = Val(Leer.GetValue("QUEST" & Nquest, "RequiredLevel"))
         PosMap(Nquest) = Leer.GetValue("QUEST" & Nquest, "PosMap")
     Next Nquest
+
 End Sub
 
-
 Public Sub CargarObjetos()
-ObjFile = PathInit & "\obj.dat"
-Call Leer.Initialize(ObjFile)
-numObjs = Val(Leer.GetValue("INIT", "NumObjs"))
-ReDim ObjData(0 To numObjs) As ObjDatas
-For Obj = 1 To numObjs
+    ObjFile = PathInit & "\obj.dat"
+    Call Leer.Initialize(ObjFile)
+    numObjs = Val(Leer.GetValue("INIT", "NumObjs"))
+    ReDim ObjData(0 To numObjs) As ObjDatas
+
+    For Obj = 1 To numObjs
         DoEvents
         ObjData(Obj).GrhIndex = Val(Leer.GetValue("OBJ" & Obj, "grhindex"))
         ObjData(Obj).Name = Leer.GetValue("OBJ" & Obj, "Name")

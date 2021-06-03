@@ -14,7 +14,7 @@ End Enum
 Private Type PICTDESC
 
     cbSizeOfStruct As Long
-    picType As Long
+    PicType As Long
     hgdiObj As Long
     hPalOrXYExt As Long
 
@@ -64,13 +64,13 @@ Private Declare Function CreateBitmap _
                              lpBits As Any) As Long
 
 Private Declare Function SetStretchBltMode _
-                Lib "gdi32" (ByVal hdc As Long, _
+                Lib "gdi32" (ByVal hDC As Long, _
                              ByVal nStretchMode As Long) As Long
 
 Private Declare Function StretchBlt _
-                Lib "gdi32" (ByVal hdc As Long, _
-                             ByVal x As Long, _
-                             ByVal y As Long, _
+                Lib "gdi32" (ByVal hDC As Long, _
+                             ByVal X As Long, _
+                             ByVal Y As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long, _
                              ByVal hSrcDC As Long, _
@@ -82,8 +82,8 @@ Private Declare Function StretchBlt _
 
 Private Declare Function BitBlt _
                 Lib "gdi32" (ByVal hDestDC As Long, _
-                             ByVal x As Long, _
-                             ByVal y As Long, _
+                             ByVal X As Long, _
+                             ByVal Y As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long, _
                              ByVal hSrcDC As Long, _
@@ -92,51 +92,51 @@ Private Declare Function BitBlt _
                              ByVal dwRop As Long) As Long
 
 Private Declare Function CreateCompatibleBitmap _
-                Lib "gdi32" (ByVal hdc As Long, _
+                Lib "gdi32" (ByVal hDC As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long) As Long
 
 Private Declare Function CreateSolidBrush Lib "gdi32" (ByVal crColor As Long) As Long
 
-Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
+Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hDC As Long) As Long
 
 Private Declare Function SelectObject _
-                Lib "gdi32" (ByVal hdc As Long, _
+                Lib "gdi32" (ByVal hDC As Long, _
                              ByVal hObject As Long) As Long
 
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 
-Private Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
+Private Declare Function DeleteDC Lib "gdi32" (ByVal hDC As Long) As Long
 
 Private Declare Function ReleaseDC _
                 Lib "user32" (ByVal hwnd As Long, _
-                              ByVal hdc As Long) As Long
+                              ByVal hDC As Long) As Long
 
 Private Declare Function GetWindowDC Lib "user32" (ByVal hwnd As Long) As Long
 
 Private Declare Function FillRect _
-                Lib "user32" (ByVal hdc As Long, _
+                Lib "user32" (ByVal hDC As Long, _
                               lppvRECT As pvRECT, _
                               ByVal hBrush As Long) As Long
 
 Private Declare Function SetBkColor _
-                Lib "gdi32" (ByVal hdc As Long, _
-                             ByVal color As Long) As Long
+                Lib "gdi32" (ByVal hDC As Long, _
+                             ByVal Color As Long) As Long
 
 Private Declare Function SetTextColor _
-                Lib "gdi32" (ByVal hdc As Long, _
-                             ByVal color As Long) As Long
+                Lib "gdi32" (ByVal hDC As Long, _
+                             ByVal Color As Long) As Long
 
 Const DI_MASK = &H1
 
 Const DI_IMAGE = &H2
 
 Public Sub pvBMPaICO(srchDC As Long, _
-                     ByVal x As Integer, _
-                     ByVal y As Integer, _
+                     ByVal X As Integer, _
+                     ByVal Y As Integer, _
                      ByVal hImagen As Long, _
                      ByVal hMask As Long, _
-                     ByVal hdc As Long, _
+                     ByVal hDC As Long, _
                      ByVal ScrDC As Long, _
                      ByVal MaskColor As Long, _
                      ByVal ModoDeStretch As Byte)
@@ -150,24 +150,24 @@ Public Sub pvBMPaICO(srchDC As Long, _
     R.Bottom = 32
     R.Right = 32
     
-    SetStretchBltMode hdc, ModoDeStretch
+    SetStretchBltMode hDC, ModoDeStretch
             
     ' Dibujo la mascara
     
     If MaskColor = -1 Then    ' No hay transparencia
         
         ' Selecciono la mascara...
-        SelectObject hdc, hMask
+        SelectObject hDC, hMask
         
         ' ... y la lleno con negro (opaco)
         hBr = CreateSolidBrush(&H0)
-        FillRect hdc, R, hBr
+        FillRect hDC, R, hBr
         DeleteObject hBr
     
         ' Selecciono la imagen
-        SelectObject hdc, hImagen
+        SelectObject hDC, hImagen
     
-        StretchBlt hdc, 0, 0, 32, 32, srchDC, x, y, 32, 32, vbSrcCopy
+        StretchBlt hDC, 0, 0, 32, 32, srchDC, X, Y, 32, 32, vbSrcCopy
                
     Else
 
@@ -186,7 +186,7 @@ Public Sub pvBMPaICO(srchDC As Long, _
         ' Hago la copia del bitmap
         SelectObject hDC_Copia, TmpBMP
         
-        StretchBlt hDC_Copia, 0, 0, 32, 32, srchDC, x, y, 32, 32, vbSrcCopy
+        StretchBlt hDC_Copia, 0, 0, 32, 32, srchDC, X, Y, 32, 32, vbSrcCopy
               
         ' De ahora en mas utilizo la copia
         ' de la que ya a sido modificado su
@@ -195,7 +195,7 @@ Public Sub pvBMPaICO(srchDC As Long, _
         ' ---- Creo la mascara -----
         
         ' Selecciono la mascara en el DC
-        SelectObject hdc, hMask
+        SelectObject hDC, hMask
         
         ' Seteo el color de fondo con
         ' el color de mascara.
@@ -205,18 +205,18 @@ Public Sub pvBMPaICO(srchDC As Long, _
         ' Al copiar windows transforma en blanco
         ' todos los pixel con el color de fondo
         ' y en negro el resto
-        BitBlt hdc, 0, 0, 32, 32, hDC_Copia, 0, 0, vbSrcCopy
+        BitBlt hDC, 0, 0, 32, 32, hDC_Copia, 0, 0, vbSrcCopy
           
-        SelectObject hdc, hImagen
+        SelectObject hDC, hImagen
         SelectObject hDC_Copia, hMask
 
         hBr = CreateSolidBrush(&H0)
-        FillRect hdc, R, hBr
+        FillRect hDC, R, hBr
         DeleteObject hBr
         
         ' Copio la mascara y luego la imagen
-        BitBlt hdc, 0, 0, 32, 32, hDC_Copia, 0, 0, vbNotSrcCopy
-        BitBlt hdc, 0, 0, 32, 32, srchDC, 0, 0, vbSrcAnd
+        BitBlt hDC, 0, 0, 32, 32, hDC_Copia, 0, 0, vbNotSrcCopy
+        BitBlt hDC, 0, 0, 32, 32, srchDC, 0, 0, vbSrcAnd
             
         DeleteDC hDC_Copia
         DeleteObject TmpBMP
@@ -229,11 +229,11 @@ Public Function HandleToPicture(ByVal hGDIHandle As Long, _
                                 ByVal ObjectType As PictureTypeConstants, _
                                 Optional ByVal hPal As Long = 0) As StdPicture
 
-    Dim ipic As IPicture, picdes As PICTDESC, iidIPicture As IID
+    Dim iPic As IPicture, picdes As PICTDESC, iidIPicture As IID
     
     ' Fill picture description
     picdes.cbSizeOfStruct = Len(picdes)
-    picdes.picType = ObjectType
+    picdes.PicType = ObjectType
     picdes.hgdiObj = hGDIHandle
     picdes.hPalOrXYExt = hPal
     
@@ -261,9 +261,9 @@ Public Function HandleToPicture(ByVal hGDIHandle As Long, _
     iidIPicture.Data4(7) = &HAB
     
     ' Crea el objeto con el handle
-    OleCreatePictureIndirect picdes, iidIPicture, True, ipic
+    OleCreatePictureIndirect picdes, iidIPicture, True, iPic
     
-    Set HandleToPicture = ipic
+    Set HandleToPicture = iPic
         
 End Function
 

@@ -73,7 +73,7 @@ Private Function CreateNamedMutex(ByRef mutexName As String) As Boolean
     
     mutexHID = CreateMutex(sa, False, "Global\" & mutexName)
     
-    CreateNamedMutex = Not (Err.LastDllError = ERROR_ALREADY_EXISTS) 'check if the mutex already existed
+    CreateNamedMutex = Not (err.LastDllError = ERROR_ALREADY_EXISTS) 'check if the mutex already existed
 
 End Function
 

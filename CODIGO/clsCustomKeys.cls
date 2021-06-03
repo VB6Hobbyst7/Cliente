@@ -45,25 +45,23 @@ Attribute VB_Exposed = False
 '13/04/2008 - Juan Martín Sotuyo Dodero (Maraxus) - (juansotuyo@gmail.com)
 '   - Removed lots of unwanted buggy features keeping it clean. Revised documentation and coding standards.
 
-
 Option Explicit
 
 ''
 'Number of Customizable Keys
-Private Const NUM_CUSTOM_KEYS As Byte = 28
+Private Const NUM_CUSTOM_KEYS            As Byte = 28
 
 ''
 'Error Raised in case the key file doesn't exist
-Private Const ERROR_NO_KEY_FILE As Long = vbObjectError + 16
+Private Const ERROR_NO_KEY_FILE          As Long = vbObjectError + 16
 
 ''
 'The relative path from the application's location where the key config file is.
-Private Const KEY_CONFIG_FILE As String = "\BindKeys.bin"
+Private Const KEY_CONFIG_FILE            As String = "\BindKeys.bin"
 
 ''
 'Array of mapped keys
 Private mappedKeys(1 To NUM_CUSTOM_KEYS) As Integer
-
 
 ''
 'Index of keys on array
@@ -96,6 +94,7 @@ Private mappedKeys(1 To NUM_CUSTOM_KEYS) As Integer
 '@param mKeyWorkMacro Key for start/stop the Work Macro
 '@param mKeyExitGame Key for close the game
 Public Enum eKeyType
+
     mKeyUp = 1
     mKeyDown
     mKeyLeft
@@ -125,10 +124,9 @@ Public Enum eKeyType
     mKeyAnclar
     mKeySalir
     
-    
-    
     'GMS
     mKeyPanelGM
+
 End Enum
 
 ''
@@ -139,12 +137,14 @@ End Enum
 '@remarks All keys not listed here are considered not valid
 
 Public Function ReadableName(ByVal KeyCode As Integer) As String
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
+
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/04/07
+    '
+    '***************************************************
     Select Case KeyCode
+
         Case KeyCodeConstants.vbKeyA To KeyCodeConstants.vbKeyZ
             ReadableName = Chr$(KeyCode)
         
@@ -241,7 +241,9 @@ Public Function ReadableName(ByVal KeyCode As Integer) As String
         Case Else
             'In all other cases, key is considered not valid.
             ReadableName = Constants.vbNullString
+
     End Select
+
 End Function
 
 ''
@@ -250,46 +252,60 @@ End Function
 '@remarks   If the custom keys file is not found ERROR_NO_KEY_FILE is raised.
 
 Public Sub LoadCustomKeys()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/21/07
-'
-'***************************************************
-    Dim I As Long
+
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/21/07
+    '
+    '***************************************************
+    Dim I       As Long
+
     Dim FileNum As Integer
+
     FileNum = FreeFile()
     
     'Inits keyboard config with default configurations
     Call LoadDefaults
+
     If Dir(PathInit & KEY_CONFIG_FILE) <> "" Then
-    Open PathInit & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
+        Open PathInit & KEY_CONFIG_FILE For Binary Access Read Lock Read Write As FileNum
     
-    For I = 1 To NUM_CUSTOM_KEYS
-        If Not EOF(FileNum) Then
-            Get FileNum, , mappedKeys(I)
-            If LenB(ReadableName(mappedKeys(I))) = 0 Then
-                Close FileNum
-                Call err.Raise(ERROR_NO_KEY_FILE)
-                Exit Sub
+        For I = 1 To NUM_CUSTOM_KEYS
+
+            If Not EOF(FileNum) Then
+                Get FileNum, , mappedKeys(I)
+
+                If LenB(ReadableName(mappedKeys(I))) = 0 Then
+                    Close FileNum
+                    Call err.Raise(ERROR_NO_KEY_FILE)
+                    Exit Sub
+
+                End If
+
             End If
-        End If
-    Next I
+
+        Next I
     
-    Close FileNum
+        Close FileNum
+
     End If
+
 End Sub
 
 ''
 ' Saves custom keys to a file
 
 Public Sub SaveCustomKeys()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
+
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/04/07
+    '
+    '***************************************************
     Dim FileNum As Integer
-    Dim I As Long
+
+    Dim I       As Long
+
     FileNum = FreeFile()
     
     Open PathInit & KEY_CONFIG_FILE For Binary Access Write As FileNum
@@ -299,6 +315,7 @@ Public Sub SaveCustomKeys()
     Next I
     
     Close #FileNum
+
 End Sub
 
 ''
@@ -308,13 +325,15 @@ End Sub
 '@return The Key code that belongs to index
 
 Public Property Get BindedKey(ByVal index As eKeyType) As Integer
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
+
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/04/07
+    '
+    '***************************************************
     If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
     BindedKey = mappedKeys(index)
+
 End Property
 
 ''
@@ -324,33 +343,38 @@ End Property
 '@param NewVal New key code
 
 Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/05/07
-'
-'***************************************************
+
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/05/07
+    '
+    '***************************************************
     If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
     
     If LenB(ReadableName(NewVal)) = 0 Then 'If key is not valid...
+
         Exit Property                      'Rejects the new assignment
+
     End If
     
     If KeyAssigned(NewVal) Then 'Also reject it in case key is already assigned
         Exit Property
+
     End If
     
     mappedKeys(index) = NewVal
+
 End Property
 
 ''
 'Loads default keys
 
 Public Sub LoadDefaults()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/04/07
+    '
+    '***************************************************
     mappedKeys(eKeyType.mKeyUp) = KeyCodeConstants.vbKeyUp
     mappedKeys(eKeyType.mKeyDown) = KeyCodeConstants.vbKeyDown
     mappedKeys(eKeyType.mKeyLeft) = KeyCodeConstants.vbKeyLeft
@@ -380,18 +404,17 @@ Public Sub LoadDefaults()
     mappedKeys(eKeyType.mKeyAnclar) = KeyCodeConstants.vbKeyB
     mappedKeys(eKeyType.mKeySalir) = KeyCodeConstants.vbKeyEscape
     
-    
     'GMS
     mappedKeys(eKeyType.mKeyPanelGM) = KeyCodeConstants.vbKeyF10
     
 End Sub
 
 Public Sub LoadAWSD()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/04/07
+    '
+    '***************************************************
     mappedKeys(eKeyType.mKeyUp) = KeyCodeConstants.vbKeyW
     mappedKeys(eKeyType.mKeyDown) = KeyCodeConstants.vbKeyS
     mappedKeys(eKeyType.mKeyLeft) = KeyCodeConstants.vbKeyA
@@ -422,8 +445,8 @@ Public Sub LoadAWSD()
     
     'GMS
     mappedKeys(eKeyType.mKeyPanelGM) = KeyCodeConstants.vbKeyF10
-End Sub
 
+End Sub
 
 ''
 'Returns whether a key is binded to an action
@@ -432,21 +455,26 @@ End Sub
 '@return True if key is mapped, false otherwise
 
 Public Function KeyAssigned(ByVal KeyCode As Integer) As Boolean
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
+
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/04/07
+    '
+    '***************************************************
     Dim counter As Long
     
     KeyAssigned = False
     
     For counter = 1 To NUM_CUSTOM_KEYS
+
         If mappedKeys(counter) = KeyCode Then
             KeyAssigned = True
             Exit For
+
         End If
+
     Next counter
+
 End Function
 
 ''
@@ -454,44 +482,52 @@ End Function
 '
 '@return The number of customizable keys
 
-Public Property Get Count() As Byte
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
-    Count = NUM_CUSTOM_KEYS
+Public Property Get count() As Byte
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/04/07
+    '
+    '***************************************************
+    count = NUM_CUSTOM_KEYS
+
 End Property
 
 ''
 'Constructor. Loads Keys from file
 
 Private Sub Class_Initialize()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
-On Error GoTo ErrHand:
+
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/04/07
+    '
+    '***************************************************
+    On Error GoTo ErrHand:
+
     Call LoadCustomKeys
     Exit Sub
     
 ErrHand:
+
     If err.Number = ERROR_NO_KEY_FILE Then
         Call LoadDefaults
         Call SaveCustomKeys
+
         Resume Next
+
     End If
+
 End Sub
 
 ''
 'Destructor. Saves Keys to file
 
 Private Sub Class_Terminate()
-'***************************************************
-'Author: Rapsodius
-'Last Modification: 08/04/07
-'
-'***************************************************
+    '***************************************************
+    'Author: Rapsodius
+    'Last Modification: 08/04/07
+    '
+    '***************************************************
     Call SaveCustomKeys
+
 End Sub

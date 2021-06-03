@@ -171,7 +171,7 @@ Private Sub list1_Click()
 
 End Sub
 
-Private Sub List1_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub List1_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = vbRightButton Then
         PopupMenu menU_usuario

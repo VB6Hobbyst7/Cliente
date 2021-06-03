@@ -79,7 +79,7 @@ Public MiCabecera    As tCabecera
 
 Public Config_Inicio As tGameIni
 
-Dim Lector       As New clsIniManager
+Dim Lector           As New clsIniManager
 
 Public Sub IniciarCabecera(ByRef Cabecera As tCabecera)
     Cabecera.Desc = "Argentum Online by Noland Studios. Copyright Noland-Studios 2001, pablomarquez@noland-studios.com.ar"
@@ -172,57 +172,57 @@ End Sub
 Public Sub ReadConfig()
     'On Local Error GoTo fileErr:
     
-   ' Set Lector = New clsIniManager
+    ' Set Lector = New clsIniManager
     Call Lector.Initialize(App.path & "/INIT/Config.ini")
 
     'With mOpciones
         
-        ' AUDIO
-        mOpciones.Music = Lector.GetValue("AUDIO", "Music")
-        mOpciones.sound = Lector.GetValue("AUDIO", "Sound")
-        mOpciones.SoundEffects = Lector.GetValue("AUDIO", "SoundEffects")
-        mOpciones.VolMusic = Lector.GetValue("AUDIO", "VolMusic")
-        mOpciones.VolSound = Lector.GetValue("AUDIO", "VolSound")
+    ' AUDIO
+    mOpciones.Music = Lector.GetValue("AUDIO", "Music")
+    mOpciones.sound = Lector.GetValue("AUDIO", "Sound")
+    mOpciones.SoundEffects = Lector.GetValue("AUDIO", "SoundEffects")
+    mOpciones.VolMusic = Lector.GetValue("AUDIO", "VolMusic")
+    mOpciones.VolSound = Lector.GetValue("AUDIO", "VolSound")
         
-        ' GUILD
-        mOpciones.GuildNews = Lector.GetValue("GUILD", "GuildNews")
-        mOpciones.DialogConsole = Lector.GetValue("GUILD", "DialogConsole")
-        mOpciones.DialogCantMessages = Lector.GetValue("GUILD", "DialogCantMessages")
+    ' GUILD
+    mOpciones.GuildNews = Lector.GetValue("GUILD", "GuildNews")
+    mOpciones.DialogConsole = Lector.GetValue("GUILD", "DialogConsole")
+    mOpciones.DialogCantMessages = Lector.GetValue("GUILD", "DialogCantMessages")
         
-        ' SCREENSHOOTER
-        mOpciones.ScreenShooterNivelSuperior = Lector.GetValue("SCREENSHOOTER", "ScreenShooterNivelSuperior")
-        mOpciones.ScreenShooterNivelSuperiorIndex = Lector.GetValue("SCREENSHOOTER", "ScreenShooterNivelSuperiorIndex")
-        mOpciones.ScreenShooterAlMorir = Lector.GetValue("SCREENSHOOTER", "ScreenShooterAlMorir")
+    ' SCREENSHOOTER
+    mOpciones.ScreenShooterNivelSuperior = Lector.GetValue("SCREENSHOOTER", "ScreenShooterNivelSuperior")
+    mOpciones.ScreenShooterNivelSuperiorIndex = Lector.GetValue("SCREENSHOOTER", "ScreenShooterNivelSuperiorIndex")
+    mOpciones.ScreenShooterAlMorir = Lector.GetValue("SCREENSHOOTER", "ScreenShooterAlMorir")
         
-        ' RECORDAR
-        mOpciones.Recordar = Lector.GetValue("CUENTA", "Recordar")
-        mOpciones.RecordarUsuario = Lector.GetValue("CUENTA", "RecordarUsuario")
-        mOpciones.RecordarPassword = Lector.GetValue("CUENTA", "RecordarPassword")
+    ' RECORDAR
+    mOpciones.Recordar = Lector.GetValue("CUENTA", "Recordar")
+    mOpciones.RecordarUsuario = Lector.GetValue("CUENTA", "RecordarUsuario")
+    mOpciones.RecordarPassword = Lector.GetValue("CUENTA", "RecordarPassword")
         
-        ' VIDEO
-        mOpciones.TransparencyTree = Lector.GetValue("VIDEO", "TransparencyTree")
-        mOpciones.Shadows = Lector.GetValue("VIDEO", "Shadows")
-        mOpciones.BlurEffects = Lector.GetValue("VIDEO", "BlurEffects")
-        mOpciones.Niebla = Lector.GetValue("VIDEO", "Niebla")
+    ' VIDEO
+    mOpciones.TransparencyTree = Lector.GetValue("VIDEO", "TransparencyTree")
+    mOpciones.Shadows = Lector.GetValue("VIDEO", "Shadows")
+    mOpciones.BlurEffects = Lector.GetValue("VIDEO", "BlurEffects")
+    mOpciones.Niebla = Lector.GetValue("VIDEO", "Niebla")
        
-        ' OTROS
-        mOpciones.CursorFaccionario = Lector.GetValue("OTROS", "CursorFaccionario")
+    ' OTROS
+    mOpciones.CursorFaccionario = Lector.GetValue("OTROS", "CursorFaccionario")
         
-        #If Debugging Then
+    #If Debugging Then
           
-            PathGraficos = Lector.GetValue("PATH", "PathGraficos")
-            PathRecursosCliente = Lector.GetValue("PATH", "PathRecursosCliente")
-            PathWav = Lector.GetValue("PATH", "PathWav")
-            PathInterface = Lector.GetValue("PATH", "PathInterface")
-            PathInit = Lector.GetValue("PATH", "PathInit")
-            IpServidor = Lector.GetValue("SERVIDOR", "IP")
-            PuertoServidor = Lector.GetValue("SERVIDOR", "PUERTO")
-        #Else
-            IpServidor = "127.0.0.1"
-            PuertoServidor = 7222
-        #End If
+        PathGraficos = Lector.GetValue("PATH", "PathGraficos")
+        PathRecursosCliente = Lector.GetValue("PATH", "PathRecursosCliente")
+        PathWav = Lector.GetValue("PATH", "PathWav")
+        PathInterface = Lector.GetValue("PATH", "PathInterface")
+        PathInit = Lector.GetValue("PATH", "PathInit")
+        IpServidor = Lector.GetValue("SERVIDOR", "IP")
+        PuertoServidor = Lector.GetValue("SERVIDOR", "PUERTO")
+    #Else
+        IpServidor = "127.0.0.1"
+        PuertoServidor = 7222
+    #End If
         
-   ' End With
+    ' End With
     
     Call Lector.DumpFile(App.path & "/INIT/Config.ini")
 fileErr:

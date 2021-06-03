@@ -53,11 +53,11 @@ Public Sub RemoveDialogs()
     'Last Modification: 04/02/07
     'Removes all dialogs
     '***************************************************
-    Dim i As Long
+    Dim I As Long
     
-    For i = 1 To p_CANTIDADDIALOGOS
-        p_Dialogos(i).Texto = vbNullString
-    Next i
+    For I = 1 To p_CANTIDADDIALOGOS
+        p_Dialogos(I).Texto = vbNullString
+    Next I
 
 End Sub
 
@@ -95,48 +95,48 @@ End Sub
 
 Public Sub Draw()
 
-    Dim i       As Byte
+    Dim I       As Byte
 
-    Dim y       As Long
+    Dim Y       As Long
 
     Dim DifTime As Long
 
     If Not p_Activo Then Exit Sub
 
-    y = 250
+    Y = 250
 
     '500 600 700 800 900
-    For i = 1 To p_CANTIDADDIALOGOS
+    For I = 1 To p_CANTIDADDIALOGOS
 
-        If Trim$(p_Dialogos(i).Texto) <> vbNullString Then
-            If Left$(p_Dialogos(i).Texto, 1) = Chr(3) Then
-                Call Mod_TileEngine.RenderText(260, y + (i * 12), mid(p_Dialogos(i).Texto, 2), D3DColorRGBA(0, 255, 0, p_Dialogos(i).Alpha))
+        If Trim$(p_Dialogos(I).Texto) <> vbNullString Then
+            If Left$(p_Dialogos(I).Texto, 1) = Chr(3) Then
+                Call Mod_TileEngine.RenderText(260, Y + (I * 12), mid(p_Dialogos(I).Texto, 2), D3DColorRGBA(0, 255, 0, p_Dialogos(I).Alpha))
             Else
-                Call Mod_TileEngine.RenderText(260, y + (i * 12), p_Dialogos(i).Texto, D3DColorRGBA(255, 255, 0, p_Dialogos(i).Alpha))
+                Call Mod_TileEngine.RenderText(260, Y + (I * 12), p_Dialogos(I).Texto, D3DColorRGBA(255, 255, 0, p_Dialogos(I).Alpha))
 
             End If
 
-            If p_Dialogos(i).StartHide > 0 Then
-                DifTime = ((GetTickCount() And &H7FFFFFFF) - p_Dialogos(i).StartHide)
+            If p_Dialogos(I).StartHide > 0 Then
+                DifTime = ((GetTickCount() And &H7FFFFFFF) - p_Dialogos(I).StartHide)
 
                 If DifTime < 1000 Then
-                    If p_Dialogos(i).Segundos = 0 Then
-                        p_Dialogos(i).Alpha = 120 - DifTime * 120 / 1000
+                    If p_Dialogos(I).Segundos = 0 Then
+                        p_Dialogos(I).Alpha = 120 - DifTime * 120 / 1000
                     Else
-                        p_Dialogos(i).Alpha = DifTime * 120 / 1000
+                        p_Dialogos(I).Alpha = DifTime * 120 / 1000
 
                     End If
                     
                 Else
 
-                    If p_Dialogos(i).Segundos = 0 Then
-                        p_Dialogos(i).Alpha = 0
+                    If p_Dialogos(I).Segundos = 0 Then
+                        p_Dialogos(I).Alpha = 0
                     Else
-                        p_Dialogos(i).Alpha = 120
+                        p_Dialogos(I).Alpha = 120
 
                     End If
 
-                    p_Dialogos(i).StartHide = 0
+                    p_Dialogos(I).StartHide = 0
 
                 End If
 
@@ -144,30 +144,30 @@ Public Sub Draw()
 
         End If
 
-    Next i
+    Next I
 
 End Sub
 
 Public Sub PassTimer()
 
-    Dim i As Byte
+    Dim I As Byte
 
-    For i = 1 To p_CANTIDADDIALOGOS
+    For I = 1 To p_CANTIDADDIALOGOS
 
-        If p_Dialogos(i).Segundos > 0 Then
-            p_Dialogos(i).Segundos = p_Dialogos(i).Segundos - 1
+        If p_Dialogos(I).Segundos > 0 Then
+            p_Dialogos(I).Segundos = p_Dialogos(I).Segundos - 1
 
-            If p_Dialogos(i).Segundos = 0 Then
-                p_Dialogos(i).StartHide = (GetTickCount() And &H7FFFFFFF)
+            If p_Dialogos(I).Segundos = 0 Then
+                p_Dialogos(I).StartHide = (GetTickCount() And &H7FFFFFFF)
 
             End If
 
         Else
-            p_Dialogos(i).Texto = vbNullString
+            p_Dialogos(I).Texto = vbNullString
 
         End If
 
-    Next i
+    Next I
     
 End Sub
 
@@ -209,39 +209,39 @@ End Sub
 
 Private Sub RealPushBackText(ByVal s As String)
 
-    Dim i     As Byte
+    Dim I     As Byte
 
     Dim Vacio As Boolean
 
     If p_CANTIDADDIALOGOS > 0 Then
-        i = p_CANTIDADDIALOGOS
+        I = p_CANTIDADDIALOGOS
         Vacio = True
 
-        While i > 0 And Vacio
+        While I > 0 And Vacio
 
-            Vacio = p_Dialogos(i).Texto = vbNullString
+            Vacio = p_Dialogos(I).Texto = vbNullString
 
-            If Vacio Then i = i - 1
+            If Vacio Then I = I - 1
         Wend
 
-        If i = p_CANTIDADDIALOGOS Then
+        If I = p_CANTIDADDIALOGOS Then
             'hay q scrollear, estamos llenos
-            i = 1
+            I = 1
 
-            While i < p_CANTIDADDIALOGOS
+            While I < p_CANTIDADDIALOGOS
 
-                p_Dialogos(i) = p_Dialogos(i + 1)
-                i = i + 1
+                p_Dialogos(I) = p_Dialogos(I + 1)
+                I = I + 1
             Wend
-            p_Dialogos(i).Texto = s
-            p_Dialogos(i).Segundos = p_SEGUNDOS
-            p_Dialogos(i).Alpha = 0
-            p_Dialogos(i).StartHide = (GetTickCount() And &H7FFFFFFF)
+            p_Dialogos(I).Texto = s
+            p_Dialogos(I).Segundos = p_SEGUNDOS
+            p_Dialogos(I).Alpha = 0
+            p_Dialogos(I).StartHide = (GetTickCount() And &H7FFFFFFF)
         Else
-            p_Dialogos(i + 1).Texto = s
-            p_Dialogos(i + 1).Segundos = p_SEGUNDOS
-            p_Dialogos(i + 1).Alpha = 0
-            p_Dialogos(i + 1).StartHide = (GetTickCount() And &H7FFFFFFF)
+            p_Dialogos(I + 1).Texto = s
+            p_Dialogos(I + 1).Segundos = p_SEGUNDOS
+            p_Dialogos(I + 1).Alpha = 0
+            p_Dialogos(I + 1).StartHide = (GetTickCount() And &H7FFFFFFF)
 
         End If
 

@@ -137,13 +137,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -177,17 +177,17 @@ Private Sub imgEnviar_Click()
         Call WriteGuildRejectNewMember(nombre, Replace(Replace(Text1.Text, ",", " "), vbCrLf, " "))
 
         'Sacamos el char de la lista de aspirantes
-        Dim i As Long
+        Dim I As Long
         
-        For i = 0 To frmGuildLeader.solicitudes.ListCount - 1
+        For I = 0 To frmGuildLeader.solicitudes.ListCount - 1
 
-            If frmGuildLeader.solicitudes.List(i) = nombre Then
-                frmGuildLeader.solicitudes.RemoveItem i
+            If frmGuildLeader.solicitudes.List(I) = nombre Then
+                frmGuildLeader.solicitudes.RemoveItem I
                 Exit For
 
             End If
 
-        Next i
+        Next I
         
         Me.Hide
         Unload frmCharInfo
@@ -221,7 +221,7 @@ Private Sub LoadBackGround()
     
 End Sub
 
-Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Text1_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub

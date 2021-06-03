@@ -207,7 +207,7 @@ Private Function WriteData(ByRef buf() As Byte, ByVal dataLength As Long) As Lon
     '***************************************************
     'Check if there is enough free space
     If queueCapacity - queueLength - dataLength < 0 Then
-        Call Err.Raise(NOT_ENOUGH_SPACE)
+        Call err.Raise(NOT_ENOUGH_SPACE)
         Exit Function
 
     End If
@@ -244,7 +244,7 @@ Private Function ReadData(ByRef buf() As Byte, ByVal dataLength As Long) As Long
     '***************************************************
     'Check if we can read the number of bytes requested
     If dataLength > queueLength Then
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call err.Raise(NOT_ENOUGH_DATA)
         Exit Function
 
     End If
@@ -754,7 +754,7 @@ Public Function ReadASCIIStringFixed(ByVal Length As Long) As String
         
         ReadASCIIStringFixed = StrConv(buf, vbUnicode)
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call err.Raise(NOT_ENOUGH_DATA)
 
     End If
 
@@ -791,7 +791,7 @@ Public Function ReadUnicodeStringFixed(ByVal Length As Long) As String
         
         ReadUnicodeStringFixed = buf
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call err.Raise(NOT_ENOUGH_DATA)
 
     End If
 
@@ -843,12 +843,12 @@ Public Function ReadASCIIString() As String
             End If
 
         Else
-            Call Err.Raise(NOT_ENOUGH_DATA)
+            Call err.Raise(NOT_ENOUGH_DATA)
 
         End If
 
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call err.Raise(NOT_ENOUGH_DATA)
 
     End If
 
@@ -895,12 +895,12 @@ Public Function ReadUnicodeString() As String
             
             ReadUnicodeString = buf2
         Else
-            Call Err.Raise(NOT_ENOUGH_DATA)
+            Call err.Raise(NOT_ENOUGH_DATA)
 
         End If
 
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call err.Raise(NOT_ENOUGH_DATA)
 
     End If
 
@@ -1108,7 +1108,7 @@ Public Function PeekASCIIStringFixed(ByVal Length As Long) As String
         
         PeekASCIIStringFixed = StrConv(buf, vbUnicode)
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call err.Raise(NOT_ENOUGH_DATA)
 
     End If
 
@@ -1144,7 +1144,7 @@ Public Function PeekUnicodeStringFixed(ByVal Length As Long) As String
         
         PeekUnicodeStringFixed = buf
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call err.Raise(NOT_ENOUGH_DATA)
 
     End If
 
@@ -1199,12 +1199,12 @@ Public Function PeekASCIIString() As String
             End If
 
         Else
-            Call Err.Raise(NOT_ENOUGH_DATA)
+            Call err.Raise(NOT_ENOUGH_DATA)
 
         End If
 
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call err.Raise(NOT_ENOUGH_DATA)
 
     End If
 
@@ -1254,12 +1254,12 @@ Public Function PeekUnicodeString() As String
             
             PeekUnicodeString = buf3
         Else
-            Call Err.Raise(NOT_ENOUGH_DATA)
+            Call err.Raise(NOT_ENOUGH_DATA)
 
         End If
 
     Else
-        Call Err.Raise(NOT_ENOUGH_DATA)
+        Call err.Raise(NOT_ENOUGH_DATA)
 
     End If
 

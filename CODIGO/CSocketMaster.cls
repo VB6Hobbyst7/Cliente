@@ -60,7 +60,7 @@ Private Declare Function api_ntohs _
 Private Declare Function api_connect _
                 Lib "ws2_32.dll" _
                 Alias "connect" (ByVal s As Long, _
-                                 ByRef name As sockaddr_in, _
+                                 ByRef Name As sockaddr_in, _
                                  ByVal namelen As Long) As Long
 
 Private Declare Function api_gethostname _
@@ -75,19 +75,19 @@ Private Declare Function api_gethostbyname _
 Private Declare Function api_bind _
                 Lib "ws2_32.dll" _
                 Alias "bind" (ByVal s As Long, _
-                              ByRef name As sockaddr_in, _
+                              ByRef Name As sockaddr_in, _
                               ByVal namelen As Long) As Long
 
 Private Declare Function api_getsockname _
                 Lib "ws2_32.dll" _
                 Alias "getsockname" (ByVal s As Long, _
-                                     ByRef name As sockaddr_in, _
+                                     ByRef Name As sockaddr_in, _
                                      ByRef namelen As Long) As Long
 
 Private Declare Function api_getpeername _
                 Lib "ws2_32.dll" _
                 Alias "getpeername" (ByVal s As Long, _
-                                     ByRef name As sockaddr_in, _
+                                     ByRef Name As sockaddr_in, _
                                      ByRef namelen As Long) As Long
 
 Private Declare Function api_inet_addr _
@@ -326,12 +326,12 @@ End Property
 Public Property Let RemotePort(ByVal lngPort As Long)
 
     If m_enmProtocol = sckTCPProtocol And m_enmState <> sckClosed Then
-        Err.Raise sckInvalidOp, "CSocketMaster.RemotePort", "Invalid operation at current state"
+        err.Raise sckInvalidOp, "CSocketMaster.RemotePort", "Invalid operation at current state"
 
     End If
 
     If lngPort < 0 Or lngPort > 65535 Then
-        Err.Raise sckInvalidArg, "CSocketMaster.RemotePort", "The argument passed to a function was not in the correct format or in the specified range."
+        err.Raise sckInvalidArg, "CSocketMaster.RemotePort", "The argument passed to a function was not in the correct format or in the specified range."
     Else
         m_lngRemotePort = lngPort
 
@@ -347,7 +347,7 @@ End Property
 Public Property Let RemoteHost(ByVal strHost As String)
 
     If m_enmProtocol = sckTCPProtocol And m_enmState <> sckClosed Then
-        Err.Raise sckInvalidOp, "CSocketMaster.RemoteHost", "Invalid operation at current state"
+        err.Raise sckInvalidOp, "CSocketMaster.RemoteHost", "Invalid operation at current state"
 
     End If
 
@@ -374,12 +374,12 @@ End Property
 Public Property Let LocalPort(ByVal lngPort As Long)
 
     If m_enmState <> sckClosed Then
-        Err.Raise sckInvalidOp, "CSocketMaster.LocalPort", "Invalid operation at current state"
+        err.Raise sckInvalidOp, "CSocketMaster.LocalPort", "Invalid operation at current state"
 
     End If
 
     If lngPort < 0 Or lngPort > 65535 Then
-        Err.Raise sckInvalidArg, "CSocketMaster.LocalPort", "The argument passed to a function was not in the correct format or in the specified range."
+        err.Raise sckInvalidArg, "CSocketMaster.LocalPort", "The argument passed to a function was not in the correct format or in the specified range."
     Else
         m_lngLocalPort = lngPort
 
@@ -442,7 +442,7 @@ End Property
 Public Property Let Protocol(ByVal enmProtocol As ProtocolConstants)
 
     If m_enmState <> sckClosed Then
-        Err.Raise sckInvalidOp, "CSocketMaster.Protocol", "Invalid operation at current state"
+        err.Raise sckInvalidOp, "CSocketMaster.Protocol", "Invalid operation at current state"
     Else
         m_enmProtocol = enmProtocol
 
@@ -466,8 +466,8 @@ Private Sub DestroySocket()
 
             Dim lngErrorCode As Long
 
-            lngErrorCode = Err.LastDllError
-            Err.Raise lngErrorCode, "CSocketMaster.DestroySocket", GetErrorDescription(lngErrorCode)
+            lngErrorCode = err.LastDllError
+            err.Raise lngErrorCode, "CSocketMaster.DestroySocket", GetErrorDescription(lngErrorCode)
     
         Else
         
@@ -526,7 +526,7 @@ Private Function SocketExists() As Boolean
             m_enmState = sckError: 'Debug.Print "STATE: sckError"
             'Debug.Print "ERROR trying to create socket"
             SocketExists = False
-            lngErrorCode = Err.LastDllError
+            lngErrorCode = err.LastDllError
 
             Dim blnCancelDisplay As Boolean
 
@@ -554,7 +554,7 @@ End Function
 Public Sub Connect(Optional RemoteHost As Variant, Optional RemotePort As Variant)
 
     If m_enmState <> sckClosed Then
-        Err.Raise sckInvalidOp, "CSocketMaster.Connect", "Invalid operation at current state"
+        err.Raise sckInvalidOp, "CSocketMaster.Connect", "Invalid operation at current state"
 
     End If
 
@@ -575,14 +575,14 @@ Public Sub Connect(Optional RemoteHost As Variant, Optional RemotePort As Varian
     If Not IsMissing(RemotePort) Then
         If IsNumeric(RemotePort) Then
             If CLng(RemotePort) > 65535 Or CLng(RemotePort) < 1 Then
-                Err.Raise sckInvalidArg, "CSocketMaster.Connect", "The argument passed to a function was not in the correct format or in the specified range."
+                err.Raise sckInvalidArg, "CSocketMaster.Connect", "The argument passed to a function was not in the correct format or in the specified range."
             Else
                 m_lngRemotePort = CLng(RemotePort)
 
             End If
 
         Else
-            Err.Raise sckUnsupported, "CSocketMaster.Connect", "Unsupported variant type."
+            err.Raise sckUnsupported, "CSocketMaster.Connect", "Unsupported variant type."
 
         End If
 
@@ -644,7 +644,7 @@ Private Sub PostResolution(ByVal lngAsynHandle As Long, ByVal lngErrorCode As Lo
 
         Dim lngRemoteHostAddress As Long
 
-        Dim Count                As Integer
+        Dim count                As Integer
 
         Dim strIpAddress         As String
     
@@ -659,8 +659,8 @@ Private Sub PostResolution(ByVal lngAsynHandle As Long, ByVal lngErrorCode As Lo
         'We turn the 32 bits long into a readable string.
         'Note: we don't need this string. I put this here just
         'in case you need it.
-        For Count = 1 To 4
-            strIpAddress = strIpAddress & arrIpAddress(Count) & "."
+        For count = 1 To 4
+            strIpAddress = strIpAddress & arrIpAddress(count) & "."
         Next
         
         strIpAddress = Left$(strIpAddress, Len(strIpAddress) - 1)
@@ -823,7 +823,7 @@ Private Sub PostSocket(ByVal lngEventID As Long, ByVal lngErrorCode As Long)
             lngResult = api_accept(m_lngSocketHandle, udtSockAddr, LenB(udtSockAddr))
     
             If lngResult = INVALID_SOCKET Then
-                lngErrorCode = Err.LastDllError
+                lngErrorCode = err.LastDllError
                 m_enmState = sckError: 'Debug.Print "STATE: sckError"
                 blnCancelDisplay = True
                 RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "CSocketMaster.PostSocket", "", 0, blnCancelDisplay)
@@ -951,11 +951,11 @@ Private Sub ConnectToIP(ByVal lngRemoteHostAddress As Long, ByVal lngErrorCode A
 
     'Check and handle errors
     If lngResult = SOCKET_ERROR Then
-        lngErrorCode = Err.LastDllError
+        lngErrorCode = err.LastDllError
 
         If lngErrorCode <> WSAEWOULDBLOCK Then
             If lngErrorCode = WSAEADDRNOTAVAIL Then
-                Err.Raise WSAEADDRNOTAVAIL, "CSocketMaster.ConnectToIP", GetErrorDescription(WSAEADDRNOTAVAIL)
+                err.Raise WSAEADDRNOTAVAIL, "CSocketMaster.ConnectToIP", GetErrorDescription(WSAEADDRNOTAVAIL)
             Else
                 m_enmState = sckError: 'Debug.Print "STATE: sckError"
                 blnCancelDisplay = True
@@ -974,7 +974,7 @@ End Sub
 Public Sub Bind(Optional LocalPort As Variant, Optional LocalIP As Variant)
 
     If m_enmState <> sckClosed Then
-        Err.Raise sckInvalidOp, "CSocketMaster.Bind", "Invalid operation at current state"
+        err.Raise sckInvalidOp, "CSocketMaster.Bind", "Invalid operation at current state"
 
     End If
 
@@ -1016,7 +1016,7 @@ Private Function BindInternal(Optional ByVal varLocalPort As Variant, _
         If IsNumeric(varLocalPort) Then
             If varLocalPort < 0 Or varLocalPort > 65535 Then
                 BindInternal = False
-                Err.Raise sckInvalidArg, "CSocketMaster.BindInternal", "The argument passed to a function was not in the correct format or in the specified range."
+                err.Raise sckInvalidArg, "CSocketMaster.BindInternal", "The argument passed to a function was not in the correct format or in the specified range."
             Else
                 lngLocalPortInternal = CLng(varLocalPort)
 
@@ -1024,7 +1024,7 @@ Private Function BindInternal(Optional ByVal varLocalPort As Variant, _
 
         Else
             BindInternal = False
-            Err.Raise sckUnsupported, "CSocketMaster.BindInternal", "Unsupported variant type."
+            err.Raise sckUnsupported, "CSocketMaster.BindInternal", "Unsupported variant type."
 
         End If
     
@@ -1051,7 +1051,7 @@ Private Function BindInternal(Optional ByVal varLocalPort As Variant, _
     lngAddressInternal = ResolveIfHostnameSync(strLocalHostInternal, strIP, lngResult)
 
     If lngResult <> 0 Then
-        Err.Raise sckInvalidArg, "CSocketMaster.BindInternal", "Invalid argument"
+        err.Raise sckInvalidArg, "CSocketMaster.BindInternal", "Invalid argument"
 
     End If
 
@@ -1072,8 +1072,8 @@ Private Function BindInternal(Optional ByVal varLocalPort As Variant, _
 
     If lngResult = SOCKET_ERROR Then
 
-        lngErrorCode = Err.LastDllError
-        Err.Raise lngErrorCode, "CSocketMaster.BindInternal", GetErrorDescription(lngErrorCode)
+        lngErrorCode = err.LastDllError
+        err.Raise lngErrorCode, "CSocketMaster.BindInternal", GetErrorDescription(lngErrorCode)
     
     Else
 
@@ -1086,8 +1086,8 @@ Private Function BindInternal(Optional ByVal varLocalPort As Variant, _
             lngResult = GetLocalPort(m_lngSocketHandle)
         
             If lngResult = SOCKET_ERROR Then
-                lngErrorCode = Err.LastDllError
-                Err.Raise lngErrorCode, "CSocketMaster.BindInternal", GetErrorDescription(lngErrorCode)
+                lngErrorCode = err.LastDllError
+                err.Raise lngErrorCode, "CSocketMaster.BindInternal", GetErrorDescription(lngErrorCode)
             Else
                 'Debug.Print "OK Bind HOST: " & strLocalHostInternal & " PORT: " & lngResult
                 m_lngLocalPortBind = lngResult
@@ -1153,8 +1153,8 @@ Private Function GetLocalHostName() As String
 
         Dim lngErrorCode As Long
 
-        lngErrorCode = Err.LastDllError
-        Err.Raise lngErrorCode, "CSocketMaster.GetLocalHostName", GetErrorDescription(lngErrorCode)
+        lngErrorCode = err.LastDllError
+        err.Raise lngErrorCode, "CSocketMaster.GetLocalHostName", GetErrorDescription(lngErrorCode)
     Else
         GetLocalHostName = Left(strHostNameBuf, InStr(1, strHostNameBuf, vbNullChar) - 1)
 
@@ -1173,7 +1173,7 @@ Private Function GetLocalIP() As String
 
     Dim arrIpAddress(1 To 4) As Byte
 
-    Dim Count                As Integer
+    Dim count                As Integer
 
     Dim udtHostent           As HOSTENT
 
@@ -1188,15 +1188,15 @@ Private Function GetLocalIP() As String
 
         Dim lngErrorCode As Long
 
-        lngErrorCode = Err.LastDllError
-        Err.Raise lngErrorCode, "CSocketMaster.GetLocalIP", GetErrorDescription(lngErrorCode)
+        lngErrorCode = err.LastDllError
+        err.Raise lngErrorCode, "CSocketMaster.GetLocalIP", GetErrorDescription(lngErrorCode)
     Else
         api_CopyMemory udtHostent, ByVal lngResult, LenB(udtHostent)
         api_CopyMemory lngPtrToIP, ByVal udtHostent.hAddrList, 4
         api_CopyMemory arrIpAddress(1), ByVal lngPtrToIP, 4
    
-        For Count = 1 To 4
-            strIpAddress = strIpAddress & arrIpAddress(Count) & "."
+        For count = 1 To 4
+            strIpAddress = strIpAddress & arrIpAddress(count) & "."
         Next
    
         strIpAddress = Left$(strIpAddress, Len(strIpAddress) - 1)
@@ -1233,7 +1233,7 @@ Private Function ResolveIfHostname(ByVal Host As String) As Long
 
                 Dim lngErrorCode As Long
 
-                lngErrorCode = Err.LastDllError
+                lngErrorCode = err.LastDllError
 
                 Dim blnCancelDisplay As Boolean
 
@@ -1251,7 +1251,7 @@ Private Function ResolveIfHostname(ByVal Host As String) As Long
         
             m_enmState = sckError: 'Debug.Print "STATE: sckError"
             'Debug.Print "Error trying to allocate memory"
-            Err.Raise sckOutOfMemory, "CSocketMaster.ResolveIfHostname", "Out of memory"
+            err.Raise sckOutOfMemory, "CSocketMaster.ResolveIfHostname", "Out of memory"
         
         End If
     
@@ -1281,7 +1281,7 @@ Private Function ResolveIfHostnameSync(ByVal Host As String, _
 
     Dim arrIpAddress(1 To 4) As Byte
 
-    Dim Count                As Integer
+    Dim count                As Integer
 
     lngAddress = api_inet_addr(Host)
 
@@ -1290,7 +1290,7 @@ Private Function ResolveIfHostnameSync(ByVal Host As String, _
         lngPtrToHOSTENT = api_gethostbyname(Host)
     
         If lngPtrToHOSTENT = 0 Then
-            lngErrorCode = Err.LastDllError
+            lngErrorCode = err.LastDllError
             strHostIP = vbNullString
             ResolveIfHostnameSync = vbNull
         Else
@@ -1299,8 +1299,8 @@ Private Function ResolveIfHostnameSync(ByVal Host As String, _
             api_CopyMemory arrIpAddress(1), ByVal lngPtrToIP, 4
             api_CopyMemory lngAddress, ByVal lngPtrToIP, 4
         
-            For Count = 1 To 4
-                strHostIP = strHostIP & arrIpAddress(Count) & "."
+            For count = 1 To 4
+                strHostIP = strHostIP & arrIpAddress(count) & "."
             Next
         
             strHostIP = Left$(strHostIP, Len(strHostIP) - 1)
@@ -1345,7 +1345,7 @@ Public Sub SendData(Data As Variant)
 
     If m_enmProtocol = sckTCPProtocol Then
         If m_enmState <> sckConnected Then
-            Err.Raise sckBadState, "CSocketMaster.SendData", "Wrong protocol or connection state for the requested transaction or request"
+            err.Raise sckBadState, "CSocketMaster.SendData", "Wrong protocol or connection state for the requested transaction or request"
             Exit Sub
 
         End If
@@ -1445,7 +1445,7 @@ Public Sub SendData(Data As Variant)
             api_CopyMemory arrData(0), sngData, LenB(sngData)
 
         Case Else
-            Err.Raise sckUnsupported, "CSocketMaster.SendData", "Unsupported variant type."
+            err.Raise sckUnsupported, "CSocketMaster.SendData", "Unsupported variant type."
 
     End Select
 
@@ -1501,9 +1501,9 @@ Private Sub SendBufferedDataUDP()
         m_strSendBuffer = ""
     
         If lngErrorCode = WSAEAFNOSUPPORT Then
-            Err.Raise lngErrorCode, "CSocketMaster.SendBufferedDataUDP", GetErrorDescription(lngErrorCode)
+            err.Raise lngErrorCode, "CSocketMaster.SendBufferedDataUDP", GetErrorDescription(lngErrorCode)
         Else
-            Err.Raise sckInvalidArg, "CSocketMaster.SendBufferedDataUDP", "Invalid argument"
+            err.Raise sckInvalidArg, "CSocketMaster.SendBufferedDataUDP", "Invalid argument"
 
         End If
 
@@ -1526,10 +1526,10 @@ Private Sub SendBufferedDataUDP()
     
     If lngResult = SOCKET_ERROR Then
     
-        lngErrorCode = Err.LastDllError
+        lngErrorCode = err.LastDllError
 
         If lngErrorCode = WSAEWOULDBLOCK Then
-            Err.Raise WSAEWOULDBLOCK, "CSocketMaster.SendBufferedDataUDP", GetErrorDescription(lngErrorCode)
+            err.Raise WSAEWOULDBLOCK, "CSocketMaster.SendBufferedDataUDP", GetErrorDescription(lngErrorCode)
         Else
             m_enmState = sckError: 'Debug.Print "STATE: sckError"
 
@@ -1575,7 +1575,7 @@ Private Sub SendBufferedDataTCP()
 
             Dim lngErrorCode As Long
 
-            lngErrorCode = Err.LastDllError
+            lngErrorCode = err.LastDllError
     
             If lngErrorCode = WSAEWOULDBLOCK Then
 
@@ -1639,8 +1639,8 @@ Private Function RecvDataToBuffer() As Long
 
         Dim lngErrorCode As Long
 
-        lngErrorCode = Err.LastDllError
-        Err.Raise lngErrorCode, "CSocketMaster.RecvDataToBuffer", GetErrorDescription(lngErrorCode)
+        lngErrorCode = err.LastDllError
+        err.Raise lngErrorCode, "CSocketMaster.RecvDataToBuffer", GetErrorDescription(lngErrorCode)
     
     ElseIf lngBytesReceived > 0 Then
     
@@ -1666,8 +1666,8 @@ Private Sub ProcessOptions()
         lngResult = api_getsockopt(m_lngSocketHandle, SOL_SOCKET, SO_RCVBUF, lngBuffer, LenB(lngBuffer))
     
         If lngResult = SOCKET_ERROR Then
-            lngErrorCode = Err.LastDllError
-            Err.Raise lngErrorCode, "CSocketMaster.ProcessOptions", GetErrorDescription(lngErrorCode)
+            lngErrorCode = err.LastDllError
+            err.Raise lngErrorCode, "CSocketMaster.ProcessOptions", GetErrorDescription(lngErrorCode)
         Else
             m_lngRecvBufferLen = lngBuffer
 
@@ -1676,8 +1676,8 @@ Private Sub ProcessOptions()
         lngResult = api_getsockopt(m_lngSocketHandle, SOL_SOCKET, SO_SNDBUF, lngBuffer, LenB(lngBuffer))
 
         If lngResult = SOCKET_ERROR Then
-            lngErrorCode = Err.LastDllError
-            Err.Raise lngErrorCode, "CSocketMaster.ProcessOptions", GetErrorDescription(lngErrorCode)
+            lngErrorCode = err.LastDllError
+            err.Raise lngErrorCode, "CSocketMaster.ProcessOptions", GetErrorDescription(lngErrorCode)
         Else
             m_lngSendBufferLen = lngBuffer
 
@@ -1690,8 +1690,8 @@ Private Sub ProcessOptions()
         lngResult = api_getsockopt(m_lngSocketHandle, SOL_SOCKET, SO_MAX_MSG_SIZE, lngBuffer, LenB(lngBuffer))
 
         If lngResult = SOCKET_ERROR Then
-            lngErrorCode = Err.LastDllError
-            Err.Raise lngErrorCode, "CSocketMaster.ProcessOptions", GetErrorDescription(lngErrorCode)
+            lngErrorCode = err.LastDllError
+            err.Raise lngErrorCode, "CSocketMaster.ProcessOptions", GetErrorDescription(lngErrorCode)
         Else
             m_lngRecvBufferLen = lngBuffer
             m_lngSendBufferLen = lngBuffer
@@ -1710,7 +1710,7 @@ Public Sub GetData(ByRef Data As Variant, _
 
     If m_enmProtocol = sckTCPProtocol Then
         If m_enmState <> sckConnected And Not m_blnAcceptClass Then
-            Err.Raise sckBadState, "CSocketMaster.GetData", "Wrong protocol or connection state for the requested transaction or request"
+            err.Raise sckBadState, "CSocketMaster.GetData", "Wrong protocol or connection state for the requested transaction or request"
             Exit Sub
 
         End If
@@ -1718,7 +1718,7 @@ Public Sub GetData(ByRef Data As Variant, _
     Else
 
         If m_enmState <> sckOpen Then
-            Err.Raise sckBadState, "CSocketMaster.GetData", "Wrong protocol or connection state for the requested transaction or request"
+            err.Raise sckBadState, "CSocketMaster.GetData", "Wrong protocol or connection state for the requested transaction or request"
             Exit Sub
 
         End If
@@ -1730,7 +1730,7 @@ Public Sub GetData(ByRef Data As Variant, _
     If Not IsMissing(maxLen) Then
         If IsNumeric(maxLen) Then
             If CLng(maxLen) < 0 Then
-                Err.Raise sckInvalidArg, "CSocketMaster.GetData", "The argument passed to a function was not in the correct format or in the specified range."
+                err.Raise sckInvalidArg, "CSocketMaster.GetData", "The argument passed to a function was not in the correct format or in the specified range."
 
             End If
 
@@ -1760,7 +1760,7 @@ Public Sub PeekData(ByRef Data As Variant, _
 
     If m_enmProtocol = sckTCPProtocol Then
         If m_enmState <> sckConnected Then
-            Err.Raise sckBadState, "CSocketMaster.PeekData", "Wrong protocol or connection state for the requested transaction or request"
+            err.Raise sckBadState, "CSocketMaster.PeekData", "Wrong protocol or connection state for the requested transaction or request"
             Exit Sub
 
         End If
@@ -1768,7 +1768,7 @@ Public Sub PeekData(ByRef Data As Variant, _
     Else
 
         If m_enmState <> sckOpen Then
-            Err.Raise sckBadState, "CSocketMaster.PeekData", "Wrong protocol or connection state for the requested transaction or request"
+            err.Raise sckBadState, "CSocketMaster.PeekData", "Wrong protocol or connection state for the requested transaction or request"
             Exit Sub
 
         End If
@@ -1780,7 +1780,7 @@ Public Sub PeekData(ByRef Data As Variant, _
     If Not IsMissing(maxLen) Then
         If IsNumeric(maxLen) Then
             If CLng(maxLen) < 0 Then
-                Err.Raise sckInvalidArg, "CSocketMaster.PeekData", "The argument passed to a function was not in the correct format or in the specified range."
+                err.Raise sckInvalidArg, "CSocketMaster.PeekData", "The argument passed to a function was not in the correct format or in the specified range."
 
             End If
 
@@ -1884,7 +1884,7 @@ Private Function RecvData(ByRef Data As Variant, _
             
                 If m_enmProtocol = sckUDPProtocol Then
                     EmptyBuffer
-                    Err.Raise WSAEMSGSIZE, "CSocketMaster.RecvData", GetErrorDescription(WSAEMSGSIZE)
+                    err.Raise WSAEMSGSIZE, "CSocketMaster.RecvData", GetErrorDescription(WSAEMSGSIZE)
 
                 End If
             
@@ -1999,13 +1999,13 @@ Private Function RecvData(ByRef Data As Variant, _
             Data = sngData
 
         Case Else
-            Err.Raise sckUnsupported, "CSocketMaster.RecvData", "Unsupported variant type."
+            err.Raise sckUnsupported, "CSocketMaster.RecvData", "Unsupported variant type."
        
     End Select
 
     'if BuildArray returns an error is handled here
     If lngErrorCode <> 0 Then
-        Err.Raise lngErrorCode, "CSocketMaster.RecvData", GetErrorDescription(lngErrorCode)
+        err.Raise lngErrorCode, "CSocketMaster.RecvData", GetErrorDescription(lngErrorCode)
 
     End If
 
@@ -2046,7 +2046,7 @@ Private Sub BuildArray(ByVal Size As Long, _
         lngResult = api_recvfrom(m_lngSocketHandle, arrBuffer(0), Size, lngFlags, udtSockAddr, LenB(udtSockAddr))
     
         If lngResult = SOCKET_ERROR Then
-            lngErrorCode = Err.LastDllError
+            lngErrorCode = err.LastDllError
 
         End If
     
@@ -2088,7 +2088,7 @@ End Sub
 Public Sub Listen()
 
     If m_enmState <> sckClosed And m_enmState <> sckOpen Then
-        Err.Raise sckInvalidOp, "CSocketMaster.Listen", "Invalid operation at current state"
+        err.Raise sckInvalidOp, "CSocketMaster.Listen", "Invalid operation at current state"
 
     End If
 
@@ -2103,8 +2103,8 @@ Public Sub Listen()
 
         Dim lngErrorCode As Long
 
-        lngErrorCode = Err.LastDllError
-        Err.Raise lngErrorCode, "CSocketMaster.Listen", GetErrorDescription(lngErrorCode)
+        lngErrorCode = err.LastDllError
+        err.Raise lngErrorCode, "CSocketMaster.Listen", GetErrorDescription(lngErrorCode)
     Else
         m_enmState = sckListening: 'Debug.Print "STATE: sckListening"
 
@@ -2115,7 +2115,7 @@ End Sub
 Public Sub Accept(requestID As Long)
 
     If m_enmState <> sckClosed Then
-        Err.Raise sckInvalidOp, "CSocketMaster.Accept", "Invalid operation at current state"
+        err.Raise sckInvalidOp, "CSocketMaster.Accept", "Invalid operation at current state"
 
     End If
 
@@ -2128,7 +2128,7 @@ Public Sub Accept(requestID As Long)
             m_lngSocketHandle = INVALID_SOCKET
             m_lngRecvBufferLen = 0
             m_lngSendBufferLen = 0
-            Err.Raise sckBadState, "CSocketMaster.Accept", "Wrong protocol or connection state for the requested transaction or request"
+            err.Raise sckBadState, "CSocketMaster.Accept", "Wrong protocol or connection state for the requested transaction or request"
         Else
             m_blnAcceptClass = True
             m_enmState = sckConnected: 'Debug.Print "STATE: sckConnected"
@@ -2276,7 +2276,7 @@ Private Function GetBufferLenTCP() As Long
     lngResult = api_ioctlsocket(m_lngSocketHandle, FIONREAD, lngBuffer)
 
     If lngResult = SOCKET_ERROR Then
-        lngErrorCode = Err.LastDllError
+        lngErrorCode = err.LastDllError
         m_enmState = sckError: 'Debug.Print "STATE: sckError"
         blnCancelDisplay = True
         RaiseEvent Error(lngErrorCode, GetErrorDescription(lngErrorCode), 0, "CSocketMaster.GetBufferLenTCP", "", 0, blnCancelDisplay)
@@ -2293,8 +2293,8 @@ End Function
 'Empty winsock incoming buffer from an UDP socket.
 Private Sub EmptyBuffer()
 
-    Dim B As Byte
+    Dim b As Byte
 
-    api_recv m_lngSocketHandle, B, Len(B), 0&
+    api_recv m_lngSocketHandle, b, Len(b), 0&
 
 End Sub

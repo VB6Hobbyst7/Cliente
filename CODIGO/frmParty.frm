@@ -239,13 +239,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -338,8 +338,8 @@ End Sub
 
 Private Sub lstMembers_MouseDown(Button As Integer, _
                                  Shift As Integer, _
-                                 x As Single, _
-                                 y As Single)
+                                 X As Single, _
+                                 Y As Single)
 
     If EsPartyLeader Then
         LastPressed.ToggleToNormal
@@ -359,21 +359,21 @@ Private Sub SendTxt_Change()
     Else
 
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i         As Long
+        Dim I         As Long
 
         Dim tempstr   As String
 
         Dim CharAscii As Integer
         
-        For i = 1 To Len(SendTxt.Text)
-            CharAscii = Asc(mid$(SendTxt.Text, i, 1))
+        For I = 1 To Len(SendTxt.Text)
+            CharAscii = Asc(mid$(SendTxt.Text, I, 1))
 
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
 
             End If
 
-        Next i
+        Next I
         
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -411,8 +411,8 @@ End Sub
 
 Private Sub txtToAdd_MouseMove(Button As Integer, _
                                Shift As Integer, _
-                               x As Single, _
-                               y As Single)
+                               X As Single, _
+                               Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub

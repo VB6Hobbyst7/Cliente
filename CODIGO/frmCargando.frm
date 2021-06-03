@@ -58,9 +58,7 @@ Attribute VB_Exposed = False
 Dim f As Integer
 
 Private Sub Form_Load()
-'Me.Picture = LoadPictureEX("cargando.jpg")
+
+    'Me.Picture = LoadPictureEX("cargando.jpg")
 End Sub
-
-
-
  

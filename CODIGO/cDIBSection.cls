@@ -73,7 +73,7 @@ Private Type BITMAPINFO
 
 End Type
 
-Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
+Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hDC As Long) As Long
 
 Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) As Long
 
@@ -82,17 +82,17 @@ Private Declare Function GetDesktopWindow Lib "user32" () As Long
 ' Note - this is not the declare in the API viewer - modify lplpVoid to be
 ' Byref so we get the pointer back:
 Private Declare Function CreateDIBSection _
-                Lib "gdi32" (ByVal hdc As Long, _
+                Lib "gdi32" (ByVal hDC As Long, _
                              pBitmapInfo As BITMAPINFO, _
                              ByVal un As Long, _
                              lplpVoid As Long, _
-                             ByVal handle As Long, _
+                             ByVal Handle As Long, _
                              ByVal dw As Long) As Long
 
 Private Declare Function BitBlt _
                 Lib "gdi32" (ByVal hDestDC As Long, _
-                             ByVal x As Long, _
-                             ByVal y As Long, _
+                             ByVal X As Long, _
+                             ByVal Y As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long, _
                              ByVal hSrcDC As Long, _
@@ -101,22 +101,22 @@ Private Declare Function BitBlt _
                              ByVal dwRop As Long) As Long
 
 Private Declare Function SelectObject _
-                Lib "gdi32" (ByVal hdc As Long, _
+                Lib "gdi32" (ByVal hDC As Long, _
                              ByVal hObject As Long) As Long
 
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 
-Private Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
+Private Declare Function DeleteDC Lib "gdi32" (ByVal hDC As Long) As Long
 
 Private Declare Function ReleaseDC _
                 Lib "user32" (ByVal hwnd As Long, _
-                              ByVal hdc As Long) As Long
+                              ByVal hDC As Long) As Long
 
 Private Const BI_RGB = 0&
 
 Private Const DIB_RGB_COLORS = 0 '  color table in RGBs
 
-Private Type bitmap
+Private Type BITMAP
 
     bmType As Long
     bmWidth As Long
@@ -135,7 +135,7 @@ Private Declare Function GetObjectAPI _
                                     lpObject As Any) As Long
 
 Private Declare Function CreateCompatibleBitmap _
-                Lib "gdi32" (ByVal hdc As Long, _
+                Lib "gdi32" (ByVal hDC As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long) As Long
 
@@ -248,7 +248,7 @@ End Function
 Public Function CreateDIB(ByVal lhDC As Long, _
                           ByVal lWidth As Long, _
                           ByVal lHeight As Long, _
-                          ByRef hDib As Long) As Boolean
+                          ByRef hDIB As Long) As Boolean
 
     With m_tBI.bmiHeader
         .biSize = Len(m_tBI.bmiHeader)
@@ -261,8 +261,8 @@ Public Function CreateDIB(ByVal lhDC As Long, _
 
     End With
 
-    hDib = CreateDIBSection(lhDC, m_tBI, DIB_RGB_COLORS, m_lPtr, 0, 0)
-    CreateDIB = (hDib <> 0)
+    hDIB = CreateDIBSection(lhDC, m_tBI, DIB_RGB_COLORS, m_lPtr, 0, 0)
+    CreateDIB = (hDIB <> 0)
 
 End Function
 
@@ -274,11 +274,11 @@ Public Function CreateFromPicture(ByRef picThis As StdPicture)
 
     Dim lhBmpOld    As Long
 
-    Dim tBMP        As bitmap
+    Dim tBMP        As BITMAP
 
     Dim lhWnd       As Long
     
-    GetObjectAPI picThis.handle, Len(tBMP), tBMP
+    GetObjectAPI picThis.Handle, Len(tBMP), tBMP
 
     If (Create(tBMP.bmWidth, tBMP.bmHeight)) Then
         lhWnd = GetDesktopWindow()
@@ -289,7 +289,7 @@ Public Function CreateFromPicture(ByRef picThis As StdPicture)
             ReleaseDC lhWnd, lhDCDesktop
 
             If (lhDC <> 0) Then
-                lhBmpOld = SelectObject(lhDC, picThis.handle)
+                lhBmpOld = SelectObject(lhDC, picThis.Handle)
                 LoadPictureBlt lhDC
                 SelectObject lhDC, lhBmpOld
                 DeleteDC lhDC
@@ -364,13 +364,13 @@ Public Sub PaintPicture(ByVal lhDC As Long, _
 
 End Sub
 
-Public Property Get hdc() As Long
-    hdc = m_hDC
+Public Property Get hDC() As Long
+    hDC = m_hDC
 
 End Property
 
-Public Property Get hDib() As Long
-    hDib = m_hDIb
+Public Property Get hDIB() As Long
+    hDIB = m_hDIb
 
 End Property
 
@@ -383,7 +383,7 @@ Public Sub RandomiseBits(Optional ByVal bGray As Boolean = False)
 
     Dim bDib() As Byte
 
-    Dim x      As Long, y As Long
+    Dim X      As Long, Y As Long
 
     Dim lC     As Long
 
@@ -412,24 +412,24 @@ Public Sub RandomiseBits(Optional ByVal bGray As Boolean = False)
 
     If (bGray) Then
 
-        For y = 0 To m_tBI.bmiHeader.biHeight - 1
-            For x = 0 To xEnd Step 3
+        For Y = 0 To m_tBI.bmiHeader.biHeight - 1
+            For X = 0 To xEnd Step 3
                 lC = Rnd * 255
-                bDib(x, y) = lC
-                bDib(x + 1, y) = lC
-                bDib(x + 2, y) = lC
-            Next x
-        Next y
+                bDib(X, Y) = lC
+                bDib(X + 1, Y) = lC
+                bDib(X + 2, Y) = lC
+            Next X
+        Next Y
 
     Else
 
-        For x = 0 To xEnd Step 3
-            For y = 0 To m_tBI.bmiHeader.biHeight - 1
-                bDib(x, y) = 0
-                bDib(x + 1, y) = Rnd * 255
-                bDib(x + 2, y) = Rnd * 255
-            Next y
-        Next x
+        For X = 0 To xEnd Step 3
+            For Y = 0 To m_tBI.bmiHeader.biHeight - 1
+                bDib(X, Y) = 0
+                bDib(X + 1, Y) = Rnd * 255
+                bDib(X + 2, Y) = Rnd * 255
+            Next Y
+        Next X
 
     End If
     
@@ -521,7 +521,7 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
 
     Dim yScale As Single
 
-    Dim x      As Long, y As Long, xEnd As Long, xOut As Long
+    Dim X      As Long, Y As Long, xEnd As Long, xOut As Long
 
     Dim fX     As Single, fY As Single
 
@@ -533,7 +533,7 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
 
     Dim G      As Long, g1 As Single, g2 As Single, g3 As Single, g4 As Single
 
-    Dim B      As Long, b1 As Single, b2 As Single, b3 As Single, b4 As Single
+    Dim b      As Long, b1 As Single, b2 As Single, b3 As Single, b4 As Single
 
     Dim ir1    As Long, ig1 As Long, ib1 As Long
 
@@ -544,14 +544,14 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
     
     xEnd = cDibTo.Width - 1
         
-    For y = 0 To cDibTo.Height - 1
+    For Y = 0 To cDibTo.Height - 1
         
-        fY = y * yScale
+        fY = Y * yScale
         ifY = Int(fY)
         dy = fY - ifY
         
-        For x = 0 To xEnd
-            fX = x * xScale
+        For X = 0 To xEnd
+            fX = X * xScale
             ifX = Int(fX)
             dX = fX - ifX
             
@@ -566,27 +566,27 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
             ir1 = r1 * (1 - dy) + r3 * dy: ig1 = g1 * (1 - dy) + g3 * dy: ib1 = b1 * (1 - dy) + b3 * dy
             ir2 = r2 * (1 - dy) + r4 * dy: ig2 = g2 * (1 - dy) + g4 * dy: ib2 = b2 * (1 - dy) + b4 * dy
             ' Interpolate in y:
-            R = ir1 * (1 - dX) + ir2 * dX: G = ig1 * (1 - dX) + ig2 * dX: B = ib1 * (1 - dX) + ib2 * dX
+            R = ir1 * (1 - dX) + ir2 * dX: G = ig1 * (1 - dX) + ig2 * dX: b = ib1 * (1 - dX) + ib2 * dX
             
             ' Set output:
             If (R < 0) Then R = 0
             If (R > 255) Then R = 255
             If (G < 0) Then G = 0
             If (G > 255) Then G = 255
-            If (B < 0) Then B = 0
-            If (B > 255) Then
-                B = 255
+            If (b < 0) Then b = 0
+            If (b > 255) Then
+                b = 255
 
             End If
 
-            xOut = x * 3
-            bDibTo(xOut, y) = B
-            bDibTo(xOut + 1, y) = G
-            bDibTo(xOut + 2, y) = R
+            xOut = X * 3
+            bDibTo(xOut, Y) = b
+            bDibTo(xOut + 1, Y) = G
+            bDibTo(xOut + 2, Y) = R
             
-        Next x
+        Next X
         
-    Next y
+    Next Y
 
     ' Clear the temporary array descriptor
     ' (This does not appear to be necessary, but

@@ -23,8 +23,8 @@ Private Type tPasos
 
     Pasos       As Integer
     VidaPasos   As Integer
-    x           As Integer
-    y           As Integer
+    X           As Integer
+    Y           As Integer
 
 End Type
 
@@ -32,13 +32,13 @@ Private cPasos(1 To MAX_PASOS) As tPasos
     
 Public Sub RenderPasos(ByVal PixelOffSetXTemp As Integer, _
                        ByVal PixelOffSetYTemp As Integer, _
-                       ByVal i As Byte)
+                       ByVal I As Byte)
 
     On Error GoTo 0
 
-    Dim color(0 To 3) As Long
+    Dim Color(0 To 3) As Long
 
-    With cPasos(i)
+    With cPasos(I)
 
         If .VidaPasos > 0 Then
 
@@ -46,17 +46,17 @@ Public Sub RenderPasos(ByVal PixelOffSetXTemp As Integer, _
 
             .VidaPasos = .VidaPasos - 2
             
-            color(0) = D3DColorARGB(.VidaPasos, 255, 255, 255)
-            color(1) = color(0)
-            color(2) = color(0)
-            color(3) = color(0)
+            Color(0) = D3DColorARGB(.VidaPasos, 255, 255, 255)
+            Color(1) = Color(0)
+            Color(2) = Color(0)
+            Color(3) = Color(0)
         
             iGrhIndex = .Pasos
             
-            Call Engine_Render_Rectangle(PixelOffSetXTemp, PixelOffSetYTemp, GrhData(iGrhIndex).PixelWidth, GrhData(iGrhIndex).PixelHeight, GrhData(iGrhIndex).sX, GrhData(iGrhIndex).sY, GrhData(iGrhIndex).PixelWidth, GrhData(iGrhIndex).PixelHeight, , , 0, GrhData(iGrhIndex).FileNum, color(0), color(1), color(2), color(3))
+            Call Engine_Render_Rectangle(PixelOffSetXTemp, PixelOffSetYTemp, GrhData(iGrhIndex).PixelWidth, GrhData(iGrhIndex).PixelHeight, GrhData(iGrhIndex).sX, GrhData(iGrhIndex).sY, GrhData(iGrhIndex).PixelWidth, GrhData(iGrhIndex).PixelHeight, , , 0, GrhData(iGrhIndex).FileNum, Color(0), Color(1), Color(2), Color(3))
                         
             If .VidaPasos <= 0 Then
-                Call RemovePaso(i)
+                Call RemovePaso(I)
 
             End If
                         
@@ -66,56 +66,56 @@ Public Sub RenderPasos(ByVal PixelOffSetXTemp As Integer, _
 
 End Sub
 
-Public Sub CreatePasos(ByVal x As Integer, ByVal y As Integer, ByVal Pasos As Integer)
+Public Sub CreatePasos(ByVal X As Integer, ByVal Y As Integer, ByVal Pasos As Integer)
 
     On Error GoTo 0
 
-    If Not InMapBounds(x, y) Then Exit Sub
-    If HayAgua(x, y) Then Exit Sub
+    If Not InMapBounds(X, Y) Then Exit Sub
+    If HayAgua(X, Y) Then Exit Sub
     If Pasos = 0 Then Exit Sub
     
-    Dim i    As Byte
+    Dim I    As Byte
 
     Dim slot As Byte
     
-    For i = 1 To MAX_PASOS
+    For I = 1 To MAX_PASOS
 
-        If cPasos(i).VidaPasos = 0 Then
-            slot = i
+        If cPasos(I).VidaPasos = 0 Then
+            slot = I
             Exit For
 
         End If
 
-    Next i
+    Next I
     
     If slot >= MAX_PASOS Then Exit Sub
     If slot > LastPaso Then LastPaso = slot
     
     With cPasos(slot)
-        .x = x
-        .y = y
+        .X = X
+        .Y = Y
         .Pasos = Pasos
         .VidaPasos = 250
 
     End With
     
-    MapData(x, y).PasosIndex = slot
+    MapData(X, Y).PasosIndex = slot
     
 End Sub
 
-Public Sub RemovePaso(ByVal i As Integer)
+Public Sub RemovePaso(ByVal I As Integer)
 
     On Error GoTo 0
 
-    With cPasos(i)
+    With cPasos(I)
 
-        If i = LastPaso Then LastPaso = LastPaso - 1
-        If .x <> 0 And .y <> 0 Then
-            MapData(.x, .y).PasosIndex = 0
+        If I = LastPaso Then LastPaso = LastPaso - 1
+        If .X <> 0 And .Y <> 0 Then
+            MapData(.X, .Y).PasosIndex = 0
             .Pasos = 0
             .VidaPasos = 0
-            .x = 0
-            .y = 0
+            .X = 0
+            .Y = 0
 
         End If
 
@@ -127,11 +127,11 @@ Public Sub RemoveAllPasos()
 
     On Error GoTo 0
 
-    Dim i As Long
+    Dim I As Long
     
-    For i = LastPaso To 1 Step -1
-        RemovePaso i
-    Next i
+    For I = LastPaso To 1 Step -1
+        RemovePaso I
+    Next I
 
 End Sub
 

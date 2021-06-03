@@ -75,15 +75,15 @@ Private Const MS_ADD_EXTRA As Integer = 5000
 Private Type dialog
 
     textLine()  As String
-    x           As Integer
-    y           As Integer
+    X           As Integer
+    Y           As Integer
     startTime   As Long
     lifeTime    As Long
     CharIndex   As Integer
-    color       As Long
+    Color       As Long
     R           As Byte
     G           As Byte
-    B           As Byte
+    b           As Byte
     a           As Byte
     renderable  As Boolean
 
@@ -184,7 +184,7 @@ Public Sub CreateDialog(ByRef chat As String, _
                         ByVal CharIndex As Integer, _
                         ByVal R As Byte, _
                         ByVal G As Byte, _
-                        ByVal B As Byte)
+                        ByVal b As Byte)
 
     '**************************************************************
     'Author: Juan Martín Sotuyo Dodero
@@ -194,7 +194,7 @@ Public Sub CreateDialog(ByRef chat As String, _
     '**************************************************************
     Dim slot As Integer
 
-    Dim i    As Long
+    Dim I    As Long
     
     slot = BinarySearch(CharIndex)
     
@@ -204,9 +204,9 @@ Public Sub CreateDialog(ByRef chat As String, _
         'We need to add it. Get insertion index and move list backwards.
         slot = Not slot
         
-        For i = dialogCount To slot + 1 Step -1
-            dialogs(i) = dialogs(i - 1)
-        Next i
+        For I = dialogCount To slot + 1 Step -1
+            dialogs(I) = dialogs(I - 1)
+        Next I
         
         dialogCount = dialogCount + 1
     Else
@@ -223,9 +223,9 @@ Public Sub CreateDialog(ByRef chat As String, _
         .CharIndex = CharIndex
         .R = R
         .G = G
-        .B = B
+        .b = b
         .a = 10
-        .color = D3DColorRGBA(R, G, B, 10)
+        .Color = D3DColorRGBA(R, G, b, 10)
         .renderable = False
         .startTime = (GetTickCount() And &H7FFFFFFF)
         .textLine = FormatChat(chat)
@@ -333,8 +333,8 @@ End Function
 ' @param    y           The Y coord where to start rendering.
 ' @param    charIndex   The character whose dialog's position is being updated.
 
-Public Sub UpdateDialogPos(ByVal x As Integer, _
-                           ByVal y As Integer, _
+Public Sub UpdateDialogPos(ByVal X As Integer, _
+                           ByVal Y As Integer, _
                            ByVal CharIndex As Integer)
 
     '**************************************************************
@@ -349,8 +349,8 @@ Public Sub UpdateDialogPos(ByVal x As Integer, _
     If slot >= 0 Then
 
         With dialogs(slot)
-            .x = x '- (MAX_LENGTH \ 2) * 3
-            .y = y - (UBound(.textLine()) * 3)
+            .X = X '- (MAX_LENGTH \ 2) * 3
+            .Y = Y - (UBound(.textLine()) * 3)
             .renderable = True
 
         End With
@@ -369,9 +369,9 @@ Public Sub Render()
     'Last Modification: 08/29/07 by Rapsodius
     'Changed the way it gets rid of older dialogs.
     '**************************************************************
-    Dim i              As Long
+    Dim I              As Long
 
-    Dim j              As Long
+    Dim J              As Long
 
     Dim offset         As Integer
 
@@ -383,11 +383,11 @@ Public Sub Render()
 
     NowTime = (GetTickCount() And &H7FFFFFFF)
 
-    For i = 0 To dialogCount - 1
+    For I = 0 To dialogCount - 1
 
         'Decrease index to prevent jumping over a dialog
         'Crappy VB will cache the limit of the For loop, so even if it changed, it won't matter
-        With dialogs(i - removedDialogs)
+        With dialogs(I - removedDialogs)
 
             If (NowTime - .startTime) >= .lifeTime Then
                 Call RemoveDialog(.CharIndex)
@@ -398,10 +398,10 @@ Public Sub Render()
 
                 If NowTime - .startTime <= 400 Then
                     .a = (NowTime - .startTime) / 2
-                    .color = D3DColorRGBA(.R, .G, .B, .a)
+                    .Color = D3DColorRGBA(.R, .G, .b, .a)
                 ElseIf .a < 200 Then
                     .a = 200
-                    .color = D3DColorRGBA(.R, .G, .B, .a)
+                    .Color = D3DColorRGBA(.R, .G, .b, .a)
 
                 End If
 
@@ -409,13 +409,13 @@ Public Sub Render()
                 cantidad = UBound(.textLine())
 
                 If cantidad = 0 Then
-                    Call RenderTextCentered(.x, .y, Trim$(.textLine(0)), .color)
+                    Call RenderTextCentered(.X, .Y, Trim$(.textLine(0)), .Color)
                 Else
 
-                    For j = 0 To cantidad
-                        Call RenderText(.x - 50, .y + offset, Trim$(.textLine(j)), .color)
+                    For J = 0 To cantidad
+                        Call RenderText(.X - 50, .Y + offset, Trim$(.textLine(J)), .Color)
                         offset = offset + usedFont.Size + 5
-                    Next j
+                    Next J
 
                 End If
                 
@@ -426,7 +426,7 @@ Public Sub Render()
 
         End With
 
-    Next i
+    Next I
 
 End Sub
 
@@ -444,15 +444,15 @@ Public Sub RemoveDialog(ByVal CharIndex As Integer)
     '**************************************************************
     Dim slot As Integer
 
-    Dim i    As Long
+    Dim I    As Long
     
     slot = BinarySearch(CharIndex)
     
     If slot < 0 Then Exit Sub
     
-    For i = slot To MAX_DIALOGS - 2
-        dialogs(i) = dialogs(i + 1)
-    Next i
+    For I = slot To MAX_DIALOGS - 2
+        dialogs(I) = dialogs(I + 1)
+    Next I
     
     dialogCount = dialogCount - 1
 

@@ -31,70 +31,73 @@ Attribute VB_Name = "Mod_General"
 'Código Postal 1900
 'Pablo Ignacio Márquez
 
-
 'Particulas
 '********************************
 
 Public Declare Function timeGetTime Lib "winmm.dll" () As Long
+
 Private Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) As Long
 'Particulas
 '***************************
 Option Explicit
 #If RenderFull = 0 Then
-Public frmMain As frmMain2
+
+    Public frmMain As frmMain2
 #Else
-Public frmMain As frmMain1
+
+    Public frmMain As frmMain1
 #End If
 
-Public PCred() As Integer
-Public PCgreen() As Integer
-Public PCblue() As Integer
+Public PCred()             As Integer
 
-Public iplst As String
+Public PCgreen()           As Integer
 
-Public bFogata As Boolean
+Public PCblue()            As Integer
 
-Private lFrameTimer As Long
+Public iplst               As String
 
-Public IpServidor As String
+Public bFogata             As Boolean
 
-Public PuertoServidor As Long
+Private lFrameTimer        As Long
 
-Public PathGraficos As String
+Public IpServidor          As String
+
+Public PuertoServidor      As Long
+
+Public PathGraficos        As String
 
 Public PathRecursosCliente As String
 
-Public PathWav As String
+Public PathWav             As String
 
-Public PathInterface As String
+Public PathInterface       As String
 
-Public PathInit As String
+Public PathInit            As String
 
 Private Type TConsola
 
     Texto As String
-    color As Long
+    Color As Long
     bold As Byte
     italic As Byte
 
 End Type
 
-Public Consola() As TConsola
-
+Public Consola()     As TConsola
 
 Public LineasConsola As Integer
 
-Public ArchivoMapa As Integer
+Public ArchivoMapa   As Integer
 
-Public DataMap1() As Byte
+Public DataMap1()    As Byte
 
-Public DataMap2() As Byte
+Public DataMap2()    As Byte
 
-Public Map1Loaded As Boolean
+Public Map1Loaded    As Boolean
 
-Public Map2Loaded As Integer
+Public Map2Loaded    As Integer
 
-Public MapInfo As MapInformation
+Public MapInfo       As MapInformation
 
 Public Function DirInterface() As String
     DirInterface = App.path & "\" & Config_Inicio.DirGraficos & "\Interface\"
@@ -225,10 +228,10 @@ Sub CargarZonas()
         With Zonas(I)
             .nombre = GetVar(archivoC, "Zona" & CStr(I), "Nombre")
             .Mapa = CByte(GetVar(archivoC, "Zona" & CStr(I), "Mapa"))
-            .x1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X1"))
-            .y1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y1"))
-            .x2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X2"))
-            .y2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y2"))
+            .X1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X1"))
+            .Y1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y1"))
+            .X2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X2"))
+            .Y2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y2"))
             .Segura = CByte(GetVar(archivoC, "Zona" & CStr(I), "Segura"))
             .Acoplar = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "Acoplar")))
             .Terreno = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "Terreno")))
@@ -488,7 +491,7 @@ Sub SetConnected()
     'Unload the connect form
     Unload frmCrearPersonaje
     
-    frmMain.Label8.Caption = UserName
+    frmMain.label8.Caption = UserName
     'Load main form
     frmMain.Visible = True
     
@@ -686,7 +689,7 @@ Sub CargarMap(ByVal Map As Integer)
 
     Dim ByFlags As Byte
 
-    Dim handle  As Integer
+    Dim Handle  As Integer
     
     'If ArchivoMapa > 0 Then
        
@@ -812,7 +815,8 @@ Sub SwitchMap(ByVal Map As Integer)
     
     CargarMap (Map)
   
-  Call Effect_Snow_Begin(13, 100)
+    Call Effect_Snow_Begin(13, 100)
+
 End Sub
 
 Sub AddtoRichPicture(ByVal Text As String, _
@@ -823,9 +827,10 @@ Sub AddtoRichPicture(ByVal Text As String, _
                      Optional ByVal italic As Boolean = False, _
                      Optional ByVal bCrLf As Boolean = False)
 
-'lo pongo aca, para q no tengan q andar cambiando todo
-'osea, si tienen consola de arriba, el richtextbox, no agan esto
+    'lo pongo aca, para q no tengan q andar cambiando todo
+    'osea, si tienen consola de arriba, el richtextbox, no agan esto
     #If RenderFull = 0 Then
+
         If Left(Text, 1) = " " Then Exit Sub
 
         Dim I As Byte
@@ -847,17 +852,17 @@ Sub AddtoRichPicture(ByVal Text As String, _
         UltimaLineavisible = False
     #Else
 
-        Dim nId As Long
+        Dim nId      As Long
 
-        Dim AText As String
+        Dim AText    As String
 
         Dim Lineas() As String
 
-        Dim I As Integer
+        Dim I        As Integer
 
-        Dim l As Integer
+        Dim l        As Integer
 
-        Dim LastEsp As Integer
+        Dim LastEsp  As Integer
 
         Lineas = Split(Text, vbCrLf)
 
@@ -881,7 +886,7 @@ Sub AddtoRichPicture(ByVal Text As String, _
             frmMain.pConsola.FontBold = bold
             frmMain.pConsola.FontItalic = italic
             Consola(nId).Texto = Text
-            Consola(nId).color = RGB(red, green, blue)
+            Consola(nId).Color = RGB(red, green, blue)
             Consola(nId).bold = bold
             Consola(nId).italic = italic
 
@@ -913,6 +918,7 @@ Sub AddtoRichPicture(ByVal Text As String, _
         Next l
 
     #End If
+
 End Sub
 
 Function ReadField(ByVal Pos As Integer, _
@@ -955,7 +961,7 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
     'Last Modify Date: 07/29/2007
     '*****************************************************************
-    Dim Count     As Long
+    Dim count     As Long
 
     Dim curPos    As Long
 
@@ -969,10 +975,10 @@ Function FieldCount(ByRef Text As String, ByVal SepASCII As Byte) As Long
     
     Do
         curPos = InStr(curPos + 1, Text, delimiter)
-        Count = Count + 1
+        count = count + 1
     Loop While curPos <> 0
     
-    FieldCount = Count
+    FieldCount = count
 
 End Function
 
@@ -1004,6 +1010,7 @@ Sub Main()
     #Else
         Set frmMain = frmMain1
     #End If
+
     If FileExist(App.path & "\Init\Config.ini", vbNormal) Then
         Call ReadConfig
     Else
@@ -1038,20 +1045,20 @@ Sub Main()
     curGeneral.CursorOn frmMain.pRender.hwnd
 
     frmMain.picHechiz.MouseIcon = picMouseIcon
-    frmMain.CmdLanzar.MouseIcon = picMouseIcon
+    frmMain.LanzarImg.MouseIcon = picMouseIcon
     'frmMain.btnHechizos.MouseIcon = picMouseIcon
     'frmMain.btnInventario.MouseIcon = picMouseIcon
 
     Dim picMousePointIcon As Picture
 
     Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Point.ico")
-    frmMain.Image1(0).MouseIcon = picMousePointIcon    'Opciones
-    frmMain.Image1(1).MouseIcon = picMousePointIcon    'Stats
-    frmMain.Image1(2).MouseIcon = picMousePointIcon    'Clanes
-    frmMain.Image1(3).MouseIcon = picMousePointIcon    'Quests
-    'frmMain.Image1(4).MouseIcon = picMousePointIcon 'Party
-    'Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Espada.ico")
-    'frmMain.btnInventario.MouseIcon = picMousePointIcon
+    '    frmMain.Image1(0).MouseIcon = picMousePointIcon    'Opciones
+    '    frmMain.Image1(1).MouseIcon = picMousePointIcon    'Stats
+    '    frmMain.Image1(2).MouseIcon = picMousePointIcon    'Clanes
+    '    frmMain.Image1(3).MouseIcon = picMousePointIcon    'Quests
+    '    'frmMain.Image1(4).MouseIcon = picMousePointIcon 'Party
+    '    'Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Espada.ico")
+    '    'frmMain.btnInventario.MouseIcon = picMousePointIcon
     'aura
     CargarAuras
     'aura
@@ -1135,16 +1142,20 @@ Sub Main()
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.25
     DoEvents
     #If RenderFull = 0 Then
+
         If Not InitTileEngine(frmMain.hwnd, frmMain.Top, frmMain.pRender.Left, 32, 32, Round(frmMain.pRender.Height / 32), Round(frmMain.pRender.Width / 32), 9, 9, 9, 0.018) Then
 
             Call CloseClient
 
         End If
+
     #Else
+
         If Not InitTileEngine(frmMain.hwnd, 125, 2, 32, 32, 19, 25, 9, 9, 9, 0.018) Then
             Call CloseClient
 
         End If
+
     #End If
 
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.4
@@ -1184,7 +1195,7 @@ Sub Main()
     DialogosClanes.CantidadDialogos = mOpciones.DialogCantMessages
 
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(frmMain.picInv, 10, 5, MAX_INVENTORY_SLOTS, True)
+    Call Inventario.Initialize(frmMain.picInv, 1, 10, MAX_INVENTORY_SLOTS, True)
 
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.55
     DoEvents
@@ -1752,7 +1763,7 @@ Public Function BuscarZona(ByVal X As Integer, ByVal Y As Integer) As Integer
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And X >= Zonas(I).x1 And X <= Zonas(I).x2 And Y >= Zonas(I).y1 And Y <= Zonas(I).y2 Then
+        If UserMap = Zonas(I).Mapa And X >= Zonas(I).X1 And X <= Zonas(I).X2 And Y >= Zonas(I).Y1 And Y <= Zonas(I).Y2 Then
             BuscarZona = I
             Encontro = True
 
@@ -1782,7 +1793,7 @@ Public Sub CheckZona()
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And UserPos.X >= Zonas(I).x1 And UserPos.X <= Zonas(I).x2 And UserPos.Y >= Zonas(I).y1 And UserPos.Y <= Zonas(I).y2 Then
+        If UserMap = Zonas(I).Mapa And UserPos.X >= Zonas(I).X1 And UserPos.X <= Zonas(I).X2 And UserPos.Y >= Zonas(I).Y1 And UserPos.Y <= Zonas(I).Y2 Then
             If ZonaActual <> I Then
                 If ZonaActual > 0 Then
                     If Zonas(ZonaActual).Segura <> Zonas(I).Segura Then
@@ -1894,7 +1905,7 @@ Sub ClosePj()
     ZoomLevel = 0
     'D3DDevice.SetRenderTarget pBackbuffer, DeviceStencil, 0
     
-    For I = 0 To Forms.Count - 1
+    For I = 0 To Forms.count - 1
 
         If Forms(I).Name <> frmMain.Name And Forms(I).Name <> frmCrearPersonaje.Name And Forms(I).Name <> frmMensaje.Name Then
             Unload Forms(I)
@@ -1920,8 +1931,6 @@ Sub ClosePj()
     Set Barco(0) = Nothing
     Set Barco(1) = Nothing
     bRain = False
-    
-  
     
     bFogata = False
     SkillPoints = 0
@@ -1961,14 +1970,14 @@ Sub ClosePj()
 
 End Sub
 
-Public Function General_Distance_Get(ByVal x1 As Integer, _
-                                     ByVal y1 As Integer, _
-                                     x2 As Integer, _
-                                     y2 As Integer) As Integer
+Public Function General_Distance_Get(ByVal X1 As Integer, _
+                                     ByVal Y1 As Integer, _
+                                     X2 As Integer, _
+                                     Y2 As Integer) As Integer
 
     Dim Dist As Long
 
-    Dist = Sqr((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+    Dist = Sqr((X1 - X2) ^ 2 + (Y1 - Y2) ^ 2)
     General_Distance_Get = Dist
 
 End Function
@@ -2121,13 +2130,13 @@ End Function
 '*****************************
 Function Engine_ElapsedTime() As Long
  
-'**************************************************************
-'Gets the time that past since the last call
-'**************************************************************
+    '**************************************************************
+    'Gets the time that past since the last call
+    '**************************************************************
  
-Dim Start_Time As Long
+    Dim Start_Time As Long
  
-'Get current time
+    'Get current time
  
     Start_Time = timeGetTime
  
@@ -2139,15 +2148,20 @@ Dim Start_Time As Long
  
 End Function
  
-Public Function Engine_GetAngle(ByVal CenterX As Integer, ByVal CenterY As Integer, ByVal TargetX As Integer, ByVal TargetY As Integer) As Single
+Public Function Engine_GetAngle(ByVal CenterX As Integer, _
+                                ByVal CenterY As Integer, _
+                                ByVal TargetX As Integer, _
+                                ByVal TargetY As Integer) As Single
  
-'************************************************************
-'Gets the angle between two points in a 2d plane
-'************************************************************
+    '************************************************************
+    'Gets the angle between two points in a 2d plane
+    '************************************************************
  
     On Error GoTo ErrOut
-Dim SideA As Single
-Dim SideC As Single
+
+    Dim SideA As Single
+
+    Dim SideC As Single
  
     'Check for horizontal lines (90 or 270 degrees)
     If CenterY = TargetY Then
@@ -2159,6 +2173,7 @@ Dim SideC As Single
             'Check for going left (270 degrees)
         Else
             Engine_GetAngle = 270
+
         End If
  
         'Exit the function
@@ -2176,6 +2191,7 @@ Dim SideC As Single
             'Check for going down (180 degrees)
         Else
             Engine_GetAngle = 180
+
         End If
  
         'Exit the function
@@ -2200,7 +2216,7 @@ Dim SideC As Single
  
     'Exit function
  
-Exit Function
+    Exit Function
  
     'Check for error
 ErrOut:
@@ -2208,18 +2224,18 @@ ErrOut:
     'Return a 0 saying there was an error
     Engine_GetAngle = 0
  
-Exit Function
+    Exit Function
  
 End Function
  
 Public Sub Engine_Init_RenderStates()
  
-'************************************************************
-'Set the render states of the Direct3D Device
-'This is in a seperate sub since if using Fullscreen and device is lost
-'this is eventually called to restore settings.
-'************************************************************
-'Set the shader to be used
+    '************************************************************
+    'Set the render states of the Direct3D Device
+    'This is in a seperate sub since if using Fullscreen and device is lost
+    'this is eventually called to restore settings.
+    '************************************************************
+    'Set the shader to be used
  
     D3DDevice.SetVertexShader D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR
  
@@ -2231,7 +2247,7 @@ Public Sub Engine_Init_RenderStates()
     D3DDevice.SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
  
     'Particle engine settings
-   D3DDevice.SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
+    D3DDevice.SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
     D3DDevice.SetRenderState D3DRS_POINTSCALE_ENABLE, 0
  
     'Set the texture stage stats (filters)
@@ -2242,14 +2258,14 @@ End Sub
  
 Public Sub Engine_Init_ParticleEngine()
  
-'*****************************************************************
-'Loads all particles into memory - unlike normal textures, these stay in memory. This isn't
-'done for any reason in particular, they just use so little memory since they are so small
-'*****************************************************************
+    '*****************************************************************
+    'Loads all particles into memory - unlike normal textures, these stay in memory. This isn't
+    'done for any reason in particular, they just use so little memory since they are so small
+    '*****************************************************************
  
-Dim I As Byte
+    Dim I As Byte
  
-'Set the particles texture
+    'Set the particles texture
  
     NumEffects = 20
     ReDim Effect(1 To NumEffects)
@@ -2261,20 +2277,20 @@ Dim I As Byte
 End Sub
  
 Function Engine_PixelPosX(ByVal X As Long) As Long
-'*****************************************************************
-'Converts a tile position to a screen position
-'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX]http://www.vbgore.com/GameClient.TileEn ... _PixelPosX[/url]
-'*****************************************************************
+    '*****************************************************************
+    'Converts a tile position to a screen position
+    'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX]http://www.vbgore.com/GameClient.TileEn ... _PixelPosX[/url]
+    '*****************************************************************
  
     Engine_PixelPosX = (X - 1) * TilePixelWidth
  
 End Function
  
 Function Engine_PixelPosY(ByVal Y As Long) As Long
-'*****************************************************************
-'Converts a tile position to a screen position
-'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY]http://www.vbgore.com/GameClient.TileEn ... _PixelPosY[/url]
-'*****************************************************************
+    '*****************************************************************
+    'Converts a tile position to a screen position
+    'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY]http://www.vbgore.com/GameClient.TileEn ... _PixelPosY[/url]
+    '*****************************************************************
  
     Engine_PixelPosY = (Y - 1) * TilePixelHeight
  
@@ -2282,10 +2298,10 @@ End Function
  
 Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
  
-'************************************************************
-'Tile Position to Screen Position
-'Takes the tile position and returns the pixel location on the screen
-'************************************************************
+    '************************************************************
+    'Tile Position to Screen Position
+    'Takes the tile position and returns the pixel location on the screen
+    '************************************************************
     
     'This acts just as a dummy in this project
  
@@ -2293,13 +2309,14 @@ End Function
  
 Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
  
-'************************************************************
-'Tile Position to Screen Position
-'Takes the tile position and returns the pixel location on the screen
-'************************************************************
+    '************************************************************
+    'Tile Position to Screen Position
+    'Takes the tile position and returns the pixel location on the screen
+    '************************************************************
  
     'This acts just as a dummy in this project
     
 End Function
+
 'Particulas
 'Particulas *********************

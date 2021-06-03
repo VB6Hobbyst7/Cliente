@@ -47,8 +47,8 @@ Friend Sub Init(pBody As Integer, _
     Escudo = ShieldAnimData(pEscudo)
     Casco = CascoAnimData(pCasco)
     Heading = pHeading
-    Pos.x = pPos.x
-    Pos.y = pPos.y
+    Pos.X = pPos.X
+    Pos.Y = pPos.Y
     cErase = pAlpha
 
 End Sub
@@ -60,7 +60,7 @@ Public Sub Update()
             cErase = cErase - 10
 
             If cErase <= 0 Then
-                Set MapData(Pos.x, Pos.y).Elemento = Nothing
+                Set MapData(Pos.X, Pos.Y).Elemento = Nothing
                 KillMe = True
                 Exit Sub
             Else
@@ -81,16 +81,16 @@ Public Sub Render(ByVal PixelOffSetX As Single, ByVal PixelOffSetY As Single)
     'PixelOffSetX = (Pos.X - X + 8) * 32 + PixelOffSetX + 256
     'PixelOffSetY = (Pos.Y - Y + 6) * 32 + PixelOffSetY + 256
 
-    ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.B, cErase)
+    ColorPj = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, cErase)
 
     'Draw Body
     If Body.Walk(Heading).GrhIndex Then Call DrawGrh(Body.Walk(Heading), PixelOffSetX, PixelOffSetY, 1, 1, 1, ColorPj, cErase)
             
     'Draw Head
-    If Head.Head(Heading).GrhIndex Then Call DrawGrh(Head.Head(Heading), PixelOffSetX + Body.HeadOffset.x, PixelOffSetY + Body.HeadOffset.y, 1, 0, 2, ColorPj, cErase)
+    If Head.Head(Heading).GrhIndex Then Call DrawGrh(Head.Head(Heading), PixelOffSetX + Body.HeadOffset.X, PixelOffSetY + Body.HeadOffset.Y, 1, 0, 2, ColorPj, cErase)
     
     'Draw Helmet
-    If Casco.Head(Heading).GrhIndex Then Call DrawGrh(Casco.Head(Heading), PixelOffSetX + Body.HeadOffset.x, PixelOffSetY + Body.HeadOffset.y, 1, 0, 2, ColorPj, cErase)
+    If Casco.Head(Heading).GrhIndex Then Call DrawGrh(Casco.Head(Heading), PixelOffSetX + Body.HeadOffset.X, PixelOffSetY + Body.HeadOffset.Y, 1, 0, 2, ColorPj, cErase)
     
     'Draw Weapon
     If Arma.WeaponWalk(Heading).GrhIndex Then Call DrawGrh(Arma.WeaponWalk(Heading), PixelOffSetX, PixelOffSetY, 1, 1, 1, ColorPj, cErase)

@@ -90,27 +90,27 @@ Private Sub Class_Terminate()
     'Last Modify Date: 3/06/2006
     'Clean up
     '**************************************************************
-    Dim i As Long
+    Dim I As Long
 
     Dim J As Long
     
     'Destroy every surface in memory
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For I = 0 To HASH_TABLE_SIZE - 1
 
-        With surfaceList(i)
+        With surfaceList(I)
 
             For J = 1 To .surfaceCount
                 Set .SurfaceEntry(J).Surface = Nothing
                 .SurfaceEntry(J).fileIndex = 0
             Next J
 
-            surfaceList(i).surfaceCount = 0
+            surfaceList(I).surfaceCount = 0
             'Destroy the arrays
             Erase .SurfaceEntry
 
         End With
 
-    Next i
+    Next I
 
 End Sub
 
@@ -121,27 +121,27 @@ Private Sub clsSurfaceManager_Limpiar()
     'Last Modify Date: 3/06/2006
     'Clean up
     '**************************************************************
-    Dim i As Long
+    Dim I As Long
 
     Dim J As Long
     
     'Destroy every surface in memory
-    For i = 0 To HASH_TABLE_SIZE - 1
+    For I = 0 To HASH_TABLE_SIZE - 1
 
-        With surfaceList(i)
+        With surfaceList(I)
 
             For J = 1 To .surfaceCount
                 Set .SurfaceEntry(J).Surface = Nothing
                 .SurfaceEntry(J).fileIndex = 0
             Next J
 
-            surfaceList(i).surfaceCount = 0
+            surfaceList(I).surfaceCount = 0
             'Destroy the arrays
             Erase .SurfaceEntry
 
         End With
 
-    Next i
+    Next I
 
 End Sub
 
@@ -173,20 +173,20 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
     '**************************************************************
     On Error GoTo ErrHandler:
 
-    Dim i As Long
+    Dim I As Long
     
     ' Search for it and return it
     With surfaceList(fileIndex Mod HASH_TABLE_SIZE)
 
-        For i = 1 To .surfaceCount
+        For I = 1 To .surfaceCount
 
-            If .SurfaceEntry(i).fileIndex = fileIndex Then
-                Set clsSurfaceManager_Surface = .SurfaceEntry(i).Surface
+            If .SurfaceEntry(I).fileIndex = fileIndex Then
+                Set clsSurfaceManager_Surface = .SurfaceEntry(I).Surface
                 Exit Property
 
             End If
 
-        Next i
+        Next I
 
     End With
     
@@ -197,7 +197,7 @@ Private Property Get clsSurfaceManager_Surface(ByVal fileIndex As Long) As Direc
     Exit Property
 
 ErrHandler:
-    MsgBox "Un error inesperado ocurrió a intentar cargar el archivo " & CStr(fileIndex) & ".bmp. & vbcrlf" & "Error: " & CStr(Err.Number), vbOKOnly Or vbCritical Or vbExclamation, "Error"
+    MsgBox "Un error inesperado ocurrió a intentar cargar el archivo " & CStr(fileIndex) & ".bmp. & vbcrlf" & "Error: " & CStr(err.Number), vbOKOnly Or vbCritical Or vbExclamation, "Error"
     
     End
 
@@ -216,9 +216,9 @@ Private Sub LoadSurfaces(ByVal ResourcePath As String)
 
     Dim Data()       As Byte
 
-    Dim i            As Long
+    Dim I            As Long
     
-    While GetNext_File(ResourcePath, i, Data(), surfaceIndex)
+    While GetNext_File(ResourcePath, I, Data(), surfaceIndex)
 
         Call LoadSurface(Data(), surfaceIndex)
     Wend
@@ -251,8 +251,8 @@ Private Sub LoadSurface(ByRef Data() As Byte, ByVal fileIndex As Long)
         'Load surface
         Set .Surface = DirectD3X.CreateTextureFromFileInMemoryEx(DeviceD3D, Data(0), Tamaño, 0, 0, D3DX_DEFAULT, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, ColorTransparenteDX, ByVal 0, ByVal 0)
         .Surface.GetLevelDesc 0, pDesc
-        SurfaceSize(fileIndex).x = pDesc.Width
-        SurfaceSize(fileIndex).y = pDesc.Height
+        SurfaceSize(fileIndex).X = pDesc.Width
+        SurfaceSize(fileIndex).Y = pDesc.Height
 
     End With
     
@@ -269,13 +269,13 @@ Private Sub LoadSurface(ByRef Data() As Byte, ByVal fileIndex As Long)
 
 ErrHandler:
 
-    If Err.Number = 1 Then
+    If err.Number = 1 Then
         ' No video memory? Try system memory! We want all surfaces loaded!
         Resume
 
     End If
     
-    MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & "El código de error es " & CStr(Err.Number) & " - " & Err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", vbOKOnly Or vbCritical Or vbExclamation, "Error"
+    MsgBox "Un error inesperado ocurrió al intentar cargar el gráfico " & CStr(fileIndex) & ".BMP" & ". " & vbCrLf & "El código de error es " & CStr(err.Number) & " - " & err.Description & vbCrLf & vbCrLf & "Copia este mensaje y notifica a los administradores.", vbOKOnly Or vbCritical Or vbExclamation, "Error"
     End
 
 End Sub

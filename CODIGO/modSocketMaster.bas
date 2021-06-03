@@ -60,8 +60,8 @@ Private Declare Function api_CreateWindowEx _
                                          ByVal lpClassName As String, _
                                          ByVal lpWindowName As String, _
                                          ByVal dwStyle As Long, _
-                                         ByVal x As Long, _
-                                         ByVal y As Long, _
+                                         ByVal X As Long, _
+                                         ByVal Y As Long, _
                                          ByVal nWidth As Long, _
                                          ByVal nHeight As Long, _
                                          ByVal hWndParent As Long, _
@@ -394,7 +394,7 @@ Public Function InitiateProcesses() As Long
             Debug.Print "OK Winsock service initiated"
         Else
             Debug.Print "ERROR trying to initiate winsock service"
-            Err.Raise lngResult, "modSocketMaster.InitiateProcesses", GetErrorDescription(lngResult)
+            err.Raise lngResult, "modSocketMaster.InitiateProcesses", GetErrorDescription(lngResult)
             InitiateProcesses = lngResult
 
         End If
@@ -431,9 +431,9 @@ Public Function FinalizeProcesses() As Long
 
             Dim lngErrorCode As Long
 
-            lngErrorCode = Err.LastDllError
+            lngErrorCode = err.LastDllError
             FinalizeProcesses = lngErrorCode
-            Err.Raise lngErrorCode, "modSocketMaster.FinalizeProcesses", GetErrorDescription(lngErrorCode)
+            err.Raise lngErrorCode, "modSocketMaster.FinalizeProcesses", GetErrorDescription(lngErrorCode)
         Else
             Debug.Print "OK Winsock service finalized"
 
@@ -623,7 +623,7 @@ Private Function DestroyWinsockMessageWindow() As Long
     
     If lngResult = 0 Then
         DestroyWinsockMessageWindow = sckOutOfMemory
-        Err.Raise sckOutOfMemory, "modSocketMaster.DestroyWinsockMessageWindow", "Out of memory"
+        err.Raise sckOutOfMemory, "modSocketMaster.DestroyWinsockMessageWindow", "Out of memory"
     Else
         Debug.Print "OK Destroyed winsock message window " & m_lngWindowHandle
         m_lngWindowHandle = 0
@@ -724,7 +724,7 @@ Public Function RegisterSocket(ByVal lngSocket As Long, _
         Debug.Print "OK Created socket collection"
     
         If CreateWinsockMessageWindow <> 0 Then
-            Err.Raise sckOutOfMemory, "modSocketMaster.RegisterSocket", "Out of memory"
+            err.Raise sckOutOfMemory, "modSocketMaster.RegisterSocket", "Out of memory"
 
         End If
     
@@ -748,8 +748,8 @@ Public Function RegisterSocket(ByVal lngSocket As Long, _
         
         If lngResult = SOCKET_ERROR Then
             Debug.Print "ERROR trying to register events from socket " & lngSocket
-            lngErrorCode = Err.LastDllError
-            Err.Raise lngErrorCode, "modSocketMaster.RegisterSocket", GetErrorDescription(lngErrorCode)
+            lngErrorCode = err.LastDllError
+            err.Raise lngErrorCode, "modSocketMaster.RegisterSocket", GetErrorDescription(lngErrorCode)
         Else
             Debug.Print "OK Registered events from socket " & lngSocket
 
@@ -772,7 +772,7 @@ Public Sub UnregisterSocket(ByVal lngSocket As Long)
 
     m_colSocketsInst.Remove "S" & lngSocket
 
-    If m_colSocketsInst.Count = 0 Then
+    If m_colSocketsInst.count = 0 Then
         Set m_colSocketsInst = Nothing
         Subclass_UnSubclass
         DestroyWinsockMessageWindow
@@ -843,7 +843,7 @@ End Function
 Public Sub UnregisterAccept(ByVal lngSocket As Long)
     m_colAcceptList.Remove "S" & lngSocket
 
-    If m_colAcceptList.Count = 0 Then
+    If m_colAcceptList.count = 0 Then
         Set m_colAcceptList = Nothing
         Debug.Print "OK Destroyed accept collection"
 
@@ -892,7 +892,7 @@ Private Sub Subclass_Initialize()
 
     Const MOD_WS   As String = "ws2_32"                         'Location of the closesocket function
 
-    Dim i          As Long                                      'Loop index
+    Dim I          As Long                                      'Loop index
 
     Dim nLen       As Long                                      'String lengths
 
@@ -905,9 +905,9 @@ Private Sub Subclass_Initialize()
     nLen = Len(sHex)                                          'Length of hex pair string
   
     'Convert the string from hex pairs to bytes and store in the ASCII string opcode buffer
-    For i = 1 To nLen Step 2                                  'For each pair of hex characters
-        sCode = sCode & ChrB$(Val("&H" & mid$(sHex, i, 2)))     'Convert a pair of hex characters to a byte and append to the ASCII string
-    Next i                                                    'Next pair
+    For I = 1 To nLen Step 2                                  'For each pair of hex characters
+        sCode = sCode & ChrB$(Val("&H" & mid$(sHex, I, 2)))     'Convert a pair of hex characters to a byte and append to the ASCII string
+    Next I                                                    'Next pair
   
     nLen = LenB(sCode)                                        'Get the machine code length
     nAddrSubclass = api_GlobalAlloc(0, nLen)                  'Allocate fixed memory for machine code buffer
@@ -920,15 +920,15 @@ Private Sub Subclass_Initialize()
         'Patch the jmp (EB0E) with two nop's (90) enabling the IDE breakpoint/stop checking code
         Call api_CopyMemory(ByVal nAddrSubclass + 13, &H9090, 2)
     
-        i = Subclass_AddrFunc(MOD_VBA6, FUNC_EBM)               'Get the address of EbMode in vba6.dll
+        I = Subclass_AddrFunc(MOD_VBA6, FUNC_EBM)               'Get the address of EbMode in vba6.dll
 
-        If i = 0 Then                                           'Found?
-            i = Subclass_AddrFunc(MOD_VBA5, FUNC_EBM)             'VB5 perhaps, try vba5.dll
+        If I = 0 Then                                           'Found?
+            I = Subclass_AddrFunc(MOD_VBA5, FUNC_EBM)             'VB5 perhaps, try vba5.dll
 
         End If
 
-        Debug.Assert i                                          'Ensure the EbMode function was found
-        Call Subclass_PatchRel(PATCH_01, i)                     'Patch the relative address to the EbMode api function
+        Debug.Assert I                                          'Ensure the EbMode function was found
+        Call Subclass_PatchRel(PATCH_01, I)                     'Patch the relative address to the EbMode api function
 
     End If
   
@@ -1063,15 +1063,15 @@ End Function
 Private Sub Subclass_AddResolveMessage(ByVal lngAsync As Long, _
                                        ByVal lngObjectPointer As Long)
 
-    Dim Count As Long
+    Dim count As Long
 
-    For Count = 1 To lngMsgCntA
+    For count = 1 To lngMsgCntA
 
-        Select Case lngTableA1(Count)
+        Select Case lngTableA1(count)
     
             Case -1
-                lngTableA1(Count) = lngAsync
-                lngTableA2(Count) = lngObjectPointer
+                lngTableA1(count) = lngAsync
+                lngTableA2(count) = lngObjectPointer
                 Exit Sub
 
             Case lngAsync
@@ -1080,7 +1080,7 @@ Private Sub Subclass_AddResolveMessage(ByVal lngAsync As Long, _
 
         End Select
 
-    Next Count
+    Next count
 
     lngMsgCntA = lngMsgCntA + 1
     ReDim Preserve lngTableA1(1 To lngMsgCntA)
@@ -1095,15 +1095,15 @@ End Sub
 Private Sub Subclass_AddSocketMessage(ByVal lngSocket As Long, _
                                       ByVal lngObjectPointer As Long)
 
-    Dim Count As Long
+    Dim count As Long
 
-    For Count = 1 To lngMsgCntB
+    For count = 1 To lngMsgCntB
 
-        Select Case lngTableB1(Count)
+        Select Case lngTableB1(count)
     
             Case -1
-                lngTableB1(Count) = lngSocket
-                lngTableB2(Count) = lngObjectPointer
+                lngTableB1(count) = lngSocket
+                lngTableB2(count) = lngObjectPointer
                 Exit Sub
 
             Case lngSocket
@@ -1112,7 +1112,7 @@ Private Sub Subclass_AddSocketMessage(ByVal lngSocket As Long, _
 
         End Select
 
-    Next Count
+    Next count
 
     lngMsgCntB = lngMsgCntB + 1
     ReDim Preserve lngTableB1(1 To lngMsgCntB)
@@ -1126,35 +1126,35 @@ End Sub
 
 Private Sub Subclass_DelResolveMessage(ByVal lngAsync As Long)
 
-    Dim Count As Long
+    Dim count As Long
 
-    For Count = 1 To lngMsgCntA
+    For count = 1 To lngMsgCntA
 
-        If lngTableA1(Count) = lngAsync Then
-            lngTableA1(Count) = -1
-            lngTableA2(Count) = -1
+        If lngTableA1(count) = lngAsync Then
+            lngTableA1(count) = -1
+            lngTableA2(count) = -1
             Exit Sub
 
         End If
 
-    Next Count
+    Next count
 
 End Sub
 
 Private Sub Subclass_DelSocketMessage(ByVal lngSocket As Long)
 
-    Dim Count As Long
+    Dim count As Long
 
-    For Count = 1 To lngMsgCntB
+    For count = 1 To lngMsgCntB
 
-        If lngTableB1(Count) = lngSocket Then
-            lngTableB1(Count) = -1
-            lngTableB2(Count) = -1
+        If lngTableB1(count) = lngSocket Then
+            lngTableB1(count) = -1
+            lngTableB2(count) = -1
             Exit Sub
 
         End If
 
-    Next Count
+    Next count
 
 End Sub
 
@@ -1184,16 +1184,16 @@ End Sub
 
 Public Sub Subclass_ChangeOwner(ByVal lngSocket As Long, ByVal lngObjectPointer As Long)
 
-    Dim Count As Long
+    Dim count As Long
 
-    For Count = 1 To lngMsgCntB
+    For count = 1 To lngMsgCntB
 
-        If lngTableB1(Count) = lngSocket Then
-            lngTableB2(Count) = lngObjectPointer
+        If lngTableB1(count) = lngSocket Then
+            lngTableB2(count) = lngObjectPointer
             Exit Sub
 
         End If
 
-    Next Count
+    Next count
 
 End Sub

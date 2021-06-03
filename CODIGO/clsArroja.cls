@@ -86,8 +86,8 @@ Public Sub Init(ByVal pAtacante As Integer, _
                 ByVal pLoops As Integer, _
                 ByVal pWav As Byte, _
                 ByVal pEfecto As Byte, _
-                ByVal x As Integer, _
-                ByVal y As Integer, _
+                ByVal X As Integer, _
+                ByVal Y As Integer, _
                 ByVal Xd As Integer, _
                 Yd As Integer)
 
@@ -96,21 +96,21 @@ Public Sub Init(ByVal pAtacante As Integer, _
     fX = pFX
     Wav = pWav
     Loops = pLoops
-    Empieza.x = x
-    Empieza.y = y
+    Empieza.X = X
+    Empieza.Y = Y
 
     If Victima = 0 Then
-        Termina.x = Xd
-        Termina.y = Yd
+        Termina.X = Xd
+        Termina.Y = Yd
     Else
-        Termina.x = charlist(Victima).Pos.x
-        Termina.y = charlist(Victima).Pos.y
+        Termina.X = charlist(Victima).Pos.X
+        Termina.Y = charlist(Victima).Pos.Y
 
     End If
 
     Efecto = pEfecto
 
-    Ang = CalcularAngulo(Empieza.x, Empieza.y, Termina.x, Termina.y)
+    Ang = CalcularAngulo(Empieza.X, Empieza.Y, Termina.X, Termina.Y)
     Ang2 = PIs2
 
     Set Particulas = New clsParticulas
@@ -118,7 +118,7 @@ Public Sub Init(ByVal pAtacante As Integer, _
     If Efecto = eEffects.Inmovilizar Then
         Particulas.Texture = 14341
         Particulas.ParticleCounts = 70
-        Particulas.B = 1
+        Particulas.b = 1
         Particulas.Efecto = eEffects.Inmovilizar
         Set Particulas2 = New clsParticulas
         Particulas2.Texture = 14341
@@ -149,7 +149,7 @@ Public Sub Init(ByVal pAtacante As Integer, _
         Particulas.ParticleCounts = 1
         Particulas.R = 1
         Particulas.G = 1
-        Particulas.B = 1
+        Particulas.b = 1
         Particulas.Desa = 1
         Particulas.Efecto = eEffects.Flecha1
         Particulas.Angulo = Ang + 0.785398163397448
@@ -160,7 +160,7 @@ Public Sub Init(ByVal pAtacante As Integer, _
         Particulas.ParticleCounts = 1
         Particulas.R = 1
         Particulas.G = 1
-        Particulas.B = 1
+        Particulas.b = 1
         Particulas.Desa = 1
         Particulas.Efecto = eEffects.Bala
         Particulas.Angulo = Ang + 0.785398163397448
@@ -192,7 +192,7 @@ Sub MovimientoInmo(TileX As Integer, _
 
     Dim Movimiento As Byte
 
-    If Radio > CalcularDistancia(Empieza.x, Empieza.y, Termina.x, Termina.y) * 32 Then
+    If Radio > CalcularDistancia(Empieza.X, Empieza.Y, Termina.X, Termina.Y) * 32 Then
         'Arrojas.Remove (1)
     
         Particulas.Matar = True
@@ -206,7 +206,7 @@ Sub MovimientoInmo(TileX As Integer, _
             End If
 
             If Wav > 0 Then
-                Call Audio.PlayWave(CStr(Wav) & "", charlist(Victima).Pos.x, charlist(Victima).Pos.y)
+                Call Audio.PlayWave(CStr(Wav) & "", charlist(Victima).Pos.X, charlist(Victima).Pos.Y)
 
             End If
 
@@ -223,8 +223,8 @@ Sub MovimientoInmo(TileX As Integer, _
     Ang2 = Ang2 + 0.06 * timerElapsedTime / 5
 
     'La posicion de la particulas siempre es relativa a su origen
-    Call Particulas.Move((Empieza.x - TileX + 12) * 32 + ScreenOffX, (Empieza.y - TileY + 10) * 32 + ScreenOffY - 24)
-    Call Particulas2.Move((Empieza.x - TileX + 12) * 32 + ScreenOffX, (Empieza.y - TileY + 10) * 32 + ScreenOffY - 24)
+    Call Particulas.Move((Empieza.X - TileX + 12) * 32 + ScreenOffX, (Empieza.Y - TileY + 10) * 32 + ScreenOffY - 24)
+    Call Particulas2.Move((Empieza.X - TileX + 12) * 32 + ScreenOffX, (Empieza.Y - TileY + 10) * 32 + ScreenOffY - 24)
     
     If Movimiento = 1 Then
 
@@ -236,8 +236,8 @@ Sub MovimientoInmo(TileX As Integer, _
         'offX = charlist(Victima).Pos.x - Termina.x + charlist(Victima).MoveOffsetX
         'offX = charlist(Victima).Pos.y - Termina.y + charlist(Victima).MoveOffsetY
 
-        Call Particulas.ReLocate((charlist(Victima).Pos.x - Termina.x) * 32 + charlist(Victima).MoveOffsetX + 16 + Cos(Ang) * Radio + Sin(Ang2 * 2 / 2) * 25, (charlist(Victima).Pos.y - Termina.y) * 32 + charlist(Victima).MoveOffsetY + Sin(Ang) * Radio + Sin(Ang2 * 1 / 2) * 25)
-        Call Particulas2.ReLocate((charlist(Victima).Pos.x - Termina.x) * 32 + charlist(Victima).MoveOffsetX + 16 + Cos(Ang) * Radio + Sin((Ang2 + 2) * 1 / 2) * 25, (charlist(Victima).Pos.y - Termina.y) * 32 + charlist(Victima).MoveOffsetY + Sin(Ang) * Radio + Sin((Ang2 + 2) * 2 / 2) * 25)
+        Call Particulas.ReLocate((charlist(Victima).Pos.X - Termina.X) * 32 + charlist(Victima).MoveOffsetX + 16 + Cos(Ang) * Radio + Sin(Ang2 * 2 / 2) * 25, (charlist(Victima).Pos.Y - Termina.Y) * 32 + charlist(Victima).MoveOffsetY + Sin(Ang) * Radio + Sin(Ang2 * 1 / 2) * 25)
+        Call Particulas2.ReLocate((charlist(Victima).Pos.X - Termina.X) * 32 + charlist(Victima).MoveOffsetX + 16 + Cos(Ang) * Radio + Sin((Ang2 + 2) * 1 / 2) * 25, (charlist(Victima).Pos.Y - Termina.Y) * 32 + charlist(Victima).MoveOffsetY + Sin(Ang) * Radio + Sin((Ang2 + 2) * 2 / 2) * 25)
 
     End If
 
@@ -262,7 +262,7 @@ Sub MovimientoFlecha(TileX As Integer, _
                      ScreenOffY As Single)
 
     'If Radio >= CalcularDistancia(Empieza.x, Empieza.Y, Termina.x, Termina.Y) * 32 - 12 Then
-    If Radio >= CalcularDistancia(Empieza.x, Empieza.y, Termina.x, Termina.y) * 32 - 12 Then
+    If Radio >= CalcularDistancia(Empieza.X, Empieza.Y, Termina.X, Termina.Y) * 32 - 12 Then
         Arrojas.Remove (1)
     
         If fX > 0 Then
@@ -271,7 +271,7 @@ Sub MovimientoFlecha(TileX As Integer, _
         End If
 
         If Wav > 0 Then
-            Call Audio.PlayWave(CStr(Wav) & "", charlist(Victima).Pos.x, charlist(Victima).Pos.y)
+            Call Audio.PlayWave(CStr(Wav) & "", charlist(Victima).Pos.X, charlist(Victima).Pos.Y)
 
         End If
 
@@ -281,7 +281,7 @@ Sub MovimientoFlecha(TileX As Integer, _
     End If
 
     'La posicion de la particulas siempre es relativa a su origen
-    Call Particulas.Move((Empieza.x - TileX + 12) * 32 + ScreenOffX, (Empieza.y - TileY + 10) * 32 + ScreenOffY - 24)
+    Call Particulas.Move((Empieza.X - TileX + 12) * 32 + ScreenOffX, (Empieza.Y - TileY + 10) * 32 + ScreenOffY - 24)
 
     Call Particulas.ReLocate(Cos(Ang) * Radio, Sin(Ang) * Radio - 20)
 
@@ -298,7 +298,7 @@ Sub MovimientoBala(TileX As Integer, _
                    ScreenOffX As Single, _
                    ScreenOffY As Single)
 
-    If Radio >= CalcularDistancia(Empieza.x, Empieza.y, Termina.x, Termina.y) * 32 - 12 Then
+    If Radio >= CalcularDistancia(Empieza.X, Empieza.Y, Termina.X, Termina.Y) * 32 - 12 Then
     
         Arrojas.Remove (1)
 
@@ -306,8 +306,8 @@ Sub MovimientoBala(TileX As Integer, _
 
         Dim destY As Integer
 
-        destX = Termina.x
-        destY = Termina.y
+        destX = Termina.X
+        destY = Termina.Y
     
         'Hacemos el daño
         If Atacante = UserCharIndex Then
@@ -319,14 +319,14 @@ Sub MovimientoBala(TileX As Integer, _
             If Victima > 0 Then
                 Call SetCharacterFx(Victima, fX, Loops)
             Else
-                Call SetAreaFx(Termina.x, Termina.y + 2, fX, Loops)
+                Call SetAreaFx(Termina.X, Termina.Y + 2, fX, Loops)
 
             End If
 
         End If
     
         If Wav > 0 Then
-            Call Audio.PlayWave(Wav, Termina.x, Termina.y)
+            Call Audio.PlayWave(Wav, Termina.X, Termina.Y)
 
         End If
     
@@ -336,7 +336,7 @@ Sub MovimientoBala(TileX As Integer, _
     End If
 
     'La posicion de la particulas siempre es relativa a su origen
-    Call Particulas.Move((Empieza.x - TileX + 12) * 32 + ScreenOffX, (Empieza.y - TileY + 10) * 32 + ScreenOffY - 24)
+    Call Particulas.Move((Empieza.X - TileX + 12) * 32 + ScreenOffX, (Empieza.Y - TileY + 10) * 32 + ScreenOffY - 24)
 
     Call Particulas.ReLocate(Cos(Ang) * Radio, Sin(Ang) * Radio - 20)
 

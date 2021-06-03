@@ -68,22 +68,22 @@ Private WithEvents InventoryWindow As PictureBox    'Placeholder where to render
 Attribute InventoryWindow.VB_VarHelpID = -1
     
 Private Declare Function SelectObject _
-                Lib "gdi32.dll" (ByVal hdc As Long, _
+                Lib "gdi32.dll" (ByVal hDC As Long, _
                                  ByVal hObject As Long) As Long
 
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 
-Private Declare Function CreateCompatibleDC Lib "gdi32.dll" (ByVal hdc As Long) As Long
+Private Declare Function CreateCompatibleDC Lib "gdi32.dll" (ByVal hDC As Long) As Long
 
-Private Declare Function DeleteDC Lib "gdi32.dll" (ByVal hdc As Long) As Long
+Private Declare Function DeleteDC Lib "gdi32.dll" (ByVal hDC As Long) As Long
 
 Private Declare Function CreateCompatibleBitmap _
-                Lib "gdi32.dll" (ByVal hdc As Long, _
+                Lib "gdi32.dll" (ByVal hDC As Long, _
                                  ByVal nWidth As Long, _
                                  ByVal nHeight As Long) As Long
 
 Private Declare Function FillRect _
-                Lib "user32" (ByVal hdc As Long, _
+                Lib "user32" (ByVal hDC As Long, _
                               lppvRECT As pvRECT, _
                               ByVal hBrush As Long) As Long
 
@@ -124,7 +124,7 @@ Private Sub Class_Terminate()
     '***************************************************
     Dim I As Integer
 
-    For I = 1 To Graficos.Count
+    For I = 1 To Graficos.count
         DeleteDC (Graficos(I))
     Next I
 
@@ -534,9 +534,9 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
     'Clear the slot area
     'Call InvSurface.BltColorFill(TempRect, InventoryWindow.BackColor)
     If EsMain Then
-        Call TransparentBlt(InventoryWindow.hdc, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, vbRed)
+        Call TransparentBlt(InventoryWindow.hDC, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, vbRed)
     Else
-        Call TransparentBlt(InventoryWindow.hdc, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, 0, 0, 32, 32, vbRed)
+        Call TransparentBlt(InventoryWindow.hDC, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, 0, 0, 32, 32, vbRed)
 
     End If
     
@@ -555,7 +555,7 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
             
         BufferBMP = Grafico(fileIndex)
         
-        Call TransparentBlt(InventoryWindow.hdc, destRect.Left, destRect.Top, destRect.Right, destRect.Bottom, BufferBMP, srcRect.Left, srcRect.Top, srcRect.Right, srcRect.Bottom, vbBlack)
+        Call TransparentBlt(InventoryWindow.hDC, destRect.Left, destRect.Top, destRect.Right, destRect.Bottom, BufferBMP, srcRect.Left, srcRect.Top, srcRect.Right, srcRect.Bottom, vbBlack)
             
         If ShowValue Then
             'Render the item grh and the amount
@@ -588,11 +588,11 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
             InventoryWindow.CurrentX = destRect.Left + 4
             InventoryWindow.CurrentY = destRect.Top + 19
             InventoryWindow.ForeColor = 0
-            InventoryWindow.Print "x"
+            InventoryWindow.Print "Equip"
             InventoryWindow.CurrentX = destRect.Left + 5
             InventoryWindow.CurrentY = destRect.Top + 20
-            InventoryWindow.ForeColor = vbRed
-            InventoryWindow.Print "x"
+            InventoryWindow.ForeColor = vbCyan 'vbRed
+            InventoryWindow.Print "Equip"
 
         End If
         
@@ -667,12 +667,12 @@ Public Sub Initialize(ByRef InvPic As PictureBox, _
     
     InventoryWindow.Cls
     
-    FONDO = CreateCompatibleDC(InventoryWindow.hdc)
+    FONDO = CreateCompatibleDC(InventoryWindow.hDC)
 
     EsMain = bEsMain
 
     If EsMain Then
-        Call SelectObject(FONDO, LoadPictureEX("VentanaPrincipalInv.jpg").handle)
+        Call SelectObject(FONDO, LoadPictureEX("VentanaPrincipalInv1.jpg").Handle)
     Else
         Call SelectObject(FONDO, Grafico(1))
 
@@ -682,7 +682,7 @@ Public Sub Initialize(ByRef InvPic As PictureBox, _
 
         R.Bottom = 32
         R.Right = 32
-        TmpBMP = CreateCompatibleBitmap(InventoryWindow.hdc, 32, 32)
+        TmpBMP = CreateCompatibleBitmap(InventoryWindow.hDC, 32, 32)
         SelectObject FONDO, TmpBMP
         
         hBr = CreateSolidBrush(&H0)
@@ -740,7 +740,7 @@ Private Sub UpdatelblItem()
         If Inventory(InvSelectedItem).MaxHit > 0 Then
             frmMain.lblItem.Caption = frmMain.lblItem.Caption & " [" & Inventory(InvSelectedItem).MinHit & "/" & Inventory(InvSelectedItem).MaxHit & "]"
         ElseIf Inventory(InvSelectedItem).MaxDef > 0 Then
-           frmMain.lblItem.Caption = frmMain.lblItem.Caption & " [" & Inventory(InvSelectedItem).MinDef & "/" & Inventory(InvSelectedItem).MaxDef & "]"
+            frmMain.lblItem.Caption = frmMain.lblItem.Caption & " [" & Inventory(InvSelectedItem).MinDef & "/" & Inventory(InvSelectedItem).MaxDef & "]"
 
         End If
 
@@ -790,7 +790,7 @@ Public Function Grafico(ByVal fileIndex As Integer) As Long
 
     Dim Data()    As Byte
 
-    Dim hdc       As Long
+    Dim hDC       As Long
 
     If Not Graficos.Exists("G" & fileIndex) Then
 
@@ -802,17 +802,17 @@ Public Function Grafico(ByVal fileIndex As Integer) As Long
         mRect.Bottom = 32
         mRect.Right = 32
     
-        Call Get_Bitmap(DirRecursos & "Graphics.AO", CStr(fileIndex) & ".png", bmpInfo, hdc)
+        Call Get_Bitmap(DirRecursos & "Graphics.AO", CStr(fileIndex) & ".png", bmpInfo, hDC)
             
         'hdc = CreateCompatibleDC()
 
         ' hPrev = SelectObject(hdc, hBitmap)
 
-        BufferBMP = CreateCompatibleDC(InventoryWindow.hdc)
+        BufferBMP = CreateCompatibleDC(InventoryWindow.hDC)
         'buffer = CreateCompatibleBitmap(InventoryWindow.hdc, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight)
     
         'SelectObject(hdc, hBitmap)
-        SelectObject BufferBMP, hdc
+        SelectObject BufferBMP, hDC
         'Call SetDIBitsToDevice(BufferBMP, 0, 0, bmpInfo.bmiHeader.biWidth, bmpInfo.bmiHeader.biHeight, 0, 0, 0, bmpInfo.bmiHeader.biHeight, Data(0), bmpInfo, DIB_RGB_COLORS)
     
         'hdc = DrawGrhtoHdc2(InventoryWindow.hdc, fileIndex, mRECT, mRECT)

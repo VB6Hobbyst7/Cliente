@@ -14,7 +14,7 @@ Private Declare Function SetWindowLong _
 
 Private Declare Function SetLayeredWindowAttributes _
                 Lib "user32" (ByVal hwnd As Long, _
-                              ByVal color As Long, _
+                              ByVal Color As Long, _
                               ByVal bAlpha As Byte, _
                               ByVal Alpha As Long) As Boolean
 
@@ -83,7 +83,7 @@ Public Sub SetTranslucent(ThehWnd As Long, nTrans As Integer)
     Exit Sub
 
 ErrorRtn:
-    MsgBox Err.Description & " Source : " & Err.Source
+    MsgBox err.Description & " Source : " & err.Source
 
 End Sub
 
@@ -107,16 +107,16 @@ Public Function LoadPictureEX(ByVal FileName As String) As IPicture
         Set LoadPictureEX = Nothing
     Else
 
-        Dim B() As Byte
+        Dim b() As Byte
 
-        Call Get_File_Data("Interface", FileName, B)
-        Set LoadPictureEX = PictureFromByteStream(B)
+        Call Get_File_Data("Interface", FileName, b)
+        Set LoadPictureEX = PictureFromByteStream(b)
 
     End If
 
 End Function
 
-Public Function PictureFromByteStream(ByRef B() As Byte) As IPicture
+Public Function PictureFromByteStream(ByRef b() As Byte) As IPicture
 
     Dim LowerBound As Long
 
@@ -132,20 +132,20 @@ Public Function PictureFromByteStream(ByRef B() As Byte) As IPicture
 
     On Error GoTo Err_Init
 
-    If UBound(B, 1) < 0 Then
+    If UBound(b, 1) < 0 Then
         Exit Function
 
     End If
     
-    LowerBound = LBound(B)
-    ByteCount = (UBound(B) - LowerBound) + 1
+    LowerBound = LBound(b)
+    ByteCount = (UBound(b) - LowerBound) + 1
     hMem = GlobalAlloc(&H2, ByteCount)
 
     If hMem <> 0 Then
         lpMem = GlobalLock(hMem)
 
         If lpMem <> 0 Then
-            MoveMemory ByVal lpMem, B(LowerBound), ByteCount
+            MoveMemory ByVal lpMem, b(LowerBound), ByteCount
             Call GlobalUnlock(hMem)
 
             If CreateStreamOnHGlobal(hMem, 1, istm) = 0 Then
@@ -164,6 +164,6 @@ Public Function PictureFromByteStream(ByRef B() As Byte) As IPicture
     
 Err_Init:
 
-    MsgBox Err.Number & " - " & Err.Description
+    MsgBox err.Number & " - " & err.Description
 
 End Function

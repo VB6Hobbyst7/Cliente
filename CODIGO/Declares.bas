@@ -31,16 +31,26 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
-Public NieveOn As Boolean
-Public SimboloY As Integer
-Public SimboloOn As Boolean
-Public COLOR_AZUL  As Long
+
+Public NieveOn        As Boolean
+
+Public SimboloY       As Integer
+
+Public SimboloOn      As Boolean
+
+Public COLOR_AZUL     As Long
+
 Public Movement_Speed As Single
+
 'aura
-Public OpcionesPath As String
-Public ActivarAuras As String
-Public RotarActivado As String
-Public Rotacion As Single
+Public OpcionesPath   As String
+
+Public ActivarAuras   As String
+
+Public RotarActivado  As String
+
+Public Rotacion       As Single
+
 'aura
 Public Enum eMessages
 
@@ -324,7 +334,7 @@ Public Type tColor
 
     R As Byte
     G As Byte
-    B As Byte
+    b As Byte
 
 End Type
 
@@ -494,7 +504,7 @@ End Enum
 
 Public Enum eSkill
 
-    magia = 1
+    Magia = 1
     Robar = 2
     Tacticas = 3
     Armas = 4
@@ -1298,36 +1308,41 @@ Public MidiCambio                As Byte
 Public SinMidi                   As Boolean
 
 Public iTickMidi                 As Long
+
 'Particulas
 '*************
-Public LastTexture As Long
+Public LastTexture               As Long
  
 'Public Const ScreenWidth As Long = 800
 'Public Const ScreenHeight As Long = 600
  
-Public ParticleOffsetX As Long
-Public ParticleOffsetY As Long
-Public LastOffsetX As Long
-Public LastOffsetY As Long
+Public ParticleOffsetX           As Long
+
+Public ParticleOffsetY           As Long
+
+Public LastOffsetX               As Long
+
+Public LastOffsetY               As Long
  
-Public End_Time As Long
-Public ElapsedTime As Single
+Public End_Time                  As Long
+
+Public ElapsedTime               As Single
 'Particulas
 '****************************
 
-
-
 Public Function EsNPC(ByVal CharIndex As Integer) As Boolean
-'If CharIndex > 0 Then
-   If Not CharIndex < 0 Then
-    If charlist(CharIndex).iHead = 0 Then
-        EsNPC = True
-        Exit Function
-    End If
+
+    'If CharIndex > 0 Then
+    If Not CharIndex < 0 Then
+        If charlist(CharIndex).iHead = 0 Then
+            EsNPC = True
+            Exit Function
+
+        End If
     
-    EsNPC = False
-End If
+        EsNPC = False
+
+    End If
+
 End Function
-
-
 

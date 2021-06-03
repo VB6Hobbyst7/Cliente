@@ -162,7 +162,7 @@ Private Sub cmdOk_Click()
 
     Dim T() As String
 
-    Dim i   As Long, N As Long, Pos As Long
+    Dim I   As Long, N As Long, Pos As Long
     
     If Len(txtMotd.Text) >= 2 Then
         If Right$(txtMotd.Text, 2) = vbCrLf Then txtMotd.Text = Left$(txtMotd.Text, Len(txtMotd.Text) - 2)
@@ -173,22 +173,22 @@ Private Sub cmdOk_Click()
     
     'hola~1~1~1~1~1
     
-    For i = LBound(T) To UBound(T)
+    For I = LBound(T) To UBound(T)
         N = 0
-        Pos = InStr(1, T(i), "~")
+        Pos = InStr(1, T(I), "~")
 
-        Do While Pos > 0 And Pos < Len(T(i))
+        Do While Pos > 0 And Pos < Len(T(I))
             N = N + 1
-            Pos = InStr(Pos + 1, T(i), "~")
+            Pos = InStr(Pos + 1, T(I), "~")
         Loop
 
         If N <> 5 Then
-            MsgBox "Error en el formato de la linea " & i + 1 & "."
+            MsgBox "Error en el formato de la linea " & I + 1 & "."
             Exit Sub
 
         End If
 
-    Next i
+    Next I
     
     Call WriteSetMOTD(txtMotd.Text)
     Unload Me

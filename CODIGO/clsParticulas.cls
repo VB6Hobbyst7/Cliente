@@ -45,7 +45,7 @@ Public R                 As Single
 
 Public G                 As Single
 
-Public B                 As Single
+Public b                 As Single
 
 Public Matar             As Boolean
 
@@ -68,7 +68,7 @@ End Property
 Public Sub Begin()
 
     '//We initialize our stuff here
-    Dim i As Long
+    Dim I As Long
     
     lngFloat0 = FtoDW(0)
     lngFloat1 = FtoDW(1)
@@ -86,9 +86,9 @@ Public Sub Begin()
     '//Now generate all particles
     Iniciadas = 0
 
-    For i = 0 To Iniciadas
-        Iniciar (i)
-    Next i
+    For I = 0 To Iniciadas
+        Iniciar (I)
+    Next I
     
     '//Set initial time
     lngPreviousFrame = (GetTickCount() And &H7FFFFFFF)
@@ -96,32 +96,32 @@ Public Sub Begin()
 
 End Sub
 
-Sub Iniciar(i As Long)
-    Set Particles(i) = New clsParticle
-    vertsPoints(i).rhw = 1
-    Call Reset(i)
+Sub Iniciar(I As Long)
+    Set Particles(I) = New clsParticle
+    vertsPoints(I).rhw = 1
+    Call Reset(I)
 
 End Sub
 
-Public Sub Reset(i As Long)
+Public Sub Reset(I As Long)
 
-    Dim x As Single, y As Single
+    Dim X As Single, Y As Single
     
-    x = sngX '+ (Rnd * 10)
-    y = sngY
+    X = sngX '+ (Rnd * 10)
+    Y = sngY
     
     '//This is were we will reset individual particles.
-    With Particles(i)
-        Call .ResetIt(x, y, 0, 0, 0, 0, 2)
+    With Particles(I)
+        Call .ResetIt(X, Y, 0, 0, 0, 0, 2)
         
         If Efecto = eEffects.Inmovilizar Then
         
-            Call .ResetColor(R + Rnd * 1, G, B, 0.6 + (0.2 * Rnd), 0.08 + Rnd * 0.04)
+            Call .ResetColor(R + Rnd * 1, G, b, 0.6 + (0.2 * Rnd), 0.08 + Rnd * 0.04)
         ElseIf Efecto = eEffects.Flecha1 Then
-            Call .ResetColor(R, G, B, 1, 0)
+            Call .ResetColor(R, G, b, 1, 0)
             
         ElseIf Efecto = eEffects.Bala Then
-            Call .ResetColor(R, G, B, 1, 0)
+            Call .ResetColor(R, G, b, 1, 0)
 
         End If
 
@@ -131,7 +131,7 @@ End Sub
 
 Public Sub Update()
 
-    Dim i              As Long
+    Dim I              As Long
 
     Dim sngElapsedTime As Single
     
@@ -154,15 +154,15 @@ Public Sub Update()
 
         End If
     
-        For i = 0 To Iniciadas
+        For I = 0 To Iniciadas
 
-            With Particles(i)
+            With Particles(I)
                 Call .UpdateParticle(sngElapsedTime)
             
                 '//If the particle is invisible, reset it again.
                 If .sngA <= 0 Then
 
-                    Call Reset(i)
+                    Call Reset(I)
                 
                 End If
 
@@ -173,29 +173,29 @@ Public Sub Update()
 
                 End If
         
-                vertsPoints(i).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA * Desa)
+                vertsPoints(I).Color = D3DColorMake(.sngR, .sngG, .sngB, .sngA * Desa)
 
-                If i = Iniciadas Then
-                    vertsPoints(i).x = sngX + OffX
-                    vertsPoints(i).y = sngY + OffY
+                If I = Iniciadas Then
+                    vertsPoints(I).X = sngX + OffX
+                    vertsPoints(I).Y = sngY + OffY
                 Else
-                    vertsPoints(i).x = .sngX + OffX
-                    vertsPoints(i).y = .sngY + OffY
+                    vertsPoints(I).X = .sngX + OffX
+                    vertsPoints(I).Y = .sngY + OffY
 
                 End If
 
             End With
 
-        Next i
+        Next I
     
     ElseIf Efecto = 2 Then
 
         With Particles(0)
             Call .UpdateParticle(sngElapsedTime)
 
-            vertsPoints(0).color = D3DColorMake(.sngR, .sngG, .sngB, 1)
-            vertsPoints(0).x = sngX + OffX
-            vertsPoints(0).y = sngY + OffY
+            vertsPoints(0).Color = D3DColorMake(.sngR, .sngG, .sngB, 1)
+            vertsPoints(0).X = sngX + OffX
+            vertsPoints(0).Y = sngY + OffY
 
         End With
         
@@ -204,9 +204,9 @@ Public Sub Update()
         With Particles(0)
             Call .UpdateParticle(sngElapsedTime)
 
-            vertsPoints(0).color = D3DColorMake(.sngR, .sngG, .sngB, 1)
-            vertsPoints(0).x = sngX + OffX
-            vertsPoints(0).y = sngY + OffY
+            vertsPoints(0).Color = D3DColorMake(.sngR, .sngG, .sngB, 1)
+            vertsPoints(0).X = sngX + OffX
+            vertsPoints(0).Y = sngY + OffY
 
         End With
 
@@ -250,9 +250,9 @@ Public Sub Render()
         End With
 
     ElseIf Efecto = eEffects.Flecha1 Then
-        Call Engine_Render_Rectangle(vertsPoints(0).x + 256, vertsPoints(0).y + 256, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
+        Call Engine_Render_Rectangle(vertsPoints(0).X + 256, vertsPoints(0).Y + 256, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
     ElseIf Efecto = eEffects.Bala Then
-        Call Engine_Render_Rectangle(vertsPoints(0).x + 256, vertsPoints(0).y + 256, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
+        Call Engine_Render_Rectangle(vertsPoints(0).X + 256, vertsPoints(0).Y + 256, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
     
     End If
 

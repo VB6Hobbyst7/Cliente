@@ -325,13 +325,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -358,7 +358,7 @@ Private Function CalculateSellPrice(ByRef objValue As Single, _
     
     Exit Function
 Error:
-    MessageBox Err.Description, vbExclamation, "Error: " & Err.Number
+    MessageBox err.Description, vbExclamation, "Error: " & err.Number
 
 End Function
 
@@ -383,7 +383,7 @@ Private Function CalculateBuyPrice(ByRef objValue As Single, _
     
     Exit Function
 Error:
-    MessageBox Err.Description, vbExclamation, "Error: " & Err.Number
+    MessageBox err.Description, vbExclamation, "Error: " & err.Number
 
 End Function
 
@@ -447,12 +447,12 @@ Private Sub picInvNpc_Click()
     ClickNpcInv = True
     InvComUsu.DeselectItem
     
-    Label1(0).Caption = NPCInventory(ItemSlot).name
+    Label1(0).Caption = NPCInventory(ItemSlot).Name
     Label1(1).Caption = "Precio: " & CalculateSellPrice(NPCInventory(ItemSlot).Valor, Val(cantidad.Text)) 'No mostramos numeros reales
     
     If NPCInventory(ItemSlot).Amount <> 0 Then
     
-        Select Case NPCInventory(ItemSlot).OBJType
+        Select Case NPCInventory(ItemSlot).ObjType
 
             Case eObjType.otWeapon
                 Label1(2).Caption = "Máx Golpe:" & NPCInventory(ItemSlot).MaxHit
@@ -482,8 +482,8 @@ End Sub
 
 Private Sub picInvNpc_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -504,7 +504,7 @@ Private Sub picInvUser_Click()
     
     If Inventario.Amount(ItemSlot) <> 0 Then
     
-        Select Case Inventario.OBJType(ItemSlot)
+        Select Case Inventario.ObjType(ItemSlot)
 
             Case eObjType.otWeapon
                 Label1(2).Caption = "Máx Golpe:" & Inventario.MaxHit(ItemSlot)
@@ -534,8 +534,8 @@ End Sub
 
 Private Sub picInvUser_MouseMove(Button As Integer, _
                                  Shift As Integer, _
-                                 x As Single, _
-                                 y As Single)
+                                 X As Single, _
+                                 Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub

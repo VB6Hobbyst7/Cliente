@@ -5,11 +5,11 @@ Public Const D3DFVF_TLVERTEX = (D3DFVF_XYZRHW Or D3DFVF_DIFFUSE Or D3DFVF_TEX1)
     
 Public Type typeTRANSLITVERTEX
 
-    x As Single
-    y As Single
+    X As Single
+    Y As Single
     z As Single
     rhw As Single
-    color As Long
+    Color As Long
     tu As Single
     tv As Single
 

@@ -509,7 +509,7 @@ Private Armas                 As Boolean
 
 Private Sub CargarImagenes()
 
-    Dim Index As Integer
+    Dim index As Integer
 
     Set Pestanias(ePestania.ieArmas) = LoadPictureEX("VentanaHerreriaArmas.jpg")
     Set Pestanias(ePestania.ieArmaduras) = LoadPictureEX("VentanaHerreriaArmaduras.jpg")
@@ -520,11 +520,11 @@ Private Sub CargarImagenes()
     Set picRecuadroItem = LoadPictureEX("RecuadroItemsHerreria.jpg")
     Set picRecuadroLingotes = LoadPictureEX("RecuadroLingotes.jpg")
     
-    For Index = 1 To MAX_LIST_ITEMS
-        imgMarcoItem(Index).Picture = picRecuadroItem
-        imgMarcoUpgrade(Index).Picture = picRecuadroItem
-        imgMarcoLingotes(Index).Picture = picRecuadroLingotes
-    Next Index
+    For index = 1 To MAX_LIST_ITEMS
+        imgMarcoItem(index).Picture = picRecuadroItem
+        imgMarcoUpgrade(index).Picture = picRecuadroItem
+        imgMarcoLingotes(index).Picture = picRecuadroLingotes
+    Next index
     
     Set cPicCerrar = New clsGraphicalButton
     Set cPicConstruir(0) = New clsGraphicalButton
@@ -558,14 +558,14 @@ Private Sub CargarImagenes()
 
 End Sub
 
-Private Sub ConstruirItem(ByVal Index As Integer)
+Private Sub ConstruirItem(ByVal index As Integer)
 
     Dim ItemIndex      As Integer
 
     Dim CantItemsCiclo As Integer
     
     If Scroll.Visible = True Then ItemIndex = Scroll.Value
-    ItemIndex = ItemIndex + Index
+    ItemIndex = ItemIndex + index
     
     Select Case UltimaPestania
 
@@ -612,7 +612,7 @@ Private Sub Form_Load()
 
     Dim MaxConstItem As Integer
 
-    Dim i            As Integer
+    Dim I            As Integer
     
     'Call SetTranslucent(Me.hwnd, NTRANS_GENERAL)
     
@@ -627,9 +627,9 @@ Private Sub Form_Load()
     MaxConstItem = CInt((UserLvl - 4) / 5)
     MaxConstItem = IIf(MaxConstItem < 1, 1, MaxConstItem)
     
-    For i = 1 To MaxConstItem
-        cboItemsCiclo.AddItem i
-    Next i
+    For I = 1 To MaxConstItem
+        cboItemsCiclo.AddItem I
+    Next I
     
     cboItemsCiclo.ListIndex = 0
     
@@ -644,20 +644,20 @@ End Sub
 Public Sub HideExtraControls(ByVal NumItems As Integer, _
                              Optional ByVal Upgrading As Boolean = False)
 
-    Dim i As Integer
+    Dim I As Integer
     
     picLingotes0.Visible = (NumItems >= 1)
     picLingotes1.Visible = (NumItems >= 2)
     picLingotes2.Visible = (NumItems >= 3)
     picLingotes3.Visible = (NumItems >= 4)
     
-    For i = 1 To MAX_LIST_ITEMS
-        picItem(i).Visible = (NumItems >= i)
-        imgMarcoItem(i).Visible = (NumItems >= i)
-        imgMarcoLingotes(i).Visible = (NumItems >= i)
-        picUpgradeItem(i).Visible = (NumItems >= i And Upgrading)
-        imgMarcoUpgrade(i).Visible = (NumItems >= i And Upgrading)
-    Next i
+    For I = 1 To MAX_LIST_ITEMS
+        picItem(I).Visible = (NumItems >= I)
+        imgMarcoItem(I).Visible = (NumItems >= I)
+        imgMarcoLingotes(I).Visible = (NumItems >= I)
+        picUpgradeItem(I).Visible = (NumItems >= I And Upgrading)
+        imgMarcoUpgrade(I).Visible = (NumItems >= I And Upgrading)
+    Next I
     
     picConstruir0.Visible = (NumItems >= 1 And Not Upgrading)
     picConstruir1.Visible = (NumItems >= 2 And Not Upgrading)
@@ -708,14 +708,14 @@ Private Sub RenderItem(ByRef Pic As PictureBox, ByVal GrhIndex As Long)
     
     Pic.Cls
     
-    Call DrawGrhtoHdc(Pic.hdc, GrhIndex, SR, DR)
+    Call DrawGrhtoHdc(Pic.hDC, GrhIndex, SR, DR)
     Pic.Refresh
 
 End Sub
 
 Public Sub RenderList(ByVal Inicio As Integer, ByVal Armas As Boolean)
 
-    Dim i            As Long
+    Dim I            As Long
 
     Dim NumItems     As Integer
 
@@ -731,69 +731,69 @@ Public Sub RenderList(ByVal Inicio As Integer, ByVal Armas As Boolean)
     NumItems = UBound(ObjHerrero)
     Inicio = Inicio - 1
 
-    For i = 1 To MAX_LIST_ITEMS
+    For I = 1 To MAX_LIST_ITEMS
 
-        If i + Inicio <= NumItems Then
+        If I + Inicio <= NumItems Then
 
-            With ObjHerrero(i + Inicio)
+            With ObjHerrero(I + Inicio)
                 ' Agrego el item
-                Call RenderItem(picItem(i), .GrhIndex)
-                picItem(i).ToolTipText = .name
+                Call RenderItem(picItem(I), .GrhIndex)
+                picItem(I).ToolTipText = .Name
             
                 ' Inventariode lingotes
-                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro", 0)
-                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata", 0)
-                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Oro", 0)
+                Call InvLingosHerreria(I).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro", 0)
+                Call InvLingosHerreria(I).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata", 0)
+                Call InvLingosHerreria(I).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Oro", 0)
 
             End With
 
         End If
 
-    Next i
+    Next I
 
 End Sub
 
 Public Sub RenderUpgradeList(ByVal Inicio As Integer)
 
-    Dim i        As Long
+    Dim I        As Long
 
     Dim NumItems As Integer
 
     NumItems = UBound(HerreroMejorar)
     Inicio = Inicio - 1
 
-    For i = 1 To MAX_LIST_ITEMS
+    For I = 1 To MAX_LIST_ITEMS
 
-        If i + Inicio <= NumItems Then
+        If I + Inicio <= NumItems Then
 
-            With HerreroMejorar(i + Inicio)
+            With HerreroMejorar(I + Inicio)
                 ' Agrego el item
-                Call RenderItem(picItem(i), .GrhIndex)
-                picItem(i).ToolTipText = .name
+                Call RenderItem(picItem(I), .GrhIndex)
+                picItem(I).ToolTipText = .Name
             
-                Call RenderItem(picUpgradeItem(i), .UpgradeGrhIndex)
-                picUpgradeItem(i).ToolTipText = .UpgradeName
+                Call RenderItem(picUpgradeItem(I), .UpgradeGrhIndex)
+                picUpgradeItem(I).ToolTipText = .UpgradeName
             
                 ' Inventariode lingotes
-                Call InvLingosHerreria(i).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro", 0)
-                Call InvLingosHerreria(i).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata", 0)
-                Call InvLingosHerreria(i).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Oro", 0)
+                Call InvLingosHerreria(I).SetItem(1, 0, .LinH, 0, LH_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Hierro", 0)
+                Call InvLingosHerreria(I).SetItem(2, 0, .LinP, 0, LP_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Plata", 0)
+                Call InvLingosHerreria(I).SetItem(3, 0, .LinO, 0, LO_GRH, 0, 0, 0, 0, 0, 0, "Lingotes de Oro", 0)
 
             End With
 
         End If
 
-    Next i
+    Next I
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -841,32 +841,32 @@ End Sub
 
 Private Sub picLingotes0_MouseMove(Button As Integer, _
                                    Shift As Integer, _
-                                   x As Single, _
-                                   y As Single)
+                                   X As Single, _
+                                   Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
 
 Private Sub picLingotes1_MouseMove(Button As Integer, _
                                    Shift As Integer, _
-                                   x As Single, _
-                                   y As Single)
+                                   X As Single, _
+                                   Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
 
 Private Sub picLingotes2_MouseMove(Button As Integer, _
                                    Shift As Integer, _
-                                   x As Single, _
-                                   y As Single)
+                                   X As Single, _
+                                   Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
 
 Private Sub picLingotes3_MouseMove(Button As Integer, _
                                    Shift As Integer, _
-                                   x As Single, _
-                                   y As Single)
+                                   X As Single, _
+                                   Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -891,18 +891,18 @@ Private Sub picMejorar3_Click()
 
 End Sub
 
-Private Sub picPestania_Click(Index As Integer)
+Private Sub picPestania_Click(index As Integer)
 
-    Dim i        As Integer
+    Dim I        As Integer
 
     Dim NumItems As Integer
     
     If Cargando Then Exit Sub
-    If UltimaPestania = Index Then Exit Sub
+    If UltimaPestania = index Then Exit Sub
     
     Scroll.Value = 0
     
-    Select Case Index
+    Select Case index
 
         Case ePestania.ieArmas
             ' Background
@@ -942,29 +942,29 @@ Private Sub picPestania_Click(Index As Integer)
 
     End Select
 
-    UltimaPestania = Index
+    UltimaPestania = index
 
 End Sub
 
 Private Sub Scroll_Change()
 
-    Dim i As Long
+    Dim I As Long
     
     If Cargando Then Exit Sub
     
-    i = Scroll.Value
+    I = Scroll.Value
     ' Cargo inventarios e imagenes
     
     Select Case UltimaPestania
 
         Case ePestania.ieArmas
-            Call RenderList(i + 1, True)
+            Call RenderList(I + 1, True)
 
         Case ePestania.ieArmaduras
-            Call RenderList(i + 1, False)
+            Call RenderList(I + 1, False)
 
         Case ePestania.ieMejorar
-            Call RenderUpgradeList(i + 1)
+            Call RenderUpgradeList(I + 1)
 
     End Select
 

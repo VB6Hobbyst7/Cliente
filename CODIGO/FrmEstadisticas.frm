@@ -1328,21 +1328,21 @@ Private Const BAR_LEFT_POS As Integer = 361 'pixeles
 Public Sub Iniciar_Labels()
 
     'Iniciamos los labels con los valores de los atributos y los skills
-    Dim i As Integer
+    Dim I As Integer
 
-    For i = 1 To NUMATRIBUTOS
-        Atri(i).Caption = UserAtributos(i)
+    For I = 1 To NUMATRIBUTOS
+        Atri(I).Caption = UserAtributos(I)
     Next
 
-    For i = 1 To NUMSKILLS
-        Skills(i).Caption = UserSkills(i)
-        CalcularBarra (i)
+    For I = 1 To NUMSKILLS
+        Skills(I).Caption = UserSkills(I)
+        CalcularBarra (I)
     Next
 
-    For i = 0 To bQuitar.UBound
-        bQuitar(i).Tag = "0"
-        bAgregar(i).Tag = "0"
-    Next i
+    For I = 0 To bQuitar.UBound
+        bQuitar(I).Tag = "0"
+        bAgregar(I).Tag = "0"
+    Next I
 
     lblSkillPts.Caption = SkillPoints
 
@@ -1374,35 +1374,35 @@ Public Sub Iniciar_Labels()
 
 End Sub
 
-Sub CalcularBarra(i As Integer)
+Sub CalcularBarra(I As Integer)
 
     Dim Ancho As Single
 
     Dim TmpS  As Single
 
-    TmpS = UserSkillsMod(i)
+    TmpS = UserSkillsMod(I)
     Ancho = TmpS * ANCHO_BARRA / 100   'IIf(PorcentajeSkills(i) = 0, ANCHO_BARRA, (100 - PorcentajeSkills(i)) / 100 * ANCHO_BARRA)
-    shpSkillsBar(i).Width = ANCHO_BARRA - Ancho
-    shpSkillsBar(i).Left = BAR_LEFT_POS + Ancho
+    shpSkillsBar(I).Width = ANCHO_BARRA - Ancho
+    shpSkillsBar(I).Left = BAR_LEFT_POS + Ancho
 
 End Sub
 
-Private Sub bAgregar_Click(Index As Integer)
+Private Sub bAgregar_Click(index As Integer)
 
-    Dim i As Integer
+    Dim I As Integer
 
     Call Audio.PlayWave(SND_CLICKNEW)
 
     If SkillPoints > 0 And SPLibres > 0 Then
-        i = Index + 1
+        I = index + 1
 
-        If UserSkillsMod(i) < 100 Then
+        If UserSkillsMod(I) < 100 Then
             SPLibres = SPLibres - 1
             lblSkillPts.Caption = SPLibres
-            UserSkillsMod(i) = UserSkillsMod(i) + 1
-            Skills(i).Caption = UserSkillsMod(i)
-            Skills(i).ForeColor = vbRed
-            CalcularBarra (i)
+            UserSkillsMod(I) = UserSkillsMod(I) + 1
+            Skills(I).Caption = UserSkillsMod(I)
+            Skills(I).ForeColor = vbRed
+            CalcularBarra (I)
 
         End If
 
@@ -1410,38 +1410,38 @@ Private Sub bAgregar_Click(Index As Integer)
 
 End Sub
 
-Private Sub bAgregar_MouseMove(Index As Integer, _
+Private Sub bAgregar_MouseMove(index As Integer, _
                                Button As Integer, _
                                Shift As Integer, _
-                               x As Single, _
-                               y As Single)
+                               X As Single, _
+                               Y As Single)
 
-    If bAgregar(Index).Tag = "0" Then
-        LimpiarBtnsDer (Index)
+    If bAgregar(index).Tag = "0" Then
+        LimpiarBtnsDer (index)
 
     End If
 
 End Sub
 
-Private Sub bQuitar_Click(Index As Integer)
+Private Sub bQuitar_Click(index As Integer)
 
-    Dim i As Integer
+    Dim I As Integer
 
     Call Audio.PlayWave(SND_CLICKNEW)
 
     If SkillPoints > 0 And SPLibres < SkillPoints Then
-        i = Index + 1
+        I = index + 1
 
-        If UserSkillsMod(i) > UserSkills(i) Then
+        If UserSkillsMod(I) > UserSkills(I) Then
             SPLibres = SPLibres + 1
             lblSkillPts.Caption = SPLibres
-            UserSkillsMod(i) = UserSkillsMod(i) - 1
-            Skills(i).Caption = UserSkillsMod(i)
-            Skills(i).ForeColor = vbRed
-            CalcularBarra (i)
+            UserSkillsMod(I) = UserSkillsMod(I) - 1
+            Skills(I).Caption = UserSkillsMod(I)
+            Skills(I).ForeColor = vbRed
+            CalcularBarra (I)
 
-            If UserSkillsMod(i) = UserSkills(i) Then
-                Skills(i).ForeColor = &HA2BAC6
+            If UserSkillsMod(I) = UserSkills(I) Then
+                Skills(I).ForeColor = &HA2BAC6
 
             End If
 
@@ -1451,62 +1451,62 @@ Private Sub bQuitar_Click(Index As Integer)
 
 End Sub
 
-Private Sub bQuitar_MouseMove(Index As Integer, _
+Private Sub bQuitar_MouseMove(index As Integer, _
                               Button As Integer, _
                               Shift As Integer, _
-                              x As Single, _
-                              y As Single)
+                              X As Single, _
+                              Y As Single)
 
-    If bQuitar(Index).Tag = "0" Then
-        LimpiarBtnsIzq (Index)
+    If bQuitar(index).Tag = "0" Then
+        LimpiarBtnsIzq (index)
 
     End If
 
 End Sub
 
-Sub LimpiarBtnsIzq(Index As Integer)
+Sub LimpiarBtnsIzq(index As Integer)
 
-    Dim i As Integer
+    Dim I As Integer
 
-    For i = 0 To bQuitar.UBound
+    For I = 0 To bQuitar.UBound
 
-        If i <> Index Then
-            If bQuitar(i).Tag = "1" Then
-                bQuitar(i).Picture = Nothing
-                bQuitar(i).Tag = "0"
+        If I <> index Then
+            If bQuitar(I).Tag = "1" Then
+                bQuitar(I).Picture = Nothing
+                bQuitar(I).Tag = "0"
 
             End If
 
         Else
-            bQuitar(i).Picture = LoadPictureEX("FlechaHoverIzq.gif")
-            bQuitar(i).Tag = "1"
+            bQuitar(I).Picture = LoadPictureEX("FlechaHoverIzq.gif")
+            bQuitar(I).Tag = "1"
 
         End If
 
-    Next i
+    Next I
 
 End Sub
 
-Sub LimpiarBtnsDer(Index As Integer)
+Sub LimpiarBtnsDer(index As Integer)
 
-    Dim i As Integer
+    Dim I As Integer
 
-    For i = 0 To bAgregar.UBound
+    For I = 0 To bAgregar.UBound
 
-        If i <> Index Then
-            If bAgregar(i).Tag = "1" Then
-                bAgregar(i).Picture = Nothing
-                bAgregar(i).Tag = "0"
+        If I <> index Then
+            If bAgregar(I).Tag = "1" Then
+                bAgregar(I).Picture = Nothing
+                bAgregar(I).Tag = "0"
 
             End If
 
         Else
-            bAgregar(i).Picture = LoadPictureEX("FlechaHoverDer.gif")
-            bAgregar(i).Tag = "1"
+            bAgregar(I).Picture = LoadPictureEX("FlechaHoverDer.gif")
+            bAgregar(I).Tag = "1"
 
         End If
 
-    Next i
+    Next I
 
 End Sub
 
@@ -1527,13 +1527,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LimpiarBtnsIzq (-1)
     LimpiarBtnsDer (-1)
     LastPressed.ToggleToNormal
@@ -1551,16 +1551,16 @@ Private Sub imgCerrar_Click()
 
     Dim HayCambio               As Boolean
 
-    Dim i                       As Long
+    Dim I                       As Long
 
     HayCambio = False
 
-    For i = 1 To NUMSKILLS
-        skillChanges(i) = UserSkillsMod(i) - UserSkills(i)
+    For I = 1 To NUMSKILLS
+        skillChanges(I) = UserSkillsMod(I) - UserSkills(I)
 
-        If UserSkillsMod(i) <> UserSkills(i) Then HayCambio = True
-        UserSkills(i) = UserSkillsMod(i)
-    Next i
+        If UserSkillsMod(I) <> UserSkills(I) Then HayCambio = True
+        UserSkills(I) = UserSkillsMod(I)
+    Next I
 
     If HayCambio Then Call WriteModifySkills(skillChanges())
     Unload Me
@@ -1569,8 +1569,8 @@ End Sub
 
 Private Sub imgCerrar_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
 
     If imgCerrar.Tag = "1" Then
         imgCerrar.Picture = LoadPictureEX("BotonCerrarApretadoEstadisticas.jpg")

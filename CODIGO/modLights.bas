@@ -7,7 +7,7 @@ Private Type Light
     ID As Integer
     MAP_X As Integer 'Coordinates
     MAP_Y As Integer
-    color As Long 'Start colour
+    Color As Long 'Start colour
     RANGE As Byte
     red As Byte
     green As Byte
@@ -49,7 +49,7 @@ Public Function Light_Color_Value_Get(ByVal light_index As Integer, _
     '*****************************************************************
     'Make sure it's a legal index
     If Light_Check(light_index) Then
-        color_value = light_list(light_index).color
+        color_value = light_list(light_index).Color
         Light_Color_Value_Get = True
 
     End If
@@ -243,39 +243,39 @@ Public Sub Light_Render_Area()
     '   Note: Las luces redondas son pesadisimas >.< mejor renderizar solo el area.
     '   OPTIMIZAR SUB CUANDO SE PUEDA!!!!!
 
-    Dim i As Integer
+    Dim I As Integer
             
-    For i = 1 To light_count
+    For I = 1 To light_count
 
-        If light_list(i).MAP_X > UserPos.x - TileBufferSize - 5 And light_list(i).MAP_X < UserPos.x + TileBufferSize + 5 Then
-            If light_list(i).MAP_Y > UserPos.y - TileBufferSize - 5 And light_list(i).MAP_Y < UserPos.y + TileBufferSize + 5 Then
-                If Light_Check(i) Then Light_Render i
+        If light_list(I).MAP_X > UserPos.X - TileBufferSize - 5 And light_list(I).MAP_X < UserPos.X + TileBufferSize + 5 Then
+            If light_list(I).MAP_Y > UserPos.Y - TileBufferSize - 5 And light_list(I).MAP_Y < UserPos.Y + TileBufferSize + 5 Then
+                If Light_Check(I) Then Light_Render I
 
             End If
 
         End If
     
-    Next i
+    Next I
 
 End Sub
 
-Public Function Light_IdbyPos(ByVal x As Integer, ByVal y As Integer) As Integer
+Public Function Light_IdbyPos(ByVal X As Integer, ByVal Y As Integer) As Integer
 
     '   Author: Dunkan
     '   Note: Las luces redondas son pesadisimas >.< mejor renderizar solo el area.
     '   OPTIMIZAR SUB CUANDO SE PUEDA!!!!!
 
-    Dim i As Integer
+    Dim I As Integer
             
-    For i = 1 To light_count
+    For I = 1 To light_count
 
-        If light_list(i).MAP_X = x And light_list(i).MAP_Y = y Then
-            Light_IdbyPos = i
+        If light_list(I).MAP_X = X And light_list(I).MAP_Y = Y Then
+            Light_IdbyPos = I
             Exit For
 
         End If
 
-    Next i
+    Next I
 
 End Function
 
@@ -327,7 +327,7 @@ Private Function CalcularRadio(ByVal cRadio As Integer, _
     
     If DistanciaVertex <= Radio Then
         Call D3DXColorLerp(CurrentColor, LightColor, AmbientColor, DistanciaVertex / Radio)
-        CalcularRadio = D3DColorXRGB(CurrentColor.R, CurrentColor.G, CurrentColor.B)
+        CalcularRadio = D3DColorXRGB(CurrentColor.R, CurrentColor.G, CurrentColor.b)
 
         If TileLight > CalcularRadio Then CalcularRadio = TileLight
     Else
@@ -347,15 +347,15 @@ Private Sub Light_Render(ByVal light_index As Integer)
 
     Dim max_y      As Integer
 
-    Dim x          As Integer
+    Dim X          As Integer
 
-    Dim y          As Integer
+    Dim Y          As Integer
 
     Dim ia         As Single
 
-    Dim i          As Integer
+    Dim I          As Integer
 
-    Dim color      As Long
+    Dim Color      As Long
 
     Dim Ya         As Integer
 
@@ -372,7 +372,7 @@ Private Sub Light_Render(ByVal light_index As Integer)
     LightColor.a = 255
     LightColor.R = light_list(light_index).red
     LightColor.G = light_list(light_index).green
-    LightColor.B = light_list(light_index).blue
+    LightColor.b = light_list(light_index).blue
     
     'Set up light borders
     min_x = light_list(light_index).MAP_X - light_list(light_index).RANGE * IIf(light_list(light_index).Direccion And 1, 0, 1)
@@ -417,22 +417,22 @@ Private Function Light_Next_Open() As Integer
     '*****************************************************************
     On Error GoTo ErrorHandler:
 
-    Dim loopc As Integer
+    Dim LoopC As Integer
     
-    loopc = 1
+    LoopC = 1
 
-    Do Until light_list(loopc).ACTIVE = False
+    Do Until light_list(LoopC).ACTIVE = False
 
-        If loopc = light_last Then
+        If LoopC = light_last Then
             Light_Next_Open = light_last + 1
             Exit Function
 
         End If
 
-        loopc = loopc + 1
+        LoopC = LoopC + 1
     Loop
     
-    Light_Next_Open = loopc
+    Light_Next_Open = LoopC
     Exit Function
 ErrorHandler:
     Light_Next_Open = 1
@@ -448,22 +448,22 @@ Public Function Light_Find(ByVal ID As Integer) As Integer
     '*****************************************************************
     On Error GoTo ErrorHandler:
 
-    Dim loopc As Integer
+    Dim LoopC As Integer
     
-    loopc = 1
+    LoopC = 1
 
-    Do Until light_list(loopc).ID = ID
+    Do Until light_list(LoopC).ID = ID
 
-        If loopc = light_last Then
+        If LoopC = light_last Then
             Light_Find = 0
             Exit Function
 
         End If
 
-        loopc = loopc + 1
+        LoopC = LoopC + 1
     Loop
     
-    Light_Find = loopc
+    Light_Find = LoopC
     Exit Function
 ErrorHandler:
     Light_Find = 0
@@ -477,40 +477,40 @@ Public Function Light_Remove_All() As Boolean
     'Last Modify Date: 1/04/2003
     '
     '*****************************************************************
-    Dim Index As Integer
+    Dim index As Integer
     
-    For Index = 1 To light_last
+    For index = 1 To light_last
 
         'Make sure it's a legal index
-        If Light_Check(Index) Then
-            light_list(Index).red = 150
-            light_list(Index).blue = 150
-            light_list(Index).green = 150
-            Light_Destroy Index
+        If Light_Check(index) Then
+            light_list(index).red = 150
+            light_list(index).blue = 150
+            light_list(index).green = 150
+            Light_Destroy index
 
         End If
 
-    Next Index
+    Next index
     
     Light_Remove_All = True
 
 End Function
 
-Public Sub Light_Destroy_ToMap(ByVal x As Integer, ByVal y As Integer)
+Public Sub Light_Destroy_ToMap(ByVal X As Integer, ByVal Y As Integer)
 
-    Dim Index As Integer
+    Dim index As Integer
     
-    For Index = 1 To light_last
+    For index = 1 To light_last
 
-        If light_list(Index).MAP_X = x And light_list(Index).MAP_Y = y Then
-            light_list(Index).ACTIVE = False
-            Light_Destroy Index
+        If light_list(index).MAP_X = X And light_list(index).MAP_Y = Y Then
+            light_list(index).ACTIVE = False
+            Light_Destroy index
             ' Call Light_Remove(Index)
             Exit For
 
         End If
 
-    Next Index
+    Next index
 
 End Sub
 
@@ -563,13 +563,13 @@ Private Sub Light_Erase(ByVal light_index As Integer)
 
     Dim max_y  As Integer
 
-    Dim x      As Integer
+    Dim X      As Integer
 
-    Dim y      As Integer
+    Dim Y      As Integer
 
     Dim colorz As Long
 
-    colorz = D3DColorXRGB(IluRGB.R, IluRGB.G, IluRGB.B)
+    colorz = D3DColorXRGB(IluRGB.R, IluRGB.G, IluRGB.b)
     'Set up light borders
     min_x = light_list(light_index).MAP_X - light_list(light_index).RANGE
     min_y = light_list(light_index).MAP_Y - light_list(light_index).RANGE
@@ -603,62 +603,62 @@ Private Sub Light_Erase(ByVal light_index As Integer)
     
     'Arrange borders
     'Upper border
-    For x = min_x + 1 To max_x - 1
+    For X = min_x + 1 To max_x - 1
 
-        If InMapBounds(x, min_y) Then
-            MapData(x, min_y).Light_Value(0) = colorz
-            MapData(x, min_y).Light_Value(2) = colorz
+        If InMapBounds(X, min_y) Then
+            MapData(X, min_y).Light_Value(0) = colorz
+            MapData(X, min_y).Light_Value(2) = colorz
 
         End If
 
-    Next x
+    Next X
     
     'Lower border
-    For x = min_x + 1 To max_x - 1
+    For X = min_x + 1 To max_x - 1
 
-        If InMapBounds(x, max_y) Then
-            MapData(x, max_y).Light_Value(1) = colorz
-            MapData(x, max_y).Light_Value(3) = colorz
+        If InMapBounds(X, max_y) Then
+            MapData(X, max_y).Light_Value(1) = colorz
+            MapData(X, max_y).Light_Value(3) = colorz
 
         End If
 
-    Next x
+    Next X
     
     'Left border
-    For y = min_y + 1 To max_y - 1
+    For Y = min_y + 1 To max_y - 1
 
-        If InMapBounds(min_x, y) Then
-            MapData(min_x, y).Light_Value(2) = colorz
-            MapData(min_x, y).Light_Value(3) = colorz
+        If InMapBounds(min_x, Y) Then
+            MapData(min_x, Y).Light_Value(2) = colorz
+            MapData(min_x, Y).Light_Value(3) = colorz
 
         End If
 
-    Next y
+    Next Y
     
     'Right border
-    For y = min_y + 1 To max_y - 1
+    For Y = min_y + 1 To max_y - 1
 
-        If InMapBounds(max_x, y) Then
-            MapData(max_x, y).Light_Value(0) = colorz
-            MapData(max_x, y).Light_Value(1) = colorz
+        If InMapBounds(max_x, Y) Then
+            MapData(max_x, Y).Light_Value(0) = colorz
+            MapData(max_x, Y).Light_Value(1) = colorz
 
         End If
 
-    Next y
+    Next Y
     
     'Set the inner part of the light
-    For x = min_x + 1 To max_x - 1
-        For y = min_y + 1 To max_y - 1
+    For X = min_x + 1 To max_x - 1
+        For Y = min_y + 1 To max_y - 1
 
-            If InMapBounds(x, y) Then
-                MapData(x, y).Light_Value(0) = colorz
-                MapData(x, y).Light_Value(1) = colorz
-                MapData(x, y).Light_Value(2) = colorz
-                MapData(x, y).Light_Value(3) = colorz
+            If InMapBounds(X, Y) Then
+                MapData(X, Y).Light_Value(0) = colorz
+                MapData(X, Y).Light_Value(1) = colorz
+                MapData(X, Y).Light_Value(2) = colorz
+                MapData(X, Y).Light_Value(3) = colorz
 
             End If
 
-        Next y
-    Next x
+        Next Y
+    Next X
     
 End Sub

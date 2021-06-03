@@ -86,7 +86,7 @@ End Type
 
 Private Type MainNode
 
-    name As String
+    Name As String
     values() As ChildNode
     numValues As Integer
 
@@ -123,14 +123,14 @@ Private Sub Class_Terminate()
     'Last Modify Date: 5/01/2006
     '
     '**************************************************************
-    Dim i As Long
+    Dim I As Long
     
     'Clean up
     If MainNodes Then
 
-        For i = 1 To MainNodes - 1
-            Erase fileData(i).values
-        Next i
+        For I = 1 To MainNodes - 1
+            Erase fileData(I).values
+        Next I
         
         Erase fileData
 
@@ -153,7 +153,7 @@ Public Sub Initialize(ByVal File As String)
     'Last Modify Date: 27/07/2006
     'Opens the requested file and loads it's data into memory
     '**************************************************************
-    Dim handle As Integer
+    Dim Handle As Integer
 
     Dim Text   As String
 
@@ -163,12 +163,12 @@ Public Sub Initialize(ByVal File As String)
     Call Class_Terminate
     
     'Get a free handle and start reading line by line until the end
-    handle = FreeFile
+    Handle = FreeFile
     
-    Open File For Input As handle
+    Open File For Input As Handle
     
-    Do Until EOF(handle)
-        Line Input #handle, Text
+    Do Until EOF(Handle)
+        Line Input #Handle, Text
         
         'Is it null??
         If Len(Text) Then
@@ -184,7 +184,7 @@ Public Sub Initialize(ByVal File As String)
                     'Add a main node
                     ReDim Preserve fileData(MainNodes) As MainNode
                     
-                    fileData(MainNodes).name = Trim$(mid$(Text, 2, Pos - 2))
+                    fileData(MainNodes).Name = Trim$(mid$(Text, 2, Pos - 2))
                     
                     MainNodes = MainNodes + 1
 
@@ -221,23 +221,23 @@ Public Sub Initialize(ByVal File As String)
 
     Loop
     
-    Close handle
+    Close Handle
     
-    Dim i As Long
+    Dim I As Long
     
     If MainNodes Then
         'Sort main nodes to allow binary search
         Call SortMainNodes(0, MainNodes - 1)
         
         'Sort values of each node to allow binary search
-        For i = 0 To MainNodes - 1
+        For I = 0 To MainNodes - 1
 
-            If fileData(i).numValues Then
-                Call SortChildNodes(fileData(i), 0, fileData(i).numValues - 1)
+            If fileData(I).numValues Then
+                Call SortChildNodes(fileData(I), 0, fileData(I).numValues - 1)
 
             End If
 
-        Next i
+        Next I
 
     End If
 
@@ -326,14 +326,14 @@ Private Sub SortMainNodes(ByVal First As Integer, ByVal Last As Integer)
     min = First
     max = Last
     
-    comp = UCase$(fileData((min + max) \ 2).name)
+    comp = UCase$(fileData((min + max) \ 2).Name)
     
     Do While min <= max
-        Do While UCase$(fileData(min).name) < comp And min < Last
+        Do While UCase$(fileData(min).Name) < comp And min < Last
             min = min + 1
         Loop
 
-        Do While UCase$(fileData(max).name) > comp And max > First
+        Do While UCase$(fileData(max).Name) > comp And max > First
             max = max - 1
         Loop
 
@@ -367,20 +367,20 @@ Public Function GetValue(ByVal Main As String, ByVal key As String) As String
     'Last Modify Date: 5/01/2006
     'Returns a value if the key and main node exist, or a nullstring otherwise
     '**************************************************************
-    Dim i As Long
+    Dim I As Long
 
     Dim J As Long
     
     'Search for the main node
-    i = FindMain(Main)
+    I = FindMain(Main)
     
-    If i >= 0 Then
+    If I >= 0 Then
     
         'If valid, binary search among keys
-        J = FindKey(i, key)
+        J = FindKey(I, key)
         
         'If we found it we return it
-        If J >= 0 Then GetValue = fileData(i).values(J).Value
+        If J >= 0 Then GetValue = fileData(I).values(J).Value
 
     End If
 
@@ -400,25 +400,25 @@ Public Sub ChangeValue(ByVal Main As String, ByVal key As String, ByVal Value As
     'Last Modify Date: 27/05/2009
     'If the key and main node exist, changes the value
     '**************************************************************
-    Dim i As Long
+    Dim I As Long
 
     Dim J As Long
     
     'Search for the main node
-    i = FindMain(Main)
+    I = FindMain(Main)
     
-    If i < 0 Then i = AddNode(Main)
+    If I < 0 Then I = AddNode(Main)
     
     'If valid, binary search among keys
-    J = FindKey(i, key)
+    J = FindKey(I, key)
     
     If J < 0 Then
-        Call AddKey(i, key, Value)
+        Call AddKey(I, key, Value)
     
     Else
         
         'If we found it we change it
-        fileData(i).values(J).Value = Value
+        fileData(I).values(J).Value = Value
 
     End If
 
@@ -486,7 +486,7 @@ End Function
 ' @param    name The name of the MainNode we are looking for.
 ' @returns  The index in which the main section we are looking for is stored or the negation of the index in which it should be if not found.
 
-Private Function FindMain(ByVal name As String) As Long
+Private Function FindMain(ByVal Name As String) As Long
 
     '**************************************************************
     'Author: Juan Martin Sotuyo Dodero
@@ -500,7 +500,7 @@ Private Function FindMain(ByVal name As String) As Long
 
     Dim mid As Long
     
-    name = UCase$(name)
+    Name = UCase$(Name)
     
     min = 0
     max = MainNodes - 1
@@ -508,10 +508,10 @@ Private Function FindMain(ByVal name As String) As Long
     Do While min <= max
         mid = (min + max) \ 2
         
-        If UCase$(fileData(mid).name) < name Then
+        If UCase$(fileData(mid).Name) < Name Then
             min = mid + 1
         
-        ElseIf UCase$(fileData(mid).name) > name Then
+        ElseIf UCase$(fileData(mid).Name) > Name Then
             max = mid - 1
         
         Else
@@ -535,24 +535,24 @@ End Function
 ' @param    name    The name of the element whose existance is being checked.
 ' @returns  True if the key exists, false otherwise.
 
-Public Function KeyExists(ByVal name As String) As Boolean
+Public Function KeyExists(ByVal Name As String) As Boolean
     '**************************************************************
     'Author: Juan Martin Sotuyo Dodero
     'Last Modify Date: 04/01/2008
     'Returns true of the key exists, false otherwise.
     '**************************************************************
-    KeyExists = FindMain(name) >= 0
+    KeyExists = FindMain(Name) >= 0
 
 End Function
 
-Private Function AddNode(ByRef name As String) As Long
+Private Function AddNode(ByRef Name As String) As Long
 
     '**************************************************************
     'Author: Torres Patricio (Pato)
     'Last Modify Date: 10/10/2010
     '
     '**************************************************************
-    Dim i       As Long
+    Dim I       As Long
 
     Dim MainPos As Long
 
@@ -561,13 +561,13 @@ Private Function AddNode(ByRef name As String) As Long
 
     If MainNodes Then
         
-        i = MainNodes - 1
+        I = MainNodes - 1
         
-        MainPos = Not FindMain(name)
+        MainPos = Not FindMain(Name)
     
-        Do While i >= MainPos
-            fileData(i + 1) = fileData(i)
-            i = i - 1
+        Do While I >= MainPos
+            fileData(I + 1) = fileData(I)
+            I = I - 1
         Loop
     
         fileData(MainPos).numValues = 0
@@ -576,7 +576,7 @@ Private Function AddNode(ByRef name As String) As Long
 
     End If
 
-    fileData(MainPos).name = name
+    fileData(MainPos).Name = Name
 
     MainNodes = MainNodes + 1
 
@@ -593,7 +593,7 @@ Private Function AddKey(ByVal MainPos As Long, _
     'Last Modify Date: 10/10/2010
     '
     '**************************************************************
-    Dim i      As Long
+    Dim I      As Long
 
     Dim KeyPos As Long
 
@@ -603,12 +603,12 @@ Private Function AddKey(ByVal MainPos As Long, _
         ReDim Preserve .values(.numValues) As ChildNode
     
         If .numValues > 0 Then
-            i = .numValues - 1
+            I = .numValues - 1
             KeyPos = Not FindKey(MainPos, key)
         
-            Do While i >= KeyPos
-                .values(i + 1) = .values(i)
-                i = i - 1
+            Do While I >= KeyPos
+                .values(I + 1) = .values(I)
+                I = I - 1
             Loop
 
         End If
@@ -633,7 +633,7 @@ Public Sub DumpFile(ByRef File As String)
     '**************************************************************
     Dim hFile As Integer
 
-    Dim i     As Long
+    Dim I     As Long
 
     Dim J     As Long
 
@@ -641,10 +641,10 @@ Public Sub DumpFile(ByRef File As String)
 
     Open File For Output As hFile
 
-    For i = 0 To MainNodes - 1
+    For I = 0 To MainNodes - 1
 
-        With fileData(i)
-            Print #hFile, "[" & .name & "]"
+        With fileData(I)
+            Print #hFile, "[" & .Name & "]"
             
             For J = 0 To .numValues - 1
                 Print #hFile, .values(J).key & "=" & .values(J).Value
@@ -654,7 +654,7 @@ Public Sub DumpFile(ByRef File As String)
 
         End With
 
-    Next i
+    Next I
     
     Close hFile
 

@@ -155,6 +155,7 @@ Public Enum ClientPacketIDGM
 End Enum
 
 Public Enum ServerPacketID
+
     OpenAccount
     logged                  ' LOGGED
     ChangeHour
@@ -298,16 +299,21 @@ Public Enum ServerPacketID
     Tooltip
     UserInEvent
     EventPacketSv
+
 End Enum
+
 'eventos
 Public Enum SvEventPacketID
+
     SendListEvent = 1
     SendDataEvent = 2
 
 End Enum
+
 'eventos
 
 Public Enum ClientPacketID
+
     BorrarPJ                'Borrar
     OpenAccount             'ALOGIN
     LoginExistingChar       'OLOGIN
@@ -428,16 +434,21 @@ Public Enum ClientPacketID
     CreateEfectoClientAction     'Luego hacemos la accion (daño, etc)
     AnclarEmbarcacion            'Ancla la embarcacion
     EventPacket
+
 End Enum
+
 'eventos
 Public Enum EventPacketID
+
     NewEvent = 1
     CloseEvent = 2
     RequiredEvents = 3
     RequiredDataEvent = 4
     ParticipeEvent = 5
     AbandonateEvent = 6
+
 End Enum
+
 'eventos
 
 Public Enum FontTypeNames

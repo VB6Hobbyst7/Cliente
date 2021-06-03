@@ -131,7 +131,7 @@ End Type
 
 Private Declare Function GdiplusStartup _
                 Lib "gdiplus" (ByRef Token As Long, _
-                               ByRef InputBuf As GdiplusStartupInput, _
+                               ByRef inputbuf As GdiplusStartupInput, _
                                ByVal pOutputBuf As Long) As Long
 
 Private Declare Function GdiplusShutdown Lib "gdiplus" (ByVal Token As Long) As Long
@@ -139,17 +139,17 @@ Private Declare Function GdiplusShutdown Lib "gdiplus" (ByVal Token As Long) As 
 Private Declare Function GdipDisposeImage Lib "gdiplus" (ByVal Image As Long) As Long
 
 Private Declare Function GdipCreateHBITMAPFromBitmap _
-                Lib "gdiplus" (ByVal bitmap As Long, _
+                Lib "gdiplus" (ByVal BITMAP As Long, _
                                ByRef hbmReturn As Long, _
                                ByVal background As Long) As Long
 
 Private Declare Function GdipCreateBitmapFromFile _
                 Lib "gdiplus" (ByVal pFileName As Long, _
-                               ByRef bitmap As Long) As Long
+                               ByRef BITMAP As Long) As Long
 
 Private Declare Function GdipCreateBitmapFromStream _
                 Lib "gdiplus" (ByVal Stream As IUnknown, _
-                               ByRef bitmap As Long) As Long
+                               ByRef BITMAP As Long) As Long
 
 Private Declare Function GdipGetImageDimension _
                 Lib "gdiplus" (ByVal Image As Long, _
@@ -378,7 +378,7 @@ Private Function Get_InfoHeader(ByRef ResourcePath As String, _
 ErrHandler:
     Close ResourceFile
     
-    Call MsgBox("Error al intentar leer el archivo " & ResourceFilePath & ". Razón: " & Err.Number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("Error al intentar leer el archivo " & ResourceFilePath & ". Razón: " & err.Number & " : " & err.Description, vbOKOnly, "Error")
 
 End Function
 
@@ -400,7 +400,7 @@ Private Sub Compress_Data(ByRef Data() As Byte)
 
     Dim BufTemp()  As Byte
 
-    Dim loopc      As Long
+    Dim LoopC      As Long
     
     Dimensions = UBound(Data) + 1
     
@@ -536,7 +536,7 @@ Public Function Extract_File(ByRef ResourcePath As String, _
     Exit Function
 
 ErrHandler:
-    Call MsgBox("Error al intentar decodificar recursos. Razon: " & Err.Number & " : " & Err.Description, vbOKOnly, "Error")
+    Call MsgBox("Error al intentar decodificar recursos. Razon: " & err.Number & " : " & err.Description, vbOKOnly, "Error")
 
 End Function
 
@@ -673,7 +673,7 @@ End Function
 Public Function Get_Bitmap(ByRef ResourcePath As String, _
                            ByRef FileName As String, _
                            ByRef bmpInfo As BITMAPINFO, _
-                           ByRef hdc As Long) As Boolean
+                           ByRef hDC As Long) As Boolean
 
     '*****************************************************************
     'Author: Nicolas Matias Gonzalez (NIGO)
@@ -703,7 +703,7 @@ Public Function Get_Bitmap(ByRef ResourcePath As String, _
         
         ' Dim hBitmap As Long
         
-        Call LoadPictureBytes(rawData, hdc)
+        Call LoadPictureBytes(rawData, hDC)
      
         'Set img = LoadPicEx(PathGraficos & "\" & FileName)
      
@@ -996,11 +996,11 @@ End Function
 
 Private Sub Secure_Compressed_Data(ByRef Data() As Byte)
 
-    Dim i As Long
+    Dim I As Long
 
-    For i = 0 To UBound(Data)
-        Data(i) = Data(i) Xor 245 Xor 9
-    Next i
+    For I = 0 To UBound(Data)
+        Data(I) = Data(I) Xor 245 Xor 9
+    Next I
 
 End Sub
 

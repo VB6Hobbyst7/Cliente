@@ -274,13 +274,13 @@ Private Const GOLD_OFFER_SLOT As Byte = INV_OFFER_SLOTS + 1
 
 Private sCommerceChat         As String
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -364,7 +364,7 @@ Private Sub imgAgregar_Click()
                 Else
                     InvSlot = .SelectedItem
                     ' Si no agrego todo
-                    Call InvOfferComUsu(0).SetItem(OfferSlot, .OBJIndex(InvSlot), Amount, 0, .GrhIndex(InvSlot), .OBJType(InvSlot), .MaxHit(InvSlot), .MinHit(InvSlot), .MaxDef(InvSlot), .MinDef(InvSlot), .Valor(InvSlot), .ItemName(InvSlot), 0)
+                    Call InvOfferComUsu(0).SetItem(OfferSlot, .OBJIndex(InvSlot), Amount, 0, .GrhIndex(InvSlot), .ObjType(InvSlot), .MaxHit(InvSlot), .MinHit(InvSlot), .MaxDef(InvSlot), .MinDef(InvSlot), .Valor(InvSlot), .ItemName(InvSlot), 0)
 
                 End If
 
@@ -530,16 +530,16 @@ End Sub
 
 Private Sub picInvComercio_MouseMove(Button As Integer, _
                                      Shift As Integer, _
-                                     x As Single, _
-                                     y As Single)
+                                     X As Single, _
+                                     Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
 
 Private Sub picInvOfertaOtro_MouseMove(Button As Integer, _
                                        Shift As Integer, _
-                                       x As Single, _
-                                       y As Single)
+                                       X As Single, _
+                                       Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -551,8 +551,8 @@ End Sub
 
 Private Sub picInvOfertaProp_MouseMove(Button As Integer, _
                                        Shift As Integer, _
-                                       x As Single, _
-                                       y As Single)
+                                       X As Single, _
+                                       Y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -584,21 +584,21 @@ Private Sub SendTxt_Change()
     Else
 
         'Make sure only valid chars are inserted (with Shift + Insert they can paste illegal chars)
-        Dim i         As Long
+        Dim I         As Long
 
         Dim tempstr   As String
 
         Dim CharAscii As Integer
         
-        For i = 1 To Len(SendTxt.Text)
-            CharAscii = Asc(mid$(SendTxt.Text, i, 1))
+        For I = 1 To Len(SendTxt.Text)
+            CharAscii = Asc(mid$(SendTxt.Text, I, 1))
 
             If CharAscii >= vbKeySpace And CharAscii <= 250 Then
                 tempstr = tempstr & Chr$(CharAscii)
 
             End If
 
-        Next i
+        Next I
         
         If tempstr <> SendTxt.Text Then
             'We only set it if it's different, otherwise the event will be raised
@@ -661,7 +661,7 @@ Private Function CheckAvailableSlot(ByVal InvSlot As Byte, ByVal Amount As Long)
     '***************************************************
     Dim slot As Long
 
-    On Error GoTo Err
+    On Error GoTo err
 
     ' Primero chequeo si puedo sumar esa cantidad en algun slot que ya tenga ese item
     For slot = 1 To INV_OFFER_SLOTS
@@ -691,7 +691,7 @@ Private Function CheckAvailableSlot(ByVal InvSlot As Byte, ByVal Amount As Long)
     Next slot
 
     Exit Function
-Err:
+err:
     Debug.Print "Slot: " & slot
 
 End Function

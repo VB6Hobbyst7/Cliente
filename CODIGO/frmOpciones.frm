@@ -401,18 +401,21 @@ Option Explicit
 Private loading As Boolean
 
 Private Sub ActAura_Click()
-If ActAura.Value = vbUnchecked Then
-  WriteVar OpcionesPath, "AURAS", "AuraActiva", 0
-  ActivarAuras = GetVar(OpcionesPath, "AURAS", "AuraActiva")
-Else
-  WriteVar OpcionesPath, "AURAS", "AuraActiva", 1
-  ActivarAuras = GetVar(OpcionesPath, "AURAS", "AuraActiva")
-End If
+
+    If ActAura.Value = vbUnchecked Then
+        WriteVar OpcionesPath, "AURAS", "AuraActiva", 0
+        ActivarAuras = GetVar(OpcionesPath, "AURAS", "AuraActiva")
+    Else
+        WriteVar OpcionesPath, "AURAS", "AuraActiva", 1
+        ActivarAuras = GetVar(OpcionesPath, "AURAS", "AuraActiva")
+
+    End If
+
 End Sub
 
-Private Sub Check1_Click(Index As Integer)
+Private Sub Check1_Click(index As Integer)
 
-    Select Case Index
+    Select Case index
 
         Case 0
 
@@ -542,13 +545,16 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub RotaAura_Click()
-If RotaAura.Value = vbUnchecked Then
-  WriteVar OpcionesPath, "AURAS", "rotacion", 0
-  RotarActivado = GetVar(OpcionesPath, "AURAS", "rotacion")
-Else
-  WriteVar OpcionesPath, "AURAS", "rotacion", 1
-  RotarActivado = GetVar(OpcionesPath, "AURAS", "rotacion")
-End If
+
+    If RotaAura.Value = vbUnchecked Then
+        WriteVar OpcionesPath, "AURAS", "rotacion", 0
+        RotarActivado = GetVar(OpcionesPath, "AURAS", "rotacion")
+    Else
+        WriteVar OpcionesPath, "AURAS", "rotacion", 1
+        RotarActivado = GetVar(OpcionesPath, "AURAS", "rotacion")
+
+    End If
+
 End Sub
 
 Private Sub slSound_Change()
@@ -687,17 +693,18 @@ Public Sub LoadOptionsValues()
     End If
     
     If ActivarAuras = "1" Then
-   frmOpciones.ActAura.Value = vbChecked
-   Else
-   frmOpciones.ActAura.Value = vbUnchecked
-   End If
+        frmOpciones.ActAura.Value = vbChecked
+    Else
+        frmOpciones.ActAura.Value = vbUnchecked
+
+    End If
    
-   If RotarActivado = "1" Then
-   frmOpciones.RotaAura.Value = vbChecked
-   Else
-   frmOpciones.RotaAura.Value = vbUnchecked
-   End If
-    
+    If RotarActivado = "1" Then
+        frmOpciones.RotaAura.Value = vbChecked
+    Else
+        frmOpciones.RotaAura.Value = vbUnchecked
+
+    End If
           
 End Sub
 

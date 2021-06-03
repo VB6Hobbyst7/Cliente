@@ -65,12 +65,12 @@ Public Sub LogError(ByVal Numero As Long, _
     End If
         
     Print #File, "Componente: " & Componente
-    Print #File, "Fecha y Hora: " & Date$ & "-" & time$
+    Print #File, "Fecha y Hora: " & Date$ & "-" & Time$
     Print #File, vbNullString
         
     Close #File
     
-    Debug.Print "Error: " & Numero & vbNewLine & "Descripcion: " & Descripcion & vbNewLine & "Componente: " & Componente & vbNewLine & "Fecha y Hora: " & Date$ & "-" & time$ & vbNewLine
+    Debug.Print "Error: " & Numero & vbNewLine & "Descripcion: " & Descripcion & vbNewLine & "Componente: " & Componente & vbNewLine & "Fecha y Hora: " & Date$ & "-" & Time$ & vbNewLine
                 
 End Sub
 

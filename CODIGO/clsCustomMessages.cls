@@ -68,27 +68,27 @@ Private Sub Class_Initialize()
     '***************************************************
     On Error GoTo ErrHandler
 
-    Dim handle As Integer
+    Dim Handle As Integer
 
-    Dim i      As Long
+    Dim I      As Long
     
     'Load custom messages
-    handle = FreeFile()
+    Handle = FreeFile()
     
-    Open App.path & MESSAGE_FILE_PATH For Input As handle
+    Open App.path & MESSAGE_FILE_PATH For Input As Handle
     
-    For i = 0 To MESSAGE_COUNT - 1
-        Line Input #handle, CustomMessages(i)
+    For I = 0 To MESSAGE_COUNT - 1
+        Line Input #Handle, CustomMessages(I)
         
         'Purge invalid messages
-        If Not MessageIsValid(CustomMessages(i)) Then
-            CustomMessages(i) = vbNullString
+        If Not MessageIsValid(CustomMessages(I)) Then
+            CustomMessages(I) = vbNullString
 
         End If
 
-    Next i
+    Next I
     
-    Close handle
+    Close Handle
     
     'If the file does not exist (only possible error),
     'then we have nothing to worry. All messages will be empty
@@ -106,9 +106,9 @@ Private Sub Class_Terminate()
     'Last Modification: 07/26/07
     'Stores all messages back into config file for later use.
     '***************************************************
-    Dim handle        As Integer
+    Dim Handle        As Integer
 
-    Dim i             As Long
+    Dim I             As Long
 
     Dim directories() As String
 
@@ -118,26 +118,26 @@ Private Sub Class_Terminate()
     directories = Split(MESSAGE_FILE_PATH, "/")
     path = App.path
     
-    For i = 0 To UBound(directories()) - 1
-        path = path & "/" & directories(i)
+    For I = 0 To UBound(directories()) - 1
+        path = path & "/" & directories(I)
         
         If LenB(Dir(path, vbDirectory)) = 0 Then
             Call MkDir(path)
 
         End If
 
-    Next i
+    Next I
     
     'Serialize custom messages
-    handle = FreeFile()
+    Handle = FreeFile()
     
-    Open App.path & MESSAGE_FILE_PATH For Output As handle
+    Open App.path & MESSAGE_FILE_PATH For Output As Handle
     
-    For i = 0 To MESSAGE_COUNT - 1
-        Print #handle, CustomMessages(i)
-    Next i
+    For I = 0 To MESSAGE_COUNT - 1
+        Print #Handle, CustomMessages(I)
+    Next I
     
-    Close handle
+    Close Handle
 
 End Sub
 
@@ -147,19 +147,19 @@ End Sub
 ' @param    index   The message index to retrieve.
 ' @return   The message requested.
 
-Public Property Get Message(ByVal Index As Integer) As String
+Public Property Get Message(ByVal index As Integer) As String
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
     'Last Modification: 07/26/07
     'Retrieves the requested message.
     '***************************************************
-    If Index < 0 Or Index >= MESSAGE_COUNT Then
+    If index < 0 Or index >= MESSAGE_COUNT Then
         Exit Property
 
     End If
     
-    Message = CustomMessages(Index)
+    Message = CustomMessages(index)
 
 End Property
 
@@ -169,25 +169,25 @@ End Property
 ' @param    index   The message index to be set.
 ' @param    nValue  The message to be stored.
 
-Public Property Let Message(ByVal Index As Integer, ByVal nValue As String)
+Public Property Let Message(ByVal index As Integer, ByVal nValue As String)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
     'Last Modification: 07/26/07
     'Sets the given message index with the requested message.
     '***************************************************
-    If Index < 0 Or Index >= MESSAGE_COUNT Then
+    If index < 0 Or index >= MESSAGE_COUNT Then
         Exit Property
 
     End If
     
     If Not MessageIsValid(nValue) Then
-        Call Err.Raise(INVALID_MESSAGE)
+        Call err.Raise(INVALID_MESSAGE)
         Exit Property
 
     End If
     
-    CustomMessages(Index) = nValue
+    CustomMessages(index) = nValue
 
 End Property
 
@@ -223,7 +223,7 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
     'it was causing problems and detected as many messages
     'as wrong with nothing bad on them
     '***************************************************
-    Dim i     As Long
+    Dim I     As Long
 
     Dim Char  As String * 1
 
@@ -239,8 +239,8 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
 
     End If
     
-    For i = 1 To Len(msg)
-        Char = mid$(msg, i, 1)
+    For I = 1 To Len(msg)
+        Char = mid$(msg, I, 1)
         ascii = Asc(Char)
         
         'check for invalid chars...
@@ -251,7 +251,7 @@ Private Function MessageIsValid(ByRef msg As String) As Boolean
 
         End If
 
-    Next i
+    Next I
     
     'Discard extremely long messages
     If Len(msg) > MAX_MESSAGE_LENGTH Then Exit Function

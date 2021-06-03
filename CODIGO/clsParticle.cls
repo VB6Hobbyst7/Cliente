@@ -171,15 +171,15 @@ Public Sub ResetColor(sngRed As Single, _
 
 End Sub
 
-Public Sub ResetIt(x As Single, _
-                   y As Single, _
+Public Sub ResetIt(X As Single, _
+                   Y As Single, _
                    XSpeed As Single, _
                    YSpeed As Single, _
                    XAcc As Single, _
                    YAcc As Single, _
                    sngResetSize As Single)
-    sngX = x
-    sngY = y
+    sngX = X
+    sngY = Y
     sngXSpeed = XSpeed
     sngYSpeed = YSpeed
     sngXAccel = XAcc

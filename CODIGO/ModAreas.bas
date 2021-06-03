@@ -40,7 +40,7 @@ Public Const MargenX     As Integer = 13
 
 Public Const MargenY     As Integer = 11
 
-Public Sub CambioDeArea(ByVal x As Integer, ByVal y As Integer, ByVal Head As Byte)
+Public Sub CambioDeArea(ByVal X As Integer, ByVal Y As Integer, ByVal Head As Byte)
 
     Dim loopX As Long, loopY As Long
 
@@ -52,10 +52,10 @@ Public Sub CambioDeArea(ByVal x As Integer, ByVal y As Integer, ByVal Head As By
 
     Dim MaxY  As Integer
 
-    MinX = x
-    MinY = y
-    MaxX = x
-    MaxY = y
+    MinX = X
+    MinY = Y
+    MaxX = X
+    MaxY = Y
 
     If Head = E_Heading.south Then
         MinX = MinX - MargenX
@@ -114,57 +114,57 @@ End Sub
 
 Public Sub LimpiarArea()
 
-    Dim x As Integer
+    Dim X As Integer
 
-    Dim y As Integer
+    Dim Y As Integer
 
-    For x = UserPos.x - MargenX * 2 To UserPos.x + MargenX * 2
-        For y = UserPos.y - MargenY * 2 To UserPos.y + MargenY * 2
+    For X = UserPos.X - MargenX * 2 To UserPos.X + MargenX * 2
+        For Y = UserPos.Y - MargenY * 2 To UserPos.Y + MargenY * 2
 
-            If InMapBounds(x, y) Then
-                If MapData(x, y).CharIndex > 0 Then
-                    If MapData(x, y).CharIndex <> UserCharIndex Then
-                        Call EraseChar(MapData(x, y).CharIndex)
+            If InMapBounds(X, Y) Then
+                If MapData(X, Y).CharIndex > 0 Then
+                    If MapData(X, Y).CharIndex <> UserCharIndex Then
+                        Call EraseChar(MapData(X, Y).CharIndex)
 
                     End If
 
                 End If
 
-                If MapData(x, y).ObjGrh.GrhIndex = GrhFogata Then
-                    MapData(x, y).Graphic(3).GrhIndex = 0
-                    Call Light_Destroy_ToMap(x, y)
+                If MapData(X, Y).ObjGrh.GrhIndex = GrhFogata Then
+                    MapData(X, Y).Graphic(3).GrhIndex = 0
+                    Call Light_Destroy_ToMap(X, Y)
 
                 End If
 
-                MapData(x, y).ObjGrh.GrhIndex = 0
+                MapData(X, Y).ObjGrh.GrhIndex = 0
 
             End If
 
-        Next y
-    Next x
+        Next Y
+    Next X
 
 End Sub
 
 Public Sub LimpiarAreaTelep()
 
-    Dim x As Integer
+    Dim X As Integer
 
-    Dim y As Integer
+    Dim Y As Integer
 
-    For x = UserPos.x - MargenX * 2 To UserPos.x + MargenX * 2
-        For y = UserPos.y - MargenY * 2 To UserPos.y + MargenY * 2
+    For X = UserPos.X - MargenX * 2 To UserPos.X + MargenX * 2
+        For Y = UserPos.Y - MargenY * 2 To UserPos.Y + MargenY * 2
 
-            If InMapBounds(x, y) Then
-                If MapData(x, y).CharIndex > 0 Then
-                    Call EraseChar(MapData(x, y).CharIndex)
+            If InMapBounds(X, Y) Then
+                If MapData(X, Y).CharIndex > 0 Then
+                    Call EraseChar(MapData(X, Y).CharIndex)
 
                 End If
 
-                MapData(x, y).ObjGrh.GrhIndex = 0
+                MapData(X, Y).ObjGrh.GrhIndex = 0
 
             End If
 
-        Next y
-    Next x
+        Next Y
+    Next X
 
 End Sub

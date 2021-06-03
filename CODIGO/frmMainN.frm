@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{BF3128D8-55B8-11D4-8ED4-00E07D815373}#1.0#0"; "MBPrgBar.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
+Object = "{BF3128D8-55B8-11D4-8ED4-00E07D815373}#1.0#0"; "mbprgbar.ocx"
 Begin VB.Form frmMain1 
    Appearance      =   0  'Flat
    BackColor       =   &H80000005&
@@ -1532,8 +1532,6 @@ Private Sub Command2_Click()
 
 End Sub
 
-
-
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 
     Select Case KeyCode
@@ -1919,44 +1917,44 @@ Private Sub lblEXP_MouseMove(Button As Integer, _
 
 End Sub
 
-
-
-
-
-Private Sub QuestBoton_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub QuestBoton_MouseMove(Button As Integer, _
+                                 Shift As Integer, _
+                                 X As Single, _
+                                 Y As Single)
     
     On Error GoTo QuestBoton_MouseMove_Err
-    
 
     If QuestBoton.Tag = "0" Then
         'QuestBoton.Picture = LoadInterface("questover.bmp")
         QuestBoton.Tag = "1"
 
     End If
-
     
     Exit Sub
 
 QuestBoton_MouseMove_Err:
+
     'Call RegistrarError(Err.Number, Err.Description, "frmMain.QuestBoton_MouseMove", Erl)
     Resume Next
     
 End Sub
 
-Private Sub QuestBoton_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub QuestBoton_MouseUp(Button As Integer, _
+                               Shift As Integer, _
+                               X As Single, _
+                               Y As Single)
     
     On Error GoTo QuestBoton_MouseUp_Err
-    
     
     If pausa Then Exit Sub
     
     Call WriteQuestListRequest
-
     
     Exit Sub
 
 QuestBoton_MouseUp_Err:
-   ' Call RegistrarError(Err.Number, Err.Description, "frmMain.QuestBoton_MouseUp", Erl)
+
+    ' Call RegistrarError(Err.Number, Err.Description, "frmMain.QuestBoton_MouseUp", Erl)
     Resume Next
     
 End Sub
@@ -2047,38 +2045,40 @@ Private Sub mnuUsar_Click()
 End Sub
 
 Private Sub MenuF_Click()
-#If RenderFull = 1 Then
+    #If RenderFull = 1 Then
 
-Menu.Visible = True
-#End If
-bar_salud.Visible = False
-Bar_Mana.Visible = False
-bar_sta.Visible = False
-bar_comida.Visible = False
-Bar_Agua.Visible = False
+        Menu.Visible = True
+    #End If
+    bar_salud.Visible = False
+    Bar_Mana.Visible = False
+    bar_sta.Visible = False
+    bar_comida.Visible = False
+    Bar_Agua.Visible = False
 
-Image1(0).Visible = True
-Image1(1).Visible = True
-Image1(2).Visible = True
-Image1(3).Visible = True
+    Image1(0).Visible = True
+    Image1(1).Visible = True
+    Image1(2).Visible = True
+    Image1(3).Visible = True
 
 End Sub
+
 Private Sub lbStats_Click()
-#If RenderFull = 1 Then
-Menu.Visible = False
-#End If
-bar_salud.Visible = True
-Bar_Mana.Visible = True
-bar_sta.Visible = True
-bar_comida.Visible = True
-Bar_Agua.Visible = True
+    #If RenderFull = 1 Then
+        Menu.Visible = False
+    #End If
+    bar_salud.Visible = True
+    Bar_Mana.Visible = True
+    bar_sta.Visible = True
+    bar_comida.Visible = True
+    Bar_Agua.Visible = True
 
-Image1(0).Visible = False
-Image1(1).Visible = False
-Image1(2).Visible = False
-Image1(3).Visible = False
+    Image1(0).Visible = False
+    Image1(1).Visible = False
+    Image1(2).Visible = False
+    Image1(3).Visible = False
 
 End Sub
+
 Private Sub picHechiz_MouseDown(Button As Integer, _
                                 Shift As Integer, _
                                 X As Single, _
@@ -2526,7 +2526,7 @@ Public Sub ReDrawConsola()
         If I >= 0 And I <= LineasConsola Then
             pConsola.CurrentX = 0
             pConsola.CurrentY = (I - OffSetConsola - 1) * 14
-            pConsola.ForeColor = Consola(I).color
+            pConsola.ForeColor = Consola(I).Color
             pConsola.FontBold = CBool(Consola(I).bold)
             pConsola.FontItalic = CBool(Consola(I).italic)
             pConsola.Print Consola(I).Texto
@@ -2588,20 +2588,24 @@ Private Sub Form_Load()
         Debug.Print "Precarga"
 
     End If
+
     OpcionesPath = App.path & "\init\Config.ini"
     ActivarAuras = GetVar(OpcionesPath, "AURAS", "AuraActiva")
     RotarActivado = GetVar(OpcionesPath, "AURAS", "rotacion")
-   If ActivarAuras = "1" Then
-   frmOpciones.ActAura.Value = vbChecked
-   Else
-   frmOpciones.ActAura.Value = vbUnchecked
-   End If
+
+    If ActivarAuras = "1" Then
+        frmOpciones.ActAura.Value = vbChecked
+    Else
+        frmOpciones.ActAura.Value = vbUnchecked
+
+    End If
    
-   If RotarActivado = "1" Then
-   frmOpciones.RotaAura.Value = vbChecked
-   Else
-   frmOpciones.RotaAura.Value = vbUnchecked
-   End If
+    If RotarActivado = "1" Then
+        frmOpciones.RotaAura.Value = vbChecked
+    Else
+        frmOpciones.RotaAura.Value = vbUnchecked
+
+    End If
 
 End Sub
 
@@ -3001,7 +3005,6 @@ Public Sub CallbackMenuFashion(ByVal MenuId As Long, ByVal Sel As Long)
 
 End Sub
 
-
 Private Sub tMouse_Timer()
 
     If MainTimer.CheckV(TimersIndex.PuedeLanzarHechizo) And MainTimer.CheckV(TimersIndex.PuedeGolpeMagia) And MainTimer.CheckV(TimersIndex.PuedeFlechas) Then
@@ -3038,10 +3041,9 @@ Private Sub tPass_LostFocus()
 
 End Sub
 
-
-
 Private Sub tRelampago_Timer()
-Call DoRelampago
+    Call DoRelampago
+
 End Sub
 
 Private Sub tUser_KeyDown(KeyCode As Integer, Shift As Integer)

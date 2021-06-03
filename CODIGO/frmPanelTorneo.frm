@@ -913,27 +913,20 @@ Attribute VB_Exposed = False
 
 Private Sub cmbCrear_Click()
     
-    
     Dim AllowedClasses(1 To NUMCLASES) As Byte
-    Dim LoopC As Byte
+
+    Dim LoopC                          As Byte
     
     If CheckForm(AllowedClasses) Then
+
         For LoopC = 1 To NUMCLASES
             AllowedClasses(LoopC) = Val(chkClass(LoopC).Value)
         Next LoopC
         
         Debug.Print "Modality: " & Val(cmbModality.ListIndex + 1)
         
-        WriteNewEvent Val(cmbModality.ListIndex + 1), _
-                        Val(cmbQuotas.List(cmbQuotas.ListIndex)), _
-                        Val(cmbLvlMin.List(cmbLvlMin.ListIndex)), _
-                        Val(cmbLvlMax.List(cmbLvlMax.ListIndex)), _
-                        Val(cmbOro.List(cmbOro.ListIndex)), _
-                        Val(cmbDsp.List(cmbDsp.ListIndex)), _
-                        Val(cmbCanje.List(cmbCanje.ListIndex)), _
-                        Val(cmbInit.List(cmbInit.ListIndex)) * 60, _
-                        Val(cmbCancel.List(cmbCancel.ListIndex)) * 60, _
-                         Val(cmbTeam.List(cmbTeam.ListIndex)), AllowedClasses()
+        WriteNewEvent Val(cmbModality.ListIndex + 1), Val(cmbQuotas.List(cmbQuotas.ListIndex)), Val(cmbLvlMin.List(cmbLvlMin.ListIndex)), Val(cmbLvlMax.List(cmbLvlMax.ListIndex)), Val(cmbOro.List(cmbOro.ListIndex)), Val(cmbDsp.List(cmbDsp.ListIndex)), Val(cmbCanje.List(cmbCanje.ListIndex)), Val(cmbInit.List(cmbInit.ListIndex)) * 60, Val(cmbCancel.List(cmbCancel.ListIndex)) * 60, Val(cmbTeam.List(cmbTeam.ListIndex)), AllowedClasses()
+
     End If
     
 End Sub
@@ -944,66 +937,81 @@ Private Function CheckForm(ByRef AllowedClasses() As Byte) As Boolean
     If cmbTeam.Text = "Vacio" Then
         MsgBox "Seleccione la cantidad de pjs por team"
         Exit Function
+
     End If
     
     If cmbModality.Text = "Vacio" Then
         MsgBox "Seleccione la modalidad del evento"
         Exit Function
+
     End If
     
     If cmbQuotas.Text = "Vacio" Then
         MsgBox "Seleccione la cantidad de cupos que tendra"
         Exit Function
+
     End If
     
     If cmbLvlMin.Text = "Vacio" Then
         MsgBox "Seleccione el nivel minimo que requerirá el evento"
         Exit Function
+
     End If
     
     If cmbLvlMax.Text = "Vacio" Then
         MsgBox "Seleccione el nivel máximo que requerirá el evento"
         Exit Function
+
     End If
     
     If cmbOro.Text = "Vacio" Then
         MsgBox "Seleccione la inscripción por ORO"
         Exit Function
+
     End If
     
     If cmbDsp.Text = "Vacio" Then
         MsgBox "Seleccione la inscripción por DSP"
         Exit Function
+
     End If
     
     If cmbCanje.Text = "Vacio" Then
         MsgBox "Seleccione la inscripción por CANJES"
         Exit Function
+
     End If
     
     If cmbInit.Text = "Vacio" Then
         MsgBox "Seleccione el tiempo que tardará en iniciar las incripciones"
         Exit Function
+
     End If
     
     If cmbCancel.Text = "Vacio" Then
         MsgBox "Seleccione el tiempo que tendrá para cancelarse el evento si no se completan cupos"
         Exit Function
+
     End If
     
     Dim LoopC As Integer, Puede As Boolean
     
     For LoopC = 1 To NUMCLASES
+
         If AllowedClasses(LoopC) = 1 Then
             Puede = True
             Exit For
+
         End If
+
     Next LoopC
         
     CheckForm = True
+
 End Function
 
 Private Sub cmbModalityCurso_Click()
+
     If cmbModalityCurso.ListIndex = -1 Then Exit Sub
     
     lblClose.Visible = IIf(cmbModalityCurso.List(cmbModalityCurso.ListIndex) <> "Vacio", True, False)
@@ -1011,13 +1019,16 @@ Private Sub cmbModalityCurso_Click()
     If cmbModalityCurso.List(cmbModalityCurso.ListIndex) = "Vacio" Then
         MsgBox "No se puede ver la información del evento que seleccionaste."
         Exit Sub
+
     End If
     
     Protocol.WriteRequiredDataEvent cmbModalityCurso.ListIndex + 1
+
 End Sub
 
 Private Sub Command1_Click()
     Protocol.WriteRequiredEvents
+
 End Sub
 
 Private Sub Form_Load()
@@ -1102,11 +1113,10 @@ Private Sub Form_Load()
     cmbCancel.ListIndex = 7
     cmbInit.ListIndex = 0
     
-    
-    
 End Sub
 
 Private Sub lblClose_Click()
     Protocol.WriteCloseEvent cmbModalityCurso.ListIndex + 1
+
 End Sub
 

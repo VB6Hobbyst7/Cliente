@@ -172,7 +172,7 @@ Public Property Let ProposalType(ByVal nValue As TIPO_PROPUESTA)
 
 End Property
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 

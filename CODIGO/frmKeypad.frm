@@ -420,30 +420,39 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Enum e_modo_keypad
+
     MAYUSCULA = 1
     MINUSCULA = 2
+
 End Enum
 
 Private Const MinIndex = "1234567890-=\qwertyuiop[]asdfghjkl;'zxcvbnm,./"
+
 Private Const MayIndex = "!@#$%^&*()_+|QWERTYUIOP{}ASDFGHJKL:""ZXCVBNM<>?"
+
 Private Modo As e_modo_keypad
 
 Private Sub Form_Activate()
-Dim i As Integer
-Dim J As Integer
-    i = RandomNumber(-2000, 2000)
+
+    Dim I As Integer
+
+    Dim J As Integer
+
+    I = RandomNumber(-2000, 2000)
     J = RandomNumber(-350, 350)
     Me.Top = Me.Top + J
-    Me.Left = Me.Left + i
+    Me.Left = Me.Left + I
 
 End Sub
 
 Private Sub Form_Load()
     'Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMin.bmp")
     Modo = MINUSCULA
+
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
+
     'frmOldPersonaje.PasswordTxt.Text = Me.txtPassword.Text
 End Sub
 
@@ -451,16 +460,21 @@ Private Sub imgEspacio_Click()
     Call Audio.PlayWave(SND_CLICK)
     Me.txtPassword.Text = Me.txtPassword.Text & " "
     Me.txtPassword.SetFocus
+
 End Sub
 
-Private Sub imgKeyPad_Click(Index As Integer)
+Private Sub imgKeyPad_Click(index As Integer)
     Call Audio.PlayWave(SND_CLICK)
+
     If Modo = MAYUSCULA Then
-        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MayIndex, Index + 1, 1)
+        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MayIndex, index + 1, 1)
     Else
-        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MinIndex, Index + 1, 1)
+        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MinIndex, index + 1, 1)
+
     End If
+
     Me.txtPassword.SetFocus
+
 End Sub
 
 Private Sub imgMay_Click()
@@ -468,6 +482,7 @@ Private Sub imgMay_Click()
     'Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMay.bmp")
     Modo = MAYUSCULA
     Me.txtPassword.SetFocus
+
 End Sub
 
 Private Sub imgMin_Click()
@@ -475,13 +490,17 @@ Private Sub imgMin_Click()
     'Me.Picture = LoadPicture(App.path & "\graficos\KeyPadMin.bmp")
     Modo = MINUSCULA
     Me.txtPassword.SetFocus
+
 End Sub
 
 Private Sub txtPassword_KeyPress(KeyAscii As Integer)
+
     If KeyAscii = 13 Then
         'frmOldPersonaje.PasswordTxt.Text = Me.txtPassword.Text
         Unload Me
     Else
         Me.txtPassword.Text = vbNullString
+
     End If
+
 End Sub
