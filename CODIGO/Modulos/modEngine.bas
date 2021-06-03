@@ -374,7 +374,7 @@ Public Sub LiberarObjetosDX()
     Set D3DX = Nothing
     Set dX = Nothing
     Exit Sub
-fin:                                         MsgBox "Error producido en Public Sub LiberarObjetosDX()"
+fin:                                                 MsgBox "Error producido en Public Sub LiberarObjetosDX()"
 
 End Sub
 

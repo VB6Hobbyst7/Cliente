@@ -2336,7 +2336,7 @@ Private Sub HandleUserAttackedSwing()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Call AddtoRichPicture(MENSAJE_1 & charlist(incomingData.ReadInteger()).nombre & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, False)
+    Call AddtoRichPicture(MENSAJE_1 & charlist(incomingData.ReadInteger()).Nombre & MENSAJE_ATAQUE_FALLO, 255, 0, 0, True, False, False)
     
 End Sub
 
@@ -2367,7 +2367,7 @@ Private Sub HandleUserHittedByUser()
 
     Dim HitArea  As Byte
 
-    attacker = charlist(incomingData.ReadInteger()).nombre
+    attacker = charlist(incomingData.ReadInteger()).Nombre
     Lugar = incomingData.ReadByte
     Golpe = incomingData.ReadInteger()
     HitArea = incomingData.ReadByte
@@ -2437,7 +2437,7 @@ Private Sub HandleUserHittedUser()
     
     CharIndex = incomingData.ReadInteger()
     
-    victim = charlist(CharIndex).nombre
+    victim = charlist(CharIndex).Nombre
     Lugar = incomingData.ReadByte
     Golpe = incomingData.ReadInteger()
     HitArea = incomingData.ReadByte()
@@ -2526,13 +2526,13 @@ Private Sub HandleChatOverHead()
 
     Dim Pos  As Integer
 
-    Pos = InStr(charlist(CharIndex).nombre, "<")
+    Pos = InStr(charlist(CharIndex).Nombre, "<")
 
-    If Pos = 0 Then Pos = Len(charlist(CharIndex).nombre) + 2
+    If Pos = 0 Then Pos = Len(charlist(CharIndex).Nombre) + 2
         
-    Name = Left$(charlist(CharIndex).nombre, Pos - 2)
+    Name = Left$(charlist(CharIndex).Nombre, Pos - 2)
         
-    If charlist(CharIndex).nombre <> "" And charlist(CharIndex).invisible = False Then Call AddtoRichPicture(Name & "> " & chat, 190, 190, 190, False, True)
+    If charlist(CharIndex).Nombre <> "" And charlist(CharIndex).invisible = False Then Call AddtoRichPicture(Name & "> " & chat, 190, 190, 190, False, True)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(buffer)
@@ -3006,7 +3006,7 @@ Private Sub HandleCharacterCreate()
     With charlist(CharIndex)
         Call SetCharacterFx(CharIndex, buffer.ReadInteger(), buffer.ReadInteger())
         
-        .nombre = buffer.ReadASCIIString()
+        .Nombre = buffer.ReadASCIIString()
         .Criminal = buffer.ReadByte()
         
         privs = buffer.ReadByte()
@@ -3085,7 +3085,7 @@ Private Sub HandleCharacterRemove()
     
     CharIndex = incomingData.ReadInteger()
     
-    If charlist(CharIndex).nombre = "" And charlist(CharIndex).Pos.X > 0 And charlist(CharIndex).Pos.Y > 0 Then
+    If charlist(CharIndex).Nombre = "" And charlist(CharIndex).Pos.X > 0 And charlist(CharIndex).Pos.Y > 0 Then
 
         Dim tN As New clsNPCMuerto
 
@@ -3439,14 +3439,14 @@ Private Sub HandleGuildList()
     
     With frmGuildAdm
         'Clear guild's list
-        .guildslist.Clear
+        .GuildsList.Clear
         
         GuildNames = Split(buffer.ReadASCIIString(), SEPARATOR)
         
         Dim I As Long
 
         For I = 0 To UBound(GuildNames())
-            Call .guildslist.AddItem(GuildNames(I))
+            Call .GuildsList.AddItem(GuildNames(I))
         Next I
         
         'If we got here then packet is complete, copy data back to original queue
@@ -3719,7 +3719,7 @@ Private Sub HandleUpdateUserStats()
         frmMain.bar_salud(0).TextAfterCaption = " / " & UserMaxHP
         frmMain.bar_salud(1).TextAfterCaption = " / " & UserMaxHP
         'frmMain.HpshpV.Value = (((UserMinHP / 100) / (UserMaxHP / 100)) * 100)
-    
+        'Helios Barras
         If UserMaxMAN > 0 Then
             frmMain.Bar_Mana(0).max = UserMaxMAN
             frmMain.Bar_Mana(0).Value = UserMinMAN
@@ -3738,7 +3738,7 @@ Private Sub HandleUpdateUserStats()
         End If
 
     #Else
-    
+        
         frmMain.Experiencia.Value = UserExp
         frmMain.bar_salud.max = UserMaxHP
         frmMain.bar_salud.Value = UserMinHP
@@ -5629,7 +5629,7 @@ Private Sub HandleCharacterInfo()
 
         End If
         
-        .nombre.Caption = buffer.ReadASCIIString()
+        .Nombre.Caption = buffer.ReadASCIIString()
         .Raza.Caption = ListaRazas(buffer.ReadByte())
         .Clase.Caption = ListaClases(buffer.ReadByte())
         
@@ -5737,10 +5737,10 @@ Private Sub HandleGuildLeaderInfo()
         GuildNames = Split(buffer.ReadASCIIString(), SEPARATOR)
         
         'Empty the list
-        Call .guildslist.Clear
+        Call .GuildsList.Clear
         
         For I = 0 To UBound(GuildNames())
-            Call .guildslist.AddItem(GuildNames(I))
+            Call .GuildsList.AddItem(GuildNames(I))
         Next I
         
         'Get list of guild's members
@@ -5887,7 +5887,7 @@ Private Sub HandleGuildDetails()
         .imgOfrecerAlianza.Visible = .EsLeader
         .imgOfrecerPaz.Visible = .EsLeader
         
-        .nombre.Caption = buffer.ReadASCIIString()
+        .Nombre.Caption = buffer.ReadASCIIString()
         .fundador.Caption = buffer.ReadASCIIString()
         .creacion.Caption = buffer.ReadASCIIString()
         .lider.Caption = buffer.ReadASCIIString()
@@ -6480,7 +6480,7 @@ Private Sub HandleUpdateTagAndStatus()
 
         End If
         
-        .nombre = userTag
+        .Nombre = userTag
         
         If CharIndex = UserCharIndex Then 'Si cambió de estado cambiamos el cursor
             Call SetCursor(General)
@@ -6740,7 +6740,7 @@ Public Sub HandleMultiMessage()
 
     Dim Number      As Integer
 
-    Dim nombre      As String
+    Dim Nombre      As String
 
     'Dim SpellIndex As Integer
     
@@ -6754,14 +6754,14 @@ Public Sub HandleMultiMessage()
 
             Case eMessages.LanzaHechizoA
                 Number = incomingData.ReadInteger()
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg("Le has quitado " & Number & " puntos de vida a " & nombre, .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg("Le has quitado " & Number & " puntos de vida a " & Nombre, .red, .green, .blue, .bold, .italic)
                 Exit Sub
 
             Case eMessages.TeLanzanHechizo
                 Number = incomingData.ReadInteger()
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg(nombre & " te ha quitado " & Number & " puntos de vida.", .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg(Nombre & " te ha quitado " & Number & " puntos de vida.", .red, .green, .blue, .bold, .italic)
                 Exit Sub
 
             Case eMessages.HasDesequipadoEsudoOponente
@@ -6806,15 +6806,15 @@ Public Sub HandleMultiMessage()
                 
             Case eMessages.HasApunaladoA
                 Number = incomingData.ReadInteger()
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg("Hás apuñalado a " & nombre & " por " & Number, 185, 185, 185, True, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg("Hás apuñalado a " & Nombre & " por " & Number, 185, 185, 185, True, .italic)
                 Call Audio.PlayWave(SND_APUÑALAR)
                 Exit Sub
 
             Case eMessages.TeHanApunalado
                 Number = incomingData.ReadInteger()
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg("Te ha apuñalado " & nombre & " por " & Number, .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg("Te ha apuñalado " & Nombre & " por " & Number, .red, .green, .blue, .bold, .italic)
                 AlphaBlood = 255
                 Call Audio.PlayWave(SND_APUÑALAR)
                 Exit Sub
@@ -6831,14 +6831,14 @@ Public Sub HandleMultiMessage()
                     
             Case eMessages.HasGolpeadoCriticamente
                 Number = incomingData.ReadInteger()
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg("Has golpeado críticamente a " & nombre & " por " & Number & ".", .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg("Has golpeado críticamente a " & Nombre & " por " & Number & ".", .red, .green, .blue, .bold, .italic)
                 Exit Sub
                     
             Case eMessages.TeHanGolpeadoCriticamente
                 Number = incomingData.ReadInteger()
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg(nombre & " te ha golpeado críticamente por " & Number & ".", .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg(Nombre & " te ha golpeado críticamente por " & Number & ".", .red, .green, .blue, .bold, .italic)
                 Exit Sub
                     
             Case eMessages.HasGolpeadoCriticamenteCriatura
@@ -7004,13 +7004,13 @@ Public Sub HandleMultiMessage()
 
             Case eMessages.LeHasRobadoMonedasDeOro
                 Number = incomingData.ReadInteger()
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg("Le hás robado " & Number & " monedas de oro a " & nombre, .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg("Le hás robado " & Number & " monedas de oro a " & Nombre, .red, .green, .blue, .bold, .italic)
                 Exit Sub
 
             Case eMessages.NoTieneOro
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg(nombre & " no tiene oro.", .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg(Nombre & " no tiene oro.", .red, .green, .blue, .bold, .italic)
                 Exit Sub
 
             Case eMessages.NoHasLogradoRobarNada
@@ -7018,25 +7018,25 @@ Public Sub HandleMultiMessage()
                 Exit Sub
 
             Case eMessages.HanIntentadoRobarte
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg("¡" & nombre & " ha intentado robarte!", .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg("¡" & Nombre & " ha intentado robarte!", .red, .green, .blue, .bold, .italic)
                 Exit Sub
 
             Case eMessages.UserNoTieneObjetos
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg("¡" & nombre & " no tiene objetos!", .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg("¡" & Nombre & " no tiene objetos!", .red, .green, .blue, .bold, .italic)
                 Exit Sub
 
             Case eMessages.HasRobadoObjetos
                 Number = incomingData.ReadInteger()
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg("Has robado " & Number & " " & nombre, .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg("Has robado " & Number & " " & Nombre, .red, .green, .blue, .bold, .italic)
                 Exit Sub
 
             Case eMessages.HasHurtadoObjetos
                 Number = incomingData.ReadInteger()
-                nombre = incomingData.ReadASCIIString()
-                Call ShowConsoleMsg("Has hurtado " & Number & " " & nombre, .red, .green, .blue, .bold, .italic)
+                Nombre = incomingData.ReadASCIIString()
+                Call ShowConsoleMsg("Has hurtado " & Number & " " & Nombre, .red, .green, .blue, .bold, .italic)
                 Exit Sub
 
             Case eMessages.HasConseguidoLena
@@ -12419,7 +12419,7 @@ Public Sub WriteSetIniVar(ByRef sLlave As String, _
 
 End Sub
 
-Public Sub WriteAddGM(ByRef nombre As String, ByVal Rango As Byte)
+Public Sub WriteAddGM(ByRef Nombre As String, ByVal Rango As Byte)
 
     '***************************************************
     'Author: Brian Chaia (BrianPr)
@@ -12431,7 +12431,7 @@ Public Sub WriteAddGM(ByRef nombre As String, ByVal Rango As Byte)
         Call .WriteByte(ClientPacketIDGM.AddGM)
         
         Call .WriteByte(Rango)
-        Call .WriteASCIIString(nombre)
+        Call .WriteASCIIString(Nombre)
 
     End With
 
@@ -12648,7 +12648,7 @@ Private Sub HandleQuestDetails()
         
             QuestIndex = .ReadInteger
         
-            FrmQuestInfo.titulo.Caption = QuestList(QuestIndex).nombre
+            FrmQuestInfo.titulo.Caption = QuestList(QuestIndex).Nombre
            
             'tmpStr = "Mision: " & .ReadASCIIString & vbCrLf
             
@@ -12766,7 +12766,7 @@ Private Sub HandleQuestDetails()
         
             QuestIndex = .ReadInteger
         
-            FrmQuests.titulo.Caption = QuestList(QuestIndex).nombre
+            FrmQuests.titulo.Caption = QuestList(QuestIndex).Nombre
            
             LevelRequerido = .ReadByte
             QuestRequerida = .ReadInteger
@@ -12774,7 +12774,7 @@ Private Sub HandleQuestDetails()
             FrmQuests.detalle.Text = QuestList(QuestIndex).Desc & vbCrLf & vbCrLf & "Requisitos" & vbCrLf & "Nivel requerido: " & LevelRequerido & vbCrLf
 
             If QuestRequerida <> 0 Then
-                FrmQuests.detalle.Text = FrmQuests.detalle.Text & vbCrLf & "Quest: " & QuestList(QuestRequerida).nombre
+                FrmQuests.detalle.Text = FrmQuests.detalle.Text & vbCrLf & "Quest: " & QuestList(QuestRequerida).Nombre
 
             End If
             
@@ -13088,7 +13088,7 @@ Public Sub HandleNpcQuestListSend()
         
             QuestIndex = .ReadInteger
             
-            FrmQuestInfo.titulo.Caption = QuestList(QuestIndex).nombre
+            FrmQuestInfo.titulo.Caption = QuestList(QuestIndex).Nombre
                
             'tmpStr = "Mision: " & .ReadASCIIString & vbCrLf
                
@@ -13196,7 +13196,7 @@ Public Sub HandleNpcQuestListSend()
             Select Case estado
                 
                 Case 0
-                    Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).nombre)
+                    Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).Nombre)
                         
                     subelemento.SubItems(1) = "Disponible"
                     subelemento.SubItems(2) = QuestIndex
@@ -13205,7 +13205,7 @@ Public Sub HandleNpcQuestListSend()
                         
                     'FrmQuestInfo.lstQuests.AddItem QuestIndex & "-" & QuestList(QuestIndex).nombre & "(Disponible)"
                 Case 1
-                    Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).nombre)
+                    Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).Nombre)
                         
                     subelemento.SubItems(1) = "En Curso"
                     subelemento.ForeColor = RGB(255, 175, 10)
@@ -13215,7 +13215,7 @@ Public Sub HandleNpcQuestListSend()
 
                     'FrmQuestInfo.lstQuests.AddItem QuestIndex & "-" & QuestList(QuestIndex).nombre & "(En curso)"
                 Case 2
-                    Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).nombre)
+                    Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).Nombre)
                         
                     subelemento.SubItems(1) = "Finalizada"
                     subelemento.SubItems(2) = QuestIndex
@@ -13225,7 +13225,7 @@ Public Sub HandleNpcQuestListSend()
 
                     ' FrmQuestInfo.lstQuests.AddItem QuestIndex & "-" & QuestList(QuestIndex).nombre & "(Realizada)"
                 Case 3
-                    Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).nombre)
+                    Set subelemento = FrmQuestInfo.ListViewQuest.ListItems.Add(, , QuestList(QuestIndex).Nombre)
                         
                     subelemento.SubItems(1) = "No disponible"
                     subelemento.SubItems(2) = QuestIndex

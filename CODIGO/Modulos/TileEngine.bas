@@ -2843,24 +2843,30 @@ Sub RenderScreen(ByVal TileX As Integer, _
    
     #If RenderFull = 0 Then
 
-        If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
+        If FPSFLAG Then Call DrawFont("FPS: ", 740, 290, D3DColorRGBA(240, 34, 37, 200))
+        If FPSFLAG Then Call DrawFont("        " & FPS, 740, 290, D3DColorRGBA(101, 209, 238, 160))
         Call Engine_Render_Rectangle(257, 257, 1024, 782, 0, 0, 1024, 782, , , 0, 14941)
-        'Call Engine_Render_Rectangle(270, 270, 205, 80, 0, 0, 205, 80, , , 0, 14937)
-        Call Engine_Render_Rectangle(269, 255, 250, 250, 0, 0, 250, 250, , , 0, 14936) ' vida
-        Call Engine_Render_Rectangle(919, 254, 76, 35, 0, 0, 76, 35, , , 0, 14954) 'user onlie
-        Call Engine_Render_Rectangle(995, 254, 259, 36, 0, 0, 259, 36, , , 0, 14955) 'Menu
+        
+        Call Engine_Render_Rectangle(269, 255, 250, 250, 0, 0, 250, 250, , , 0, 14936) ' vida Helios
+        Call Engine_Render_Rectangle(919, 254, 76, 35, 0, 0, 76, 35, , , 0, 14954) 'user onlie Helios
+        Call Engine_Render_Rectangle(995, 254, 259, 36, 0, 0, 259, 36, , , 0, 14955) 'Menu Helios
         Call Engine_Render_Rectangle(1248, 250, 34, 35, 0, 0, 34, 35, , , 0, 14953)
-        'Call Engine_Render_Rectangle(262, 800, 50, 45, 0, 0, 50, 45, , , 0, 14939)
+
+        If frmMain.invHechisos.Visible = True Then
+            Call Engine_Render_Rectangle(1150, 620, 40, 45, 0, 0, 40, 45, , , 0, 14956)
+
+        End If
+
         'Call Engine_Render_Rectangle(262, 740, 41, 50, 0, 0, 41, 50, , , 0, 14940)
         'Call Engine_Render_Rectangle(262, 690, 50, 39, 0, 0, 50, 39, , , 0, 14942) ' engranaje
            
         Call DrawFont(CStr(UserLvl), 308, 292, D3DColorRGBA(255, 255, 0, 190))
         
-        Call DrawFont(CStr(UserName), 297, 331, D3DColorRGBA(255, 255, 255, 255))
+        Call DrawFont(CStr(UserName), 297, 331, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
         
-        Call DrawFont("      " & CStr(UsersOn), 928, 268, D3DColorRGBA(240, 34, 37, 200))
+        Call DrawFont("      " & CStr(UsersOn), 928, 268, D3DColorRGBA(240, 34, 37, 200)) 'Useron Helios
         
-        Call DrawFont("      " & CStr(Time), 1155, 265, D3DColorRGBA(101, 209, 238, 160)) 'Hora
+        Call DrawFont("      " & CStr(Time), 1155, 265, D3DColorRGBA(101, 209, 238, 160)) 'Hora Helios
         
         If Zonas(ZonaActual).Segura = 1 Then
             Call DrawFont(Zonas(ZonaActual).nombre, 1190, 410, D3DColorRGBA(0, 255, 0, 160))
@@ -2873,7 +2879,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         Call DrawFont("(X:" & UserPos.X & ", Y:" & UserPos.Y & ")", 1150, 425, D3DColorRGBA(255, 255, 255, 160))
     #Else
 
-        If FPSFLAG Then Call DrawFont("FPS: " & FPS, 740, 260, D3DColorRGBA(255, 255, 255, 160))
+        If FPSFLAG Then Call DrawFont("     " & FPS, 740, 290, D3DColorRGBA(101, 209, 238, 160))
     #End If
 
 End Sub
@@ -3409,16 +3415,18 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 frmMain.BarraHechiz.Visible = False
                 frmMain.invHechisos.Visible = False
                 'frmMain.Menu.Visible = False
+                'Helios Barras
                 frmMain.bar_salud(0).Visible = False
                 frmMain.bar_salud(1).Visible = False
                 frmMain.Bar_Mana(0).Visible = False
                 frmMain.Bar_Mana(1).Visible = False
                 frmMain.bar_sta.Visible = False
                 frmMain.bar_comida.Visible = False
+                'Fin Helios Barras
                 frmMain.picfondoinve.Visible = False
-                frmMain.Bar_Agua.Visible = False
-                frmMain.Experiencia.Visible = False
-                frmMain.PicInv.Visible = False
+                frmMain.Bar_Agua.Visible = False 'Helios Barras
+                frmMain.Experiencia.Visible = False 'Helios Barra exp
+                frmMain.picInv.Visible = False
                 frmMain.imgMiniMapa.Visible = False
                 frmMain.LanzarImg.Visible = False
                 Call RenderConectar
@@ -3426,7 +3434,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 '    Call CleanViewPort
             Else
                 'frmMain.picInv.Visible = True
-               ' frmMain.imgMiniMapa.Visible = True
+                ' frmMain.imgMiniMapa.Visible = True
 
                 frmMain.Experiencia.Visible = True
                 ' frmMain.Menu.Visible = False

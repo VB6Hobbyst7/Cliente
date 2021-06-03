@@ -1,0 +1,26 @@
+Línea 3:no se puede crear la referencia: '{6A967C3A-24E5-47BD-9298-705322683301}#1.0#0'.
+Línea 316: la clase SocketWrenchCtl.SocketWrench del control SocketWrench1 no era una clase de control cargada.
+Línea 322: la clase SocketWrenchCtl.SocketWrench del control Socket1 no era una clase de control cargada.
+Línea 141: no se pudo establecer la propiedad Picture de picInv.
+Línea 179: no se pudo establecer la propiedad Picture de picHechiz.
+Línea 199: no se pudo establecer la propiedad Picture de BarraHechiz.
+Línea 291: no se pudo establecer la propiedad Picture de pConsola.
+Línea 319: el nombre de la propiedad _cx de SocketWrench1 no es válido.
+Línea 320: el nombre de la propiedad _cy de SocketWrench1 no es válido.
+Línea 325: el nombre de la propiedad _cx de Socket1 no es válido.
+Línea 326: el nombre de la propiedad _cy de Socket1 no es válido.
+Línea 329: no se pudo establecer la propiedad Picture de BarraConsola.
+Línea 354: no se pudo establecer la propiedad Picture de BarritaConsola.
+Línea 581: no se pudo establecer la propiedad Picture de btnHechizos.
+Línea 589: no se pudo establecer la propiedad Picture de btnInventario.
+Línea 598: no se pudo establecer la propiedad Picture de iBEXPE.
+Línea 626: no se pudo establecer la propiedad Picture de PicSeg.
+Línea 683: no se pudo establecer la propiedad MouseIcon de cmdMoverHechi.
+Línea 703: no se pudo establecer la propiedad MouseIcon de CmdLanzar.
+Línea 712: no se pudo establecer la propiedad MouseIcon de cmdInfo.
+Línea 748: no se pudo establecer la propiedad MouseIcon de Image1.
+Línea 757: no se pudo establecer la propiedad MouseIcon de Image1.
+Línea 811: no se pudo establecer la propiedad Picture de STAShp.
+Línea 825: no se pudo establecer la propiedad Picture de Hpshp.
+Línea 832: no se pudo establecer la propiedad Picture de COMIDAsp.
+Línea 839: no se pudo establecer la propiedad Picture de AGUAsp.
