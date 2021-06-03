@@ -1560,7 +1560,7 @@ Private Sub btnHechizos_Click()
     
     'btnHechizos.Picture = LoadPictureEX("btnHechizos_R.jpg")
     'btnInventario.Picture = LoadPictureEX("btnInventario.jpg")
-    BarraHechiz2.Visible = True
+    BarraHechiz.Visible = True
     lblItemInfo.Visible = False
 
 End Sub
@@ -1584,7 +1584,7 @@ Private Sub btnInventario_Click()
     
     'btnInventario.Picture = LoadPictureEX("btnInventario_R.jpg")
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
-    BarraHechiz2.Visible = False
+    BarraHechiz.Visible = False
     
     lblItemInfo.Visible = True
     
