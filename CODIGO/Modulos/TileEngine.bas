@@ -676,8 +676,8 @@ Sub ConvertCPtoTP(ByVal viewPortX As Integer, _
     'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
     '******************************************
 
-    tX = UserPos.X + viewPortX \ TilePixelWidth - WindowTileWidth \ 2
-    tY = UserPos.Y + viewPortY \ TilePixelHeight - WindowTileHeight \ 2
+    tX = UserPos.X + (viewPortX + 16) \ TilePixelWidth - WindowTileWidth \ 2
+    tY = UserPos.Y + (viewPortY + 16) \ TilePixelHeight - WindowTileHeight \ 2
 
     'frmMain.lblPosTest2.Caption = "X: " & tX & "; Y:" & tY
    
