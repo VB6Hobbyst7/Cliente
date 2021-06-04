@@ -491,7 +491,7 @@ Sub SetConnected()
     'Unload the connect form
     Unload frmCrearPersonaje
     
-    frmMain.label8.Caption = UserName
+    frmMain.Label8.Caption = UserName
     'Load main form
     frmMain.Visible = True
     

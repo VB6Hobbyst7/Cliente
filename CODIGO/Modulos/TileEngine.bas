@@ -2624,7 +2624,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
             If PosMapX > -1024 Then    'Dibujo primera columna
                 If PosMapY <= 0 And PosMapY > -1024 Then
-                    Call Engine_Render_Rectangle(256, 256, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), -PosMapX, -PosMapY, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), , , , 14763, Color, Color, Color, Color)
+                    Call Engine_Render_Rectangle(256, 256, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), -PosMapX, -PosMapY, 600 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), , , , 14763, Color, Color, Color, Color)
 
                 End If
 
@@ -2848,35 +2848,48 @@ Sub RenderScreen(ByVal TileX As Integer, _
         Call Engine_Render_Rectangle(257, 257, 1024, 782, 0, 0, 1024, 782, , , 0, 14941)
         
         Call Engine_Render_Rectangle(269, 255, 250, 250, 0, 0, 250, 250, , , 0, 14936) ' vida Helios
-        Call Engine_Render_Rectangle(919, 254, 76, 35, 0, 0, 76, 35, , , 0, 14954) 'user onlie Helios
-        Call Engine_Render_Rectangle(995, 254, 259, 36, 0, 0, 259, 36, , , 0, 14955) 'Menu Helios
+        Call Engine_Render_Rectangle(830, 254, 76, 35, 0, 0, 76, 35, , , 0, 14954) 'user onlie Helios
+        Call Engine_Render_Rectangle(908, 254, 343, 36, 0, 0, 343, 36, , , 0, 14955) 'Menu Helios
         Call Engine_Render_Rectangle(1248, 250, 34, 35, 0, 0, 34, 35, , , 0, 14953)
 
-        If frmMain.invHechisos.Visible = True Then
-            Call Engine_Render_Rectangle(1150, 620, 40, 45, 0, 0, 40, 45, , , 0, 14956)
+        If frmMain.imgMiniMapa.Visible = True Then
+            Call Engine_Render_Rectangle(1148, 290, 110, 111, 0, 0, 110, 111, , , 0, 14958) 'Marco Minimapa
 
         End If
 
-        'Call Engine_Render_Rectangle(262, 740, 41, 50, 0, 0, 41, 50, , , 0, 14940)
+        If frmMain.invHechisos.Visible = True Then
+            Call Engine_Render_Rectangle(1150, 620, 40, 45, 0, 0, 40, 45, , , 0, 14956) 'Lanzar Hechizos
+
+        End If
+        
+        If MostrarMenuInventario = True Then
+            Call Engine_Render_Rectangle(1183, 465, 75, 36, 0, 0, 75, 36, , , 0, 14957) ' Helios menu elegir inventario hechizos
+
+        End If
+
         'Call Engine_Render_Rectangle(262, 690, 50, 39, 0, 0, 50, 39, , , 0, 14942) ' engranaje
            
         Call DrawFont(CStr(UserLvl), 308, 292, D3DColorRGBA(255, 255, 0, 190))
         
         Call DrawFont(CStr(UserName), 297, 331, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
         
-        Call DrawFont("      " & CStr(UsersOn), 928, 268, D3DColorRGBA(240, 34, 37, 200)) 'Useron Helios
+        Call DrawFont("      " & CStr(UsersOn), 835, 268, D3DColorRGBA(240, 34, 37, 200)) 'Useron Helios
         
-        Call DrawFont("      " & CStr(Time), 1155, 265, D3DColorRGBA(101, 209, 238, 160)) 'Hora Helios
-        
-        If Zonas(ZonaActual).Segura = 1 Then
-            Call DrawFont(Zonas(ZonaActual).nombre, 1190, 410, D3DColorRGBA(0, 255, 0, 160))
-        Else
-            Call DrawFont(Zonas(ZonaActual).nombre, 1190, 410, D3DColorRGBA(255, 0, 0, 160))
+        Call DrawFont("      " & CStr(Time), 1157, 269, D3DColorRGBA(101, 209, 238, 160)) 'Hora Helios
+    
+        If frmMain.imgMiniMapa.Visible = True Then 'Helios escondo letras 04/06/2021 0:08
+            If Zonas(ZonaActual).Segura = 1 Then
+                Call DrawFont(Zonas(ZonaActual).nombre, 1194, 399, D3DColorRGBA(0, 255, 0, 160), True)
+            Else
+                Call DrawFont(Zonas(ZonaActual).nombre, 1194, 399, D3DColorRGBA(255, 0, 0, 160), True)
+
+            End If
+
+            ' Call DrawFont("Mapa: " & Zonas(ZonaActual).Mapa & "(X:" & UserPos.X & ", Y:" & UserPos.Y & ")", 1124, 425, D3DColorRGBA(255, 255, 255, 160))
+            Call DrawFont("(X:" & UserPos.X & ", Y:" & UserPos.Y & ")", 1194, 415, D3DColorRGBA(255, 255, 255, 160), True)
 
         End If
-              
-        ' Call DrawFont("Mapa: " & Zonas(ZonaActual).Mapa & "(X:" & UserPos.X & ", Y:" & UserPos.Y & ")", 1124, 425, D3DColorRGBA(255, 255, 255, 160))
-        Call DrawFont("(X:" & UserPos.X & ", Y:" & UserPos.Y & ")", 1150, 425, D3DColorRGBA(255, 255, 255, 160))
+
     #Else
 
         If FPSFLAG Then Call DrawFont("     " & FPS, 740, 290, D3DColorRGBA(101, 209, 238, 160))
@@ -3423,7 +3436,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 frmMain.bar_sta.Visible = False
                 frmMain.bar_comida.Visible = False
                 'Fin Helios Barras
-                frmMain.picfondoinve.Visible = False
+                'frmMain.picfondoinve.Visible = False Helios elije Menuinventario
                 frmMain.Bar_Agua.Visible = False 'Helios Barras
                 frmMain.Experiencia.Visible = False 'Helios Barra exp
                 frmMain.picInv.Visible = False
@@ -3443,7 +3456,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
                 frmMain.bar_sta.Visible = True
                 frmMain.bar_comida.Visible = True
-                frmMain.picfondoinve.Visible = True
+                'frmMain.picfondoinve.Visible = True
                 frmMain.Bar_Agua.Visible = True
 
                 Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX - 16, OffsetCounterY - 16)
