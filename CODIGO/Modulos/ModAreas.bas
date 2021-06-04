@@ -36,9 +36,9 @@ Option Explicit
 Public Const TilesBuffer As Byte = 4
 
 'LAS GUARDAMOS PARA PROCESAR LOS MPs y sabes si borrar personajes
-Public Const MargenX     As Integer = 13
+Public Const MargenX     As Integer = 16
 
-Public Const MargenY     As Integer = 11
+Public Const MargenY     As Integer = 12
 
 Public Sub CambioDeArea(ByVal X As Integer, ByVal Y As Integer, ByVal Head As Byte)
 

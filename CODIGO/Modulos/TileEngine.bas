@@ -3446,7 +3446,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 frmMain.picfondoinve.Visible = True
                 frmMain.Bar_Agua.Visible = True
 
-                Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+                Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX - 16, OffsetCounterY - 16)
                 RenderConsola
 
                 ' Form1.BarraCir.ChangeDefaults UserPasarNivel, RGB(200, 15, 19), 0.25, 0.8, &H777777, "Times New Roman", RGB(255, 255, 255)
