@@ -511,6 +511,7 @@ Begin VB.Form frmMain2
          BorderStyle     =   0  'None
          Height          =   1498
          Left            =   13440
+         Picture         =   "frmMainN2.frx":61C6B
          ScaleHeight     =   1500
          ScaleMode       =   0  'User
          ScaleWidth      =   1100
@@ -553,7 +554,7 @@ Begin VB.Form frmMain2
          ForeColor       =   &H80000008&
          Height          =   5550
          Left            =   14490
-         Picture         =   "frmMainN2.frx":61C6B
+         Picture         =   "frmMainN2.frx":691DF
          ScaleHeight     =   370
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   38
@@ -568,11 +569,12 @@ Begin VB.Form frmMain2
          BorderStyle     =   0  'None
          Height          =   570
          Left            =   13920
-         Picture         =   "frmMainN2.frx":665F2
+         Picture         =   "frmMainN2.frx":6DB66
          ScaleHeight     =   570
          ScaleWidth      =   1125
          TabIndex        =   33
          Top             =   3135
+         Visible         =   0   'False
          Width           =   1125
          Begin VB.Label Lblmagia 
             BackStyle       =   0  'Transparent
@@ -771,7 +773,7 @@ Begin VB.Form frmMain2
       ForeColor       =   &H80000008&
       Height          =   1367
       Left            =   8880
-      Picture         =   "frmMainN2.frx":6A121
+      Picture         =   "frmMainN2.frx":71695
       ScaleHeight     =   91
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   18
@@ -797,7 +799,7 @@ Begin VB.Form frmMain2
          ForeColor       =   &H80000008&
          Height          =   105
          Left            =   30
-         Picture         =   "frmMainN2.frx":6B54B
+         Picture         =   "frmMainN2.frx":72ABF
          ScaleHeight     =   7
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   14
@@ -1267,7 +1269,8 @@ End Sub
 Private Sub bar_salud_DblClick(index As Integer)
 
     If index = 0 Then
-    'Helios Barras
+
+        'Helios Barras
         If bar_salud(1).Visible = True Then
             bar_salud(1).Visible = False
         Else
@@ -1733,7 +1736,6 @@ Public Sub SetRender(Full As Boolean)
         'pRender.Move 11, 133, Render_Width, Render_Height
         'End If
         
-        
     #Else
 
         If Full Then
@@ -2072,7 +2074,7 @@ End Sub
 
 Private Sub lblinve_Click()
 
-     Call Audio.PlayWave(SND_CLICKNEW)
+    Call Audio.PlayWave(SND_CLICKNEW)
      
     If invHechisos.Visible = True Then
         invHechisos.Visible = False
@@ -2080,17 +2082,20 @@ Private Sub lblinve_Click()
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
         LanzarImg.Visible = False
-        picfondoinve.Visible = True
+        'picfondoinve.Visible = True
         picInv.Visible = True
         
         Exit Sub
     Else
+
         If picInv.Visible = True Then
-            picfondoinve.Visible = False
+            'picfondoinve.Visible = False
             picInv.Visible = False
-        Exit Sub
+            Exit Sub
+
         End If
-        picfondoinve.Visible = True
+
+        'picfondoinve.Visible = True
         picInv.Visible = True
         Exit Sub
 
@@ -2101,12 +2106,12 @@ End Sub
 Private Sub lblinve_DblClick()
 
     If picInv2.Visible = True Then
-        picfondoinve.Visible = True
+        ' picfondoinve.Visible = True
         picInv2.Visible = False
         Exit Sub
     Else
 
-        picfondoinve.Visible = True
+        ' picfondoinve.Visible = True
         picInv2.Visible = True
         Exit Sub
 
@@ -2116,13 +2121,14 @@ End Sub
 
 Private Sub Lblmagia_Click()
 
-Call Audio.PlayWave(214)
+    Call Audio.PlayWave(214)
+
     If invHechisos.Visible = True Then
         invHechisos.Visible = False
         picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        picfondoinve.Visible = True
+        'picfondoinve.Visible = True
         LanzarImg.Visible = False
         
         Exit Sub
@@ -2141,8 +2147,6 @@ Call Audio.PlayWave(214)
     End If
 
 End Sub
-
-
 
 Private Sub pRender_KeyDown(KeyCode As Integer, Shift As Integer)
 
@@ -2351,8 +2355,8 @@ Private Sub pRender_KeyUp(KeyCode As Integer, Shift As Integer)
             Call ScreenCapture
         
         Case CustomKeys.BindedKey(eKeyType.mKeyToggleFPS)
-        'prue
-      '      FPSFLAG = Not FPSFLAG
+            'prue
+            '      FPSFLAG = Not FPSFLAG
             
         Case CustomKeys.BindedKey(eKeyType.mKeySalir)
             prgRun = False
@@ -2708,79 +2712,118 @@ Private Function InGameArea() As Boolean
 
 End Function
 
-
 Private Sub pRender_Click()
 
     If Conectar Then Exit Sub
     If Cartel Then Cartel = False
     
     'Helios 03/06/2021 "coordenadas del raton"
-    If MouseX > 1003 And MouseX < 1018 And MouseY > 6 And MouseY < 19 Then
+    If MouseX > 661 And MouseX < 681 And MouseY > 5 And MouseY < 25 Then
+        Call ImgLanzar_Click(2) 'Helios Clanes 04/06/2021
         Call Audio.PlayWave(SND_CLICKNEW)
-        Call WriteQuit
         Exit Sub
 
     End If
-
-    If MouseX > 897 And MouseX < 910 And MouseY > 7 And MouseY < 21 Then
-        Call ImgLanzar_Click(0) ' Opciones
-          Call Audio.PlayWave(SND_CLICKNEW)
-        Exit Sub
-
-    End If
-
-    If MouseX > 781 And MouseX < 799 And MouseY > 7 And MouseY < 24 Then
+    
+    If MouseX > 688 And MouseX < 712 And MouseY > 5 And MouseY < 25 Then
         Call ImgLanzar_Click(1) ' Estadisticas
         Call Audio.PlayWave(SND_CLICKNEW)
         Exit Sub
 
     End If
-
-    If MouseX > 757 And MouseX < 772 And MouseY > 7 And MouseY < 22 Then
-        Call ImgLanzar_Click(2) ' Clanes
+    
+    'Mostrar el Minipa
+    If MouseX > 719 And MouseX < 739 And MouseY > 5 And MouseY < 25 Then
         Call Audio.PlayWave(SND_CLICKNEW)
+
+        If frmMain.imgMiniMapa.Visible = True Then
+            frmMain.imgMiniMapa.Visible = False
+            
+        Else
+            frmMain.imgMiniMapa.Visible = True
+              
+        End If
+
         Exit Sub
 
     End If
-
-    If MouseX > 840 And MouseX < 856 And MouseY > 7 And MouseY < 22 Then
+        
+    'Helios Misiones 04/06/2021
+    If MouseX > 749 And MouseX < 764 And MouseY > 5 And MouseY < 25 Then
         If pausa Then Exit Sub
         Call WriteQuestListRequest
         Call Audio.PlayWave(SND_CLICKNEW)
         Exit Sub
 
     End If
-
-    'Mostrar el Minipa
-    If MouseX > 812 And MouseX < 828 And MouseY > 7 And MouseY < 22 Then
-    Call Audio.PlayWave(SND_CLICKNEW)
-        If frmMain.imgMiniMapa.Visible = True Then
-            frmMain.imgMiniMapa.Visible = False
-            
-        Else
-            frmMain.imgMiniMapa.Visible = True
-
-        End If
-
+    
+    If MouseX > 774 And MouseX < 794 And MouseY > 5 And MouseY < 25 Then
+        Call Audio.PlayWave(SND_CLICKNEW)
+        Call ImgLanzar_Click(3) ' Helios PArty 04/06/2021
         Exit Sub
 
     End If
     
-    If MouseX > 866 And MouseX < 883 And MouseY > 7 And MouseY < 22 Then
-    Call Audio.PlayWave(SND_CLICKNEW)
-        Call ImgLanzar_Click(3) ' Clanes
+    If MouseX > 803 And MouseX < 824 And MouseY > 5 And MouseY < 25 Then
+        Call ImgLanzar_Click(0) ' Helios Opciones 04/06/2021
+        Call Audio.PlayWave(SND_CLICKNEW)
+        Exit Sub
+
+    End If
+    
+    If MouseX > 1003 And MouseX < 1018 And MouseY > 6 And MouseY < 19 Then
+        Call Audio.PlayWave(SND_CLICKNEW) ' Desconectar
+        Call WriteQuit
+        Exit Sub
+
+    End If
+
+    If MouseX > 828 And MouseX < 850 And MouseY > 5 And MouseY < 25 Then
+    If picInv.Visible = True Then Exit Sub
+    If picHechiz.Visible = True Then Exit Sub
+        ContarClip = ContarClip + 1
+
+        If ContarClip = 1 Then
+           
+            Call Audio.PlayWave(SND_CLICKNEW)
+            MostrarMenuInventario = True
+        Else
+            MostrarMenuInventario = False
+            ContarClip = 0
+
+        End If
+  
         Exit Sub
 
     End If
     
     If MouseX > 902 And MouseX < 925 And MouseY > 182 And MouseY < 1237 Then
         If frmMain.invHechisos.Visible = True Then
-        Call Audio.PlayWave(SND_CLICKNEW)
+            Call Audio.PlayWave(SND_CLICKNEW)
             Call Engine_Render_Rectangle(1150, 620, 40, 45, 0, 0, 40, 45, , , 0, 14956)
             Call LanzarImg_Click ' Lanzar Magia
 
         End If
 
+        Exit Sub
+
+    End If
+
+    If MouseX > 936 And MouseX < 960 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Inventrario
+        If picInv.Visible = True Then
+                
+            Call lblinve_DblClick
+        Else
+            Call lblinve_Click
+
+        End If
+
+        Exit Sub
+
+    End If
+
+    If MouseX > 968 And MouseX < 991 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Inventrario
+        Call Lblmagia_Click
         Exit Sub
 
     End If
@@ -2821,7 +2864,7 @@ Private Sub pRender_Click()
         End If
 
         Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
-        Debug.Print "Coordenada X: " & MouseX & " Coordenada Y: " & MouseY & " No se que es " & tX & " - " & tY
+        Debug.Print "Coordenada X: " & MouseX & " Coordenada Y: " & MouseY & " --- " & tX & " - " & tY
 
         If Not InGameArea() Then Exit Sub
         If Not InMapBounds(tX, tY) Then Exit Sub
@@ -3149,7 +3192,7 @@ End Sub
 
 Private Sub Form_Load()
     
-    frmMain.Caption = "AoYind 3"
+    'frmMain.Caption = "AoYind 3"
     'PanelDer.Picture = LoadPicture(App.path & _
      "\Graficos\Principalnuevo_sin_energia.jpg")
     

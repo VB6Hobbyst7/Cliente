@@ -152,6 +152,8 @@ Public Enum eEffects
 
 End Enum
 
+Public MostrarMenuInventario                      As Boolean
+
 Public ScreenShooterCapturePending                As Boolean
 
 Public FragShooterEsperandoLevel                  As Boolean
@@ -208,6 +210,8 @@ Public DummyCode()                                As Byte
 Public iServer                                    As Integer
 
 Public iCliente                                   As Integer
+
+Public ContarClip                                 As Long
 
 ''
 'The main timer of the game.
