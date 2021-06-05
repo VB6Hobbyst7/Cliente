@@ -28,12 +28,12 @@ Begin VB.Form frmMain2
    StartUpPosition =   2  'CenterScreen
    Begin MBProgressBar.ProgressBar bar_sta 
       Height          =   90
-      Left            =   1425
+      Left            =   1830
       TabIndex        =   26
-      Top             =   945
+      Top             =   840
       Visible         =   0   'False
-      Width           =   2100
-      _ExtentX        =   3704
+      Width           =   1590
+      _ExtentX        =   2805
       _ExtentY        =   159
       BorderStyle     =   0
       CaptionType     =   2
@@ -55,15 +55,15 @@ Begin VB.Form frmMain2
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar Bar_Mana 
-      Height          =   165
+      Height          =   150
       Index           =   0
-      Left            =   1425
+      Left            =   1830
       TabIndex        =   25
-      Top             =   630
+      Top             =   600
       Visible         =   0   'False
-      Width           =   2100
-      _ExtentX        =   3704
-      _ExtentY        =   291
+      Width           =   1590
+      _ExtentX        =   2805
+      _ExtentY        =   265
       BorderStyle     =   0
       CaptionType     =   2
       Value           =   50
@@ -84,19 +84,19 @@ Begin VB.Form frmMain2
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar bar_salud 
-      Height          =   180
+      Height          =   150
       Index           =   0
-      Left            =   1425
+      Left            =   1830
       TabIndex        =   24
-      Top             =   330
+      Top             =   360
       Visible         =   0   'False
-      Width           =   2100
-      _ExtentX        =   3704
-      _ExtentY        =   318
+      Width           =   1590
+      _ExtentX        =   2805
+      _ExtentY        =   265
       BorderStyle     =   0
       CaptionType     =   2
-      Value           =   50
-      Percentage      =   50
+      Value           =   100
+      Percentage      =   100
       Smooth          =   -1  'True
       TextColor       =   16777215
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -267,21 +267,21 @@ Begin VB.Form frmMain2
       Width           =   11820
    End
    Begin MBProgressBar.ProgressBar Experiencia 
-      Height          =   135
-      Left            =   840
+      Height          =   75
+      Left            =   4875
       TabIndex        =   22
-      Top             =   1620
+      Top             =   195
       Visible         =   0   'False
-      Width           =   2775
-      _ExtentX        =   4895
-      _ExtentY        =   238
+      Width           =   3720
+      _ExtentX        =   6562
+      _ExtentY        =   132
       BorderStyle     =   0
       Value           =   50
       Percentage      =   50
       Smooth          =   -1  'True
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
-         Size            =   8.25
+         Size            =   6
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -289,19 +289,19 @@ Begin VB.Form frmMain2
          Strikethrough   =   0   'False
       EndProperty
       BackPicture     =   "frmMainN2.frx":453FC
-      BarPicture      =   "frmMainN2.frx":4A844
+      BarPicture      =   "frmMainN2.frx":467B0
       TextAfterCaption=   "%"
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar Bar_Agua 
-      Height          =   435
-      Left            =   1770
+      Height          =   120
+      Left            =   1755
       TabIndex        =   27
-      Top             =   1125
+      Top             =   1005
       Visible         =   0   'False
-      Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   767
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   212
       BorderStyle     =   0
       CaptionType     =   2
       Value           =   50
@@ -319,19 +319,19 @@ Begin VB.Form frmMain2
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN2.frx":4FC8C
-      BarPicture      =   "frmMainN2.frx":5074C
+      BackPicture     =   "frmMainN2.frx":47B64
+      BarPicture      =   "frmMainN2.frx":48428
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar bar_comida 
-      Height          =   435
-      Left            =   2265
+      Height          =   120
+      Left            =   2235
       TabIndex        =   28
-      Top             =   1125
+      Top             =   1005
       Visible         =   0   'False
-      Width           =   480
-      _ExtentX        =   847
-      _ExtentY        =   767
+      Width           =   345
+      _ExtentX        =   609
+      _ExtentY        =   212
       BorderStyle     =   0
       CaptionType     =   2
       Value           =   50
@@ -348,8 +348,8 @@ Begin VB.Form frmMain2
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN2.frx":5120C
-      BarPicture      =   "frmMainN2.frx":51CCC
+      BackPicture     =   "frmMainN2.frx":48CEC
+      BarPicture      =   "frmMainN2.frx":495B0
       Style           =   1
    End
    Begin VB.PictureBox pRender 
@@ -358,7 +358,7 @@ Begin VB.Form frmMain2
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   11730
-      Left            =   -240
+      Left            =   0
       ScaleHeight     =   782
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   1024
@@ -398,7 +398,7 @@ Begin VB.Form frmMain2
          ForeColor       =   &H80000008&
          Height          =   2595
          Left            =   15090
-         Picture         =   "frmMainN2.frx":5278C
+         Picture         =   "frmMainN2.frx":49E74
          ScaleHeight     =   173
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   16
@@ -425,7 +425,7 @@ Begin VB.Form frmMain2
             ForeColor       =   &H80000008&
             Height          =   105
             Left            =   15
-            Picture         =   "frmMainN2.frx":5483E
+            Picture         =   "frmMainN2.frx":4BF26
             ScaleHeight     =   7
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   14
@@ -455,7 +455,7 @@ Begin VB.Form frmMain2
          ForeColor       =   &H80000008&
          Height          =   5550
          Left            =   13920
-         Picture         =   "frmMainN2.frx":549B4
+         Picture         =   "frmMainN2.frx":4C09C
          ScaleHeight     =   370
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   38
@@ -490,7 +490,7 @@ Begin VB.Form frmMain2
          BorderStyle     =   0  'None
          Height          =   3465
          Left            =   13965
-         Picture         =   "frmMainN2.frx":5933B
+         Picture         =   "frmMainN2.frx":50A23
          ScaleHeight     =   3465
          ScaleWidth      =   1140
          TabIndex        =   41
@@ -501,7 +501,7 @@ Begin VB.Form frmMain2
             Height          =   315
             Left            =   15
             MousePointer    =   99  'Custom
-            Picture         =   "frmMainN2.frx":5F1C8
+            Picture         =   "frmMainN2.frx":568B0
             Top             =   3375
             Visible         =   0   'False
             Width           =   1125
@@ -511,7 +511,7 @@ Begin VB.Form frmMain2
          BorderStyle     =   0  'None
          Height          =   1498
          Left            =   13440
-         Picture         =   "frmMainN2.frx":61C6B
+         Picture         =   "frmMainN2.frx":59353
          ScaleHeight     =   1500
          ScaleMode       =   0  'User
          ScaleWidth      =   1100
@@ -554,7 +554,7 @@ Begin VB.Form frmMain2
          ForeColor       =   &H80000008&
          Height          =   5550
          Left            =   14490
-         Picture         =   "frmMainN2.frx":691DF
+         Picture         =   "frmMainN2.frx":608C7
          ScaleHeight     =   370
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   38
@@ -569,7 +569,7 @@ Begin VB.Form frmMain2
          BorderStyle     =   0  'None
          Height          =   570
          Left            =   13920
-         Picture         =   "frmMainN2.frx":6DB66
+         Picture         =   "frmMainN2.frx":6524E
          ScaleHeight     =   570
          ScaleWidth      =   1125
          TabIndex        =   33
@@ -773,7 +773,7 @@ Begin VB.Form frmMain2
       ForeColor       =   &H80000008&
       Height          =   1367
       Left            =   8880
-      Picture         =   "frmMainN2.frx":71695
+      Picture         =   "frmMainN2.frx":68D7D
       ScaleHeight     =   91
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   18
@@ -799,7 +799,7 @@ Begin VB.Form frmMain2
          ForeColor       =   &H80000008&
          Height          =   105
          Left            =   30
-         Picture         =   "frmMainN2.frx":72ABF
+         Picture         =   "frmMainN2.frx":6A1A7
          ScaleHeight     =   7
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   14

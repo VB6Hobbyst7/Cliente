@@ -2869,9 +2869,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
         'Call Engine_Render_Rectangle(262, 690, 50, 39, 0, 0, 50, 39, , , 0, 14942) ' engranaje
            
-        Call DrawFont(CStr(UserLvl), 308, 292, D3DColorRGBA(255, 255, 0, 190))
+        Call DrawFont(CStr(UserLvl), 313, 295, D3DColorRGBA(255, 255, 0, 190))
         
-        Call DrawFont(CStr(UserName), 297, 331, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
+        Call DrawFont(CStr(UserName), 310, 336, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
         
         Call DrawFont("      " & CStr(UsersOn), 835, 268, D3DColorRGBA(240, 34, 37, 200)) 'Useron Helios
         
