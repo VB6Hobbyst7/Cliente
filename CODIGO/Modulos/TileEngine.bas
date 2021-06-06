@@ -1527,7 +1527,7 @@ Sub DrawGrhIndex(ByVal GrhIndex As Integer, _
         End If
         
         Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , , .FileNum, Color, Color, Color, Color)
-
+      
     End With
 
 End Sub

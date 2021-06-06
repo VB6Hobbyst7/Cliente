@@ -460,16 +460,20 @@ Public Sub Render(ByVal TileX As Integer, _
     Select Case Direccion
 
         Case east
-            Call DrawGrhIndex(5447, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+            Call DrawGrhIndex(5447, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'derecha
+            
 
         Case west
-            Call DrawGrhIndex(5446, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+            Call DrawGrhIndex(5446, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'isq
+            
 
         Case north
-            Call DrawGrhIndex(5497, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+            Call DrawGrhIndex(5497, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'arriba
+            
 
         Case south
-            Call DrawGrhIndex(5496, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+            Call DrawGrhIndex(5496, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'abajo
+            
 
     End Select
 

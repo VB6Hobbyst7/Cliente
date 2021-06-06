@@ -74,7 +74,7 @@ Public Sub RenderBarcos(ByVal X As Integer, _
 
         If Not Barco(I) Is Nothing Then
             If Barco(I).X = X And Barco(I).Y = Y Then
-                Call Barco(I).Render(TileX, TileY, PixelOffSetX, PixelOffSetY)
+                Call Barco(I).Render(TileX - 4, TileY - 5, PixelOffSetX, PixelOffSetY)
 
             End If
 
