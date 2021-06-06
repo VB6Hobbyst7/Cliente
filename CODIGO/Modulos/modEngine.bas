@@ -789,8 +789,8 @@ Public Sub RenderUserDieBlood()
     End If
     
     Color = D3DColorRGBA(255, 255, 255, AlphaBloodUserDie)
-
-    Call Engine_Render_D3DXSprite(400, 325, 1024, 768, 0, 0, Color, 4011, 0)
+        'helios Grafico Muerto 06/06/2021
+    Call Engine_Render_D3DXSprite(500, 330, 1024, 768, 0, 0, Color, 4011, 0)
 
 End Sub
 

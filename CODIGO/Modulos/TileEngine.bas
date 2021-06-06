@@ -2449,10 +2449,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
                 End If
 
                 ColorLluvia = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 140)
-
-                For Y = 0 To 5
-                    For X = 0 To 6
-                        Call Engine_Render_Rectangle(LTLluvia(X), LTLluvia(Y), RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
+                    'fix Lluvia idea SenSui, Helios 06/06/2021
+                For Y = 0 To 6
+                    For X = 0 To 7
+                        Call Engine_Render_Rectangle(LTLluvia(X), LTLluvia(Y) + 40, RLluvia(iFrameIndex).Right + 30 - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
                     Next X
                 Next Y
 
