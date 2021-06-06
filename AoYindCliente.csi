@@ -19,7 +19,7 @@
 18=#P0#=mb	#P1#=HandleUpdateUserStats	#P2#=AoYindCliente/Protocol/HandleUpdateUserStats	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210604152605	#P7#=0	#P8#=16	.
 19=#P0#=mb	#P1#=ShowNextFrame	#P2#=AoYindCliente/Mod_TileEngine/ShowNextFrame	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210604152508	#P7#=0	#P8#=139	.
 20=#P0#=mb	#P1#=bar_salud_DblClick	#P2#=AoYindCliente/frmMain2/bar_salud_DblClick	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210604152425	#P7#=0	#P8#=6	.
-21=#P0#=mb	#P1#=pRender_Click	#P2#=AoYindCliente/frmMain2/pRender_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210604152237	#P7#=0	#P8#=67	.
+21=#P0#=mb	#P1#=pRender_Click	#P2#=AoYindCliente/frmMain2/pRender_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210606144433	#P7#=0	#P8#=121	.
 22=#P0#=mb	#P1#=Lblmagia_Click	#P2#=AoYindCliente/frmMain2/Lblmagia_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210604003708	#P7#=0	#P8#=0	.
 23=#P0#=mb	#P1#=lblinve_DblClick	#P2#=AoYindCliente/frmMain2/lblinve_DblClick	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210604003504	#P7#=0	#P8#=0	.
 24=#P0#=mb	#P1#=lblinve_Click	#P2#=AoYindCliente/frmMain2/lblinve_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210604003450	#P7#=0	#P8#=0	.
@@ -62,7 +62,7 @@
 61=#P0#=mb	#P1#=imgCerrar_Click	#P2#=AoYindCliente/frmGuildAdm/imgCerrar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210603015921	#P7#=0	#P8#=1	.
 62=#P0#=mb	#P1#=Command2_Click	#P2#=AoYindCliente/frmOpciones/Command2_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210603015813	#P7#=0	#P8#=1	.
 63=#P0#=mb	#P1#=lblEXP_MouseMove	#P2#=AoYindCliente/frmMain2/lblEXP_MouseMove	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20210603014255	#P7#=0	#P8#=9	.
-64=#P0#=mb	#P1#=ImgLanzar_Click	#P2#=AoYindCliente/frmMain2/ImgLanzar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210603010016	#P7#=0	#P8#=1	.
+64=#P0#=mb	#P1#=ImgLanzar_Click	#P2#=AoYindCliente/frmMain2/ImgLanzar_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210606144248	#P7#=0	#P8#=40	.
 65=#P0#=mb	#P1#=ListView2_Click	#P2#=AoYindCliente/FrmQuests/ListView2_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210603005602	#P7#=0	#P8#=6	.
 66=#P0#=mb	#P1#=ParseUserCommand	#P2#=AoYindCliente/ProtocolCmdParse/ParseUserCommand	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210602233900	#P7#=0	#P8#=1668	.
 67=#P0#=mb	#P1#=AuxWriteWhisper	#P2#=AoYindCliente/ProtocolCmdParse/AuxWriteWhisper	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210602233844	#P7#=0	#P8#=13	.
@@ -82,7 +82,7 @@
 81=#P0#=mb	#P1#=picHechiz_MouseDown	#P2#=AoYindCliente/frmMain2/picHechiz_MouseDown	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210602211701	#P7#=0	#P8#=3	.
 82=#P0#=mb	#P1#=WriteQuest	#P2#=AoYindCliente/Protocol/WriteQuest	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210602210024	#P7#=0	#P8#=0	.
 83=#P0#=mb	#P1#=LoadDefaults	#P2#=AoYindCliente/clsCustomKeys/LoadDefaults	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210602203351	#P7#=0	#P8#=30	.
-84=#P0#=mb	#P1#=HandleQuestListSend	#P2#=AoYindCliente/Protocol/HandleQuestListSend	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210602172918	#P7#=0	#P8#=0	.
+84=#P0#=mb	#P1#=HandleQuestListSend	#P2#=AoYindCliente/Protocol/HandleQuestListSend	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210606143237	#P7#=0	#P8#=51	.
 85=#P0#=mb	#P1#=HandleUsersOnline	#P2#=AoYindCliente/Protocol/HandleUsersOnline	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210602155101	#P7#=0	#P8#=24	.
 86=#P0#=mb	#P1#=InitDebug	#P2#=AoYindCliente/Paquetes/InitDebug	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210602155019	#P7#=0	#P8#=106	.
 87=#P0#=mb	#P1#=HandleQuit	#P2#=AoYindCliente/Protocol/HandleQuit	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210602013726	#P7#=0	#P8#=21	.

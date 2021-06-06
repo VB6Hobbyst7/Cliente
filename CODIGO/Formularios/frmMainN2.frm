@@ -2732,7 +2732,7 @@ Private Sub pRender_Click()
 
     End If
     
-    'Mostrar el Minipa
+    'Mostrar el Minipa helios 06/06/2021
     If MouseX > 719 And MouseX < 739 And MouseY > 5 And MouseY < 25 Then
         Call Audio.PlayWave(SND_CLICKNEW)
 
@@ -2740,6 +2740,7 @@ Private Sub pRender_Click()
             frmMain.imgMiniMapa.Visible = False
             
         Else
+        
             frmMain.imgMiniMapa.Visible = True
               
         End If
@@ -2750,15 +2751,24 @@ Private Sub pRender_Click()
         
     'Helios Misiones 04/06/2021
     If MouseX > 749 And MouseX < 764 And MouseY > 5 And MouseY < 25 Then
+    Call Audio.PlayWave(SND_CLICKNEW)
         If pausa Then Exit Sub
+        'helios 06/06/2021
+        If FrmQuests.Visible = True Then Unload FrmQuests: Exit Sub
         Call WriteQuestListRequest
-        Call Audio.PlayWave(SND_CLICKNEW)
+        
         Exit Sub
+        
+        
+        
+        
 
     End If
     
     If MouseX > 774 And MouseX < 794 And MouseY > 5 And MouseY < 25 Then
         Call Audio.PlayWave(SND_CLICKNEW)
+        'helios 06/06/2021
+        If frmParty.Visible = True Then Unload frmParty: Exit Sub
         Call ImgLanzar_Click(3) ' Helios PArty 04/06/2021
         Exit Sub
 
@@ -2772,6 +2782,7 @@ Private Sub pRender_Click()
     End If
     
     If MouseX > 1003 And MouseX < 1018 And MouseY > 6 And MouseY < 19 Then
+    'helios 06/06/2021
         Call Audio.PlayWave(SND_CLICKNEW) ' Desconectar
         Call WriteQuit
         Exit Sub
@@ -2779,6 +2790,7 @@ Private Sub pRender_Click()
     End If
 
     If MouseX > 828 And MouseX < 850 And MouseY > 5 And MouseY < 25 Then
+    'helios 06/06/2021
     If picInv.Visible = True Then Exit Sub
     If picHechiz.Visible = True Then Exit Sub
         ContarClip = ContarClip + 1
@@ -2796,7 +2808,7 @@ Private Sub pRender_Click()
         Exit Sub
 
     End If
-    
+    'helios 06/06/2021
     If MouseX > 902 And MouseX < 925 And MouseY > 182 And MouseY < 1237 Then
         If frmMain.invHechisos.Visible = True Then
             Call Audio.PlayWave(SND_CLICKNEW)
@@ -2808,7 +2820,7 @@ Private Sub pRender_Click()
         Exit Sub
 
     End If
-
+    'helios 06/06/2021
     If MouseX > 936 And MouseX < 960 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Inventrario
         If picInv.Visible = True Then
                 
@@ -2821,7 +2833,7 @@ Private Sub pRender_Click()
         Exit Sub
 
     End If
-
+    'helios 06/06/2021
     If MouseX > 968 And MouseX < 991 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Inventrario
         Call Lblmagia_Click
         Exit Sub
@@ -3284,9 +3296,14 @@ Private Sub ImgLanzar_Click(index As Integer)
     Select Case index
 
         Case 0
+            'helios 06/06/2021
+            If frmOpciones.Visible = True Then Unload frmOpciones: Exit Sub
             Call frmOpciones.Show(vbModeless, frmMain)
             
         Case 1
+            'helios 06/06/2021
+            If frmEstadisticas.Visible = False Then
+            
             LlegaronAtrib = False
             LlegaronSkills = False
             LlegoFama = False
@@ -3304,13 +3321,18 @@ Private Sub ImgLanzar_Click(index As Integer)
             LlegaronAtrib = False
             LlegaronSkills = False
             LlegoFama = False
-        
+        Else
+        Unload frmEstadisticas
+        End If
         Case 2
-
+        'helios 06/06/2021
+            If frmGuildAdm.Visible = False Then
             If frmGuildLeader.Visible Then Unload frmGuildLeader
             
             Call WriteRequestGuildLeaderInfo
-
+            Else
+            Unload frmGuildAdm
+            End If
         Case 3
             Call WriteRequestPartyForm
 
