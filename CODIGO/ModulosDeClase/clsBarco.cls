@@ -49,7 +49,7 @@ Dim Puerto                     As Byte
 
 Dim CapitanIndex               As Integer
 
-Dim Pasajeros(0 To 4)          As Integer
+Dim Pasajeros(0 To 4)          As Integer ' cantidad de user en el barco
 
 Dim FactorBarco                As Single
 
@@ -155,13 +155,13 @@ Public Sub Init(ByVal Ruta As String, _
 
     'Capitan
     CapitanIndex = 10000 - Sentido
-    charlist(CapitanIndex).Body = BodyData(428)
-    charlist(CapitanIndex).Head = HeadData(502)
-    charlist(CapitanIndex).Alpha = 255
+'    charlist(CapitanIndex).Body = BodyData(428)
+'    charlist(CapitanIndex).Head = HeadData(502)
+'    charlist(CapitanIndex).Alpha = 255
 
     Pasajeros(0) = CapitanIndex
 
-    For I = 1 To 4
+    For I = 1 To 4 ' cantidad de user en el barco
         Pasajeros(I) = mPasajeros(I)
 
         If Pasajeros(I) = UserCharIndex And UserCharIndex > 0 Then
@@ -189,7 +189,7 @@ Public Sub Init(ByVal Ruta As String, _
     Call CalcularFactorBarco
 
     InitTick = (GetTickCount() And &H7FFFFFFF)
-
+  Call Actualizar(X, Y) 'Prueba
 End Sub
 
 Public Function Actualizar(ByVal X As Integer, ByVal Y As Integer) As Boolean
@@ -460,19 +460,20 @@ Public Sub Render(ByVal TileX As Integer, _
     Select Case Direccion
 
         Case east
-            Call DrawGrhIndex(5447, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'derecha
-            
+            'Call DrawGrhIndex(5447, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'derecha
+            Call DrawGrhIndex(30353, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'derecha
 
         Case west
-            Call DrawGrhIndex(5446, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'isq
-            
+            'Call DrawGrhIndex(5446, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'isq
+            Call DrawGrhIndex(30349, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'isq
 
         Case north
-            Call DrawGrhIndex(5497, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'arriba
-            
+            'Call DrawGrhIndex(5497, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'arriba
+            Call DrawGrhIndex(30357, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'arriba
 
         Case south
-            Call DrawGrhIndex(5496, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'abajo
+            'Call DrawGrhIndex(5497, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'abajo
+            Call DrawGrhIndex(30361, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'abajo
             
 
     End Select
@@ -513,7 +514,7 @@ Public Sub Render(ByVal TileX As Integer, _
         If index > 0 Then
             charlist(index).Heading = Direccion
             charlist(index).priv = 10
-            Call CharRender(charlist(index), index, OffX + AddX * IIf(I > 0 And (Direccion = east Or Direccion = west), 9.5 - I, 0), OffY + AddY * IIf(I > 0 And (Direccion = north Or Direccion = south), 6 - I, 0))
+            'Call CharRender(charlist(index), index, OffX + AddX * IIf(I > 0 And (Direccion = east Or Direccion = west), 9.5 - I, 0), OffY + AddY * IIf(I > 0 And (Direccion = north Or Direccion = south), 6 - I, 0))
 
         End If
 

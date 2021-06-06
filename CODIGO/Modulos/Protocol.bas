@@ -1602,7 +1602,7 @@ Private Sub HandleShowBarco()
 
     Dim Sentido           As Byte
 
-    Dim Pasajeros(1 To 4) As Integer
+    Dim Pasajeros(1 To 4) As Integer ' cantidad de user en el barco
 
     Dim I                 As Integer
 
@@ -1617,7 +1617,7 @@ Private Sub HandleShowBarco()
     
     Debug.Print "Paquete Barco"
     
-    For I = 1 To 4
+    For I = 1 To 4 ' cantidad de user en el barco
         Pasajeros(I) = incomingData.ReadInteger()
         Body = incomingData.ReadInteger()
         Head = incomingData.ReadInteger()
@@ -1719,7 +1719,7 @@ Private Sub HandleAgregarPasajero()
         charlist(CharIndex).Casco = CascoAnimData(Casco)
         charlist(CharIndex).Arma = WeaponAnimData(2)
         charlist(CharIndex).Escudo = ShieldAnimData(2)
-    
+
         Call Barco(Sentido).AgregarPasajero(Lugar, CharIndex)
 
     End If

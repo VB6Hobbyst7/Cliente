@@ -2871,11 +2871,14 @@ Sub RenderScreen(ByVal TileX As Integer, _
            
         Call DrawFont(CStr(UserLvl), 313, 295, D3DColorRGBA(255, 255, 0, 190))
         
-        Call DrawFont(CStr(UserName), 310, 336, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
+        Call DrawFont(CStr(UserName), 310, 344, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
         
         Call DrawFont("      " & CStr(UsersOn), 835, 268, D3DColorRGBA(240, 34, 37, 200)) 'Useron Helios
         
-        Call DrawFont("      " & CStr(Time), 1157, 269, D3DColorRGBA(101, 209, 238, 160)) 'Hora Helios
+       ' Call Engine_Render_Rectangle(1150, 450, 32, 32, 0, 0, 32, 32, , , 0, 510) ' ORO Helios
+        Call DrawFont(" " & CStr(UserGLD), 430, 344, D3DColorRGBA(256, 239, 239, 160), True) 'ORO Helios
+        
+        Call DrawFont("      " & CStr(Time), 1157, 270, D3DColorRGBA(101, 209, 238, 160)) 'Hora Helios
     
         If frmMain.imgMiniMapa.Visible = True Then 'Helios escondo letras 04/06/2021 0:08
             If Zonas(ZonaActual).Segura = 1 Then
