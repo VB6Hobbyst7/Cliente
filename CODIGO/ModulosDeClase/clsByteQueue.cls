@@ -236,7 +236,7 @@ End Function
 ' @see NOT_ENOUGH_DATA
 
 Private Function ReadData(ByRef buf() As Byte, ByVal dataLength As Long) As Long
-
+ 
     '***************************************************
     'Autor: Juan Martín Sotuyo Dodero (Maraxus)
     'Last Modification: 04/27/06
