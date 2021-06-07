@@ -1629,7 +1629,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    picture1.Visible = True
+    Picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -2169,7 +2169,7 @@ Private Sub Lblmagia_Click()
         picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        picture1.Visible = False
+        Picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2181,7 +2181,7 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         picHechiz.Visible = True
-        picture1.Visible = True
+        Picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         'LanzarImg.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & "14956.png", , , , , True)
@@ -2829,6 +2829,10 @@ Private Sub pRender_Click()
             CTextos = CTextos + 1
     If CTextos = 1 Then
         sintextos = False
+        Dim a As Byte
+        For a = 1 To 6
+        Call ShowConsoleMsg(" ", , , , , 0)
+        Next a
     Else
     sintextos = True
     CTextos = 0

@@ -829,11 +829,18 @@ Sub AddtoRichPicture(ByVal Text As String, _
 
     'lo pongo aca, para q no tengan q andar cambiando todo
     'osea, si tienen consola de arriba, el richtextbox, no agan esto
-    If sintextos = False Then frmMain.ReDrawConsola: Exit Sub
+    If sintextos = False Then
+  
+    'frmMain.ReDrawConsola
+
+    GoTo a
+    Exit Sub
+    
+    End If
     #If RenderFull = 0 Then
 
         If Left(Text, 1) = " " Then Exit Sub
-
+a:
         Dim I As Byte
 
         For I = 2 To MaxLineas
@@ -1011,7 +1018,7 @@ Sub Main()
     #Else
         Set frmMain = frmMain1
     #End If
-    sintextos = False
+    sintextos = True
     If FileExist(App.path & "\Init\Config.ini", vbNormal) Then
         Call ReadConfig
     Else
@@ -1196,7 +1203,7 @@ Sub Main()
     DialogosClanes.CantidadDialogos = mOpciones.DialogCantMessages
 
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(frmMain.PicInv, 1, 10, MAX_INVENTORY_SLOTS, True)
+    Call Inventario.Initialize(frmMain.picInv, 1, 10, MAX_INVENTORY_SLOTS, True)
 
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.55
     DoEvents
@@ -1422,6 +1429,8 @@ Public Sub ShowSendTxt()
     If Not frmCantidad.Visible Then
         frmMain.SendTxt.Visible = True
         frmMain.SendTxt.SetFocus
+
+        
 
     End If
 
