@@ -2449,7 +2449,8 @@ Sub RenderScreen(ByVal TileX As Integer, _
                 End If
 
                 ColorLluvia = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 140)
-                    'fix Lluvia idea SenSui, Helios 06/06/2021
+
+                'fix Lluvia idea SenSui, Helios 06/06/2021
                 For Y = 0 To 6
                     For X = 0 To 7
                         Call Engine_Render_Rectangle(LTLluvia(X), LTLluvia(Y) + 40, RLluvia(iFrameIndex).Right + 30 - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
@@ -2845,11 +2846,21 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
         If FPSFLAG Then Call DrawFont("FPS: ", 740, 290, D3DColorRGBA(240, 34, 37, 200))
         If FPSFLAG Then Call DrawFont("        " & FPS, 740, 290, D3DColorRGBA(101, 209, 238, 160))
+        
         Call Engine_Render_Rectangle(257, 257, 1024, 782, 0, 0, 1024, 782, , , 0, 14941)
         
-        Call Engine_Render_Rectangle(269, 255, 250, 250, 0, 0, 250, 250, , , 0, 14936) ' vida Helios
+        If MmenuBarras = True Then
+            Call Engine_Render_Rectangle(269, 255, 250, 250, 0, 0, 250, 250, , , 0, 14936) ' vida Helios
+            Call DrawFont(CStr(UserLvl), 313, 295, D3DColorRGBA(255, 255, 0, 190)) 'Helios UserNivel
+            Call DrawFont(CStr(UserName), 310, 344, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
+            Call DrawFont(" " & CStr(UserGLD), 430, 344, D3DColorRGBA(256, 239, 239, 160), True) 'ORO Helios
+
+        End If
+
         Call Engine_Render_Rectangle(830, 254, 76, 35, 0, 0, 76, 35, , , 0, 14954) 'user onlie Helios
+        
         Call Engine_Render_Rectangle(908, 254, 343, 36, 0, 0, 343, 36, , , 0, 14955) 'Menu Helios
+        
         Call Engine_Render_Rectangle(1248, 250, 34, 35, 0, 0, 34, 35, , , 0, 14953)
 
         If frmMain.imgMiniMapa.Visible = True Then
@@ -2858,7 +2869,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         End If
 
         If frmMain.invHechisos.Visible = True Then
-            Call Engine_Render_Rectangle(1150, 620, 40, 45, 0, 0, 40, 45, , , 0, 14956) 'Lanzar Hechizos
+            Call Engine_Render_Rectangle(1150, 620, 40, 45, 0, 0, 40, 45, , , 0, 14817) 'Lanzar Hechizos
 
         End If
         
@@ -2868,15 +2879,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
         End If
 
         'Call Engine_Render_Rectangle(262, 690, 50, 39, 0, 0, 50, 39, , , 0, 14942) ' engranaje
-           
-        Call DrawFont(CStr(UserLvl), 313, 295, D3DColorRGBA(255, 255, 0, 190))
-        
-        Call DrawFont(CStr(UserName), 310, 344, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
         
         Call DrawFont("      " & CStr(UsersOn), 835, 268, D3DColorRGBA(240, 34, 37, 200)) 'Useron Helios
         
-       ' Call Engine_Render_Rectangle(1150, 450, 32, 32, 0, 0, 32, 32, , , 0, 510) ' ORO Helios
-        Call DrawFont(" " & CStr(UserGLD), 430, 344, D3DColorRGBA(256, 239, 239, 160), True) 'ORO Helios
+        ' Call Engine_Render_Rectangle(1150, 450, 32, 32, 0, 0, 32, 32, , , 0, 510) ' ORO Helios
         
         Call DrawFont("      " & CStr(Time), 1157, 270, D3DColorRGBA(101, 209, 238, 160)) 'Hora Helios
     
@@ -3430,6 +3436,8 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 frmMain.picHechiz.Visible = False
                 frmMain.BarraHechiz.Visible = False
                 frmMain.invHechisos.Visible = False
+                frmMain.cmdinfo.Visible = False
+                frmMain.Picture1.Visible = False
                 'frmMain.Menu.Visible = False
                 'Helios Barras
                 frmMain.bar_salud(0).Visible = False
@@ -3454,13 +3462,13 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
                 frmMain.Experiencia.Visible = True
                 ' frmMain.Menu.Visible = False
-                frmMain.bar_salud(0).Visible = True
-                frmMain.Bar_Mana(0).Visible = True
-
-                frmMain.bar_sta.Visible = True
-                frmMain.bar_comida.Visible = True
-                'frmMain.picfondoinve.Visible = True
-                frmMain.Bar_Agua.Visible = True
+'                frmMain.bar_salud(0).Visible = True
+'                frmMain.Bar_Mana(0).Visible = True
+'
+'                frmMain.bar_sta.Visible = True
+'                frmMain.bar_comida.Visible = True
+'                'frmMain.picfondoinve.Visible = True
+'                frmMain.Bar_Agua.Visible = True
 
                 Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX - 16, OffsetCounterY - 16)
                 RenderConsola

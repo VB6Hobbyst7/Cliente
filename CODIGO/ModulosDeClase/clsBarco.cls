@@ -155,9 +155,9 @@ Public Sub Init(ByVal Ruta As String, _
 
     'Capitan
     CapitanIndex = 10000 - Sentido
-'    charlist(CapitanIndex).Body = BodyData(428)
-'    charlist(CapitanIndex).Head = HeadData(502)
-'    charlist(CapitanIndex).Alpha = 255
+    '    charlist(CapitanIndex).Body = BodyData(428)
+    '    charlist(CapitanIndex).Head = HeadData(502)
+    '    charlist(CapitanIndex).Alpha = 255
 
     Pasajeros(0) = CapitanIndex
 
@@ -189,7 +189,8 @@ Public Sub Init(ByVal Ruta As String, _
     Call CalcularFactorBarco
 
     InitTick = (GetTickCount() And &H7FFFFFFF)
-  Call Actualizar(X, Y) 'Prueba
+    Call Actualizar(X, Y) 'Prueba
+
 End Sub
 
 Public Function Actualizar(ByVal X As Integer, ByVal Y As Integer) As Boolean
@@ -474,7 +475,6 @@ Public Sub Render(ByVal TileX As Integer, _
         Case south
             'Call DrawGrhIndex(5497, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'abajo
             Call DrawGrhIndex(30361, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'abajo
-            
 
     End Select
 

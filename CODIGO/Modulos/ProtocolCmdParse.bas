@@ -1992,6 +1992,7 @@ Public Sub ShowConsoleMsg(ByVal Message As String, _
     'Last Modification: 01/03/07
     '
     '***************************************************
+    If sintextos = False Then Exit Sub
     Call AddtoRichPicture(Message, red, green, blue, bold, italic)
 
 End Sub
