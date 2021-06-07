@@ -1,9 +1,9 @@
 [History]
-1=#P0#=mb	#P1#=ShowSendTxt	#P2#=AoYindCliente/Mod_General/ShowSendTxt	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607211806	#P7#=0	#P8#=0	.
-2=#P0#=mb	#P1#=ClosePj	#P2#=AoYindCliente/Mod_General/ClosePj	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607211609	#P7#=0	#P8#=27	.
-3=#P0#=mb	#P1#=AddtoRichPicture	#P2#=AoYindCliente/Mod_General/AddtoRichPicture	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607211902	#P7#=0	#P8#=10	.
-4=#P0#=mb	#P1#=RenderConsola	#P2#=AoYindCliente/Mod_TileEngine/RenderConsola	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607210628	#P7#=0	#P8#=7	.
-5=#P0#=mb	#P1#=pRender_Click	#P2#=AoYindCliente/frmMain2/pRender_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210607210341	#P7#=0	#P8#=71	.
+1=#P0#=mb	#P1#=AddtoRichPicture	#P2#=AoYindCliente/Mod_General/AddtoRichPicture	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607222428	#P7#=0	#P8#=10	.
+2=#P0#=mb	#P1#=pRender_Click	#P2#=AoYindCliente/frmMain2/pRender_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210607221652	#P7#=0	#P8#=81	.
+3=#P0#=mb	#P1#=ShowSendTxt	#P2#=AoYindCliente/Mod_General/ShowSendTxt	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607211806	#P7#=0	#P8#=0	.
+4=#P0#=mb	#P1#=ClosePj	#P2#=AoYindCliente/Mod_General/ClosePj	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607211609	#P7#=0	#P8#=27	.
+5=#P0#=mb	#P1#=RenderConsola	#P2#=AoYindCliente/Mod_TileEngine/RenderConsola	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607210628	#P7#=0	#P8#=7	.
 6=#P0#=mb	#P1#=RenderScreen	#P2#=AoYindCliente/Mod_TileEngine/RenderScreen	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607201919	#P7#=0	#P8#=838	.
 7=#P0#=mb	#P1#=Form_Load	#P2#=AoYindCliente/frmMain2/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20210607172420	#P7#=0	#P8#=11	.
 8=#P0#=mb	#P1#=ShowConsoleMsg	#P2#=AoYindCliente/ProtocolCmdParse/ShowConsoleMsg	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20210607163541	#P7#=0	#P8#=11	.

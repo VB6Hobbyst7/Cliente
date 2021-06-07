@@ -1619,8 +1619,8 @@ Private Sub btnInventario_Click()
     cmdMoverHechi(0).Visible = True
     cmdMoverHechi(1).Visible = True
     
-'    cmdMoverHechi(0).Enabled = False
-'    cmdMoverHechi(1).Enabled = False
+    '    cmdMoverHechi(0).Enabled = False
+    '    cmdMoverHechi(1).Enabled = False
     
     'btnInventario.Visible = False
     'btnHechizos.Visible = True
@@ -1629,7 +1629,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    Picture1.Visible = True
+    picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -2169,7 +2169,7 @@ Private Sub Lblmagia_Click()
         picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        Picture1.Visible = False
+        picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2181,7 +2181,7 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         picHechiz.Visible = True
-        Picture1.Visible = True
+        picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         'LanzarImg.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & "14956.png", , , , , True)
@@ -2826,17 +2826,24 @@ Private Sub pRender_Click()
     End If
     
     If MouseX > 854 And MouseX < 878 And MouseY > 5 And MouseY < 25 Then
-            CTextos = CTextos + 1
-    If CTextos = 1 Then
-        sintextos = False
-        Dim a As Byte
-        For a = 1 To 6
-        Call ShowConsoleMsg(" ", , , , , 0)
-        Next a
-    Else
-    sintextos = True
-    CTextos = 0
-    End If
+        CTextos = CTextos + 1
+
+        If CTextos = 1 Then
+            sintextos = False
+
+            Dim a As Byte
+
+            For a = 1 To 6
+                Call ShowConsoleMsg(" ", , , , , 0)
+            Next a
+
+        Else
+       
+            sintextos = True
+            CTextos = 0
+
+        End If
+
     End If
     
     'helios esconder Barras 07/06/2021
@@ -2911,27 +2918,28 @@ Private Sub pRender_Click()
 
     'helios 06/06/2021
     If ContarClip = 1 Then
-    If MouseX > 936 And MouseX < 960 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Inventrario
-        If picInv.Visible = True Then
+        If MouseX > 936 And MouseX < 960 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Inventrario
+            If picInv.Visible = True Then
                 
-            Call lblinve_DblClick
-        Else
-            Call lblinve_Click
+                Call lblinve_DblClick
+            Else
+                Call lblinve_Click
 
-        End If
+            End If
 
-        Exit Sub
+            Exit Sub
+
         End If
 
     End If
 
     'helios 06/06/2021
     If ContarClip = 1 Then
-    If MouseX > 968 And MouseX < 991 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Magia
-        Call Lblmagia_Click
-        Exit Sub
+        If MouseX > 968 And MouseX < 991 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Magia
+            Call Lblmagia_Click
+            Exit Sub
 
-    End If
+        End If
     
     End If
 

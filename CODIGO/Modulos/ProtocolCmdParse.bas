@@ -1987,6 +1987,7 @@ Public Sub ShowConsoleMsg(ByVal Message As String, _
                           Optional ByVal blue As Integer = 255, _
                           Optional ByVal bold As Boolean = False, _
                           Optional ByVal italic As Boolean = False)
+
     '***************************************************
     'Author: Nicolas Matias Gonzalez (NIGO)
     'Last Modification: 01/03/07

@@ -491,7 +491,7 @@ Sub SetConnected()
     'Unload the connect form
     Unload frmCrearPersonaje
     
-    frmMain.label8.Caption = UserName
+    frmMain.Label8.Caption = UserName
     'Load main form
     frmMain.Visible = True
     
@@ -830,17 +830,18 @@ Sub AddtoRichPicture(ByVal Text As String, _
     'lo pongo aca, para q no tengan q andar cambiando todo
     'osea, si tienen consola de arriba, el richtextbox, no agan esto
     If sintextos = False Then
-  
-    'frmMain.ReDrawConsola
 
-    GoTo a
-    Exit Sub
-    
+        If Text > " " Then Exit Sub ' compruebo si el texto es mayo a un espacio no imprime  :D
+        GoTo a ' imprime hasta 6 veces
+        Exit Sub
+
     End If
+
     #If RenderFull = 0 Then
 
         If Left(Text, 1) = " " Then Exit Sub
 a:
+
         Dim I As Byte
 
         For I = 2 To MaxLineas
@@ -1019,6 +1020,7 @@ Sub Main()
         Set frmMain = frmMain1
     #End If
     sintextos = True
+
     If FileExist(App.path & "\Init\Config.ini", vbNormal) Then
         Call ReadConfig
     Else
@@ -1429,8 +1431,6 @@ Public Sub ShowSendTxt()
     If Not frmCantidad.Visible Then
         frmMain.SendTxt.Visible = True
         frmMain.SendTxt.SetFocus
-
-        
 
     End If
 

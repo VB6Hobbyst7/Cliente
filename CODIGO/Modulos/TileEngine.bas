@@ -3462,13 +3462,13 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
                 frmMain.Experiencia.Visible = True
                 ' frmMain.Menu.Visible = False
-'                frmMain.bar_salud(0).Visible = True
-'                frmMain.Bar_Mana(0).Visible = True
-'
-'                frmMain.bar_sta.Visible = True
-'                frmMain.bar_comida.Visible = True
-'                'frmMain.picfondoinve.Visible = True
-'                frmMain.Bar_Agua.Visible = True
+                '                frmMain.bar_salud(0).Visible = True
+                '                frmMain.Bar_Mana(0).Visible = True
+                '
+                '                frmMain.bar_sta.Visible = True
+                '                frmMain.bar_comida.Visible = True
+                '                'frmMain.picfondoinve.Visible = True
+                '                frmMain.Bar_Agua.Visible = True
 
                 Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX - 16, OffsetCounterY - 16)
                 RenderConsola

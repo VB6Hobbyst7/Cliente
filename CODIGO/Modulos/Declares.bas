@@ -152,7 +152,7 @@ Public Enum eEffects
 
 End Enum
 
-Public sintextos                                   As Boolean 'helios consola
+Public sintextos                                  As Boolean 'helios consola
 
 Public MostrarMenuInventario                      As Boolean 'helios 2/06/2021
 
@@ -220,6 +220,7 @@ Public ContarClip                                 As Long 'Helios 28/06/2021
 Public PulsarEsconder                             As Long 'Helios 07/06/2021
 
 Public CTextos                                    As Long 'helios 2/06/2021
+
 ''
 'The main timer of the game.
 Public MainTimer                                  As New clsTimer
