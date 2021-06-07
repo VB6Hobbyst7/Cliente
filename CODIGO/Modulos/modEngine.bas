@@ -374,7 +374,7 @@ Public Sub LiberarObjetosDX()
     Set D3DX = Nothing
     Set dX = Nothing
     Exit Sub
-fin:                                                         MsgBox "Error producido en Public Sub LiberarObjetosDX()"
+fin:                                                                         MsgBox "Error producido en Public Sub LiberarObjetosDX()"
 
 End Sub
 
@@ -789,7 +789,7 @@ Public Sub RenderUserDieBlood()
     End If
     
     Color = D3DColorRGBA(255, 255, 255, AlphaBloodUserDie)
-        'helios Grafico Muerto 06/06/2021
+    'helios Grafico Muerto 06/06/2021
     Call Engine_Render_D3DXSprite(500, 330, 1024, 768, 0, 0, Color, 4011, 0)
 
 End Sub

@@ -491,7 +491,7 @@ Sub SetConnected()
     'Unload the connect form
     Unload frmCrearPersonaje
     
-    frmMain.Label8.Caption = UserName
+    frmMain.label8.Caption = UserName
     'Load main form
     frmMain.Visible = True
     
@@ -829,6 +829,7 @@ Sub AddtoRichPicture(ByVal Text As String, _
 
     'lo pongo aca, para q no tengan q andar cambiando todo
     'osea, si tienen consola de arriba, el richtextbox, no agan esto
+    If sintextos = False Then frmMain.ReDrawConsola: Exit Sub
     #If RenderFull = 0 Then
 
         If Left(Text, 1) = " " Then Exit Sub
@@ -889,7 +890,7 @@ Sub AddtoRichPicture(ByVal Text As String, _
             Consola(nId).Color = RGB(red, green, blue)
             Consola(nId).bold = bold
             Consola(nId).italic = italic
-
+                
             If LineasConsola > 6 Then
                 OffSetConsola = LineasConsola - 6
                 frmMain.BarritaConsola.Top = 68
@@ -1010,7 +1011,7 @@ Sub Main()
     #Else
         Set frmMain = frmMain1
     #End If
-
+    sintextos = False
     If FileExist(App.path & "\Init\Config.ini", vbNormal) Then
         Call ReadConfig
     Else
@@ -1195,7 +1196,7 @@ Sub Main()
     DialogosClanes.CantidadDialogos = mOpciones.DialogCantMessages
 
     'Inicializamos el inventario gráfico
-    Call Inventario.Initialize(frmMain.picInv, 1, 10, MAX_INVENTORY_SLOTS, True)
+    Call Inventario.Initialize(frmMain.PicInv, 1, 10, MAX_INVENTORY_SLOTS, True)
 
     frmCargando.BProg.Width = frmCargando.BBProg.Width * 0.55
     DoEvents
