@@ -250,9 +250,9 @@ Public Sub Render()
         End With
 
     ElseIf Efecto = eEffects.Flecha1 Then
-        Call Engine_Render_Rectangle(vertsPoints(0).X + 256, vertsPoints(0).Y + 256, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
+        Call Engine_Render_Rectangle(vertsPoints(0).X, vertsPoints(0).Y, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
     ElseIf Efecto = eEffects.Bala Then
-        Call Engine_Render_Rectangle(vertsPoints(0).X + 256, vertsPoints(0).Y + 256, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
+        Call Engine_Render_Rectangle(vertsPoints(0).X, vertsPoints(0).Y, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
     
     End If
 

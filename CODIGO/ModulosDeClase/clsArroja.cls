@@ -223,8 +223,8 @@ Sub MovimientoInmo(TileX As Integer, _
     Ang2 = Ang2 + 0.06 * timerElapsedTime / 5
 
     'La posicion de la particulas siempre es relativa a su origen
-    Call Particulas.Move((Empieza.X - TileX + 12) * 32 + ScreenOffX, (Empieza.Y - TileY + 10) * 32 + ScreenOffY - 24)
-    Call Particulas2.Move((Empieza.X - TileX + 12) * 32 + ScreenOffX, (Empieza.Y - TileY + 10) * 32 + ScreenOffY - 24)
+    Call Particulas.Move((Empieza.X - TileX + 16) * 32 + ScreenOffX, (Empieza.Y - TileY + 13) * 32 + ScreenOffY - 24)
+    Call Particulas2.Move((Empieza.X - TileX + 16) * 32 + ScreenOffX, (Empieza.Y - TileY + 13) * 32 + ScreenOffY - 24)
     
     If Movimiento = 1 Then
 

@@ -40,7 +40,7 @@ Public Sub Render(TileX As Integer, _
     End If
 
     If X > 0 And Y > 0 Then
-        Call RenderTextCentered((X - TileX + 12) * 32 + ScreenOffX + OffX + 256 - 16, (Y - TileY + 8) * 32 + ScreenOffY + OffY + 256 + 16, Mensaje, D3DColorRGBA(R, G, b, Alpha))
+        Call RenderTextCentered((X - TileX + 12) * 32 + ScreenOffX + OffX - 16, (Y - TileY + 8) * 32 + ScreenOffY + OffY + 16, Mensaje, D3DColorRGBA(R, G, b, Alpha))
 
     End If
 

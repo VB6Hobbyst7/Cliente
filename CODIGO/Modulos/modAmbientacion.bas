@@ -239,7 +239,7 @@ Public Sub SetDayLight(Optional ByVal WithSound As Boolean = False)
     '    pHora = Hora
     
     frmMain.lblDIATEST.Caption = "Hora: " & Hora & " - " & "pHora: " & pHora & "-" & "Transp: " & luz_dia(pHora).R
-    
+   
     If WithSound = True Then
 
         Select Case luz_dia(Hora).R
@@ -260,6 +260,7 @@ Public Sub SetDayLight(Optional ByVal WithSound As Boolean = False)
 
     End If
 
+ Exit Sub
     IluRGB.R = luz_dia(Hora).R
     IluRGB.G = luz_dia(Hora).G
     IluRGB.b = luz_dia(Hora).b

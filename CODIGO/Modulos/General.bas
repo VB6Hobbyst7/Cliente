@@ -491,7 +491,7 @@ Sub SetConnected()
     'Unload the connect form
     Unload frmCrearPersonaje
     
-    frmMain.Label8.Caption = UserName
+    frmMain.label8.Caption = UserName
     'Load main form
     frmMain.Visible = True
     
@@ -1153,7 +1153,7 @@ Sub Main()
     DoEvents
     #If RenderFull = 0 Then
 
-        If Not InitTileEngine(frmMain.hwnd, frmMain.Top, frmMain.pRender.Left, 32, 32, Round(frmMain.pRender.Height / 32), Round(frmMain.pRender.Width / 32), 9, 9, 9, 0.018) Then
+        If Not InitTileEngine(frmMain.hwnd, frmMain.Top, frmMain.pRender.Left, 32, 32, 24, 32, 14, 9, 9, 0.018) Then
 
             Call CloseClient
 

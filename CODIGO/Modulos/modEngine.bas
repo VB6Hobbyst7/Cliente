@@ -438,8 +438,8 @@ Public Sub Engine_Render_D3DXSprite(ByVal X As Single, _
     End If
     
     'Set the translation (location on the screen)
-    v3.X = X - 256
-    v3.Y = Y - 256
+    v3.X = X
+    v3.Y = Y
 
     'Draw the sprite
     If TextureNum > 0 Then
@@ -495,8 +495,8 @@ Public Sub Engine_Render_D3DXTexture(ByVal X As Single, _
     End If
     
     'Set the translation (location on the screen)
-    v3.X = X - 256
-    v3.Y = Y - 256
+    v3.X = X
+    v3.Y = Y
 
     'Draw the sprite
     Sprite.Draw Texture, srcRect, SpriteScaleVector, v2, Degrees, v3, Light
@@ -553,10 +553,10 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
 
     'Perform in-bounds check if needed
     If InBoundsCheck Then
-        If X - 256 + SrcWidth <= 0 Then Exit Sub
-        If Y - 256 + SrcHeight <= 0 Then Exit Sub
-        If X - 256 >= frmMain.pRender.Width Then Exit Sub
-        If Y - 256 >= frmMain.pRender.Height Then Exit Sub
+        If X + SrcWidth <= 0 Then Exit Sub
+        If Y + SrcHeight <= 0 Then Exit Sub
+        If X >= frmMain.pRender.Width Then Exit Sub
+        If Y >= frmMain.pRender.Height Then Exit Sub
 
     End If
 
@@ -583,18 +583,18 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
 
         'To make things easy, we just do a completely separate calculation the top two points
         ' with an uncropped tU / tV algorithm
-        VertexArray(0).X = X - 256 + (Width * 0.5)
-        VertexArray(0).Y = Y - 256 - (Height * 0.5)
+        VertexArray(0).X = X + (Width * 0.5)
+        VertexArray(0).Y = Y - (Height * 0.5)
         VertexArray(0).tu = (srcX / SrcBitmapWidth)
         VertexArray(0).tv = (srcY / SrcBitmapHeight)
         
         VertexArray(1).X = VertexArray(0).X + Width
         VertexArray(1).tu = ((srcX + Width) / SrcBitmapWidth)
 
-        VertexArray(2).X = X - 256
+        VertexArray(2).X = X
         VertexArray(2).tu = (srcX / SrcBitmapWidth)
 
-        VertexArray(3).X = X - 256 + Width
+        VertexArray(3).X = X + Width
         VertexArray(3).tu = (srcX + SrcWidth + ShadowAdd) / SrcBitmapWidth
 
     Else
@@ -639,17 +639,17 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
         ShadowAdd = 1
 
         'Find the left side of the rectangle
-        VertexArray(0).X = X - 256
+        VertexArray(0).X = X
 
         If SrcBitmapWidth = 0 Then Exit Sub
         VertexArray(0).tu = (srcX / SrcBitmapWidth)
 
         'Find the top side of the rectangle
-        VertexArray(0).Y = Y - 256
+        VertexArray(0).Y = Y
         VertexArray(0).tv = (srcY / SrcBitmapHeight)
     
         'Find the right side of the rectangle
-        VertexArray(1).X = X - 256 + Width
+        VertexArray(1).X = X + Width
         VertexArray(1).tu = (srcX + SrcWidth + ShadowAdd) / SrcBitmapWidth
  
         'These values will only equal each other when not a shadow
@@ -659,7 +659,7 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
     End If
     
     'Find the bottom of the rectangle
-    VertexArray(2).Y = Y - 256 + Height
+    VertexArray(2).Y = Y + Height
     VertexArray(2).tv = (srcY + SrcHeight + ShadowAdd) / SrcBitmapHeight
 
     'Because this is a perfect rectangle, all of the values below will equal one of the values we already got
@@ -677,8 +677,8 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
         RadAngle = Degrees * DegreeToRadian
 
         'Set the CenterX and CenterY values
-        CenterX = X - 256 + (Width * 0.5)
-        CenterY = Y - 256 + (Height * 0.5)
+        CenterX = X + (Width * 0.5)
+        CenterY = Y + (Height * 0.5)
 
         'Pre-calculate the cosine and sine of the radiant
         SinRad = Sin(RadAngle)

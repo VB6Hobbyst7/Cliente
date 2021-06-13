@@ -454,8 +454,8 @@ Public Sub Render(ByVal TileX As Integer, _
 
     Dim OffY As Integer, AddY As Integer
 
-    X = (Pos.X - TileX + 11) * 32 + PixelOffSetX + 256 + BOffSetX
-    Y = (Pos.Y - TileY + 8) * 32 + PixelOffSetY + 256 + BOffSetY + 20
+    X = (Pos.X - TileX + 11) * 32 + PixelOffSetX + BOffSetX
+    Y = (Pos.Y - TileY + 8) * 32 + PixelOffSetY + BOffSetY + 20
 
     'Call DrawGrh(GrhBarco, X, Y, 1, 1, 0)
     Select Case Direccion

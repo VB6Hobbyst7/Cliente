@@ -505,8 +505,8 @@ Sub RenderConectar()
 
     If GTCPres < 4000 Then
         Color = D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 0, 220, 15))
-        Call Engine_Render_Rectangle(255 + 412, 255 + 284, 200, 200, 0, 0, 400, 400, , , 0, 14705, Color, Color, Color, Color)
-        Call Engine_Render_Rectangle(255 + 390, 255 + 340, 262, 402, 0, 0, 262, 402, , , 0, 14785, Color, Color, Color, Color)
+        Call Engine_Render_Rectangle(412, 284, 200, 200, 0, 0, 400, 400, , , 0, 14705, Color, Color, Color, Color)
+        Call Engine_Render_Rectangle(390, 340, 262, 402, 0, 0, 262, 402, , , 0, 14785, Color, Color, Color, Color)
 
     End If
 
@@ -545,10 +545,10 @@ Sub RenderConectar()
 
         End If
 
-        Call Engine_Render_D3DXSprite(255, 255, 1024, 768, 0, 0, D3DColorRGBA(tmpColor, tmpColor, tmpColor, CalcAlpha(GTCPres, 4000, 255, 15)), 14704, 0)
+        Call Engine_Render_D3DXSprite(0, 0, 1024, 768, 0, 0, D3DColorRGBA(tmpColor, tmpColor, tmpColor, CalcAlpha(GTCPres, 4000, 255, 15)), 14704, 0)
     
         tmpColor = D3DColorRGBA(255, 255, 255, 220 - CalcAlpha(GTCPres, 4000, 220, 15))
-        Call Engine_Render_Rectangle(255 + 412, 255 + 284 - a * (T ^ 2), 200, 200, 0, 0, 400, 400, , , 0, 14705, tmpColor, tmpColor, tmpColor, tmpColor)
+        Call Engine_Render_Rectangle(412, 284 - a * (T ^ 2), 200, 200, 0, 0, 400, 400, , , 0, 14705, tmpColor, tmpColor, tmpColor, tmpColor)
 
         Mueve = (T * 20) Mod 512
     
@@ -604,11 +604,11 @@ Sub RenderConectar()
                 End If
         
                 If I = AperturaPj Or I = -AperturaPj Then
-                    X = 255 + 497 + Cos(Angulo) * (497 - AperturaX / 2)
-                    Y = 255 + 412 + Sin(Angulo) * (147 - AperturaY / 3) - (AperturaY - 110) / 6
+                    X = 497 + Cos(Angulo) * (497 - AperturaX / 2)
+                    Y = 412 + Sin(Angulo) * (147 - AperturaY / 3) - (AperturaY - 110) / 6
                 Else
-                    X = 255 + 512 + Cos(Angulo) * AperturaX * 1.5
-                    Y = 255 + 450 + Sin(Angulo) * AperturaY * 1.5
+                    X = 512 + Cos(Angulo) * AperturaX * 1.5
+                    Y = 450 + Sin(Angulo) * AperturaY * 1.5
 
                 End If
         
@@ -633,14 +633,14 @@ Sub RenderConectar()
         'NIEBLA
         tmpColor = D3DColorRGBA(255, 200, 200, CalcAlpha(GTCPres, 4000, 165, 15))
     
-        Call Engine_Render_D3DXSprite(255, 255, 512 - Mueve, 512, Mueve, 0, tmpColor, 14706, 0)
-        Call Engine_Render_D3DXSprite(255, 767, 512 - Mueve, 256, Mueve, 0, tmpColor, 14706, 0)
+        Call Engine_Render_D3DXSprite(0, 0, 512 - Mueve, 512, Mueve, 0, tmpColor, 14706, 0)
+        Call Engine_Render_D3DXSprite(0, 512, 512 - Mueve, 256, Mueve, 0, tmpColor, 14706, 0)
     
-        Call Engine_Render_D3DXSprite(767 - Mueve, 255, 512, 512, 0, 0, tmpColor, 14706, 0)
-        Call Engine_Render_D3DXSprite(767 - Mueve, 767, 512, 256, 0, 0, tmpColor, 14706, 0)
+        Call Engine_Render_D3DXSprite(512 - Mueve, 0, 512, 512, 0, 0, tmpColor, 14706, 0)
+        Call Engine_Render_D3DXSprite(512 - Mueve, 512, 512, 256, 0, 0, tmpColor, 14706, 0)
     
-        Call Engine_Render_D3DXSprite(1279 - Mueve, 255, Mueve, 512, 0, 0, tmpColor, 14706, 0)
-        Call Engine_Render_D3DXSprite(1279 - Mueve, 767, Mueve, 256, 0, 0, tmpColor, 14706, 0)
+        Call Engine_Render_D3DXSprite(1024 - Mueve, 0, Mueve, 512, 0, 0, tmpColor, 14706, 0)
+        Call Engine_Render_D3DXSprite(1024 - Mueve, 512, Mueve, 256, 0, 0, tmpColor, 14706, 0)
     
         If MousePj > 0 Then
             If UBound(IntroChars) > 0 Then
@@ -717,9 +717,9 @@ Sub RenderConectar()
         
             If MostrarCrearCuenta = True Then
                 If T2 < 1 Then
-                    Call Engine_Render_D3DXSprite(570, 1023 - 388.5 * T2 + 263 / 2 * (T2 ^ 2), 400, 263, 0, 0, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, MostrarEntrar, 200, 4)), 14769, 0)
+                    Call Engine_Render_D3DXSprite(314, 768 - 388.5 * T2 + 263 / 2 * (T2 ^ 2), 400, 263, 0, 0, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, MostrarEntrar, 200, 4)), 14769, 0)
                 Else
-                    Call Engine_Render_D3DXSprite(570, 1023 - 272, 400, 263, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14769, 0)
+                    Call Engine_Render_D3DXSprite(314, 768 - 272, 400, 263, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14769, 0)
 
                     If frmMain.tUser.Visible = False Then
                         frmMain.tUser.Text = ""
@@ -760,14 +760,14 @@ Sub RenderConectar()
             Else
 
                 If T2 < 1 Then
-                    Call Engine_Render_D3DXSprite(255, 1023 + 14 - 388.5 * T2 + 259 / 2 * (T2 ^ 2), 1024, 259, 0, 177, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, MostrarEntrar, 200, 4)), 14703, 0)
+                    Call Engine_Render_D3DXSprite(0, 768 + 14 - 388.5 * T2 + 259 / 2 * (T2 ^ 2), 1024, 259, 0, 177, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, MostrarEntrar, 200, 4)), 14703, 0)
                 Else
-                    Call Engine_Render_D3DXSprite(255, 1023 + 14 - 259, 1024, 259, 0, 177, D3DColorRGBA(255, 255, 255, 200), 14703, 0)
+                    Call Engine_Render_D3DXSprite(0, 768 + 14 - 259, 1024, 259, 0, 177, D3DColorRGBA(255, 255, 255, 200), 14703, 0)
                 
                     If mOpciones.Recordar = True Then
-                        Call Engine_Render_D3DXSprite(870, 920 + 14, 37, 41, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14771, 0)
+                        Call Engine_Render_D3DXSprite(614, 664 + 14, 37, 41, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14771, 0)
                     Else
-                        Call Engine_Render_D3DXSprite(870, 920 + 14, 37, 41, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14770, 0)
+                        Call Engine_Render_D3DXSprite(614, 664 + 14, 37, 41, 0, 0, D3DColorRGBA(255, 255, 255, 200), 14770, 0)
 
                     End If
                 
@@ -801,7 +801,7 @@ Sub RenderConectar()
         
             If MostrarCrearCuenta = True Then
                 If T2 < 1 Then
-                    Call Engine_Render_D3DXSprite(570, 1023 - 263 + 388.5 * T2 - 263 / 2 * (T2 ^ 2), 400, 263, 0, 0, D3DColorRGBA(255, 255, 255, 200 - CalcAlpha(GTCPres, -MostrarEntrar, 200, 4)), 14769, 0)
+                    Call Engine_Render_D3DXSprite(314, 768 - 263 + 388.5 * T2 - 263 / 2 * (T2 ^ 2), 400, 263, 0, 0, D3DColorRGBA(255, 255, 255, 200 - CalcAlpha(GTCPres, -MostrarEntrar, 200, 4)), 14769, 0)
                 Else
                     MostrarCrearCuenta = False
                     MostrarEntrar = 0
@@ -822,7 +822,7 @@ Sub RenderConectar()
             Else
 
                 If T2 < 1 Then
-                    Call Engine_Render_D3DXSprite(255, 1023 - 259 + 388.5 * T2 - 259 / 2 * (T2 ^ 2), 800, 259, 0, 177, D3DColorRGBA(255, 255, 255, 200 - CalcAlpha(GTCPres, -MostrarEntrar, 200, 4)), 14703, 0)
+                    Call Engine_Render_D3DXSprite(0, 768 - 259 + 388.5 * T2 - 259 / 2 * (T2 ^ 2), 800, 259, 0, 177, D3DColorRGBA(255, 255, 255, 200 - CalcAlpha(GTCPres, -MostrarEntrar, 200, 4)), 14703, 0)
                 Else
                     MostrarEntrar = 0
                 
@@ -844,11 +844,11 @@ Sub RenderConectar()
         End If
     
         If T <= 4 Then
-            Call Engine_Render_D3DXSprite(255, 255 - 177 + Int(88.5 * T - 22.125 / 2 * (T ^ 2)), 1024, 177, 0, 0, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
-            Call Engine_Render_D3DXSprite(255, 1023 - Int(23 * T - 5.75 / 2 * (T ^ 2)), 1024, 47, 0, 436, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
+            Call Engine_Render_D3DXSprite(0, -177 + Int(88.5 * T - 22.125 / 2 * (T ^ 2)), 1024, 177, 0, 0, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
+            Call Engine_Render_D3DXSprite(0, 768 - Int(23 * T - 5.75 / 2 * (T ^ 2)), 1024, 47, 0, 436, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
         Else
-            Call Engine_Render_D3DXSprite(255, 255, 1024, 177, 0, 0, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
-            Call Engine_Render_D3DXSprite(255, 1023 - 34, 1024, 47, 0, 436, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
+            Call Engine_Render_D3DXSprite(0, 0, 1024, 177, 0, 0, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
+            Call Engine_Render_D3DXSprite(0, 768 - 34, 1024, 47, 0, 436, D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 4000, 255, 15)), 14703, 0)
 
         End If
     
