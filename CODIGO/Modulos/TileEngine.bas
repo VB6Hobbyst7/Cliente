@@ -35,7 +35,7 @@ Option Explicit
 
 Public OffSetConsola      As Byte
 
-Public Const ComienzoY    As Integer = 860
+Public Const ComienzoY    As Integer = 604
 
 Public UltimaLineavisible As Boolean
 
@@ -2371,14 +2371,16 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
      For Y = TileY - BufferY4 To TileY + BufferY4
         For X = TileX - BufferX4 To TileX + BufferX4
-            ScreenX = X - TileX + BufferX1
-            ScreenY = Y - TileY + BufferY1
-
-            'Layer 4 **********************************
-            If MapData(X, Y).Graphic(4).GrhIndex And bAlpha > 0 Then
-                'Draw
-                Call DrawGrhIndex(MapData(X, Y).Graphic(4).GrhIndex, ScreenX * TilePixelWidth + PixelOffSetX, ScreenY * TilePixelHeight + PixelOffSetY, 1, ColorTecho)
-
+            If X > 0 And Y > 0 And X <= MapInfo.Width And Y <= MapInfo.Height Then
+                ScreenX = X - TileX + BufferX1
+                ScreenY = Y - TileY + BufferY1
+    
+                'Layer 4 **********************************
+                If MapData(X, Y).Graphic(4).GrhIndex And bAlpha > 0 Then
+                    'Draw
+                    Call DrawGrhIndex(MapData(X, Y).Graphic(4).GrhIndex, ScreenX * TilePixelWidth + PixelOffSetX, ScreenY * TilePixelHeight + PixelOffSetY, 1, ColorTecho)
+    
+                End If
             End If
         Next X
     Next Y
@@ -4122,10 +4124,10 @@ Sub RenderConsola()
 
     For I = 1 To MaxLineas - 1
 
-        RenderText 300, ComienzoY + (I * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(I).R, Con(I).G, Con(I).b, I * (255 / MaxLineas))
+        RenderText 44, ComienzoY + (I * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(I).R, Con(I).G, Con(I).b, I * (255 / MaxLineas))
 
     Next I
 
-    If UltimaLineavisible = True Then RenderText 300, ComienzoY + (MaxLineas * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(MaxLineas).R, Con(MaxLineas).G, Con(I).b, 255)
+    If UltimaLineavisible = True Then RenderText 44, ComienzoY + (MaxLineas * 15) + OffSetConsola, Con(I).T, D3DColorRGBA(Con(MaxLineas).R, Con(MaxLineas).G, Con(I).b, 255)
 
 End Sub
