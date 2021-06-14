@@ -64,8 +64,8 @@ Public Property Let Embarcado(ByVal Value As Boolean)
 
     If Value Then
         UserEmbarcado = True
-        UserPos.X = Pos.X
-        UserPos.Y = Pos.Y
+        UserPos.x = Pos.x
+        UserPos.y = Pos.y
 
     End If
 
@@ -78,13 +78,13 @@ Public Property Get Embarcado() As Boolean
 
 End Property
 
-Public Property Get X() As Integer
-    X = Pos.X
+Public Property Get x() As Integer
+    x = Pos.x
 
 End Property
 
-Public Property Get Y() As Integer
-    Y = Pos.Y
+Public Property Get y() As Integer
+    y = Pos.y
 
 End Property
 
@@ -109,8 +109,8 @@ End Function
 
 Public Sub Init(ByVal Ruta As String, _
                 ByVal mPaso As Byte, _
-                ByVal X As Integer, _
-                ByVal Y As Integer, _
+                ByVal x As Integer, _
+                ByVal y As Integer, _
                 ByVal TiempoPuerto As Long, _
                 ByVal mSentido As Byte, _
                 ByRef mPasajeros() As Integer)
@@ -125,13 +125,13 @@ Public Sub Init(ByVal Ruta As String, _
     ReDim RutaBarco(0 To UPasos) As Position
 
     For I = 0 To UPasos
-        RutaBarco(I).X = Val(ReadField(1, Rutas(I), 44))
-        RutaBarco(I).Y = Val(ReadField(2, Rutas(I), 44))
+        RutaBarco(I).x = Val(ReadField(1, Rutas(I), 44))
+        RutaBarco(I).y = Val(ReadField(2, Rutas(I), 44))
     Next I
 
     Paso = mPaso
-    Pos.X = X
-    Pos.Y = Y
+    Pos.x = x
+    Pos.y = y
     Sentido = mSentido
 
     For I = IIf(Sentido = 0, 1, NUM_PUERTOS) To IIf(Sentido = 0, NUM_PUERTOS, 1) Step IIf(Sentido = 0, 1, -1)
@@ -171,13 +171,13 @@ Public Sub Init(ByVal Ruta As String, _
 
     Next I
 
-    If Pos.X > RutaBarco(Paso).X Then
+    If Pos.x > RutaBarco(Paso).x Then
         Direccion = west
         Call InitGrh(GrhBarco, 10384)
-    ElseIf Pos.X < RutaBarco(Paso).X Then
+    ElseIf Pos.x < RutaBarco(Paso).x Then
         Direccion = east
         Call InitGrh(GrhBarco, 10388)
-    ElseIf Pos.Y > RutaBarco(Paso).Y Then
+    ElseIf Pos.y > RutaBarco(Paso).y Then
         Direccion = north
         Call InitGrh(GrhBarco, 10396)
     Else 'If Pos.Y < RutaBarco(Paso).Y Then '''REVISAR
@@ -189,12 +189,12 @@ Public Sub Init(ByVal Ruta As String, _
     Call CalcularFactorBarco
 
     InitTick = (GetTickCount() And &H7FFFFFFF)
-    Call Actualizar(X, Y) 'Prueba
+    Call Actualizar(x, y) 'Prueba
 
 End Sub
 
-Public Function Actualizar(ByVal X As Integer, ByVal Y As Integer) As Boolean
-    Actualizar = Abs(X - Pos.X) > 20 Or Abs(Y - Pos.Y) > 20
+Public Function Actualizar(ByVal x As Integer, ByVal y As Integer) As Boolean
+    Actualizar = Abs(x - Pos.x) > 20 Or Abs(y - Pos.y) > 20
 
 End Function
 
@@ -204,8 +204,8 @@ Public Sub AgregarPasajero(ByVal Num As Byte, ByVal CharIndex As Integer)
     If CharIndex = UserCharIndex And UserCharIndex > 0 Then
         Embarcado = True
     
-        UserPos.X = Pos.X
-        UserPos.Y = Pos.Y
+        UserPos.x = Pos.x
+        UserPos.y = Pos.y
     
         Call frmMain.RefreshMiniMap
     
@@ -232,7 +232,7 @@ Private Sub CalcularFactorBarco()
     Dim Dist As Integer, Dist2 As Integer
 
     NP = Puertos(Puerto).Paso(Sentido)
-    Dist = Abs(RutaBarco(NP).X - Pos.X) + Abs(RutaBarco(NP).Y - Pos.Y)
+    Dist = Abs(RutaBarco(NP).x - Pos.x) + Abs(RutaBarco(NP).y - Pos.y)
 
     If Sentido = 0 Then
         If Puerto - 1 = 0 Then
@@ -254,7 +254,7 @@ Private Sub CalcularFactorBarco()
     End If
 
     'Sistema de aceleracion, era muy brusco sino cuando el barco llegaba ;)
-    Dist2 = Abs(RutaBarco(NP).X - Pos.X) + Abs(RutaBarco(NP).Y - Pos.Y)
+    Dist2 = Abs(RutaBarco(NP).x - Pos.x) + Abs(RutaBarco(NP).y - Pos.y)
 
     If Dist <= ACELERACION Then
         FactorBarco = (Dist / ACELERACION) * (VELOCIDAD - 0.5) + 0.5
@@ -274,33 +274,33 @@ Public Sub Avanzar()
     Select Case Direccion
 
         Case north
-            Pos.Y = Pos.Y - 1
+            Pos.y = Pos.y - 1
 
         Case south
-            Pos.Y = Pos.Y + 1
+            Pos.y = Pos.y + 1
 
         Case west
-            Pos.X = Pos.X - 1
+            Pos.x = Pos.x - 1
 
         Case east
-            Pos.X = Pos.X + 1
+            Pos.x = Pos.x + 1
 
     End Select
 
     If Embarcado Then
-        UserPos.X = Pos.X
-        UserPos.Y = Pos.Y
+        UserPos.x = Pos.x
+        UserPos.y = Pos.y
 
     End If
 
     Call CalcularFactorBarco
 
-    If Pos.X = RutaBarco(Paso).X And Pos.Y = RutaBarco(Paso).Y Then
+    If Pos.x = RutaBarco(Paso).x And Pos.y = RutaBarco(Paso).y Then
         If EsPuerto(Paso) Then
             TickPuerto = (GetTickCount() And &H7FFFFFFF)
             NP = NextPuerto
         
-            Call Audio.PlayWave(215, Pos.X, Pos.Y)
+            Call Audio.PlayWave(215, Pos.x, Pos.y)
 
             If Embarcado Then
                 Call Dialogos.CreateDialog("¡Hemos llegado al puerto de " & Puertos(Puerto).nombre & "! Pueden descender aquí o seguir rumbo a " & Puertos(NP).nombre, CapitanIndex, 255, 255, 255)
@@ -315,16 +315,16 @@ Public Sub Avanzar()
 
         Paso = NextPaso
     
-        If Pos.X > RutaBarco(Paso).X Then
+        If Pos.x > RutaBarco(Paso).x Then
             Direccion = west
             Call InitGrh(GrhBarco, 10384)
-        ElseIf Pos.X < RutaBarco(Paso).X Then
+        ElseIf Pos.x < RutaBarco(Paso).x Then
             Direccion = east
             Call InitGrh(GrhBarco, 10388)
-        ElseIf Pos.Y > RutaBarco(Paso).Y Then
+        ElseIf Pos.y > RutaBarco(Paso).y Then
             Direccion = north
             Call InitGrh(GrhBarco, 10396)
-        ElseIf Pos.Y < RutaBarco(Paso).Y Then
+        ElseIf Pos.y < RutaBarco(Paso).y Then
             Direccion = south
             Call InitGrh(GrhBarco, 10392)
 
@@ -382,7 +382,7 @@ Public Sub Calcular()
     '    Debug.Print (GetTickCount() And &H7FFFFFFF) - InitTick
     '    End
     'End If
-    If Abs(Pos.X - UserPos.X) > 25 Or Abs(Pos.Y - UserPos.Y) > 25 Then
+    If Abs(Pos.x - UserPos.x) > 25 Or Abs(Pos.y - UserPos.y) > 25 Then
         Set Barco(Sentido) = Nothing
         Exit Sub
 
@@ -446,40 +446,40 @@ Public Sub Render(ByVal TileX As Integer, _
                   ByVal PixelOffSetX As Single, _
                   ByVal PixelOffSetY As Single)
 
-    Dim X    As Integer
+    Dim x    As Integer
 
-    Dim Y    As Integer
+    Dim y    As Integer
 
     Dim OffX As Integer, AddX As Integer
 
     Dim OffY As Integer, AddY As Integer
 
-    X = (Pos.X - TileX + 11) * 32 + PixelOffSetX + BOffSetX
-    Y = (Pos.Y - TileY + 8) * 32 + PixelOffSetY + BOffSetY + 20
+    x = (Pos.x - TileX + 11) * 32 + PixelOffSetX + BOffSetX
+    y = (Pos.y - TileY + 8) * 32 + PixelOffSetY + BOffSetY + 20
 
     'Call DrawGrh(GrhBarco, X, Y, 1, 1, 0)
     Select Case Direccion
 
         Case east
             'Call DrawGrhIndex(5447, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'derecha
-            Call DrawGrhIndex(30353, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'derecha
+            Call DrawGrhIndex(30353, x, y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'derecha
 
         Case west
             'Call DrawGrhIndex(5446, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'isq
-            Call DrawGrhIndex(30349, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'isq
+            Call DrawGrhIndex(30349, x, y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'isq
 
         Case north
             'Call DrawGrhIndex(5497, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'arriba
-            Call DrawGrhIndex(30357, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'arriba
+            Call DrawGrhIndex(30357, x, y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'arriba
 
         Case south
             'Call DrawGrhIndex(5497, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'abajo
-            Call DrawGrhIndex(30361, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'abajo
+            Call DrawGrhIndex(30361, x, y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)) 'abajo
 
     End Select
 
-    OffX = X
-    OffY = Y
+    OffX = x
+    OffY = y
     'Dibujamos a los pasajeros y capitan
 
     Select Case Direccion
@@ -506,14 +506,14 @@ Public Sub Render(ByVal TileX As Integer, _
 
     Dim I     As Integer
 
-    Dim index As Integer
+    Dim Index As Integer
 
     For I = IIf(Direccion = north, 0, 4) To IIf(Direccion = north, 4, 0) Step IIf(Direccion = north, 1, -1)
-        index = Pasajeros(I)
+        Index = Pasajeros(I)
 
-        If index > 0 Then
-            charlist(index).Heading = Direccion
-            charlist(index).priv = 10
+        If Index > 0 Then
+            charlist(Index).Heading = Direccion
+            charlist(Index).priv = 10
             'Call CharRender(charlist(index), index, OffX + AddX * IIf(I > 0 And (Direccion = east Or Direccion = west), 9.5 - I, 0), OffY + AddY * IIf(I > 0 And (Direccion = north Or Direccion = south), 6 - I, 0))
 
         End If
@@ -523,18 +523,18 @@ Public Sub Render(ByVal TileX As Integer, _
     Select Case Direccion
 
         Case east
-            Call DrawGrhIndex(5449, X - 108, Y - 29, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+            Call DrawGrhIndex(5449, x - 108, y - 29, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
 
         Case west
-            Call DrawGrhIndex(5448, X + 56, Y - 29, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+            Call DrawGrhIndex(5448, x + 56, y - 29, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
 
         Case north
-            Call DrawGrhIndex(5499, X, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 220))
+            Call DrawGrhIndex(5499, x, y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 220))
 
         Case south
-            Call DrawGrhIndex(5498, X + 2, Y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 220))
-            index = Pasajeros(0)
-            Call CharRender(charlist(index), index, OffX, OffY)
+            Call DrawGrhIndex(5498, x + 2, y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 220))
+            Index = Pasajeros(0)
+            Call CharRender(charlist(Index), Index, OffX, OffY)
 
     End Select
 

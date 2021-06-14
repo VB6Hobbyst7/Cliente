@@ -246,8 +246,8 @@ Private Const SRCCOPY = &HCC0020 ' (DWORD) dest = source
 'Good old bitblt
 Private Declare Function BitBlt _
                 Lib "gdi32" (ByVal hDestDC As Long, _
-                             ByVal X As Long, _
-                             ByVal Y As Long, _
+                             ByVal x As Long, _
+                             ByVal y As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long, _
                              ByVal hSrcDC As Long, _

@@ -5,8 +5,8 @@ Dim z As Integer
 
 Private Type Effect
 
-    X As Single                 'Location of effect
-    Y As Single
+    x As Single                 'Location of effect
+    y As Single
     GoToX As Single             'Location to move to
     GoToY As Single
     KillWhenAtTarget As Boolean     'If the effect is at its target (GoToX/Y), then Progression is set to 0
@@ -73,8 +73,8 @@ Private Declare Sub ZeroMemory _
                 Alias "RtlZeroMemory" (ByRef Destination As Any, _
                                        ByVal Length As Long)
  
-Function Effect_EquationTemplate_Begin(ByVal X As Single, _
-                                       ByVal Y As Single, _
+Function Effect_EquationTemplate_Begin(ByVal x As Single, _
+                                       ByVal y As Single, _
                                        ByVal Gfx As Integer, _
                                        ByVal Particles As Integer, _
                                        Optional ByVal Progression As Single = 1) As Integer
@@ -100,8 +100,8 @@ Function Effect_EquationTemplate_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_EquationTemplate  'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
     Effect(EffectIndex).used = True                     'Enable the effect
-    Effect(EffectIndex).X = X                           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                           'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                           'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                           'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx                       'Set the graphic
     Effect(EffectIndex).Progression = Progression       'If we loop the effect
  
@@ -129,25 +129,25 @@ Function Effect_EquationTemplate_Begin(ByVal X As Single, _
 End Function
  
 Private Sub Effect_EquationTemplate_Reset(ByVal EffectIndex As Integer, _
-                                          ByVal index As Long)
+                                          ByVal Index As Long)
 
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Reset]http://www.vbgore.com/CommonCode.Partic ... late_Reset[/url]
     '*****************************************************************
-    Dim X As Single
+    Dim x As Single
 
-    Dim Y As Single
+    Dim y As Single
 
     Dim R As Single
     
     Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 0.1
-    R = (index / 20) * exp(index / Effect(EffectIndex).Progression Mod 3)
-    X = R * Cos(index)
-    Y = R * Sin(index)
+    R = (Index / 20) * exp(Index / Effect(EffectIndex).Progression Mod 3)
+    x = R * Cos(Index)
+    y = R * Sin(Index)
     
     'Reset the particle
-    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
-    Effect(EffectIndex).Particles(index).ResetColor 1, 1, 1, 1, 0.2 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x + x, Effect(EffectIndex).y + y, 0, 0, 0, 0
+    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 1, 0.2 + (Rnd * 0.2)
  
 End Sub
  
@@ -202,8 +202,8 @@ Private Sub Effect_EquationTemplate_Update(ByVal EffectIndex As Integer)
  
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
@@ -213,8 +213,8 @@ Private Sub Effect_EquationTemplate_Update(ByVal EffectIndex As Integer)
  
 End Sub
  
-Function Effect_Bless_Begin(ByVal X As Single, _
-                            ByVal Y As Single, _
+Function Effect_Bless_Begin(ByVal x As Single, _
+                            ByVal y As Single, _
                             ByVal Gfx As Integer, _
                             ByVal Particles As Integer, _
                             Optional ByVal Size As Byte = 30, _
@@ -239,8 +239,8 @@ Function Effect_Bless_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Bless     'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
     Effect(EffectIndex).used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                   'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                   'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx               'Set the graphic
     Effect(EffectIndex).Modifier = Size         'How large the circle is
     Effect(EffectIndex).Progression = Time      'How long the effect will last
@@ -268,25 +268,25 @@ Function Effect_Bless_Begin(ByVal X As Single, _
  
 End Function
  
-Private Sub Effect_Bless_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Bless_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Reset]http://www.vbgore.com/CommonCode.Partic ... less_Reset[/url]
     '*****************************************************************
     Dim a As Single
 
-    Dim X As Single
+    Dim x As Single
 
-    Dim Y As Single
+    Dim y As Single
  
     'Get the positions
     a = Rnd * 360 * DegreeToRadian
-    X = Effect(EffectIndex).X - (Cos(a) * Effect(EffectIndex).Modifier)
-    Y = Effect(EffectIndex).Y + (Sin(a) * Effect(EffectIndex).Modifier)
+    x = Effect(EffectIndex).x - (Cos(a) * Effect(EffectIndex).Modifier)
+    y = Effect(EffectIndex).y + (Sin(a) * Effect(EffectIndex).Modifier)
  
     'Reset the particle
-    Effect(EffectIndex).Particles(index).ResetIt X, Y, 0, Rnd * -1, 0, -2
-    Effect(EffectIndex).Particles(index).ResetColor 0, 5, 5, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(Index).ResetIt x, y, 0, Rnd * -1, 0, -2
+    Effect(EffectIndex).Particles(Index).ResetColor 0, 5, 5, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
  
 End Sub
  
@@ -344,8 +344,8 @@ Private Sub Effect_Bless_Update(ByVal EffectIndex As Integer)
  
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
@@ -355,8 +355,8 @@ Private Sub Effect_Bless_Update(ByVal EffectIndex As Integer)
  
 End Sub
  
-Function Effect_Fire_Begin(ByVal X As Single, _
-                           ByVal Y As Single, _
+Function Effect_Fire_Begin(ByVal x As Single, _
+                           ByVal y As Single, _
                            ByVal Gfx As Integer, _
                            ByVal Particles As Integer, _
                            Optional ByVal Direction As Integer = 180, _
@@ -381,8 +381,8 @@ Function Effect_Fire_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Fire      'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
     Effect(EffectIndex).used = True     'Enabled the effect
-    Effect(EffectIndex).X = X           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y           'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x           'Set the effect's X coordinate
+    Effect(EffectIndex).y = y           'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx       'Set the graphic
     Effect(EffectIndex).Direction = Direction       'The direction the effect is animat
     Effect(EffectIndex).Progression = Progression   'Loop the effect
@@ -410,14 +410,14 @@ Function Effect_Fire_Begin(ByVal X As Single, _
  
 End Function
  
-Private Sub Effect_Fire_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Fire_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Reset]http://www.vbgore.com/CommonCode.Partic ... Fire_Reset[/url]
     '*****************************************************************
  
     'Reset the particle
-    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
-    Effect(EffectIndex).Particles(index).ResetColor 1, 0.2, 0.2, 0.4 + (Rnd * 0.2), 0.03 + (Rnd * 0.07)
+    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x - 10 + Rnd * 20, Effect(EffectIndex).y - 10 + Rnd * 20, -Sin((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, Cos((Effect(EffectIndex).Direction + (Rnd * 70) - 35) * DegreeToRadian) * 8, 0, 0
+    Effect(EffectIndex).Particles(Index).ResetColor 1, 0.2, 0.2, 0.4 + (Rnd * 0.2), 0.03 + (Rnd * 0.07)
  
 End Sub
  
@@ -472,8 +472,8 @@ Private Sub Effect_Fire_Update(ByVal EffectIndex As Integer)
  
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
@@ -498,8 +498,8 @@ Private Function Effect_FToDW(f As Single) As Long
  
 End Function
  
-Function Effect_Heal_Begin(ByVal X As Single, _
-                           ByVal Y As Single, _
+Function Effect_Heal_Begin(ByVal x As Single, _
+                           ByVal y As Single, _
                            ByVal Gfx As Integer, _
                            ByVal Particles As Integer, _
                            Optional ByVal Progression As Single = 1) As Integer
@@ -523,8 +523,8 @@ Function Effect_Heal_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Heal      'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
     Effect(EffectIndex).used = True     'Enabled the effect
-    Effect(EffectIndex).X = X           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y           'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x           'Set the effect's X coordinate
+    Effect(EffectIndex).y = y           'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx       'Set the graphic
     Effect(EffectIndex).Progression = Progression   'Loop the effect
     Effect(EffectIndex).KillWhenAtTarget = True     'End the effect when it reaches the target (progression = 0)
@@ -553,14 +553,14 @@ Function Effect_Heal_Begin(ByVal X As Single, _
  
 End Function
  
-Private Sub Effect_Heal_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Heal_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Reset]http://www.vbgore.com/CommonCode.Partic ... Heal_Reset[/url]
     '*****************************************************************
  
     'Reset the particle
-    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X - 10 + Rnd * 20, Effect(EffectIndex).Y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
-    Effect(EffectIndex).Particles(index).ResetColor 0.8, 0.2, 0.2, 0.6 + (Rnd * 0.2), 0.01 + (Rnd * 0.5)
+    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x - 10 + Rnd * 20, Effect(EffectIndex).y - 10 + Rnd * 20, -Sin((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), Cos((180 + (Rnd * 90) - 45) * 0.0174533) * 8 + (Rnd * 3), 0, 0
+    Effect(EffectIndex).Particles(Index).ResetColor 0.8, 0.2, 0.2, 0.6 + (Rnd * 0.2), 0.01 + (Rnd * 0.5)
     
 End Sub
  
@@ -617,8 +617,8 @@ Private Sub Effect_Heal_Update(ByVal EffectIndex As Integer)
                 
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
@@ -688,8 +688,8 @@ Private Function Effect_NextOpenSlot() As Integer
  
 End Function
  
-Function Effect_Protection_Begin(ByVal X As Single, _
-                                 ByVal Y As Single, _
+Function Effect_Protection_Begin(ByVal x As Single, _
+                                 ByVal y As Single, _
                                  ByVal Gfx As Integer, _
                                  ByVal Particles As Integer, _
                                  Optional ByVal Size As Byte = 30, _
@@ -714,8 +714,8 @@ Function Effect_Protection_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Protection    'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles           'Set the number of particles
     Effect(EffectIndex).used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                   'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                   'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx               'Set the graphic
     Effect(EffectIndex).Modifier = Size         'How large the circle is
     Effect(EffectIndex).Progression = Time      'How long the effect will last
@@ -743,25 +743,25 @@ Function Effect_Protection_Begin(ByVal X As Single, _
  
 End Function
  
-Private Sub Effect_Protection_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Protection_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Reset]http://www.vbgore.com/CommonCode.Partic ... tion_Reset[/url]
     '*****************************************************************
     Dim a As Single
 
-    Dim X As Single
+    Dim x As Single
 
-    Dim Y As Single
+    Dim y As Single
  
     'Get the positions
     a = Rnd * 360 * DegreeToRadian
-    X = Effect(EffectIndex).X - (Sin(a) * Effect(EffectIndex).Modifier)
-    Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier)
+    x = Effect(EffectIndex).x - (Sin(a) * Effect(EffectIndex).Modifier)
+    y = Effect(EffectIndex).y + (Cos(a) * Effect(EffectIndex).Modifier)
  
     'Reset the particle
-    Effect(EffectIndex).Particles(index).ResetIt X, Y, 0, Rnd * -1, 0, -2
-    Effect(EffectIndex).Particles(index).ResetColor 0.1, 0.1, 0.9, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(Index).ResetIt x, y, 0, Rnd * -1, 0, -2
+    Effect(EffectIndex).Particles(Index).ResetColor 0.1, 0.1, 0.9, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
  
 End Sub
  
@@ -771,8 +771,8 @@ Private Sub Effect_UpdateOffset(ByVal EffectIndex As Integer)
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_UpdateOffset]http://www.vbgore.com/CommonCode.Partic ... dateOffset[/url]
     '***************************************************
  
-    Effect(EffectIndex).X = Effect(EffectIndex).X + (LastOffsetX - ParticleOffsetX)
-    Effect(EffectIndex).Y = Effect(EffectIndex).Y + (LastOffsetY - ParticleOffsetY)
+    Effect(EffectIndex).x = Effect(EffectIndex).x + (LastOffsetX - ParticleOffsetX)
+    Effect(EffectIndex).y = Effect(EffectIndex).y + (LastOffsetY - ParticleOffsetY)
  
 End Sub
  
@@ -815,8 +815,8 @@ Private Sub Effect_UpdateBinding(ByVal EffectIndex As Integer)
         Else
  
             'Calculate the X and Y positions
-            Effect(EffectIndex).GoToX = Engine_TPtoSPX(charlist(Effect(EffectIndex).BindToChar).Pos.X) + 16
-            Effect(EffectIndex).GoToY = Engine_TPtoSPY(charlist(Effect(EffectIndex).BindToChar).Pos.Y)
+            Effect(EffectIndex).GoToX = Engine_TPtoSPX(charlist(Effect(EffectIndex).BindToChar).Pos.x) + 16
+            Effect(EffectIndex).GoToY = Engine_TPtoSPY(charlist(Effect(EffectIndex).BindToChar).Pos.y)
  
         End If
  
@@ -824,36 +824,36 @@ Private Sub Effect_UpdateBinding(ByVal EffectIndex As Integer)
  
     'Move to the new position if needed
     If Effect(EffectIndex).GoToX > -30000 Or Effect(EffectIndex).GoToY > -30000 Then
-        If Effect(EffectIndex).GoToX <> Effect(EffectIndex).X Or Effect(EffectIndex).GoToY <> Effect(EffectIndex).Y Then
+        If Effect(EffectIndex).GoToX <> Effect(EffectIndex).x Or Effect(EffectIndex).GoToY <> Effect(EffectIndex).y Then
  
             'Calculate the angle
-            TargetA = Engine_GetAngle(Effect(EffectIndex).X, Effect(EffectIndex).Y, Effect(EffectIndex).GoToX, Effect(EffectIndex).GoToY) + 180
+            TargetA = Engine_GetAngle(Effect(EffectIndex).x, Effect(EffectIndex).y, Effect(EffectIndex).GoToX, Effect(EffectIndex).GoToY) + 180
  
             'Update the position of the effect
-            Effect(EffectIndex).X = Effect(EffectIndex).X - Sin(TargetA * DegreeToRadian) * Effect(EffectIndex).BindSpeed
-            Effect(EffectIndex).Y = Effect(EffectIndex).Y + Cos(TargetA * DegreeToRadian) * Effect(EffectIndex).BindSpeed
+            Effect(EffectIndex).x = Effect(EffectIndex).x - Sin(TargetA * DegreeToRadian) * Effect(EffectIndex).BindSpeed
+            Effect(EffectIndex).y = Effect(EffectIndex).y + Cos(TargetA * DegreeToRadian) * Effect(EffectIndex).BindSpeed
  
             'Check if the effect is close enough to the target to just stick it at the target
             If Effect(EffectIndex).GoToX > -30000 Then
-                If Abs(Effect(EffectIndex).X - Effect(EffectIndex).GoToX) < 6 Then Effect(EffectIndex).X = Effect(EffectIndex).GoToX
+                If Abs(Effect(EffectIndex).x - Effect(EffectIndex).GoToX) < 6 Then Effect(EffectIndex).x = Effect(EffectIndex).GoToX
 
             End If
 
             If Effect(EffectIndex).GoToY > -30000 Then
-                If Abs(Effect(EffectIndex).Y - Effect(EffectIndex).GoToY) < 6 Then Effect(EffectIndex).Y = Effect(EffectIndex).GoToY
+                If Abs(Effect(EffectIndex).y - Effect(EffectIndex).GoToY) < 6 Then Effect(EffectIndex).y = Effect(EffectIndex).GoToY
 
             End If
  
             'Check if the position of the effect is equal to that of the target
-            If Effect(EffectIndex).X = Effect(EffectIndex).GoToX Then
-                If Effect(EffectIndex).Y = Effect(EffectIndex).GoToY Then
+            If Effect(EffectIndex).x = Effect(EffectIndex).GoToX Then
+                If Effect(EffectIndex).y = Effect(EffectIndex).GoToY Then
  
                     'For some effects, if the position is reached, we want to end the effect
                     If Effect(EffectIndex).KillWhenAtTarget Then
                         Effect(EffectIndex).BindToChar = 0
                         Effect(EffectIndex).Progression = 0
-                        Effect(EffectIndex).GoToX = Effect(EffectIndex).X
-                        Effect(EffectIndex).GoToY = Effect(EffectIndex).Y
+                        Effect(EffectIndex).GoToX = Effect(EffectIndex).x
+                        Effect(EffectIndex).GoToY = Effect(EffectIndex).y
 
                     End If
 
@@ -923,8 +923,8 @@ Private Sub Effect_Protection_Update(ByVal EffectIndex As Integer)
  
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
@@ -1010,7 +1010,7 @@ Function Effect_Snow_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As 
 End Function
  
 Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, _
-                              ByVal index As Long, _
+                              ByVal Index As Long, _
                               Optional ByVal FirstReset As Byte = 0)
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Reset]http://www.vbgore.com/CommonCode.Partic ... Snow_Reset[/url]
@@ -1019,21 +1019,21 @@ Private Sub Effect_Snow_Reset(ByVal EffectIndex As Integer, _
     If FirstReset = 1 Then
  
         'The very first reset
-        Effect(EffectIndex).Particles(index).ResetIt -200 + (Rnd * (ScreenWidth + 400)), Rnd * (ScreenHeight + 50), Rnd * 5, 5 + Rnd * 3, 0, 0
+        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (ScreenWidth + 400)), Rnd * (ScreenHeight + 50), Rnd * 5, 5 + Rnd * 3, 0, 0
  
     Else
  
         'Any reset after first
-        Effect(EffectIndex).Particles(index).ResetIt -200 + (Rnd * (ScreenWidth + 400)), -15 - Rnd * 185, Rnd * 5, 5 + Rnd * 3, 0, 0
+        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (ScreenWidth + 400)), -15 - Rnd * 185, Rnd * 5, 5 + Rnd * 3, 0, 0
 
-        If Effect(EffectIndex).Particles(index).sngX < -20 Then Effect(EffectIndex).Particles(index).sngY = Rnd * (ScreenHeight + 50)
-        If Effect(EffectIndex).Particles(index).sngX > ScreenWidth Then Effect(EffectIndex).Particles(index).sngY = Rnd * (ScreenHeight + 50)
-        If Effect(EffectIndex).Particles(index).sngY > ScreenHeight Then Effect(EffectIndex).Particles(index).sngX = Rnd * (ScreenWidth + 50)
+        If Effect(EffectIndex).Particles(Index).sngX < -20 Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (ScreenHeight + 50)
+        If Effect(EffectIndex).Particles(Index).sngX > ScreenWidth Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (ScreenHeight + 50)
+        If Effect(EffectIndex).Particles(Index).sngY > ScreenHeight Then Effect(EffectIndex).Particles(Index).sngX = Rnd * (ScreenWidth + 50)
  
     End If
  
     'Set the color
-    Effect(EffectIndex).Particles(index).ResetColor 1, 1, 1, 0.8, 0
+    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 0.8, 0
  
 End Sub
  
@@ -1074,8 +1074,8 @@ Private Sub Effect_Snow_Update(ByVal EffectIndex As Integer)
  
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
@@ -1085,8 +1085,8 @@ Private Sub Effect_Snow_Update(ByVal EffectIndex As Integer)
  
 End Sub
  
-Function Effect_Strengthen_Begin(ByVal X As Single, _
-                                 ByVal Y As Single, _
+Function Effect_Strengthen_Begin(ByVal x As Single, _
+                                 ByVal y As Single, _
                                  ByVal Gfx As Integer, _
                                  ByVal Particles As Integer, _
                                  Optional ByVal Size As Byte = 30, _
@@ -1111,8 +1111,8 @@ Function Effect_Strengthen_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Strengthen    'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles           'Set the number of particles
     Effect(EffectIndex).used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                   'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                   'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx               'Set the graphic
     Effect(EffectIndex).Modifier = Size         'How large the circle is
     Effect(EffectIndex).Progression = Time      'How long the effect will last
@@ -1140,25 +1140,25 @@ Function Effect_Strengthen_Begin(ByVal X As Single, _
  
 End Function
  
-Private Sub Effect_Strengthen_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Strengthen_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Reset]http://www.vbgore.com/CommonCode.Partic ... then_Reset[/url]
     '*****************************************************************
     Dim a As Single
 
-    Dim X As Single
+    Dim x As Single
 
-    Dim Y As Single
+    Dim y As Single
  
     'Get the positions
     a = Rnd * 360 * DegreeToRadian
-    X = Effect(EffectIndex).X - (Sin(a) * Effect(EffectIndex).Modifier)
-    Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier)
+    x = Effect(EffectIndex).x - (Sin(a) * Effect(EffectIndex).Modifier)
+    y = Effect(EffectIndex).y + (Cos(a) * Effect(EffectIndex).Modifier)
  
     'Reset the particle
-    Effect(EffectIndex).Particles(index).ResetIt X, Y, 0, Rnd * -1, 0, -2
-    Effect(EffectIndex).Particles(index).ResetColor 0.2, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(Index).ResetIt x, y, 0, Rnd * -1, 0, -2
+    Effect(EffectIndex).Particles(Index).ResetColor 0.2, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
  
 End Sub
  
@@ -1216,8 +1216,8 @@ Private Sub Effect_Strengthen_Update(ByVal EffectIndex As Integer)
  
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
@@ -1339,7 +1339,7 @@ Function Effect_Rain_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As 
 End Function
  
 Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, _
-                              ByVal index As Long, _
+                              ByVal Index As Long, _
                               Optional ByVal FirstReset As Byte = 0)
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Reset]http://www.vbgore.com/CommonCode.Partic ... Rain_Reset[/url]
@@ -1348,21 +1348,21 @@ Private Sub Effect_Rain_Reset(ByVal EffectIndex As Integer, _
     If FirstReset = 1 Then
  
         'The very first reset
-        Effect(EffectIndex).Particles(index).ResetIt -200 + (Rnd * (ScreenWidth + 400)), Rnd * (ScreenHeight + 50), Rnd * 5, 25 + Rnd * 12, 0, 0
+        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * (ScreenWidth + 400)), Rnd * (ScreenHeight + 50), Rnd * 5, 25 + Rnd * 12, 0, 0
  
     Else
  
         'Any reset after first
-        Effect(EffectIndex).Particles(index).ResetIt -200 + (Rnd * 1200), -15 - Rnd * 185, Rnd * 5, 25 + Rnd * 12, 0, 0
+        Effect(EffectIndex).Particles(Index).ResetIt -200 + (Rnd * 1200), -15 - Rnd * 185, Rnd * 5, 25 + Rnd * 12, 0, 0
 
-        If Effect(EffectIndex).Particles(index).sngX < -20 Then Effect(EffectIndex).Particles(index).sngY = Rnd * (ScreenHeight + 50)
-        If Effect(EffectIndex).Particles(index).sngX > ScreenWidth Then Effect(EffectIndex).Particles(index).sngY = Rnd * (ScreenHeight + 50)
-        If Effect(EffectIndex).Particles(index).sngY > ScreenHeight Then Effect(EffectIndex).Particles(index).sngX = Rnd * (ScreenWidth + 50)
+        If Effect(EffectIndex).Particles(Index).sngX < -20 Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (ScreenHeight + 50)
+        If Effect(EffectIndex).Particles(Index).sngX > ScreenWidth Then Effect(EffectIndex).Particles(Index).sngY = Rnd * (ScreenHeight + 50)
+        If Effect(EffectIndex).Particles(Index).sngY > ScreenHeight Then Effect(EffectIndex).Particles(Index).sngX = Rnd * (ScreenWidth + 50)
  
     End If
  
     'Set the color
-    Effect(EffectIndex).Particles(index).ResetColor 1, 1, 1, 0.4, 0
+    Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 1, 0.4, 0
  
 End Sub
  
@@ -1403,8 +1403,8 @@ Private Sub Effect_Rain_Update(ByVal EffectIndex As Integer)
  
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
@@ -1415,8 +1415,8 @@ Private Sub Effect_Rain_Update(ByVal EffectIndex As Integer)
 End Sub
  
 Public Sub Effect_Begin(ByVal EffectIndex As Integer, _
-                        ByVal X As Single, _
-                        ByVal Y As Single, _
+                        ByVal x As Single, _
+                        ByVal y As Single, _
                         ByVal GfxIndex As Byte, _
                         ByVal Particles As Byte, _
                         Optional ByVal Direction As Single = 180, _
@@ -1433,25 +1433,25 @@ Public Sub Effect_Begin(ByVal EffectIndex As Integer, _
     Select Case EffectIndex
 
         Case EffectNum_Fire
-            RetNum = Effect_Fire_Begin(X, Y, GfxIndex, Particles, Direction, 1)
+            RetNum = Effect_Fire_Begin(x, y, GfxIndex, Particles, Direction, 1)
 
         Case EffectNum_Bless
-            RetNum = Effect_Bless_Begin(X, Y, GfxIndex, Particles, 80, 1000)
+            RetNum = Effect_Bless_Begin(x, y, GfxIndex, Particles, 80, 1000)
 
         Case EffectNum_Waterfall
-            RetNum = Effect_Waterfall_Begin(X, Y, GfxIndex, 1000)
+            RetNum = Effect_Waterfall_Begin(x, y, GfxIndex, 1000)
             
         Case EffectNum_Necro
-            RetNum = Effect_Necro_Begin(X, Y, GfxIndex, Particles, 6, 500)
+            RetNum = Effect_Necro_Begin(x, y, GfxIndex, Particles, 6, 500)
               
         Case EffectNum_Atom
-            RetNum = Effect_Atom_Begin(X, Y, GfxIndex, Particles, 30, 1000)
+            RetNum = Effect_Atom_Begin(x, y, GfxIndex, Particles, 30, 1000)
               
         Case EffectNum_MeditMAX
-            RetNum = Effect_MeditMAX_Begin(X, Y, 1, 10, 100, 30, 10)
+            RetNum = Effect_MeditMAX_Begin(x, y, 1, 10, 100, 30, 10)
               
         Case EffectNum_PortalGroso
-            RetNum = Effect_PortalGroso_Begin(X, Y, 1, 1000, 10)
+            RetNum = Effect_PortalGroso_Begin(x, y, 1, 1000, 10)
               
     End Select
     
@@ -1460,8 +1460,8 @@ Public Sub Effect_Begin(ByVal EffectIndex As Integer, _
     
 End Sub
  
-Function Effect_Waterfall_Begin(ByVal X As Single, _
-                                ByVal Y As Single, _
+Function Effect_Waterfall_Begin(ByVal x As Single, _
+                                ByVal y As Single, _
                                 ByVal Gfx As Integer, _
                                 ByVal Particles As Integer) As Integer
 
@@ -1484,8 +1484,8 @@ Function Effect_Waterfall_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Waterfall     'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles           'Set the number of particles
     Effect(EffectIndex).used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                   'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                   'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx               'Set the graphic
  
     'Set the number of particles left to the total avaliable
@@ -1511,19 +1511,19 @@ Function Effect_Waterfall_Begin(ByVal X As Single, _
  
 End Function
  
-Private Sub Effect_Waterfall_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Waterfall_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Reset]http://www.vbgore.com/CommonCode.Partic ... fall_Reset[/url]
     '*****************************************************************
  
     If Int(Rnd * 10) = 1 Then
-        Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + (Rnd * 60), Effect(EffectIndex).Y + (Rnd * 130), 0, 8 + (Rnd * 6), 0, 0
+        Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x + (Rnd * 60), Effect(EffectIndex).y + (Rnd * 130), 0, 8 + (Rnd * 6), 0, 0
     Else
-        Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + (Rnd * 60), Effect(EffectIndex).Y + (Rnd * 10), 0, 8 + (Rnd * 6), 0, 0
+        Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x + (Rnd * 60), Effect(EffectIndex).y + (Rnd * 10), 0, 8 + (Rnd * 6), 0, 0
 
     End If
 
-    Effect(EffectIndex).Particles(index).ResetColor 0.1, 0.1, 0.9, 0.6 + (Rnd * 0.4), 0
+    Effect(EffectIndex).Particles(Index).ResetColor 0.1, 0.1, 0.9, 0.6 + (Rnd * 0.4), 0
     
 End Sub
  
@@ -1555,7 +1555,7 @@ Private Sub Effect_Waterfall_Update(ByVal EffectIndex As Integer)
                 .UpdateParticle ElapsedTime
  
                 'Check if the particle is ready to die
-                If (.sngY > Effect(EffectIndex).Y + 140) Or (.sngA = 0) Then
+                If (.sngY > Effect(EffectIndex).y + 140) Or (.sngA = 0) Then
     
                     'Reset the particle
                     Effect_Waterfall_Reset EffectIndex, LoopC
@@ -1564,8 +1564,8 @@ Private Sub Effect_Waterfall_Update(ByVal EffectIndex As Integer)
  
                     'Set the particle information on the particle vertex
                     Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
-                    Effect(EffectIndex).PartVertex(LoopC).X = .sngX
-                    Effect(EffectIndex).PartVertex(LoopC).Y = .sngY
+                    Effect(EffectIndex).PartVertex(LoopC).x = .sngX
+                    Effect(EffectIndex).PartVertex(LoopC).y = .sngY
     
                 End If
     
@@ -1577,8 +1577,8 @@ Private Sub Effect_Waterfall_Update(ByVal EffectIndex As Integer)
  
 End Sub
  
-Function Effect_Summon_Begin(ByVal X As Single, _
-                             ByVal Y As Single, _
+Function Effect_Summon_Begin(ByVal x As Single, _
+                             ByVal y As Single, _
                              ByVal Gfx As Integer, _
                              ByVal Particles As Integer, _
                              Optional ByVal Progression As Single = 0) As Integer
@@ -1602,8 +1602,8 @@ Function Effect_Summon_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Summon    'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
     Effect(EffectIndex).used = True                     'Enable the effect
-    Effect(EffectIndex).X = X                           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                           'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                           'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                           'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx                       'Set the graphic
     Effect(EffectIndex).Progression = Progression       'If we loop the effect
  
@@ -1630,14 +1630,14 @@ Function Effect_Summon_Begin(ByVal X As Single, _
  
 End Function
  
-Private Sub Effect_Summon_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Summon_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
     '*****************************************************************
     'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Reset]http://www.vbgore.com/CommonCode.Partic ... mmon_Reset[/url]
     '*****************************************************************
-    Dim X As Single
+    Dim x As Single
 
-    Dim Y As Single
+    Dim y As Single
 
     Dim R As Single
     
@@ -1648,13 +1648,13 @@ Private Sub Effect_Summon_Reset(ByVal EffectIndex As Integer, ByVal index As Lon
 
     End If
 
-    R = (index / 30) * exp(index / Effect(EffectIndex).Progression)
-    X = R * Cos(index)
-    Y = R * Sin(index)
+    R = (Index / 30) * exp(Index / Effect(EffectIndex).Progression)
+    x = R * Cos(Index)
+    y = R * Sin(Index)
     
     'Reset the particle
-    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
-    Effect(EffectIndex).Particles(index).ResetColor 0, Rnd, 0, 0.9, 0.2 + (Rnd * 0.2)
+    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x + x, Effect(EffectIndex).y + y, 0, 0, 0, 0
+    Effect(EffectIndex).Particles(Index).ResetColor 0, Rnd, 0, 0.9, 0.2 + (Rnd * 0.2)
  
 End Sub
  
@@ -1709,8 +1709,8 @@ Private Sub Effect_Summon_Update(ByVal EffectIndex As Integer)
             
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
@@ -1720,8 +1720,8 @@ Private Sub Effect_Summon_Update(ByVal EffectIndex As Integer)
  
 End Sub
 
-Function Effect_Necro_Begin(ByVal X As Single, _
-                            ByVal Y As Single, _
+Function Effect_Necro_Begin(ByVal x As Single, _
+                            ByVal y As Single, _
                             ByVal Gfx As Integer, _
                             ByVal Particles As Integer, _
                             Optional ByVal Direction As Integer = 180, _
@@ -1746,8 +1746,8 @@ Function Effect_Necro_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Necro     'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles        'Set the number of particles
     Effect(EffectIndex).used = True     'Enabled the effect
-    Effect(EffectIndex).X = X          'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y           'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x          'Set the effect's X coordinate
+    Effect(EffectIndex).y = y           'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx       'Set the graphic
     Effect(EffectIndex).Direction = Direction       'The direction the effect is animat
     Effect(EffectIndex).Progression = Progression   'Loop the effect
@@ -1776,7 +1776,7 @@ Function Effect_Necro_Begin(ByVal X As Single, _
 
 End Function
 
-Private Sub Effect_Necro_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Necro_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
     'Static TargetA As Single
     Dim Co As Single
@@ -1785,7 +1785,7 @@ Private Sub Effect_Necro_Reset(ByVal EffectIndex As Integer, ByVal index As Long
 
     'Calculate the angle
     
-    If Effect(EffectIndex).TargetAA = 0 And Effect(EffectIndex).GoToX <> -30000 Then Effect(EffectIndex).TargetAA = Engine_GetAngle(Effect(EffectIndex).X, Effect(EffectIndex).Y, Effect(EffectIndex).GoToX, Effect(EffectIndex).GoToY) + 180
+    If Effect(EffectIndex).TargetAA = 0 And Effect(EffectIndex).GoToX <> -30000 Then Effect(EffectIndex).TargetAA = Engine_GetAngle(Effect(EffectIndex).x, Effect(EffectIndex).y, Effect(EffectIndex).GoToX, Effect(EffectIndex).GoToY) + 180
     
     sI = Sin(Effect(EffectIndex).TargetAA * DegreeToRadian)
     Co = Cos(Effect(EffectIndex).TargetAA * DegreeToRadian)
@@ -1793,12 +1793,12 @@ Private Sub Effect_Necro_Reset(ByVal EffectIndex As Integer, ByVal index As Long
     'Reset the particle
     If RandomNumber(1, 2) = 2 Then
         'Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).x, Effect(EffectIndex).y, Co * Sin(Effect(EffectIndex).Progression * 3) * 20, Si * Sin(Effect(EffectIndex).Progression * 3) * 20, 0, 0
-        Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + Co * Sin(Effect(EffectIndex).Progression) * 25, Effect(EffectIndex).Y + sI * Sin(Effect(EffectIndex).Progression) * 25, 0, 0, 0, 0
-        Effect(EffectIndex).Particles(index).ResetColor 0.2, 0.2 + (Rnd * 0.5), 1, 0.5 + (Rnd * 0.2), 0.1 + (Rnd * 4.09)
+        Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x + Co * Sin(Effect(EffectIndex).Progression) * 25, Effect(EffectIndex).y + sI * Sin(Effect(EffectIndex).Progression) * 25, 0, 0, 0, 0
+        Effect(EffectIndex).Particles(Index).ResetColor 0.2, 0.2 + (Rnd * 0.5), 1, 0.5 + (Rnd * 0.2), 0.1 + (Rnd * 4.09)
     Else
         'Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).x, Effect(EffectIndex).y, Co * Sin(Effect(EffectIndex).Progression * 3) * -20, Si * Sin(Effect(EffectIndex).Progression * 3) * -20, 0, 0
-        Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + Co * Sin(Effect(EffectIndex).Progression) * -25, Effect(EffectIndex).Y + sI * Sin(Effect(EffectIndex).Progression) * -25, 0, 0, 0, 0
-        Effect(EffectIndex).Particles(index).ResetColor 1, 0.2 + (Rnd * 0.5), 0.2, 0.7 + (Rnd * 0.2), 0.1 + (Rnd * 4.09)
+        Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x + Co * Sin(Effect(EffectIndex).Progression) * -25, Effect(EffectIndex).y + sI * Sin(Effect(EffectIndex).Progression) * -25, 0, 0, 0, 0
+        Effect(EffectIndex).Particles(Index).ResetColor 1, 0.2 + (Rnd * 0.5), 0.2, 0.7 + (Rnd * 0.2), 0.1 + (Rnd * 4.09)
 
     End If
 
@@ -1858,8 +1858,8 @@ Private Sub Effect_Necro_Update(ByVal EffectIndex As Integer)
                 
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 
@@ -1869,8 +1869,8 @@ Private Sub Effect_Necro_Update(ByVal EffectIndex As Integer)
 
 End Sub
 
-Function Effect_Atom_Begin(ByVal X As Single, _
-                           ByVal Y As Single, _
+Function Effect_Atom_Begin(ByVal x As Single, _
+                           ByVal y As Single, _
                            ByVal Gfx As Integer, _
                            ByVal Particles As Integer, _
                            Optional ByVal Size As Byte = 30, _
@@ -1892,8 +1892,8 @@ Function Effect_Atom_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Atom    'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles           'Set the number of particles
     Effect(EffectIndex).used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                   'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                   'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx               'Set the graphic
     Effect(EffectIndex).Modifier = Size         'How large the circle is
     Effect(EffectIndex).Progression = Time      'How long the effect will last
@@ -1921,13 +1921,13 @@ Function Effect_Atom_Begin(ByVal X As Single, _
 
 End Function
 
-Private Sub Effect_Atom_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Atom_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
     Dim a As Single
 
-    Dim X As Single
+    Dim x As Single
 
-    Dim Y As Single
+    Dim y As Single
 
     Dim R As Single
 
@@ -1936,27 +1936,27 @@ Private Sub Effect_Atom_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
     R = Rnd * 4
 
     If R < 1 Then
-        X = Effect(EffectIndex).X - (Sin(a) * Effect(EffectIndex).Modifier) / 3 + (Cos(a) * Effect(EffectIndex).Modifier)
-        Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier)
-        Effect(EffectIndex).Particles(index).ResetColor 0.2, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+        x = Effect(EffectIndex).x - (Sin(a) * Effect(EffectIndex).Modifier) / 3 + (Cos(a) * Effect(EffectIndex).Modifier)
+        y = Effect(EffectIndex).y + (Cos(a) * Effect(EffectIndex).Modifier)
+        Effect(EffectIndex).Particles(Index).ResetColor 0.2, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
     ElseIf R < 2 Then
-        X = Effect(EffectIndex).X - (Sin(a) * Effect(EffectIndex).Modifier)
-        Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier) / 3 + (Sin(a) * Effect(EffectIndex).Modifier)
-        Effect(EffectIndex).Particles(index).ResetColor 1, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+        x = Effect(EffectIndex).x - (Sin(a) * Effect(EffectIndex).Modifier)
+        y = Effect(EffectIndex).y + (Cos(a) * Effect(EffectIndex).Modifier) / 3 + (Sin(a) * Effect(EffectIndex).Modifier)
+        Effect(EffectIndex).Particles(Index).ResetColor 1, 1, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
     ElseIf R < 3 Then
-        X = Effect(EffectIndex).X - (Sin(a) * Effect(EffectIndex).Modifier) / 3
-        Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier)
-        Effect(EffectIndex).Particles(index).ResetColor 1, 0.2, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+        x = Effect(EffectIndex).x - (Sin(a) * Effect(EffectIndex).Modifier) / 3
+        y = Effect(EffectIndex).y + (Cos(a) * Effect(EffectIndex).Modifier)
+        Effect(EffectIndex).Particles(Index).ResetColor 1, 0.2, 0.2, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
     ElseIf R < 4 Then
-        X = Effect(EffectIndex).X - (Sin(a) * Effect(EffectIndex).Modifier)
-        Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier) / 3
+        x = Effect(EffectIndex).x - (Sin(a) * Effect(EffectIndex).Modifier)
+        y = Effect(EffectIndex).y + (Cos(a) * Effect(EffectIndex).Modifier) / 3
         
-        Effect(EffectIndex).Particles(index).ResetColor 0.2, 0.2, 1, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
+        Effect(EffectIndex).Particles(Index).ResetColor 0.2, 0.2, 1, 0.6 + (Rnd * 0.4), 0.06 + (Rnd * 0.2)
 
     End If
     
     'Reset the particle
-    Effect(EffectIndex).Particles(index).ResetIt X, Y, 0, 0, 0, -1
+    Effect(EffectIndex).Particles(Index).ResetIt x, y, 0, 0, 0, -1
 
 End Sub
 
@@ -2011,8 +2011,8 @@ Private Sub Effect_Atom_Update(ByVal EffectIndex As Integer)
 
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 
@@ -2022,8 +2022,8 @@ Private Sub Effect_Atom_Update(ByVal EffectIndex As Integer)
 
 End Sub
 
-Function Effect_MeditMAX_Begin(ByVal X As Single, _
-                               ByVal Y As Single, _
+Function Effect_MeditMAX_Begin(ByVal x As Single, _
+                               ByVal y As Single, _
                                ByVal Gfx As Integer, _
                                ByVal Particles As Integer, _
                                Optional ByVal Size As Byte = 30, _
@@ -2046,8 +2046,8 @@ Function Effect_MeditMAX_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_MeditMAX    'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles  'Set the number of particles
     Effect(EffectIndex).used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                   'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                   'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx               'Set the graphic
     Effect(EffectIndex).Modifier = Size         'How large the circle is
     Effect(EffectIndex).Progression = Time      'How long the effect will last
@@ -2077,13 +2077,13 @@ Function Effect_MeditMAX_Begin(ByVal X As Single, _
 
 End Function
 
-Private Sub Effect_MeditMAX_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_MeditMAX_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
     Dim a    As Single
 
-    Dim X    As Single
+    Dim x    As Single
 
-    Dim Y    As Single
+    Dim y    As Single
 
     Dim AccX As Single
 
@@ -2098,11 +2098,11 @@ Private Sub Effect_MeditMAX_Reset(ByVal EffectIndex As Integer, ByVal index As L
         a = Rnd * 60 * DegreeToRadian * 6
     Loop
     
-    X = Effect(EffectIndex).X - (Sin(a) * Effect(EffectIndex).Modifier)
-    Y = Effect(EffectIndex).Y + (Cos(a) * Effect(EffectIndex).Modifier) / 2
+    x = Effect(EffectIndex).x - (Sin(a) * Effect(EffectIndex).Modifier)
+    y = Effect(EffectIndex).y + (Cos(a) * Effect(EffectIndex).Modifier) / 2
     
-    Effect(EffectIndex).Particles(index).ResetIt X, Y, -(Sgn(Sin(a)) * 4 * (Rnd - 0.2)), Rnd * -1, 0, -1.8
-    Effect(EffectIndex).Particles(index).ResetColor 0.9, 0.9, 0.7 * Rnd, 0.7 + (Rnd * 0.3), 0.05 + (Rnd * 0.1)
+    Effect(EffectIndex).Particles(Index).ResetIt x, y, -(Sgn(Sin(a)) * 4 * (Rnd - 0.2)), Rnd * -1, 0, -1.8
+    Effect(EffectIndex).Particles(Index).ResetColor 0.9, 0.9, 0.7 * Rnd, 0.7 + (Rnd * 0.3), 0.05 + (Rnd * 0.1)
 
 End Sub
 
@@ -2157,8 +2157,8 @@ Public Sub Effect_MeditMAX_Update(ByVal EffectIndex As Integer)
 
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 
@@ -2168,8 +2168,8 @@ Public Sub Effect_MeditMAX_Update(ByVal EffectIndex As Integer)
 
 End Sub
 
-Function Effect_PortalGroso_Begin(ByVal X As Single, _
-                                  ByVal Y As Single, _
+Function Effect_PortalGroso_Begin(ByVal x As Single, _
+                                  ByVal y As Single, _
                                   ByVal Gfx As Integer, _
                                   ByVal Particles As Integer, _
                                   Optional ByVal Progression As Single = 1) As Integer
@@ -2190,8 +2190,8 @@ Function Effect_PortalGroso_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_PortalGroso  'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles       'Set the number of particles
     Effect(EffectIndex).used = True                     'Enable the effect
-    Effect(EffectIndex).X = X                           'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                           'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                           'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                           'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx                       'Set the graphic
     Effect(EffectIndex).Progression = Progression       'If we loop the effect
 
@@ -2218,28 +2218,28 @@ Function Effect_PortalGroso_Begin(ByVal X As Single, _
 
 End Function
 
-Private Sub Effect_PortalGroso_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_PortalGroso_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
-    Dim X   As Single
+    Dim x   As Single
 
-    Dim Y   As Single
+    Dim y   As Single
 
     Dim R   As Single
 
     Dim ind As Integer
 
     Effect(EffectIndex).Progression = Effect(EffectIndex).Progression + 0.1
-    ind = CInt(index / 10) * 10
-    R = ((index + 100) / 4) * exp((index + 100) / 2000)
-    X = R * Cos(index) * 0.25 '* 0.3 * 0.25
-    Y = R * Sin(index) * 0.25 '* 0.2 * 0.25
+    ind = CInt(Index / 10) * 10
+    R = ((Index + 100) / 4) * exp((Index + 100) / 2000)
+    x = R * Cos(Index) * 0.25 '* 0.3 * 0.25
+    y = R * Sin(Index) * 0.25 '* 0.2 * 0.25
     'Reset the particle
     'If Rnd * 20 < 1 Then
     '    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).x + x, Effect(EffectIndex).y + y, 0, 0, 0, -1.5 * (ind / Effect(EffectIndex).ParticleCount)
     'Else
-    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + X, Effect(EffectIndex).Y + Y, 0, 0, 0, 0
+    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x + x, Effect(EffectIndex).y + y, 0, 0, 0, 0
     'End If
-    Effect(EffectIndex).Particles(index).ResetColor 0.2, 0, (0.7 * ind / Effect(EffectIndex).ParticleCount), 1, IIf(ind / Effect(EffectIndex).ParticleCount / 7 < 0.03, 0.03, ind / Effect(EffectIndex).ParticleCount / 7)
+    Effect(EffectIndex).Particles(Index).ResetColor 0.2, 0, (0.7 * ind / Effect(EffectIndex).ParticleCount), 1, IIf(ind / Effect(EffectIndex).ParticleCount / 7 < 0.03, 0.03, ind / Effect(EffectIndex).ParticleCount / 7)
 
 End Sub
 
@@ -2309,8 +2309,8 @@ Private Sub Effect_PortalGroso_Update(ByVal EffectIndex As Integer)
 
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 
@@ -2320,8 +2320,8 @@ Private Sub Effect_PortalGroso_Update(ByVal EffectIndex As Integer)
 
 End Sub
 
-Function Effect_RedFountain_Begin(ByVal X As Single, _
-                                  ByVal Y As Single, _
+Function Effect_RedFountain_Begin(ByVal x As Single, _
+                                  ByVal y As Single, _
                                   ByVal Gfx As Integer, _
                                   ByVal Particles As Integer) As Integer
 
@@ -2342,8 +2342,8 @@ Function Effect_RedFountain_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_RedFountain     'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles          'Set the number of particles
     Effect(EffectIndex).used = True             'Enabled the effect
-    Effect(EffectIndex).X = X                   'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y                   'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x                   'Set the effect's X coordinate
+    Effect(EffectIndex).y = y                   'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx               'Set the graphic
 
     'Set the number of particles left to the total avaliable
@@ -2369,14 +2369,14 @@ Function Effect_RedFountain_Begin(ByVal X As Single, _
 
 End Function
 
-Private Sub Effect_RedFountain_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_RedFountain_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
     'If Int(Rnd * 10) < 6 Then
-    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + (Rnd * 10) - 5, Effect(EffectIndex).Y - (Rnd * 10), 0, 1, 0, -1 - Rnd * 0.25
+    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x + (Rnd * 10) - 5, Effect(EffectIndex).y - (Rnd * 10), 0, 1, 0, -1 - Rnd * 0.25
     'Else
     'Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).x + (Rnd * 10) - 5, Effect(EffectIndex).y - (Rnd * 10), 1 + (Rnd * 5), -15 - (Rnd * 3), 0, 1.1 + Rnd * 0.1
     'End If
-    Effect(EffectIndex).Particles(index).ResetColor 0.9, Rnd * 0.7, 0.1, 0.6 + (Rnd * 0.4), 0.035 + Rnd * 0.01
+    Effect(EffectIndex).Particles(Index).ResetColor 0.9, Rnd * 0.7, 0.1, 0.6 + (Rnd * 0.4), 0.035 + Rnd * 0.01
     
 End Sub
 
@@ -2405,7 +2405,7 @@ Private Sub Effect_RedFountain_Update(ByVal EffectIndex As Integer)
                 .UpdateParticle ElapsedTime
 
                 'Check if the particle is ready to die
-                If (.sngA < 0) Or (.sngY > Effect(EffectIndex).Y + 100) Then
+                If (.sngA < 0) Or (.sngY > Effect(EffectIndex).y + 100) Then
     
                     'Reset the particle
                     Effect_RedFountain_Reset EffectIndex, LoopC
@@ -2414,8 +2414,8 @@ Private Sub Effect_RedFountain_Update(ByVal EffectIndex As Integer)
 
                     'Set the particle information on the particle vertex
                     Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
-                    Effect(EffectIndex).PartVertex(LoopC).X = .sngX
-                    Effect(EffectIndex).PartVertex(LoopC).Y = .sngY
+                    Effect(EffectIndex).PartVertex(LoopC).x = .sngX
+                    Effect(EffectIndex).PartVertex(LoopC).y = .sngY
     
                 End If
     
@@ -2427,8 +2427,8 @@ Private Sub Effect_RedFountain_Update(ByVal EffectIndex As Integer)
 
 End Sub
 
-Function Effect_Smoke_Begin(ByVal X As Single, _
-                            ByVal Y As Single, _
+Function Effect_Smoke_Begin(ByVal x As Single, _
+                            ByVal y As Single, _
                             ByVal Gfx As Integer, _
                             ByVal Particles As Integer, _
                             Optional ByVal Radius As Integer = 180, _
@@ -2453,8 +2453,8 @@ Function Effect_Smoke_Begin(ByVal X As Single, _
     Effect(EffectIndex).EffectNum = EffectNum_Smoke     'Set the effect number
     Effect(EffectIndex).ParticleCount = Particles - Particles * 0.25 * (2)        'Set the number of particles
     Effect(EffectIndex).used = True     'Enabled the effect
-    Effect(EffectIndex).X = X          'Set the effect's X coordinate
-    Effect(EffectIndex).Y = Y           'Set the effect's Y coordinate
+    Effect(EffectIndex).x = x          'Set the effect's X coordinate
+    Effect(EffectIndex).y = y           'Set the effect's Y coordinate
     Effect(EffectIndex).Gfx = Gfx       'Set the graphic
     Effect(EffectIndex).Modifier = Radius       'The direction the effect is animat
     Effect(EffectIndex).Progression = Progression   'Loop the effect
@@ -2482,7 +2482,7 @@ Function Effect_Smoke_Begin(ByVal X As Single, _
 
 End Function
 
-Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal index As Long)
+Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal Index As Long)
 
     '*****************************************************************
     'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Reset
@@ -2491,8 +2491,8 @@ Private Sub Effect_Smoke_Reset(ByVal EffectIndex As Integer, ByVal index As Long
 
     v = Rnd * 20
     'Reset the particle
-    Effect(EffectIndex).Particles(index).ResetIt Effect(EffectIndex).X + Effect(EffectIndex).Modifier * RandomNumber(-1, 1) * Rnd / 2, Effect(EffectIndex).Y - Effect(EffectIndex).Modifier, 0, 0, 0, Rnd * -1.5
-    Effect(EffectIndex).Particles(index).ResetColor 0.2, 0.2, 0.2, 1, 0
+    Effect(EffectIndex).Particles(Index).ResetIt Effect(EffectIndex).x + Effect(EffectIndex).Modifier * RandomNumber(-1, 1) * Rnd / 2, Effect(EffectIndex).y - Effect(EffectIndex).Modifier, 0, 0, 0, Rnd * -1.5
+    Effect(EffectIndex).Particles(Index).ResetColor 0.2, 0.2, 0.2, 1, 0
 
 End Sub
 
@@ -2522,7 +2522,7 @@ Private Sub Effect_Smoke_Update(ByVal EffectIndex As Integer)
             Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
 
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(LoopC).sngA <= 0.3 Or Effect(EffectIndex).Particles(LoopC).sngY + Effect(EffectIndex).Modifier * 3 < Effect(EffectIndex).Y Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0.3 Or Effect(EffectIndex).Particles(LoopC).sngY + Effect(EffectIndex).Modifier * 3 < Effect(EffectIndex).y Then
 
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Or Effect(EffectIndex).Progression = -5000 Then
@@ -2550,8 +2550,8 @@ Private Sub Effect_Smoke_Update(ByVal EffectIndex As Integer)
                 
                 'Set the particle information on the particle vertex
                 Effect(EffectIndex).PartVertex(LoopC).Color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
-                Effect(EffectIndex).PartVertex(LoopC).X = Effect(EffectIndex).Particles(LoopC).sngX
-                Effect(EffectIndex).PartVertex(LoopC).Y = Effect(EffectIndex).Particles(LoopC).sngY
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 

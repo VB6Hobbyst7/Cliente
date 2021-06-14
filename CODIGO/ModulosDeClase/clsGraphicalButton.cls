@@ -114,8 +114,8 @@ End Sub
 
 Private Sub ButtonHolder_MouseDown(Button As Integer, _
                                    Shift As Integer, _
-                                   X As Single, _
-                                   Y As Single)
+                                   x As Single, _
+                                   y As Single)
 
     '***************************************************
     'Author: ZaMa
@@ -131,8 +131,8 @@ End Sub
 
 Private Sub ButtonHolder_MouseMove(Button As Integer, _
                                    Shift As Integer, _
-                                   X As Single, _
-                                   Y As Single)
+                                   x As Single, _
+                                   y As Single)
 
     '***************************************************
     'Author: ZaMa
@@ -174,8 +174,8 @@ End Sub
 
 Private Sub ButtonHolder_MouseUp(Button As Integer, _
                                  Shift As Integer, _
-                                 X As Single, _
-                                 Y As Single)
+                                 x As Single, _
+                                 y As Single)
 
     '***************************************************
     'Author: ZaMa

@@ -1267,7 +1267,7 @@ Dim InvY                 As Integer
 Public WithEvents Client As CSocketMaster
 Attribute Client.VB_VarHelpID = -1
 
-Private Sub Bar_Mana_Click(index As Integer)
+Private Sub Bar_Mana_Click(Index As Integer)
 
     If UserMinMAN = UserMaxMAN Then Exit Sub
             
@@ -1292,9 +1292,9 @@ Private Sub Bar_Mana_Click(index As Integer)
 
 End Sub
 
-Private Sub Bar_Mana_DblClick(index As Integer)
+Private Sub Bar_Mana_DblClick(Index As Integer)
 
-    If index = 0 Then
+    If Index = 0 Then
         If Bar_Mana(1).Visible = True Then
             Bar_Mana(1).Visible = False
         Else
@@ -1306,9 +1306,9 @@ Private Sub Bar_Mana_DblClick(index As Integer)
 
 End Sub
 
-Private Sub bar_salud_DblClick(index As Integer)
+Private Sub bar_salud_DblClick(Index As Integer)
 
-    If index = 0 Then
+    If Index = 0 Then
 
         'Helios Barras
         If bar_salud(1).Visible = True Then
@@ -1439,14 +1439,14 @@ End Sub
 
 Private Sub BarraConsola_MouseDown(Button As Integer, _
                                    Shift As Integer, _
-                                   X As Single, _
-                                   Y As Single)
+                                   x As Single, _
+                                   y As Single)
 
     Dim TempY  As Integer
 
     Dim TamCon As Integer
 
-    TempY = Y - 3
+    TempY = y - 3
     TamCon = (LineasConsola - 6)
 
     If TamCon > 0 Then
@@ -1476,14 +1476,14 @@ End Sub
 
 Private Sub BarraHechiz_MouseDown(Button As Integer, _
                                   Shift As Integer, _
-                                  X As Single, _
-                                  Y As Single)
+                                  x As Single, _
+                                  y As Single)
 
     Dim TempY  As Integer
 
     Dim TamCon As Integer
 
-    TempY = Y - 3
+    TempY = y - 3
 
     Dim MaxItems As Integer
 
@@ -1516,11 +1516,11 @@ End Sub
 
 Private Sub BarritaConsola_MouseDown(Button As Integer, _
                                      Shift As Integer, _
-                                     X As Single, _
-                                     Y As Single)
+                                     x As Single, _
+                                     y As Single)
 
     If Button = 1 Then
-        OldYConsola = Y
+        OldYConsola = y
 
     End If
 
@@ -1528,14 +1528,14 @@ End Sub
 
 Private Sub BarritaConsola_MouseMove(Button As Integer, _
                                      Shift As Integer, _
-                                     X As Single, _
-                                     Y As Single)
+                                     x As Single, _
+                                     y As Single)
 
     If Button = 1 Then
 
         Dim TempY As Integer
 
-        TempY = BarritaConsola.Top + (Y - OldYConsola)
+        TempY = BarritaConsola.Top + (y - OldYConsola)
 
         If TempY < 16 Then TempY = 16
         If TempY > 68 Then TempY = 68
@@ -1550,11 +1550,11 @@ End Sub
 
 Private Sub BarritaHechiz_MouseDown(Button As Integer, _
                                     Shift As Integer, _
-                                    X As Single, _
-                                    Y As Single)
+                                    x As Single, _
+                                    y As Single)
 
     If Button = 1 Then
-        hlst.OldY = Y
+        hlst.OldY = y
 
     End If
 
@@ -1562,8 +1562,8 @@ End Sub
 
 Private Sub BarritaHechiz_MouseMove(Button As Integer, _
                                     Shift As Integer, _
-                                    X As Single, _
-                                    Y As Single)
+                                    x As Single, _
+                                    y As Single)
 
     If Button = 1 Then
 
@@ -1572,7 +1572,7 @@ Private Sub BarritaHechiz_MouseMove(Button As Integer, _
         Dim MaxItems As Integer
 
         MaxItems = Int(picHechiz.Height / hlst.Pixel_Alto)
-        TempY = BarritaHechiz.Top + (Y - hlst.OldY)
+        TempY = BarritaHechiz.Top + (y - hlst.OldY)
 
         If TempY < 16 Then TempY = 16
         If TempY > 150 Then TempY = 150
@@ -1646,13 +1646,13 @@ Private Sub cmdEfecto_Click()
     'AlphaCeguera = 255
 End Sub
 
-Private Sub cmdMoverHechi_Click(index As Integer)
+Private Sub cmdMoverHechi_Click(Index As Integer)
 
     If hlst.ListIndex = -1 Then Exit Sub
 
     Dim sTemp As String
 
-    Select Case index
+    Select Case Index
 
         Case 1 'subir
 
@@ -1664,9 +1664,9 @@ Private Sub cmdMoverHechi_Click(index As Integer)
 
     End Select
 
-    Call WriteMoveSpell(index, hlst.ListIndex + 1)
+    Call WriteMoveSpell(Index, hlst.ListIndex + 1)
     
-    Select Case index
+    Select Case Index
 
         Case 1 'subir
             sTemp = hlst.List(hlst.ListIndex - 1)
@@ -2061,16 +2061,16 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
-    If Y < 24 And NoRes Then
+    If y < 24 And NoRes Then
         MoverVentana (Me.hwnd)
 
     End If
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If UserPasarNivel > 0 Then
         frmMain.exp.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
@@ -2106,8 +2106,8 @@ End Sub
 
 Private Sub lblEXP_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             X As Single, _
-                             Y As Single)
+                             x As Single, _
+                             y As Single)
     frmMain.exp.Caption = UserExp & "/" & UserPasarNivel
     frmMain.exp.Caption = UserExp & "/" & UserPasarNivel
 
@@ -2541,8 +2541,8 @@ End Sub
 
 Private Sub QuestBoton_MouseUp(Button As Integer, _
                                Shift As Integer, _
-                               X As Single, _
-                               Y As Single)
+                               x As Single, _
+                               y As Single)
     
     On Error GoTo QuestBoton_MouseUp_Err
     
@@ -2669,26 +2669,26 @@ End Sub
 
 Private Sub picHechiz_MouseDown(Button As Integer, _
                                 Shift As Integer, _
-                                X As Single, _
-                                Y As Single)
+                                x As Single, _
+                                y As Single)
     
     Call Audio.PlayWave(SND_CLICK)
 
-    If Y < 0 Then Y = 0
-    If Y > 228 Then Y = 228
-    hlst.ListIndex = Int(Y / hlst.Pixel_Alto) + hlst.Scroll
+    If y < 0 Then y = 0
+    If y > 228 Then y = 228
+    hlst.ListIndex = Int(y / hlst.Pixel_Alto) + hlst.Scroll
 
 End Sub
 
 Private Sub picHechiz_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                X As Single, _
-                                Y As Single)
+                                x As Single, _
+                                y As Single)
 
     If Button = 1 Then
-        If Y < 0 Then Y = 0
-        If Y > 228 Then Y = 228
-        hlst.ListIndex = Int(Y / hlst.Pixel_Alto) + hlst.Scroll
+        If y < 0 Then y = 0
+        If y > 228 Then y = 228
+        hlst.ListIndex = Int(y / hlst.Pixel_Alto) + hlst.Scroll
 
     End If
 
@@ -2696,8 +2696,8 @@ End Sub
 
 Private Sub picInv_MouseDown(Button As Integer, _
                              Shift As Integer, _
-                             X As Single, _
-                             Y As Single)
+                             x As Single, _
+                             y As Single)
 
     If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
         Call Audio.PlayWave(SND_CLICK)
@@ -2708,10 +2708,10 @@ End Sub
 
 Private Sub PicInv_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             X As Single, _
-                             Y As Single)
-    InvX = X
-    InvY = Y
+                             x As Single, _
+                             y As Single)
+    InvX = x
+    InvY = y
 
     If Button = 2 And Not Comerciando Then
         If Inventario.GrhIndex(Inventario.SelectedItem) > 0 Then
@@ -2877,7 +2877,19 @@ Private Sub pRender_Click()
     If MouseX > 1003 And MouseX < 1018 And MouseY > 6 And MouseY < 19 Then
         'helios 06/06/2021
         Call Audio.PlayWave(SND_CLICKNEW) ' Desconectar
-        Call WriteQuit
+
+        If frmCerrar.Visible Then Exit Sub
+
+        Dim mForm As Form
+
+        For Each mForm In Forms
+
+            If mForm.hwnd <> Me.hwnd Then Unload mForm
+            Set mForm = Nothing
+        Next
+        frmCerrar.Show , Me
+        
+        'Call WriteQuit
         Exit Sub
 
     End If
@@ -3120,8 +3132,8 @@ End Sub
 
 Private Sub pRender_MouseDown(Button As Integer, _
                               Shift As Integer, _
-                              X As Single, _
-                              Y As Single)
+                              x As Single, _
+                              y As Single)
     MouseBoton = Button
     MouseShift = Shift
 
@@ -3129,10 +3141,10 @@ End Sub
 
 Private Sub pRender_MouseMove(Button As Integer, _
                               Shift As Integer, _
-                              X As Single, _
-                              Y As Single)
-    MouseX = X
-    MouseY = Y
+                              x As Single, _
+                              y As Single)
+    MouseX = x
+    MouseY = y
     
     'Trim to fit screen
     If MouseX < 0 Then
@@ -3150,15 +3162,15 @@ Private Sub pRender_MouseMove(Button As Integer, _
 
     End If
     
-    If Conectar Then Call MouseAction(X, Y, 0)
+    If Conectar Then Call MouseAction(x, y, 0)
 
 End Sub
 
-Private Sub pRender_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    clicX = X
-    clicY = Y
+Private Sub pRender_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+    clicX = x
+    clicY = y
 
-    If Conectar Then Call MouseAction(X, Y, 1)
+    If Conectar Then Call MouseAction(x, y, 1)
 
 End Sub
 
@@ -3268,8 +3280,8 @@ End Sub
 
 Private Sub LanzarImg_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                X As Single, _
-                                Y As Single)
+                                x As Single, _
+                                y As Single)
     UsaMacro = False
     CnTd = 0
 
@@ -3393,10 +3405,10 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
 
 End Sub
 
-Private Sub ImgLanzar_Click(index As Integer)
+Private Sub ImgLanzar_Click(Index As Integer)
     'Call Audio.PlayWave(SND_CLICK)
 
-    Select Case index
+    Select Case Index
 
         Case 0
 
@@ -3450,9 +3462,9 @@ Private Sub ImgLanzar_Click(index As Integer)
 
 End Sub
 
-Private Sub Image3_Click(index As Integer)
+Private Sub Image3_Click(Index As Integer)
 
-    Select Case index
+    Select Case Index
 
         Case 0
             Inventario.SelectGold
@@ -3526,7 +3538,7 @@ Private Sub picInv_DblClick()
 
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If DragAndDrop Then
         frmMain.MouseIcon = Nothing
@@ -3536,11 +3548,11 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y A
     End If
 
     If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
-        If X >= Inventario.OffSetX And Y >= Inventario.OffSetY And X <= picInv.Width And Y <= picInv.Height Then
+        If x >= Inventario.OffSetX And y >= Inventario.OffSetY And x <= picInv.Width And y <= picInv.Height Then
 
             Dim NewPosInv As Integer
 
-            NewPosInv = Inventario.ClickItem(X, Y)
+            NewPosInv = Inventario.ClickItem(x, y)
 
             If NewPosInv > 0 Then
                 Call WriteIntercambiarInv(Inventario.SelectedItem, NewPosInv, False)
@@ -3554,25 +3566,25 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y A
 
             Dim DropY As Integer, tmpY As Integer
 
-            tmpX = X + picInv.Left - pRender.Left
-            tmpY = Y + picInv.Top - pRender.Top
+            tmpX = x + picInv.Left - pRender.Left
+            tmpY = y + picInv.Top - pRender.Top
         
             If tmpX > 0 And tmpX < pRender.Width And tmpY > 0 And tmpY < pRender.Height Then
                 Call ConvertCPtoTP(tmpX, tmpY, DropX, DropY)
         
                 'Solo tira a un tilde de distancia...
-                If DropX < UserPos.X - 1 Then
-                    DropX = UserPos.X - 1
-                    DropY = UserPos.Y
-                ElseIf DropX > UserPos.X + 1 Then
-                    DropX = UserPos.X + 1
-                    DropY = UserPos.Y
-                ElseIf DropY < UserPos.Y - 1 Then
-                    DropY = UserPos.Y - 1
-                    DropX = UserPos.X
-                ElseIf DropY > UserPos.Y + 1 Then
-                    DropY = UserPos.Y + 1
-                    DropX = UserPos.X
+                If DropX < UserPos.x - 1 Then
+                    DropX = UserPos.x - 1
+                    DropY = UserPos.y
+                ElseIf DropX > UserPos.x + 1 Then
+                    DropX = UserPos.x + 1
+                    DropY = UserPos.y
+                ElseIf DropY < UserPos.y - 1 Then
+                    DropY = UserPos.y - 1
+                    DropX = UserPos.x
+                ElseIf DropY > UserPos.y + 1 Then
+                    DropY = UserPos.y + 1
+                    DropX = UserPos.x
 
                 End If
             
@@ -3959,28 +3971,28 @@ Private Sub WSock_Error(ByVal Number As Integer, _
 End Sub
 
 Public Sub RefreshMiniMap()
-    frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
+    frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
 
-    Me.shpMiniMapaUser.Left = UserPos.X
-    Me.shpMiniMapaUser.Top = UserPos.Y
-    Me.shpMiniMapaVision.Left = UserPos.X - 135
-    Me.shpMiniMapaVision.Top = UserPos.Y - 135
+    Me.shpMiniMapaUser.Left = UserPos.x
+    Me.shpMiniMapaUser.Top = UserPos.y
+    Me.shpMiniMapaVision.Left = UserPos.x - 135
+    Me.shpMiniMapaVision.Top = UserPos.y - 135
     Me.imgMiniMapa.Refresh
 
 End Sub
 
 Private Sub imgMiniMapa_MouseDown(Button As Integer, _
                                   Shift As Integer, _
-                                  X As Single, _
-                                  Y As Single)
+                                  x As Single, _
+                                  y As Single)
 
-    If X > 1077 Then X = 1077
-    If X < 23 Then X = 23
-    If Y > 1477 Then Y = 1477
-    If Y < 23 Then Y = 23
+    If x > 1077 Then x = 1077
+    If x < 23 Then x = 23
+    If y > 1477 Then y = 1477
+    If y < 23 Then y = 23
 
     If Button = vbRightButton Then
-        Call WriteWarpChar("YO", UserMap, CInt(X - 1), CInt(Y - 1))
+        Call WriteWarpChar("YO", UserMap, CInt(x - 1), CInt(y - 1))
         Call RefreshMiniMap
 
     End If

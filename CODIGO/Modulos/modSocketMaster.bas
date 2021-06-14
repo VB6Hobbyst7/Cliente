@@ -60,8 +60,8 @@ Private Declare Function api_CreateWindowEx _
                                          ByVal lpClassName As String, _
                                          ByVal lpWindowName As String, _
                                          ByVal dwStyle As Long, _
-                                         ByVal X As Long, _
-                                         ByVal Y As Long, _
+                                         ByVal x As Long, _
+                                         ByVal y As Long, _
                                          ByVal nWidth As Long, _
                                          ByVal nHeight As Long, _
                                          ByVal hWndParent As Long, _

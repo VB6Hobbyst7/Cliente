@@ -97,22 +97,22 @@ Public Sub Draw()
 
     Dim I       As Byte
 
-    Dim Y       As Long
+    Dim y       As Long
 
     Dim DifTime As Long
 
     If Not p_Activo Then Exit Sub
 
-    Y = 250
+    y = 250
 
     '500 600 700 800 900
     For I = 1 To p_CANTIDADDIALOGOS
 
         If Trim$(p_Dialogos(I).Texto) <> vbNullString Then
             If Left$(p_Dialogos(I).Texto, 1) = Chr(3) Then
-                Call Mod_TileEngine.RenderText(260, Y + (I * 12), mid(p_Dialogos(I).Texto, 2), D3DColorRGBA(0, 255, 0, p_Dialogos(I).Alpha))
+                Call Mod_TileEngine.RenderText(260, y + (I * 12), mid(p_Dialogos(I).Texto, 2), D3DColorRGBA(0, 255, 0, p_Dialogos(I).Alpha))
             Else
-                Call Mod_TileEngine.RenderText(260, Y + (I * 12), p_Dialogos(I).Texto, D3DColorRGBA(255, 255, 0, p_Dialogos(I).Alpha))
+                Call Mod_TileEngine.RenderText(260, y + (I * 12), p_Dialogos(I).Texto, D3DColorRGBA(255, 255, 0, p_Dialogos(I).Alpha))
 
             End If
 

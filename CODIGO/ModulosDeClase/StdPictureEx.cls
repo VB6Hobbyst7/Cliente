@@ -204,8 +204,8 @@ Private Declare Function CreateWindowEx _
                                          ByVal lpClassName As String, _
                                          ByVal lpWindowName As String, _
                                          ByVal dwStyle As Long, _
-                                         ByVal X As Long, _
-                                         ByVal Y As Long, _
+                                         ByVal x As Long, _
+                                         ByVal y As Long, _
                                          ByVal nWidth As Long, _
                                          ByVal nHeight As Long, _
                                          ByVal hWndParent As Long, _
@@ -500,8 +500,8 @@ Private Declare Function VerQueryValue _
 
 Private Declare Function ImageList_GetIconSize _
                 Lib "Comctl32.dll" (ByVal hIML As Long, _
-                                    Cx As Long, _
-                                    Cy As Long) As Long
+                                    cx As Long, _
+                                    cy As Long) As Long
 
 Private Declare Function SHGetImageListXP _
                 Lib "shell32.dll" _
@@ -898,7 +898,7 @@ Public Sub SavePicture(Picture As StdPicture, _
 
         Dim BIH     As BITMAPV5HEADER, brRect As RECTI, p As PICREF
 
-        Dim index   As Long, lWritten As Long, oIPic As IPicture
+        Dim Index   As Long, lWritten As Long, oIPic As IPicture
 
         Const FILE_ATTRIBUTE_NORMAL = &H80&
 
@@ -927,11 +927,11 @@ Public Sub SavePicture(Picture As StdPicture, _
         Set oIPic = Picture
 
         If AlwaysSaveAsBitmap Or (dFormat = ptcBitmap And Not oIPic.KeepOriginalFormat) Then
-            index = pvPictureToIndex(Picture)                   ' convert/save to bitmap
+            Index = pvPictureToIndex(Picture)                   ' convert/save to bitmap
 
             With BIH
 
-                If index > -1& And KeepPremultipliedBits = True Then ' managed, keep premultiplied bits?
+                If Index > -1& And KeepPremultipliedBits = True Then ' managed, keep premultiplied bits?
                     If Picture.Type = ptcBitmap Then .biBitCount = 32 Else .biBitCount = 24
                 Else
                     .biBitCount = 24
@@ -1088,20 +1088,20 @@ Public Function SubImage(Picture As StdPicture, ByVal NewIndex As Long) As StdPi
                     Set SubImage = Picture
                 Else
 
-                    Dim lValue As Long, index As Long
+                    Dim lValue As Long, Index As Long
 
-                    index = pvPictureToIndex(Picture)
+                    Index = pvPictureToIndex(Picture)
 
-                    If index > -1& Then
-                        lValue = (m_PicRefs(index).flags And &HFFF0000) \ &H10000
+                    If Index > -1& Then
+                        lValue = (m_PicRefs(Index).flags And &HFFF0000) \ &H10000
 
                         If Not (lValue < 2& Or NewIndex > lValue) Then
-                            m_PicRefs(index).flags = (m_PicRefs(index).flags And &HFFFF000F) Or NewIndex * &H10&
+                            m_PicRefs(Index).flags = (m_PicRefs(Index).flags And &HFFFF000F) Or NewIndex * &H10&
 
-                            If (m_PicRefs(index).flags And &HF) = ptcTIF Then
-                                Set SubImage = pvSetPage(Picture, index)
+                            If (m_PicRefs(Index).flags And &HF) = ptcTIF Then
+                                Set SubImage = pvSetPage(Picture, Index)
                             Else
-                                Call pvSetFrame(Picture, index)
+                                Call pvSetFrame(Picture, Index)
 
                             End If
 
@@ -1287,15 +1287,15 @@ Public Function GetGIFAnimationInfo(Picture As StdPicture, _
 
         Const PropertyTagLoopCount  As Long = &H5101
 
-        Dim index                   As Long, hImage As Long
+        Dim Index                   As Long, hImage As Long
 
         Dim pData()                 As Byte, pSize As Long, pPointer As Long
        
-        index = pvPictureToIndex(Picture)
+        Index = pvPictureToIndex(Picture)
 
-        If index < 0& Then Exit Function
-        If Not (m_PicRefs(index).flags And &HF) = ptcGIF Then Exit Function ' not GIF
-        hImage = m_PicRefs(index).pHandle
+        If Index < 0& Then Exit Function
+        If Not (m_PicRefs(Index).flags And &HF) = ptcGIF Then Exit Function ' not GIF
+        hImage = m_PicRefs(Index).pHandle
        
         If GdipGetPropertyItemSize(hImage, PropertyTagFrameDelay, pSize) Then Exit Function
         ReDim pData(0 To pSize - 1&)
@@ -1303,7 +1303,7 @@ Public Function GetGIFAnimationInfo(Picture As StdPicture, _
         If GdipGetPropertyItem(hImage, PropertyTagFrameDelay, pSize, pData(0)) Then Exit Function
         CopyMemory pSize, pData(4), 4&
        
-        ReDim Durations(0 To (m_PicRefs(index).flags And &HFFF0000) \ &H10000)
+        ReDim Durations(0 To (m_PicRefs(Index).flags And &HFFF0000) \ &H10000)
         CopyMemory pPointer, pData(12), 4&
         CopyMemory Durations(1), ByVal pPointer, pSize
 
@@ -1376,7 +1376,7 @@ Public Property Get HasOriginalFormat(Picture As StdPicture) As Boolean
    
 End Property
 
-Private Function pvSetPage(Picture As StdPicture, index As Long) As StdPicture
+Private Function pvSetPage(Picture As StdPicture, Index As Long) As StdPicture
 
     ' changes the page of a multi-page TIF
 
@@ -1388,7 +1388,7 @@ Private Function pvSetPage(Picture As StdPicture, index As Long) As StdPicture
 
     Dim hDIB          As Long, hBits As Long
 
-    With m_PicRefs(index)
+    With m_PicRefs(Index)
 
         If GdipImageSelectActiveFrame(.pHandle, m_PageGUID(0, 1), (.flags And &HFFF0&) \ &H10 - 1&) Then Exit Function
         hImage = .pHandle
@@ -1447,8 +1447,8 @@ Private Function pvSetPage(Picture As StdPicture, index As Long) As StdPicture
                     DeleteObject hDIB
                 Else
                     Set nIPic = pvSetPage
-                    m_PicRefs(index).pIPicDisp = ObjPtr(pvSetPage)
-                    m_PicRefs(index).pIPicture = ObjPtr(nIPic)
+                    m_PicRefs(Index).pIPicDisp = ObjPtr(pvSetPage)
+                    m_PicRefs(Index).pIPicture = ObjPtr(nIPic)
 
                 End If
 
@@ -1460,7 +1460,7 @@ Private Function pvSetPage(Picture As StdPicture, index As Long) As StdPicture
 
 End Function
 
-Private Sub pvSetFrame(Picture As StdPicture, index As Long)
+Private Sub pvSetFrame(Picture As StdPicture, Index As Long)
 
     ' changes the frame of an animated GIF
 
@@ -1470,7 +1470,7 @@ Private Sub pvSetFrame(Picture As StdPicture, index As Long)
 
     Dim hImage        As Long
    
-    With m_PicRefs(index)
+    With m_PicRefs(Index)
 
         If GdipImageSelectActiveFrame(.pHandle, m_PageGUID(0, 0), (.flags And &HFFF0&) \ &H10 - 1&) Then Exit Sub
         hImage = .pHandle
@@ -1800,7 +1800,7 @@ Private Function pvLoadStdPicture(Picture As StdPicture, _
     '       For any other formats, have VB create source similar to SavePicture, not managed
     Dim hGlobal    As Long, lSize As Long, hLock As Long
 
-    Dim pUDT()     As Long, icData() As Byte, index As Long
+    Dim pUDT()     As Long, icData() As Byte, Index As Long
 
     Dim BIH        As BITMAPV5HEADER, pRECT As RECTI, oIPic As IPicture
 
@@ -1826,9 +1826,9 @@ Private Function pvLoadStdPicture(Picture As StdPicture, _
     ElseIf m_hDC = 0& Then                          ' class was never initialized properly
         pPicRef.flags = -3&
     Else
-        index = pvPictureToIndex(Picture)
+        Index = pvPictureToIndex(Picture)
 
-        If index < 0& Then                          ' unmanaged
+        If Index < 0& Then                          ' unmanaged
 
             Select Case Picture.Type
 
@@ -1861,7 +1861,7 @@ Private Function pvLoadStdPicture(Picture As StdPicture, _
 
             End If
 
-            If Not m_PicRefs(index).oStream Is Nothing Then
+            If Not m_PicRefs(Index).oStream Is Nothing Then
                 If KeepFormat = True Then pPicRef.flags = -4&
 
             End If
@@ -1879,11 +1879,11 @@ Private Function pvLoadStdPicture(Picture As StdPicture, _
                 pPicRef.flags = 0&
 
                 If ReturnDataOnly Then
-                    Set pPicRef.oStream = m_PicRefs(index).oStream: Exit Function
+                    Set pPicRef.oStream = m_PicRefs(Index).oStream: Exit Function
 
                 End If
 
-                Call GetHGlobalFromStream(ObjPtr(m_PicRefs(index).oStream), hGlobal)
+                Call GetHGlobalFromStream(ObjPtr(m_PicRefs(Index).oStream), hGlobal)
 
                 If hGlobal Then lSize = GlobalSize(hGlobal)
             Else                                            ' have COM save it to stream
@@ -2111,7 +2111,7 @@ Private Function pvLoadhIcon(icData() As Byte, _
 
     Dim LB               As Long, lMax As Long, lVal As Long
 
-    Dim index            As Long, lFlags As Long, hHandle As Long
+    Dim Index            As Long, lFlags As Long, hHandle As Long
 
     Dim icSorted()       As Long, lSize As Long
 
@@ -2185,7 +2185,7 @@ Private Function pvLoadhIcon(icData() As Byte, _
 
         End If
 
-        For index = 0& To ICD.idCount - 1&
+        For Index = 0& To ICD.idCount - 1&
 
             ' we sort icon metrics for a best pick strategy, icons are sorted by size & depth
             ' not a perfect algo, but since most icons in same resource are same shape, should be ok
@@ -2193,14 +2193,14 @@ Private Function pvLoadhIcon(icData() As Byte, _
             ' 0x0007FF00    (width+height)\2
             ' 0x7FF00000    index into the icon directory
             ' 0x80000000    PNG resource
-            If (lVal And &H7FF00) < (icSorted(index) And &H7FF00) Then
-                CopyMemory icSorted(index + 1&), icSorted(index), (ICD.idCount - index) * 4&
+            If (lVal And &H7FF00) < (icSorted(Index) And &H7FF00) Then
+                CopyMemory icSorted(Index + 1&), icSorted(Index), (ICD.idCount - Index) * 4&
                 Exit For
 
             End If
 
         Next
-        icSorted(index) = lVal
+        icSorted(Index) = lVal
     Next
    
     '/// DETERMINE SIZE OF ICON TO RETURN
@@ -2211,12 +2211,12 @@ Private Function pvLoadhIcon(icData() As Byte, _
         If dDepth < 1& Then dDepth = GetDeviceCaps(m_hDC, 12&) ' 12 = constant BITSPERPIXEL
         lMax = (((dCx And &H7FF) + (dCy And &H7FF)) \ 2) * &H100&   ' desired value
 
-        For index = 0& To ICD.idCount - 1&
+        For Index = 0& To ICD.idCount - 1&
 
-            If (icSorted(index) And &H7FF00) >= lMax Then           ' size-match found
-                lMax = icSorted(index) And &H7FF00                  ' find best-match for depth (sorted descending)
+            If (icSorted(Index) And &H7FF00) >= lMax Then           ' size-match found
+                lMax = icSorted(Index) And &H7FF00                  ' find best-match for depth (sorted descending)
 
-                For lVal = index + 1& To ICD.idCount - 1&
+                For lVal = Index + 1& To ICD.idCount - 1&
 
                     If (icSorted(lVal) And &H7FF00) > lMax Then     ' landed on a different size, use previous entry
                         lVal = lVal - 1&
@@ -2227,19 +2227,19 @@ Private Function pvLoadhIcon(icData() As Byte, _
                     End If
 
                 Next
-                index = lVal: Exit For                              ' algo is done
+                Index = lVal: Exit For                              ' algo is done
 
             End If
 
         Next
 
-        If index = ICD.idCount Then index = index - 1&              ' adjust if Index out of bounds, uses largest size/depth
-        CopyMemory ICDE, icData(LB + 6& + 16& * (icSorted(index) And &H7FF00000) \ &H100000), 16& ' get chosen ICDE
+        If Index = ICD.idCount Then Index = Index - 1&              ' adjust if Index out of bounds, uses largest size/depth
+        CopyMemory ICDE, icData(LB + 6& + 16& * (icSorted(Index) And &H7FF00000) \ &H100000), 16& ' get chosen ICDE
 
     End If
    
     '/// CREATE HICON WHETHER PNG-ENCODED OR NOT
-    If (m_VistaPlus Or icSorted(index) > -1&) Then ' If PNG, then icSorted(n) high bit is set
+    If (m_VistaPlus Or icSorted(Index) > -1&) Then ' If PNG, then icSorted(n) high bit is set
 
         ' we can't use this on lower than Vista if PNG
         If ICD.idType = 1 Then  ' icon
@@ -2284,11 +2284,11 @@ Private Function pvLoadhIcon(icData() As Byte, _
 
                         Case PixelFormat32bppAlpha, PixelFormat32bppPremultiplied, &H61007, &H34400D, &H1C400E ' all known GDI+ alpha formats
                             .PixelFormat = PixelFormat32bppAlpha ' return 32bpp Alpha
-                            icSorted(index) = 32&
+                            icSorted(Index) = 32&
 
                         Case Else
                             .PixelFormat = PixelFormat24bpp  ' return 24bpp format
-                            icSorted(index) = 24&
+                            icSorted(Index) = 24&
 
                     End Select
 
@@ -2388,7 +2388,7 @@ Private Function pvLoadhIcon(icData() As Byte, _
 
                 End If
 
-                If (icSorted(index) And &HFF) = 32& Then pPicRef.flags = ptcIcon ' always manage 32bpp
+                If (icSorted(Index) And &HFF) = 32& Then pPicRef.flags = ptcIcon ' always manage 32bpp
 
             End If
 
@@ -2409,7 +2409,7 @@ Private Function pvCvAnyToICO(Picture As StdPicture, _
     ' if the loaded image was some other type (gif,tif,png), the LoadPicture method ensured that
     '   a bitmap would be returned before getting here. See LoadPicture
 
-    Dim BHI      As BITMAPV5HEADER, icData() As Byte, icHdr() As Long, X As Long
+    Dim BHI      As BITMAPV5HEADER, icData() As Byte, icHdr() As Long, x As Long
 
     Dim mskShift As Long, mskPtr As Long, mskBits As Long, lAlpha As Long
 
@@ -2451,15 +2451,15 @@ Private Function pvCvAnyToICO(Picture As StdPicture, _
             If pvValidateAlphaChannel(VarPtr(icData(62)), BHI.biWidth, BHI.biHeight) = PixelFormat32bppPremultiplied Then
                 mskShift = 128: mskPtr = 62& + BHI.biSizeImage
 
-                For X = 65& To mskPtr - 1& Step 4&
-                    lAlpha = icData(X)
+                For x = 65& To mskPtr - 1& Step 4&
+                    lAlpha = icData(x)
 
                     If lAlpha = 0& Then
                         mskBits = mskBits Or mskShift
                     ElseIf lAlpha < 255& Then
-                        icData(X - 1&) = (icData(X - 1&) * lAlpha) \ 255
-                        icData(X - 2&) = (icData(X - 2&) * lAlpha) \ 255
-                        icData(X - 3&) = (icData(X - 2&) * lAlpha) \ 255
+                        icData(x - 1&) = (icData(x - 1&) * lAlpha) \ 255
+                        icData(x - 2&) = (icData(x - 2&) * lAlpha) \ 255
+                        icData(x - 3&) = (icData(x - 2&) * lAlpha) \ 255
 
                     End If
 
@@ -2505,7 +2505,7 @@ Private Function pvCvAnytoBMP(Picture As StdPicture, pPicRef As PICREF) As StdPi
 
     Dim ICI() As Long, aMask() As Byte, hDIB As Long, hBits As Long
 
-    Dim X     As Long, Y As Long, dPtr As Long, hMask As Long
+    Dim x     As Long, y As Long, dPtr As Long, hMask As Long
 
     Dim BIH   As BITMAPV5HEADER, mScanWidth As Long
    
@@ -2565,34 +2565,34 @@ Private Function pvCvAnytoBMP(Picture As StdPicture, pPicRef As PICREF) As StdPi
                     .biSize = 40: GetDIBits m_hDC, hMask, 0&, 0&, ByVal 0&, BIH, 0&
 
                     If .biBitCount = 0 Then GoTo ExitRoutine
-                    Y = .biHeight \ 2&              ' prepare a 32bpp format for DIB creation
+                    y = .biHeight \ 2&              ' prepare a 32bpp format for DIB creation
                     .biBitCount = 32: .biClrImportant = 0: .biClrUsed = 0&
-                    .biSizeImage = 0&: .biCompression = 0: .biHeight = Y
+                    .biSizeImage = 0&: .biCompression = 0: .biHeight = y
                     hDIB = CreateDIBSection(m_hDC, BIH, 0&, hBits, 0&, 0&)
 
                     If hDIB = 0& Then GoTo ExitRoutine ' create the DIB
-                    .biHeight = Y + Y: X = Y        ' transfer top 1/2 of mask to our DIB
-                    GetDIBits m_hDC, hMask, 0&, Y, ByVal hBits, BIH, 0&
+                    .biHeight = y + y: x = y        ' transfer top 1/2 of mask to our DIB
+                    GetDIBits m_hDC, hMask, 0&, y, ByVal hBits, BIH, 0&
                 Else
-                    Y = .biHeight: X = 0&
+                    y = .biHeight: x = 0&
                 End If                              ' get the mask bits
 
                 .biBitCount = 8: .biClrImportant = 0: .biClrUsed = 256: .biSizeImage = 0
                 mScanWidth = pvDWordAlign(.biBitCount, .biWidth)
-                ReDim aMask(0 To mScanWidth * Y - 1&)
+                ReDim aMask(0 To mScanWidth * y - 1&)
                 CopyMemory ICI(0), BIH, 40&: ICI(11) = vbWhite
-                GetDIBits m_hDC, hMask, X, Y, aMask(0), ICI(0), 0&
+                GetDIBits m_hDC, hMask, x, y, aMask(0), ICI(0), 0&
                 Erase ICI()
 
             End With
 
             DeleteObject hMask: ICI(3) = 0&
-            dPtr = 3&: For Y = 0& To Y - 1&         ' apply the mask to our bitmap
-                X = Y * mScanWidth
+            dPtr = 3&: For y = 0& To y - 1&         ' apply the mask to our bitmap
+                x = y * mScanWidth
 
-                For X = X To X + BIH.biWidth - 1&
+                For x = x To x + BIH.biWidth - 1&
 
-                    If aMask(X) = 0& Then
+                    If aMask(x) = 0& Then
                         CopyMemory ByVal pvSafePointerAdd(hBits, dPtr), 255, 1&
                     Else
                         hMask = 0&                  ' contains simple transparency
@@ -2637,7 +2637,7 @@ Private Function pvCvMetaFileToAny(Picture As StdPicture, _
 
     Dim BIH    As BITMAPV5HEADER, nPic As IPicture
 
-    Dim hDIB   As Long, hBits As Long, X As Long
+    Dim hDIB   As Long, hBits As Long, x As Long
 
     Dim bAlpha As Byte, dPtr As Long, hIcon As Long, icData() As Byte
 
@@ -2685,15 +2685,15 @@ Private Function pvCvMetaFileToAny(Picture As StdPicture, _
     If PicType = vbPicTypeBitmap Then                   ' loop thru alpha bytes & toggle them
         If BIH.biBitCount = 32& Then
 
-            For X = 3& To BIH.biSizeImage - 1& Step 4
-                dPtr = pvSafePointerAdd(hBits, X)
+            For x = 3& To BIH.biSizeImage - 1& Step 4
+                dPtr = pvSafePointerAdd(hBits, x)
                 CopyMemory bAlpha, ByVal dPtr, 1
                 bAlpha = bAlpha Xor 255
 
                 If bAlpha = 255 Then
                     CopyMemory ByVal dPtr, bAlpha, 1
                 Else
-                    CopyMemory ByVal pvSafePointerAdd(hBits, X - 3&), 0&, 4&
+                    CopyMemory ByVal pvSafePointerAdd(hBits, x - 3&), 0&, 4&
 
                 End If
 
@@ -2733,10 +2733,10 @@ Private Function pvCvMetaFileToAny(Picture As StdPicture, _
         If BIH.biBitCount = 32& Then                        ' loop and toggle alpha + build icon mask
             mskPtr = BIH.biSizeImage + 62&: mskShift = 128&
 
-            For X = 65& To mskPtr - 1& Step 4&
-                icData(X) = icData(X) Xor 255
+            For x = 65& To mskPtr - 1& Step 4&
+                icData(x) = icData(x) Xor 255
 
-                If icData(X) = 0 Then mskBits = mskBits Or mskShift
+                If icData(x) = 0 Then mskBits = mskBits Or mskShift
                 If mskShift = 1& Then
                     icData(mskPtr) = mskBits
                     mskBits = 0&: mskShift = 128&
@@ -3253,7 +3253,7 @@ Private Function pvValidateAlphaChannel(ByVal PixelPointer As Long, _
 
     Dim lColor      As Long, lPrevColor As Long
 
-    Dim bScanLine() As Long, Y As Long, X As Long
+    Dim bScanLine() As Long, y As Long, x As Long
 
     Const ZEROES    As Long = 256&
    
@@ -3271,12 +3271,12 @@ Private Function pvValidateAlphaChannel(ByVal PixelPointer As Long, _
     CopyMemory lPrevColor, ByVal PixelPointer, 4&
     lPrevColor = lPrevColor Xor 1&
    
-    For Y = 0& To Height - 1&
-        X = Width * 4&
-        CopyMemory bScanLine(0), ByVal pvSafePointerAdd(PixelPointer, X * Y), X
+    For y = 0& To Height - 1&
+        x = Width * 4&
+        CopyMemory bScanLine(0), ByVal pvSafePointerAdd(PixelPointer, x * y), x
 
-        For X = 0& To Width - 1&
-            lColor = bScanLine(X)               ' get 32bit color
+        For x = 0& To Width - 1&
+            lColor = bScanLine(x)               ' get 32bit color
 
             If Not lColor = lPrevColor Then     ' and extact the alpha byte
                 If lColor = 0& Then
@@ -3291,7 +3291,7 @@ Private Function pvValidateAlphaChannel(ByVal PixelPointer As Long, _
                             If (lFormat And Not ZEROES) > 2& Then
                                 ' at least one other alpha value was > 0 and < 255
                                 ' since this alpha is zero & RGB non-zero. Done:
-                                lFormat = 8&: Y = Height: Exit For
+                                lFormat = 8&: y = Height: Exit For
 
                             End If
 
@@ -3303,7 +3303,7 @@ Private Function pvValidateAlphaChannel(ByVal PixelPointer As Long, _
 
                         If (lFormat And 1&) Then
                             ' already seen alpha zero & non-zero RGB. Here we have 255 alpha. Done:
-                            lFormat = 8&: Y = Height: Exit For
+                            lFormat = 8&: y = Height: Exit For
 
                         End If
 
@@ -3311,11 +3311,11 @@ Private Function pvValidateAlphaChannel(ByVal PixelPointer As Long, _
                        
                         ' else if any RGB values > alpha then not-premultiplied
                     ElseIf bAlpha < (lColor And &HFF&) Then
-                        lFormat = 8&: Y = Height: Exit For ' definitly ARGB
+                        lFormat = 8&: y = Height: Exit For ' definitly ARGB
                     ElseIf bAlpha < (lColor And &HFF00&) \ &H100& Then
-                        lFormat = 8&: Y = Height: Exit For ' definitly ARGB
+                        lFormat = 8&: y = Height: Exit For ' definitly ARGB
                     ElseIf bAlpha < (lColor And &HFF0000) \ &H10000 Then
-                        lFormat = 8&: Y = Height: Exit For ' definitly ARGB
+                        lFormat = 8&: y = Height: Exit For ' definitly ARGB
                     Else
                         lFormat = lFormat Or 16& ' likely pARGB, but not sure yet
 
@@ -3427,7 +3427,7 @@ Private Function pvCreateThunks() As Boolean
 
     Dim tPic                     As StdPicture, nIPic As IPicture
 
-    Dim vIPic                    As Long, vIPicDisp As Long, index As Long
+    Dim vIPic                    As Long, vIPicDisp As Long, Index As Long
 
     Dim hwnd                     As Long, tObj As Object
    
@@ -3527,10 +3527,10 @@ Private Function pvCreateThunks() As Boolean
     z_Code(22) = GetWindowLong(m_Hwnd, GWL_WNDPROC)
    
     ' sanity checks
-    For index = 0& To 14&
+    For Index = 0& To 14&
 
-        If z_Code(index) = 0& Then
-            If index < 2& Or index > 4& Then ' z_Code(2)(3) done later, z_Code(4) applies to IDE only
+        If z_Code(Index) = 0& Then
+            If Index < 2& Or Index > 4& Then ' z_Code(2)(3) done later, z_Code(4) applies to IDE only
                 VirtualFree vThunks(0), 0&, MEM_RELEASE
                 vThunks(0) = 0&
                 GoTo ExitRoutine
@@ -3593,10 +3593,10 @@ Private Function pvCreateThunks() As Boolean
     z_Code(16) = vThunks(1): z_Code(28) = vThunks(1): z_Code(33) = vThunks(1): z_Code(44) = vThunks(1)
    
     ' sanity checks
-    For index = 0& To 10&   ' z_Code(11) & (12) are always zero; thunk use only
+    For Index = 0& To 10&   ' z_Code(11) & (12) are always zero; thunk use only
 
-        If z_Code(index) = 0& Then
-            If Not index = 3& Then
+        If z_Code(Index) = 0& Then
+            If Not Index = 3& Then
                 VirtualFree vThunks(1), 0&, MEM_RELEASE
                 vThunks(1) = 0&
                 GoTo ExitRoutine
@@ -3636,12 +3636,12 @@ Private Function pvCreateThunks() As Boolean
 ExitRoutine:
 
     ' clean up if failure occurred above...
-    For index = 2& To 0& Step -1&
+    For Index = 2& To 0& Step -1&
 
-        If vThunks(index) = 0& Then Exit For    ' if any thunk failed creation, rewind everything
+        If vThunks(Index) = 0& Then Exit For    ' if any thunk failed creation, rewind everything
     Next
 
-    If index < 0& Then
+    If Index < 0& Then
         m_ThunkPtr = vThunks(0)
         SetProp m_Hwnd, "ThunkAddr", m_ThunkPtr
         SetProp m_Hwnd, "IPicAddr", vIPic
@@ -3653,9 +3653,9 @@ ExitRoutine:
     Else                        ' not all thunks were created, failure & abort
         m_ThunkPtr = -1&
 
-        For index = 0& To 2&    ' ensure all thunks are released
+        For Index = 0& To 2&    ' ensure all thunks are released
 
-            If vThunks(index) Then VirtualFree vThunks(index), 0&, MEM_RELEASE
+            If vThunks(Index) Then VirtualFree vThunks(Index), 0&, MEM_RELEASE
         Next                    ' ensure any manually loaded DLLs are released
 
         If hMsImg Then FreeLibrary hMsImg
@@ -3891,26 +3891,26 @@ Private Sub pvReleased(ByVal pUnk As Long)
     ' the passed interface. Unless the picture being destroyed was loaded as a multi-page
     ' TIFF or multi-frame GIF, there will be no action taken in this method
    
-    Dim index   As Long, hImage As Long, lCount As Long
+    Dim Index   As Long, hImage As Long, lCount As Long
 
     Dim pImages As Long, gImage As Long, gIndex As Long
    
     '    Debug.Print "releasing "; pUnk
    
-    For index = 0& To m_RefCount - 1&                           ' locate the pUnk object in our array
+    For Index = 0& To m_RefCount - 1&                           ' locate the pUnk object in our array
 
-        If pUnk = m_PicRefs(index).pIPicture Then
-            hImage = m_PicRefs(index).pHandle                   ' set reference & exit loop
+        If pUnk = m_PicRefs(Index).pIPicture Then
+            hImage = m_PicRefs(Index).pHandle                   ' set reference & exit loop
             Exit For
-        ElseIf pUnk = m_PicRefs(index).pIPicDisp Then
-            hImage = m_PicRefs(index).pHandle                   ' set reference & exit loop
+        ElseIf pUnk = m_PicRefs(Index).pIPicDisp Then
+            hImage = m_PicRefs(Index).pHandle                   ' set reference & exit loop
             Exit For
 
         End If
 
     Next
 
-    If index < m_RefCount Then
+    If Index < m_RefCount Then
         If hImage Then
             GdipDisposeImage hImage                             ' dispose of the image
             CopyMemory pImages, ByVal pvSafePointerAdd(m_ThunkPtr, 12&), 4& ' get array of GDI+ handles
@@ -3918,8 +3918,8 @@ Private Sub pvReleased(ByVal pUnk As Long)
             If pImages Then                                     ' could be zero
                 CopyMemory lCount, ByVal pImages, 4&            ' get handle count in array
 
-                For index = 0& To lCount - 1&                   ' start the search
-                    CopyMemory gImage, ByVal pvSafePointerAdd(pImages, index * 4& + 8&), 4&
+                For Index = 0& To lCount - 1&                   ' start the search
+                    CopyMemory gImage, ByVal pvSafePointerAdd(pImages, Index * 4& + 8&), 4&
 
                     If gImage = hImage Then
                         lCount = lCount - 1&
@@ -3929,8 +3929,8 @@ Private Sub pvReleased(ByVal pUnk As Long)
                             CoTaskMemRealloc pImages, 0&
                         Else                                    ' update array & shift as needed
 
-                            If index < lCount Then
-                                CopyMemory ByVal pvSafePointerAdd(pImages, index * 4& + 8&), ByVal pvSafePointerAdd(pImages, lCount * 4& + 8&), 4&
+                            If Index < lCount Then
+                                CopyMemory ByVal pvSafePointerAdd(pImages, Index * 4& + 8&), ByVal pvSafePointerAdd(pImages, lCount * 4& + 8&), 4&
 
                             End If
 
@@ -3948,10 +3948,10 @@ Private Sub pvReleased(ByVal pUnk As Long)
 
         End If
 
-        Set m_PicRefs(index).oStream = Nothing                  ' release the IStream as needed
+        Set m_PicRefs(Index).oStream = Nothing                  ' release the IStream as needed
         m_RefCount = m_RefCount - 1&                            ' update count & shift array as needed
 
-        If index < m_RefCount Then m_PicRefs(index) = m_PicRefs(m_RefCount)
+        If Index < m_RefCount Then m_PicRefs(Index) = m_PicRefs(m_RefCount)
         Set m_PicRefs(m_RefCount).oStream = Nothing
 
     End If

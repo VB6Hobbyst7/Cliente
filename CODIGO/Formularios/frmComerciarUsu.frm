@@ -274,13 +274,13 @@ Private Const GOLD_OFFER_SLOT As Byte = INV_OFFER_SLOTS + 1
 
 Private sCommerceChat         As String
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -530,16 +530,16 @@ End Sub
 
 Private Sub picInvComercio_MouseMove(Button As Integer, _
                                      Shift As Integer, _
-                                     X As Single, _
-                                     Y As Single)
+                                     x As Single, _
+                                     y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
 
 Private Sub picInvOfertaOtro_MouseMove(Button As Integer, _
                                        Shift As Integer, _
-                                       X As Single, _
-                                       Y As Single)
+                                       x As Single, _
+                                       y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -551,8 +551,8 @@ End Sub
 
 Private Sub picInvOfertaProp_MouseMove(Button As Integer, _
                                        Shift As Integer, _
-                                       X As Single, _
-                                       Y As Single)
+                                       x As Single, _
+                                       y As Single)
     LastPressed.ToggleToNormal
 
 End Sub

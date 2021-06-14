@@ -49,14 +49,14 @@ Public Sub Initialize(ByRef LPic As PictureBox, ByVal ForeColor As Long)
     
 End Sub
 
-Public Property Get List(ByVal index As Integer) As String
+Public Property Get List(ByVal Index As Integer) As String
 Attribute List.VB_UserMemId = 0
-    List = lista(index)
+    List = lista(Index)
 
 End Property
 
-Public Property Let List(ByVal index As Integer, ByVal Valor As String)
-    lista(index) = Valor
+Public Property Let List(ByVal Index As Integer, ByVal Valor As String)
+    lista(Index) = Valor
     Dibujar
 
 End Property

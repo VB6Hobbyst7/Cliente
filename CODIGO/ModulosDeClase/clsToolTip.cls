@@ -12,9 +12,9 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 
-Private X       As Integer
+Private x       As Integer
 
-Private Y       As Integer
+Private y       As Integer
 
 Private OffX    As Single
 
@@ -39,8 +39,8 @@ Public Sub Render(TileX As Integer, _
 
     End If
 
-    If X > 0 And Y > 0 Then
-        Call RenderTextCentered((X - TileX + 12) * 32 + ScreenOffX + OffX - 16, (Y - TileY + 8) * 32 + ScreenOffY + OffY + 16, Mensaje, D3DColorRGBA(R, G, b, Alpha))
+    If x > 0 And y > 0 Then
+        Call RenderTextCentered((x - TileX + 12) * 32 + ScreenOffX + OffX - 16, (y - TileY + 8) * 32 + ScreenOffY + OffY + 16, Mensaje, D3DColorRGBA(R, G, b, Alpha))
 
     End If
 
@@ -52,8 +52,8 @@ Public Sub Init(ByVal mX As Integer, _
                 ByVal mR As Byte, _
                 ByVal mG As Byte, _
                 ByVal mB As Byte)
-    X = mX
-    Y = mY
+    x = mX
+    y = mY
     Mensaje = mMensaje
     R = mR
     G = mG

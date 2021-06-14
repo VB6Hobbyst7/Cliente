@@ -56,8 +56,8 @@ Public Sub ResetColor(sngRed As Single, _
  
 End Sub
  
-Public Sub ResetIt(X As Single, _
-                   Y As Single, _
+Public Sub ResetIt(x As Single, _
+                   y As Single, _
                    XSpeed As Single, _
                    YSpeed As Single, _
                    XAcc As Single, _
@@ -67,8 +67,8 @@ Public Sub ResetIt(X As Single, _
     'More info: [url=http://www.vbgore.com/CommonCode.Particle.ResetIt]http://www.vbgore.com/CommonCode.Particle.ResetIt[/url]
     '************************************************************
  
-    sngX = X
-    sngY = Y
+    sngX = x
+    sngY = y
     sngXSpeed = XSpeed
     sngYSpeed = YSpeed
     sngXAccel = XAcc

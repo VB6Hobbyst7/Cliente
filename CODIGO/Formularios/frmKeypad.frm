@@ -463,13 +463,13 @@ Private Sub imgEspacio_Click()
 
 End Sub
 
-Private Sub imgKeyPad_Click(index As Integer)
+Private Sub imgKeyPad_Click(Index As Integer)
     Call Audio.PlayWave(SND_CLICK)
 
     If Modo = MAYUSCULA Then
-        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MayIndex, index + 1, 1)
+        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MayIndex, Index + 1, 1)
     Else
-        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MinIndex, index + 1, 1)
+        Me.txtPassword.Text = Me.txtPassword.Text & mid$(MinIndex, Index + 1, 1)
 
     End If
 

@@ -369,26 +369,26 @@ Private Sub LoadButtons()
     
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Call LastPressed.ToggleToNormal
 
 End Sub
 
-Private Sub Image1_Click(index As Integer)
+Private Sub Image1_Click(Index As Integer)
     
     Call Audio.PlayWave(SND_CLICK)
     
-    If InvBanco(index).SelectedItem = 0 Then Exit Sub
+    If InvBanco(Index).SelectedItem = 0 Then Exit Sub
     
     If Not IsNumeric(cantidad.Text) Then Exit Sub
     
-    Select Case index
+    Select Case Index
 
         Case 0
             LastIndex1 = InvBanco(0).SelectedItem
@@ -454,8 +454,8 @@ End Sub
 
 Private Sub PicBancoInv_MouseMove(Button As Integer, _
                                   Shift As Integer, _
-                                  X As Single, _
-                                  Y As Single)
+                                  x As Single, _
+                                  y As Single)
     Call LastPressed.ToggleToNormal
 
     If Button = 2 And InvBanco(0).SelectedItem > 0 Then
@@ -477,10 +477,10 @@ End Sub
 
 Private Sub PicBancoInv_MouseUp(Button As Integer, _
                                 Shift As Integer, _
-                                X As Single, _
-                                Y As Single)
+                                x As Single, _
+                                y As Single)
 
-    If X < InvBanco(0).OffSetX Or Y < InvBanco(0).OffSetY Or X > PicBancoInv.Width Or Y > PicBancoInv.Height Then
+    If x < InvBanco(0).OffSetX Or y < InvBanco(0).OffSetY Or x > PicBancoInv.Width Or y > PicBancoInv.Height Then
         DragAndDrop = False
     Else
 
@@ -488,7 +488,7 @@ Private Sub PicBancoInv_MouseUp(Button As Integer, _
 
             Dim NewPosInv As Integer
 
-            NewPosInv = InvBanco(0).ClickItem(X, Y)
+            NewPosInv = InvBanco(0).ClickItem(x, y)
 
             If NewPosInv > 0 Then
                 Call WriteIntercambiarInv(InvBanco(0).SelectedItem, NewPosInv, True)
@@ -544,8 +544,8 @@ End Sub
 
 Private Sub PicInv_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             X As Single, _
-                             Y As Single)
+                             x As Single, _
+                             y As Single)
     Call LastPressed.ToggleToNormal
 
 End Sub

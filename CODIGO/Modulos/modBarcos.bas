@@ -59,8 +59,8 @@ Public Sub InitBarcos()
 
 End Sub
 
-Public Sub RenderBarcos(ByVal X As Integer, _
-                        ByVal Y As Integer, _
+Public Sub RenderBarcos(ByVal x As Integer, _
+                        ByVal y As Integer, _
                         ByVal TileX As Integer, _
                         ByVal TileY As Integer, _
                         ByVal PixelOffSetX As Single, _
@@ -73,7 +73,7 @@ Public Sub RenderBarcos(ByVal X As Integer, _
     For I = 0 To 1
 
         If Not Barco(I) Is Nothing Then
-            If Barco(I).X = X And Barco(I).Y = Y Then
+            If Barco(I).x = x And Barco(I).y = y Then
                 Call Barco(I).Render(TileX - 4, TileY - 5, PixelOffSetX, PixelOffSetY)
 
             End If

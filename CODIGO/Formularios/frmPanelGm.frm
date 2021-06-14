@@ -2950,8 +2950,8 @@ End Sub
 
 Private Sub lstUsers_MouseUp(Button As Integer, _
                              Shift As Integer, _
-                             X As Single, _
-                             Y As Single)
+                             x As Single, _
+                             y As Single)
 
     '    If Button = vbRightButton Then
     '        PopupMenu mnuSeguimientos
@@ -3021,7 +3021,7 @@ Private Sub PEventos_Click()
 End Sub
 
 Private Sub TabStrip_Click()
-    Call showTab(TabStrip.SelectedItem.index)
+    Call showTab(TabStrip.SelectedItem.Index)
 
 End Sub
 

@@ -451,7 +451,7 @@ Public Sub SetItem(ByVal slot As Byte, _
 
 End Sub
 
-Public Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
+Public Function ClickItem(ByVal x As Long, ByVal y As Long) As Long
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -464,9 +464,9 @@ Public Function ClickItem(ByVal X As Long, ByVal Y As Long) As Long
 
     Dim temp_y   As Long
 
-    If Y >= OffSetY And X >= OffSetX Then
-        temp_x = (X - OffSetX) \ ownTilePixelWidth
-        temp_y = (Y - OffSetY) \ ownTilePixelHeight
+    If y >= OffSetY And x >= OffSetX Then
+        temp_x = (x - OffSetX) \ ownTilePixelWidth
+        temp_y = (y - OffSetY) \ ownTilePixelHeight
         
         TempItem = temp_x + (temp_y + InventoryOffset) * ((InventoryWindow.ScaleWidth - OffSetX) \ ownTilePixelWidth) + 1
         
@@ -698,8 +698,8 @@ End Sub
 
 Private Sub InventoryWindow_MouseDown(Button As Integer, _
                                       Shift As Integer, _
-                                      X As Single, _
-                                      Y As Single)
+                                      x As Single, _
+                                      y As Single)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -711,12 +711,12 @@ Private Sub InventoryWindow_MouseDown(Button As Integer, _
     Dim prevSelItem As Long
     
     'Exit if it got outside the control's area
-    If X < OffSetX Or Y < OffSetY Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then Exit Sub
+    If x < OffSetX Or y < OffSetY Or x > InventoryWindow.Width Or y > InventoryWindow.Height Then Exit Sub
     
     prevSelItem = InvSelectedItem
 
     'Get the currently clickced item
-    InvSelectedItem = ClickItem(CInt(X), CInt(Y))
+    InvSelectedItem = ClickItem(CInt(x), CInt(y))
     
     'Update needed inventory slots
     If prevSelItem <> InvSelectedItem Then
@@ -750,8 +750,8 @@ End Sub
 
 Private Sub InventoryWindow_MouseMove(Button As Integer, _
                                       Shift As Integer, _
-                                      X As Single, _
-                                      Y As Single)
+                                      x As Single, _
+                                      y As Single)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -766,10 +766,10 @@ Private Sub InventoryWindow_MouseMove(Button As Integer, _
     Dim TempItem As Integer
     
     'Exit if it got outside the control's area
-    If X < 0 Or Y < 0 Or X > InventoryWindow.Width Or Y > InventoryWindow.Height Then Exit Sub
+    If x < 0 Or y < 0 Or x > InventoryWindow.Width Or y > InventoryWindow.Height Then Exit Sub
     
-    temp_x = X \ ownTilePixelWidth
-    temp_y = Y \ ownTilePixelHeight
+    temp_x = x \ ownTilePixelWidth
+    temp_y = y \ ownTilePixelHeight
     
     TempItem = temp_x + (temp_y + InventoryOffset) * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
     

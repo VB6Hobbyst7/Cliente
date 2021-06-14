@@ -30,8 +30,8 @@ Private Declare Function QueryPerformanceCounter _
 
 Public Type TLVERTEX
 
-    X As Single
-    Y As Single
+    x As Single
+    y As Single
     z As Single
     rhw As Single
     Color As Long
@@ -42,15 +42,15 @@ End Type
 
 Public Type TexInfo
 
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
 
 End Type
 
 Private Type PosC
 
-    X As Long
-    Y As Long
+    x As Long
+    y As Long
     X2 As Long
     Y2 As Long
 
@@ -105,10 +105,10 @@ Dim End_Time                As Currency
 
 Dim timer_freq              As Currency
 
-Public Function DDRect(X, Y, X1, Y1) As RECT
+Public Function DDRect(x, y, X1, Y1) As RECT
     DDRect.Bottom = Y1
-    DDRect.Top = Y
-    DDRect.Left = X
+    DDRect.Top = y
+    DDRect.Left = x
     DDRect.Right = X1
 
 End Function
@@ -149,8 +149,8 @@ Public Function IniciarD3D() As Boolean
     Set Sprite = D3DX.CreateSprite(D3DDevice)
      
     'Set the scaling to default aspect ratio
-    SpriteScaleVector.X = 1
-    SpriteScaleVector.Y = 1
+    SpriteScaleVector.x = 1
+    SpriteScaleVector.y = 1
 
     Call setup_ambient
 
@@ -237,8 +237,8 @@ Public Sub CargarFont()
 End Sub
 
 Public Sub DrawFont(Texto As String, _
-                    ByVal X As Long, _
-                    ByVal Y As Long, _
+                    ByVal x As Long, _
+                    ByVal y As Long, _
                     ByVal Color As Long, _
                     Optional Centrado As Boolean = False)
 
@@ -264,7 +264,7 @@ Public Sub DrawFont(Texto As String, _
     For I = 1 To Len(Texto)
         CharC = Asc(mid$(Texto, I, 1))
         'Call Engine_Render_D3DXSprite(X - SumaL + SumaX, Y, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, Caracteres(CharC).X + 1, Caracteres(CharC).Y + 1, Color, 14324, 0)
-        Call Engine_Render_Rectangle(X - SumaL + SumaX, Y, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, Caracteres(CharC).X + 1, Caracteres(CharC).Y + 1, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, , , , 14324, Color, Color, Color, Color)
+        Call Engine_Render_Rectangle(x - SumaL + SumaX, y, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, Caracteres(CharC).x + 1, Caracteres(CharC).y + 1, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, , , , 14324, Color, Color, Color, Color)
     
         SumaX = SumaX + Caracteres(CharC).X2 - 2
     Next I
@@ -335,10 +335,10 @@ Public Function IniciarDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS) As Boolean
             BlurTA(T).rhw = 1
         Next T
 
-        BlurTA(1).X = ScreenWidth
-        BlurTA(2).Y = ScreenHeight
-        BlurTA(3).X = ScreenWidth
-        BlurTA(3).Y = ScreenHeight
+        BlurTA(1).x = ScreenWidth
+        BlurTA(2).y = ScreenHeight
+        BlurTA(3).x = ScreenWidth
+        BlurTA(3).y = ScreenHeight
 
     End If
 
@@ -374,7 +374,7 @@ Public Sub LiberarObjetosDX()
     Set D3DX = Nothing
     Set dX = Nothing
     Exit Sub
-fin:                                                                                         MsgBox "Error producido en Public Sub LiberarObjetosDX()"
+fin:                                                                                                 MsgBox "Error producido en Public Sub LiberarObjetosDX()"
 
 End Sub
 
@@ -395,8 +395,8 @@ Public Sub Engine_ReadyTexture(ByVal TextureNum As Integer)
 
 End Sub
 
-Public Sub Engine_Render_D3DXSprite(ByVal X As Single, _
-                                    ByVal Y As Single, _
+Public Sub Engine_Render_D3DXSprite(ByVal x As Single, _
+                                    ByVal y As Single, _
                                     ByVal Width As Single, _
                                     ByVal Height As Single, _
                                     ByVal srcX As Single, _
@@ -430,16 +430,16 @@ Public Sub Engine_Render_D3DXSprite(ByVal X As Single, _
         If Degrees > 360 Then Degrees = Degrees - 360
 
         With v2
-            .X = (Width * 0.5)
-            .Y = (Height * 0.5)
+            .x = (Width * 0.5)
+            .y = (Height * 0.5)
 
         End With
 
     End If
     
     'Set the translation (location on the screen)
-    v3.X = X
-    v3.Y = Y
+    v3.x = x
+    v3.y = y
 
     'Draw the sprite
     If TextureNum > 0 Then
@@ -451,8 +451,8 @@ Public Sub Engine_Render_D3DXSprite(ByVal X As Single, _
     
 End Sub
 
-Public Sub Engine_Render_D3DXTexture(ByVal X As Single, _
-                                     ByVal Y As Single, _
+Public Sub Engine_Render_D3DXTexture(ByVal x As Single, _
+                                     ByVal y As Single, _
                                      ByVal Width As Single, _
                                      ByVal Height As Single, _
                                      ByVal srcX As Single, _
@@ -487,24 +487,24 @@ Public Sub Engine_Render_D3DXTexture(ByVal X As Single, _
         If Degrees > 360 Then Degrees = Degrees - 360
 
         With v2
-            .X = (Width * 0.5)
-            .Y = (Height * 0.5)
+            .x = (Width * 0.5)
+            .y = (Height * 0.5)
 
         End With
 
     End If
     
     'Set the translation (location on the screen)
-    v3.X = X
-    v3.Y = Y
+    v3.x = x
+    v3.y = y
 
     'Draw the sprite
     Sprite.Draw Texture, srcRect, SpriteScaleVector, v2, Degrees, v3, Light
     
 End Sub
 
-Sub Engine_Render_Rectangle(ByVal X As Single, _
-                            ByVal Y As Single, _
+Sub Engine_Render_Rectangle(ByVal x As Single, _
+                            ByVal y As Single, _
                             ByVal Width As Single, _
                             ByVal Height As Single, _
                             ByVal srcX As Single, _
@@ -534,7 +534,7 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
 
     Dim CenterY             As Single
 
-    Dim index               As Integer
+    Dim Index               As Integer
 
     Dim NewX                As Single
 
@@ -553,10 +553,10 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
 
     'Perform in-bounds check if needed
     If InBoundsCheck Then
-        If X + SrcWidth <= 0 Then Exit Sub
-        If Y + SrcHeight <= 0 Then Exit Sub
-        If X >= frmMain.pRender.Width Then Exit Sub
-        If Y >= frmMain.pRender.Height Then Exit Sub
+        If x + SrcWidth <= 0 Then Exit Sub
+        If y + SrcHeight <= 0 Then Exit Sub
+        If x >= frmMain.pRender.Width Then Exit Sub
+        If y >= frmMain.pRender.Height Then Exit Sub
 
     End If
 
@@ -564,8 +564,8 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
     Engine_ReadyTexture TextureNum
 
     'Set the bitmap dimensions if needed
-    If SrcBitmapWidth = -1 Then SrcBitmapWidth = SurfaceSize(TextureNum).X
-    If SrcBitmapHeight = -1 Then SrcBitmapHeight = SurfaceSize(TextureNum).Y
+    If SrcBitmapWidth = -1 Then SrcBitmapWidth = SurfaceSize(TextureNum).x
+    If SrcBitmapHeight = -1 Then SrcBitmapHeight = SurfaceSize(TextureNum).y
     
     'Set the RHWs (must always be 1)
     VertexArray(0).rhw = 1
@@ -583,18 +583,18 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
 
         'To make things easy, we just do a completely separate calculation the top two points
         ' with an uncropped tU / tV algorithm
-        VertexArray(0).X = X + (Width * 0.5)
-        VertexArray(0).Y = Y - (Height * 0.5)
+        VertexArray(0).x = x + (Width * 0.5)
+        VertexArray(0).y = y - (Height * 0.5)
         VertexArray(0).tu = (srcX / SrcBitmapWidth)
         VertexArray(0).tv = (srcY / SrcBitmapHeight)
         
-        VertexArray(1).X = VertexArray(0).X + Width
+        VertexArray(1).x = VertexArray(0).x + Width
         VertexArray(1).tu = ((srcX + Width) / SrcBitmapWidth)
 
-        VertexArray(2).X = X
+        VertexArray(2).x = x
         VertexArray(2).tu = (srcX / SrcBitmapWidth)
 
-        VertexArray(3).X = X + Width
+        VertexArray(3).x = x + Width
         VertexArray(3).tu = (srcX + SrcWidth + ShadowAdd) / SrcBitmapWidth
 
     Else
@@ -639,34 +639,34 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
         ShadowAdd = 1
 
         'Find the left side of the rectangle
-        VertexArray(0).X = X
+        VertexArray(0).x = x
 
         If SrcBitmapWidth = 0 Then Exit Sub
         VertexArray(0).tu = (srcX / SrcBitmapWidth)
 
         'Find the top side of the rectangle
-        VertexArray(0).Y = Y
+        VertexArray(0).y = y
         VertexArray(0).tv = (srcY / SrcBitmapHeight)
     
         'Find the right side of the rectangle
-        VertexArray(1).X = X + Width
+        VertexArray(1).x = x + Width
         VertexArray(1).tu = (srcX + SrcWidth + ShadowAdd) / SrcBitmapWidth
  
         'These values will only equal each other when not a shadow
-        VertexArray(2).X = VertexArray(0).X
-        VertexArray(3).X = VertexArray(1).X
+        VertexArray(2).x = VertexArray(0).x
+        VertexArray(3).x = VertexArray(1).x
 
     End If
     
     'Find the bottom of the rectangle
-    VertexArray(2).Y = Y + Height
+    VertexArray(2).y = y + Height
     VertexArray(2).tv = (srcY + SrcHeight + ShadowAdd) / SrcBitmapHeight
 
     'Because this is a perfect rectangle, all of the values below will equal one of the values we already got
-    VertexArray(1).Y = VertexArray(0).Y
+    VertexArray(1).y = VertexArray(0).y
     VertexArray(1).tv = VertexArray(0).tv
     VertexArray(2).tu = VertexArray(0).tu
-    VertexArray(3).Y = VertexArray(2).Y
+    VertexArray(3).y = VertexArray(2).y
     VertexArray(3).tu = VertexArray(1).tu
     VertexArray(3).tv = VertexArray(2).tv
     
@@ -677,25 +677,25 @@ Sub Engine_Render_Rectangle(ByVal X As Single, _
         RadAngle = Degrees * DegreeToRadian
 
         'Set the CenterX and CenterY values
-        CenterX = X + (Width * 0.5)
-        CenterY = Y + (Height * 0.5)
+        CenterX = x + (Width * 0.5)
+        CenterY = y + (Height * 0.5)
 
         'Pre-calculate the cosine and sine of the radiant
         SinRad = Sin(RadAngle)
         CosRad = Cos(RadAngle)
 
         'Loops through the passed vertex buffer
-        For index = 0 To 3
+        For Index = 0 To 3
 
             'Calculates the new X and Y co-ordinates of the vertices for the given angle around the center co-ordinates
-            NewX = CenterX + (VertexArray(index).X - CenterX) * CosRad - (VertexArray(index).Y - CenterY) * SinRad
-            NewY = CenterY + (VertexArray(index).Y - CenterY) * CosRad + (VertexArray(index).X - CenterX) * SinRad
+            NewX = CenterX + (VertexArray(Index).x - CenterX) * CosRad - (VertexArray(Index).y - CenterY) * SinRad
+            NewY = CenterY + (VertexArray(Index).y - CenterY) * CosRad + (VertexArray(Index).x - CenterX) * SinRad
 
             'Applies the new co-ordinates to the buffer
-            VertexArray(index).X = NewX
-            VertexArray(index).Y = NewY
+            VertexArray(Index).x = NewX
+            VertexArray(Index).y = NewY
 
-        Next index
+        Next Index
 
     End If
 
@@ -878,7 +878,7 @@ Public Sub ReproducirSonidosDeAmbiente()
         If (GetTickCount And &H7FFFFFFF) - last_tick >= 12000 Then
 
             With charlist(UserCharIndex)
-                Call Audio.PlayWave(Zonas(ZonaActual).Sonido(RandomNumber(1, Zonas(ZonaActual).CantSonidos)), RandomNumber(.Pos.X - 10, .Pos.X + 10), RandomNumber(.Pos.Y - 9, .Pos.Y + 9))
+                Call Audio.PlayWave(Zonas(ZonaActual).Sonido(RandomNumber(1, Zonas(ZonaActual).CantSonidos)), RandomNumber(.Pos.x - 10, .Pos.x + 10), RandomNumber(.Pos.y - 9, .Pos.y + 9))
                 last_tick = (GetTickCount And &H7FFFFFFF)
 
             End With

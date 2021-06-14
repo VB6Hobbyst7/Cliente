@@ -413,9 +413,9 @@ Private Sub ActAura_Click()
 
 End Sub
 
-Private Sub Check1_Click(index As Integer)
+Private Sub Check1_Click(Index As Integer)
 
-    Select Case index
+    Select Case Index
 
         Case 0
 

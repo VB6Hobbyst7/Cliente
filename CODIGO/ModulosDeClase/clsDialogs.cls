@@ -75,8 +75,8 @@ Private Const MS_ADD_EXTRA As Integer = 5000
 Private Type dialog
 
     textLine()  As String
-    X           As Integer
-    Y           As Integer
+    x           As Integer
+    y           As Integer
     startTime   As Long
     lifeTime    As Long
     CharIndex   As Integer
@@ -333,8 +333,8 @@ End Function
 ' @param    y           The Y coord where to start rendering.
 ' @param    charIndex   The character whose dialog's position is being updated.
 
-Public Sub UpdateDialogPos(ByVal X As Integer, _
-                           ByVal Y As Integer, _
+Public Sub UpdateDialogPos(ByVal x As Integer, _
+                           ByVal y As Integer, _
                            ByVal CharIndex As Integer)
 
     '**************************************************************
@@ -349,8 +349,8 @@ Public Sub UpdateDialogPos(ByVal X As Integer, _
     If slot >= 0 Then
 
         With dialogs(slot)
-            .X = X '- (MAX_LENGTH \ 2) * 3
-            .Y = Y - (UBound(.textLine()) * 3)
+            .x = x '- (MAX_LENGTH \ 2) * 3
+            .y = y - (UBound(.textLine()) * 3)
             .renderable = True
 
         End With
@@ -409,11 +409,11 @@ Public Sub Render()
                 cantidad = UBound(.textLine())
 
                 If cantidad = 0 Then
-                    Call RenderTextCentered(.X, .Y, Trim$(.textLine(0)), .Color)
+                    Call RenderTextCentered(.x, .y, Trim$(.textLine(0)), .Color)
                 Else
 
                     For J = 0 To cantidad
-                        Call RenderText(.X - 50, .Y + offset, Trim$(.textLine(J)), .Color)
+                        Call RenderText(.x - 50, .y + offset, Trim$(.textLine(J)), .Color)
                         offset = offset + usedFont.Size + 5
                     Next J
 

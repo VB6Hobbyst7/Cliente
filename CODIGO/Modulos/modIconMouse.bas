@@ -69,8 +69,8 @@ Private Declare Function SetStretchBltMode _
 
 Private Declare Function StretchBlt _
                 Lib "gdi32" (ByVal hDC As Long, _
-                             ByVal X As Long, _
-                             ByVal Y As Long, _
+                             ByVal x As Long, _
+                             ByVal y As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long, _
                              ByVal hSrcDC As Long, _
@@ -82,8 +82,8 @@ Private Declare Function StretchBlt _
 
 Private Declare Function BitBlt _
                 Lib "gdi32" (ByVal hDestDC As Long, _
-                             ByVal X As Long, _
-                             ByVal Y As Long, _
+                             ByVal x As Long, _
+                             ByVal y As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long, _
                              ByVal hSrcDC As Long, _
@@ -132,8 +132,8 @@ Const DI_MASK = &H1
 Const DI_IMAGE = &H2
 
 Public Sub pvBMPaICO(srchDC As Long, _
-                     ByVal X As Integer, _
-                     ByVal Y As Integer, _
+                     ByVal x As Integer, _
+                     ByVal y As Integer, _
                      ByVal hImagen As Long, _
                      ByVal hMask As Long, _
                      ByVal hDC As Long, _
@@ -167,7 +167,7 @@ Public Sub pvBMPaICO(srchDC As Long, _
         ' Selecciono la imagen
         SelectObject hDC, hImagen
     
-        StretchBlt hDC, 0, 0, 32, 32, srchDC, X, Y, 32, 32, vbSrcCopy
+        StretchBlt hDC, 0, 0, 32, 32, srchDC, x, y, 32, 32, vbSrcCopy
                
     Else
 
@@ -186,7 +186,7 @@ Public Sub pvBMPaICO(srchDC As Long, _
         ' Hago la copia del bitmap
         SelectObject hDC_Copia, TmpBMP
         
-        StretchBlt hDC_Copia, 0, 0, 32, 32, srchDC, X, Y, 32, 32, vbSrcCopy
+        StretchBlt hDC_Copia, 0, 0, 32, 32, srchDC, x, y, 32, 32, vbSrcCopy
               
         ' De ahora en mas utilizo la copia
         ' de la que ya a sido modificado su

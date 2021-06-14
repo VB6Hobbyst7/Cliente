@@ -782,21 +782,21 @@ Private Sub imgCustomKeyNormal_Click()
 
 End Sub
 
-Private Sub Text1_KeyDown(index As Integer, KeyCode As Integer, Shift As Integer)
+Private Sub Text1_KeyDown(Index As Integer, KeyCode As Integer, Shift As Integer)
 
     Dim I As Long
     
     If LenB(CustomKeys.ReadableName(KeyCode)) = 0 Then Exit Sub
     'If key is not valid, we exit
     
-    Text1(index).Text = CustomKeys.ReadableName(KeyCode)
-    Text1(index).SelStart = Len(Text1(index).Text)
+    Text1(Index).Text = CustomKeys.ReadableName(KeyCode)
+    Text1(Index).SelStart = Len(Text1(Index).Text)
     
     For I = 1 To CustomKeys.count
 
-        If I <> index Then
+        If I <> Index Then
             If CustomKeys.BindedKey(I) = KeyCode Then
-                Text1(index).Text = "" 'If the key is already assigned, simply reject it
+                Text1(Index).Text = "" 'If the key is already assigned, simply reject it
                 Call Beep 'Alert the user
                 KeyCode = 0
                 Exit Sub
@@ -807,16 +807,16 @@ Private Sub Text1_KeyDown(index As Integer, KeyCode As Integer, Shift As Integer
 
     Next I
     
-    CustomKeys.BindedKey(index) = KeyCode
+    CustomKeys.BindedKey(Index) = KeyCode
 
 End Sub
 
-Private Sub Text1_KeyPress(index As Integer, KeyAscii As Integer)
+Private Sub Text1_KeyPress(Index As Integer, KeyAscii As Integer)
     KeyAscii = 0
 
 End Sub
 
-Private Sub Text1_KeyUp(index As Integer, KeyCode As Integer, Shift As Integer)
-    Call Text1_KeyDown(index, KeyCode, Shift)
+Private Sub Text1_KeyUp(Index As Integer, KeyCode As Integer, Shift As Integer)
+    Call Text1_KeyDown(Index, KeyCode, Shift)
 
 End Sub

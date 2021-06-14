@@ -486,7 +486,7 @@ Public LastPressed             As clsGraphicalButton
 
 Public EsLeader                As Boolean
 
-Private Sub Desc_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Desc_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -528,13 +528,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
 
 End Sub

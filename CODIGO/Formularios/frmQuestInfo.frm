@@ -397,7 +397,7 @@ Form_KeyPress_Err:
     
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     
     On Error GoTo Form_MouseMove_Err
     
@@ -416,8 +416,8 @@ End Sub
 
 Private Sub Image1_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             X As Single, _
-                             Y As Single)
+                             x As Single, _
+                             y As Single)
     
     On Error GoTo Image1_MouseMove_Err
 
@@ -435,7 +435,7 @@ Image1_MouseMove_Err:
     
 End Sub
 
-Private Sub Image1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Image1_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     
     On Error GoTo Image1_MouseUp_Err
     
@@ -451,8 +451,8 @@ End Sub
 
 Private Sub Image2_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             X As Single, _
-                             Y As Single)
+                             x As Single, _
+                             y As Single)
     
     On Error GoTo Image2_MouseMove_Err
 
@@ -470,12 +470,12 @@ Image2_MouseMove_Err:
     
 End Sub
 
-Private Sub Image2_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Image2_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     
     On Error GoTo Image2_MouseUp_Err
 
-    If ListViewQuest.SelectedItem.index > 0 Then
-        Call WriteQuestAccept(ListViewQuest.SelectedItem.index)
+    If ListViewQuest.SelectedItem.Index > 0 Then
+        Call WriteQuestAccept(ListViewQuest.SelectedItem.Index)
         Unload Me
 
     End If

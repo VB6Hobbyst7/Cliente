@@ -764,14 +764,14 @@ Public Sub ParseUserCommand(ByVal RawCommand As String)
                     Else
                         'No uso ningun formato por defecto
                         TPos = NombreLugar(ArgumentosAll(1))
-                        Call WriteWarpChar(ArgumentosAll(0), TPos.Map, TPos.X, TPos.Y)
+                        Call WriteWarpChar(ArgumentosAll(0), TPos.Map, TPos.x, TPos.y)
 
                     End If
 
                 ElseIf CantidadArgumentos = 1 Then
 
                     TPos = NombreLugar(ArgumentosAll(0))
-                    Call WriteWarpChar("YO", TPos.Map, TPos.X, TPos.Y)
+                    Call WriteWarpChar("YO", TPos.Map, TPos.x, TPos.y)
                 Else
                     'Avisar que falta el parametro
                     Call ShowConsoleMsg("Faltan parámetros. Utilice /telep NICKNAME MAPA X Y.")
@@ -2140,33 +2140,33 @@ Private Function NombreLugar(ByVal nombre As String) As WorldPos
     Select Case nombre
 
         Case "ULLA", "ULLATHORPE"
-            p.X = 304
-            p.Y = 854
+            p.x = 304
+            p.y = 854
             p.Map = 1
 
         Case "NIX"
-            p.X = 194
-            p.Y = 1252
+            p.x = 194
+            p.y = 1252
             p.Map = 1
         
         Case "BANDER", "BANDERBILL"
-            p.X = 300
-            p.Y = 220
+            p.x = 300
+            p.y = 220
             p.Map = 1
         
         Case "ARK", "ARKHEIN"
-            p.X = 550
-            p.Y = 1415
+            p.x = 550
+            p.y = 1415
             p.Map = 1
         
         Case "ARGHAL"
-            p.X = 694
-            p.Y = 338
+            p.x = 694
+            p.y = 338
             p.Map = 1
         
         Case "LINDOS"
-            p.X = 949
-            p.Y = 951
+            p.x = 949
+            p.y = 951
             p.Map = 1
         
     End Select

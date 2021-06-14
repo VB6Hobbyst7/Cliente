@@ -524,7 +524,7 @@ End Sub
 
 Private Sub LoadButtons()
 
-    Dim index As Long
+    Dim Index As Long
 
     Set Pestanias(ePestania.ieItems) = LoadPictureEX("VentanaCarpinteriaItems.jpg")
     Set Pestanias(ePestania.ieMejorar) = LoadPictureEX("VentanaCarpinteriaMejorar.jpg")
@@ -534,11 +534,11 @@ Private Sub LoadButtons()
     Set picRecuadroItem = LoadPictureEX("RecuadroItemsCarpinteria.jpg")
     Set picRecuadroMaderas = LoadPictureEX("RecuadroMadera.jpg")
     
-    For index = 1 To MAX_LIST_ITEMS
-        imgMarcoItem(index).Picture = picRecuadroItem
-        imgMarcoUpgrade(index).Picture = picRecuadroItem
-        imgMarcoMaderas(index).Picture = picRecuadroMaderas
-    Next index
+    For Index = 1 To MAX_LIST_ITEMS
+        imgMarcoItem(Index).Picture = picRecuadroItem
+        imgMarcoUpgrade(Index).Picture = picRecuadroItem
+        imgMarcoMaderas(Index).Picture = picRecuadroMaderas
+    Next Index
     
     Set cBotonCerrar = New clsGraphicalButton
     Set cBotonConstruir(0) = New clsGraphicalButton
@@ -608,14 +608,14 @@ Private Sub LoadDefaultValues()
 
 End Sub
 
-Private Sub Construir(ByVal index As Integer)
+Private Sub Construir(ByVal Index As Integer)
 
     Dim ItemIndex      As Integer
 
     Dim CantItemsCiclo As Integer
     
     If Scroll.Visible = True Then ItemIndex = Scroll.Value
-    ItemIndex = ItemIndex + index
+    ItemIndex = ItemIndex + Index
     
     Select Case UltimaPestania
 
@@ -781,13 +781,13 @@ Public Sub RenderUpgradeList(ByVal Inicio As Integer)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -852,18 +852,18 @@ Private Sub imgMejorar3_Click()
 
 End Sub
 
-Private Sub imgPestania_Click(index As Integer)
+Private Sub imgPestania_Click(Index As Integer)
 
     Dim I        As Integer
 
     Dim NumItems As Integer
     
     If Cargando Then Exit Sub
-    If UltimaPestania = index Then Exit Sub
+    If UltimaPestania = Index Then Exit Sub
     
     Scroll.Value = 0
     
-    Select Case index
+    Select Case Index
 
         Case ePestania.ieItems
             ' Background
@@ -888,7 +888,7 @@ Private Sub imgPestania_Click(index As Integer)
 
     End Select
 
-    UltimaPestania = index
+    UltimaPestania = Index
 
 End Sub
 

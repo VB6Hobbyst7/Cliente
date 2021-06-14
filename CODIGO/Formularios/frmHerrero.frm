@@ -509,7 +509,7 @@ Private Armas                 As Boolean
 
 Private Sub CargarImagenes()
 
-    Dim index As Integer
+    Dim Index As Integer
 
     Set Pestanias(ePestania.ieArmas) = LoadPictureEX("VentanaHerreriaArmas.jpg")
     Set Pestanias(ePestania.ieArmaduras) = LoadPictureEX("VentanaHerreriaArmaduras.jpg")
@@ -520,11 +520,11 @@ Private Sub CargarImagenes()
     Set picRecuadroItem = LoadPictureEX("RecuadroItemsHerreria.jpg")
     Set picRecuadroLingotes = LoadPictureEX("RecuadroLingotes.jpg")
     
-    For index = 1 To MAX_LIST_ITEMS
-        imgMarcoItem(index).Picture = picRecuadroItem
-        imgMarcoUpgrade(index).Picture = picRecuadroItem
-        imgMarcoLingotes(index).Picture = picRecuadroLingotes
-    Next index
+    For Index = 1 To MAX_LIST_ITEMS
+        imgMarcoItem(Index).Picture = picRecuadroItem
+        imgMarcoUpgrade(Index).Picture = picRecuadroItem
+        imgMarcoLingotes(Index).Picture = picRecuadroLingotes
+    Next Index
     
     Set cPicCerrar = New clsGraphicalButton
     Set cPicConstruir(0) = New clsGraphicalButton
@@ -558,14 +558,14 @@ Private Sub CargarImagenes()
 
 End Sub
 
-Private Sub ConstruirItem(ByVal index As Integer)
+Private Sub ConstruirItem(ByVal Index As Integer)
 
     Dim ItemIndex      As Integer
 
     Dim CantItemsCiclo As Integer
     
     If Scroll.Visible = True Then ItemIndex = Scroll.Value
-    ItemIndex = ItemIndex + index
+    ItemIndex = ItemIndex + Index
     
     Select Case UltimaPestania
 
@@ -787,13 +787,13 @@ Public Sub RenderUpgradeList(ByVal Inicio As Integer)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -841,32 +841,32 @@ End Sub
 
 Private Sub picLingotes0_MouseMove(Button As Integer, _
                                    Shift As Integer, _
-                                   X As Single, _
-                                   Y As Single)
+                                   x As Single, _
+                                   y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
 
 Private Sub picLingotes1_MouseMove(Button As Integer, _
                                    Shift As Integer, _
-                                   X As Single, _
-                                   Y As Single)
+                                   x As Single, _
+                                   y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
 
 Private Sub picLingotes2_MouseMove(Button As Integer, _
                                    Shift As Integer, _
-                                   X As Single, _
-                                   Y As Single)
+                                   x As Single, _
+                                   y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
 
 Private Sub picLingotes3_MouseMove(Button As Integer, _
                                    Shift As Integer, _
-                                   X As Single, _
-                                   Y As Single)
+                                   x As Single, _
+                                   y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -891,18 +891,18 @@ Private Sub picMejorar3_Click()
 
 End Sub
 
-Private Sub picPestania_Click(index As Integer)
+Private Sub picPestania_Click(Index As Integer)
 
     Dim I        As Integer
 
     Dim NumItems As Integer
     
     If Cargando Then Exit Sub
-    If UltimaPestania = index Then Exit Sub
+    If UltimaPestania = Index Then Exit Sub
     
     Scroll.Value = 0
     
-    Select Case index
+    Select Case Index
 
         Case ePestania.ieArmas
             ' Background
@@ -942,7 +942,7 @@ Private Sub picPestania_Click(index As Integer)
 
     End Select
 
-    UltimaPestania = index
+    UltimaPestania = Index
 
 End Sub
 

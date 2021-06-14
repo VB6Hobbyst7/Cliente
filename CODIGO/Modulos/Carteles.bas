@@ -99,16 +99,16 @@ Sub DibujarCartel()
 
     If Not Cartel Then Exit Sub
 
-    Dim X As Integer, Y As Integer
+    Dim x As Integer, y As Integer
 
-    X = XPosCartel + 20
-    Y = YPosCartel + 60
+    x = XPosCartel + 20
+    y = YPosCartel + 60
     Call DrawGrhIndex(Textura, XPosCartel, YPosCartel, 0, D3DColorRGBA(255, 255, 255, 255))
 
     Dim J As Integer, desp As Integer
 
     For J = 0 To UBound(LeyendaFormateada)
-        RenderText X, Y + desp, LeyendaFormateada(J), D3DColorRGBA(255, 255, 255, 255)
+        RenderText x, y + desp, LeyendaFormateada(J), D3DColorRGBA(255, 255, 255, 255)
         desp = desp + (frmMain.font.Size) + 5
     Next
 

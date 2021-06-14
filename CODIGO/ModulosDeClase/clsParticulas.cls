@@ -105,14 +105,14 @@ End Sub
 
 Public Sub Reset(I As Long)
 
-    Dim X As Single, Y As Single
+    Dim x As Single, y As Single
     
-    X = sngX '+ (Rnd * 10)
-    Y = sngY
+    x = sngX '+ (Rnd * 10)
+    y = sngY
     
     '//This is were we will reset individual particles.
     With Particles(I)
-        Call .ResetIt(X, Y, 0, 0, 0, 0, 2)
+        Call .ResetIt(x, y, 0, 0, 0, 0, 2)
         
         If Efecto = eEffects.Inmovilizar Then
         
@@ -176,11 +176,11 @@ Public Sub Update()
                 vertsPoints(I).Color = D3DColorMake(.sngR, .sngG, .sngB, .sngA * Desa)
 
                 If I = Iniciadas Then
-                    vertsPoints(I).X = sngX + OffX
-                    vertsPoints(I).Y = sngY + OffY
+                    vertsPoints(I).x = sngX + OffX
+                    vertsPoints(I).y = sngY + OffY
                 Else
-                    vertsPoints(I).X = .sngX + OffX
-                    vertsPoints(I).Y = .sngY + OffY
+                    vertsPoints(I).x = .sngX + OffX
+                    vertsPoints(I).y = .sngY + OffY
 
                 End If
 
@@ -194,8 +194,8 @@ Public Sub Update()
             Call .UpdateParticle(sngElapsedTime)
 
             vertsPoints(0).Color = D3DColorMake(.sngR, .sngG, .sngB, 1)
-            vertsPoints(0).X = sngX + OffX
-            vertsPoints(0).Y = sngY + OffY
+            vertsPoints(0).x = sngX + OffX
+            vertsPoints(0).y = sngY + OffY
 
         End With
         
@@ -205,8 +205,8 @@ Public Sub Update()
             Call .UpdateParticle(sngElapsedTime)
 
             vertsPoints(0).Color = D3DColorMake(.sngR, .sngG, .sngB, 1)
-            vertsPoints(0).X = sngX + OffX
-            vertsPoints(0).Y = sngY + OffY
+            vertsPoints(0).x = sngX + OffX
+            vertsPoints(0).y = sngY + OffY
 
         End With
 
@@ -250,9 +250,9 @@ Public Sub Render()
         End With
 
     ElseIf Efecto = eEffects.Flecha1 Then
-        Call Engine_Render_Rectangle(vertsPoints(0).X, vertsPoints(0).Y, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
+        Call Engine_Render_Rectangle(vertsPoints(0).x, vertsPoints(0).y, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
     ElseIf Efecto = eEffects.Bala Then
-        Call Engine_Render_Rectangle(vertsPoints(0).X, vertsPoints(0).Y, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
+        Call Engine_Render_Rectangle(vertsPoints(0).x, vertsPoints(0).y, 32, 32, 0, 0, 32, 32, , , Angulo * 57, Texture)
     
     End If
 

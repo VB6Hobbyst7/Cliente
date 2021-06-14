@@ -261,8 +261,8 @@ Private Function LoadSurface(ByVal fileIndex As Long) As Direct3DTexture8
         
         Set .Surface = DirectD3X.CreateTextureFromFileInMemoryEx(DeviceD3D, Data(0), Tamaño, 0, 0, D3DX_DEFAULT, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_POINT, ColorTransparenteDX, ByVal 0, ByVal 0)
         .Surface.GetLevelDesc 0, pDesc
-        SurfaceSize(fileIndex).X = pDesc.Width
-        SurfaceSize(fileIndex).Y = pDesc.Height
+        SurfaceSize(fileIndex).x = pDesc.Width
+        SurfaceSize(fileIndex).y = pDesc.Height
 
     End With
     

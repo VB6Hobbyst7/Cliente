@@ -324,15 +324,15 @@ End Sub
 '@param index Index of the key code to retrieve
 '@return The Key code that belongs to index
 
-Public Property Get BindedKey(ByVal index As eKeyType) As Integer
+Public Property Get BindedKey(ByVal Index As eKeyType) As Integer
 
     '***************************************************
     'Author: Rapsodius
     'Last Modification: 08/04/07
     '
     '***************************************************
-    If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
-    BindedKey = mappedKeys(index)
+    If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
+    BindedKey = mappedKeys(Index)
 
 End Property
 
@@ -342,14 +342,14 @@ End Property
 '@param index Index of the key to change
 '@param NewVal New key code
 
-Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
+Public Property Let BindedKey(ByVal Index As eKeyType, ByVal NewVal As Integer)
 
     '***************************************************
     'Author: Rapsodius
     'Last Modification: 08/05/07
     '
     '***************************************************
-    If index < 1 Or index > NUM_CUSTOM_KEYS Then Exit Property
+    If Index < 1 Or Index > NUM_CUSTOM_KEYS Then Exit Property
     
     If LenB(ReadableName(NewVal)) = 0 Then 'If key is not valid...
 
@@ -362,7 +362,7 @@ Public Property Let BindedKey(ByVal index As eKeyType, ByVal NewVal As Integer)
 
     End If
     
-    mappedKeys(index) = NewVal
+    mappedKeys(Index) = NewVal
 
 End Property
 

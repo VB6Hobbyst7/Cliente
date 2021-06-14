@@ -35,8 +35,8 @@ Private Type SoundBuffer
 
     FileName As String
     looping As Boolean
-    X As Integer
-    Y As Integer
+    x As Integer
+    y As Integer
     normalFq As Long
     buffer As DirectSoundSecondaryBuffer8
 
@@ -328,8 +328,8 @@ Public Function PlayWave(ByVal FileName As String, _
         'Call .Buffer.SetPan(Calculate_Pan(srcX, srcY))
         
         'Store position
-        .X = srcX
-        .Y = srcY
+        .x = srcX
+        .y = srcY
         
         'Get standard frequency
         .normalFq = .buffer.GetFrequency()
@@ -409,8 +409,8 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, _
     Dim perceivedFq       As Long
     
     With DSBuffers(bufferIndex)
-        distanceXOld = .X - lastPosX
-        distanceYOld = .Y - lastPosY
+        distanceXOld = .x - lastPosX
+        distanceYOld = .y - lastPosY
         
         distanceXNew = distanceXOld + deltaX
         distanceYNew = distanceYOld + deltaY
@@ -453,7 +453,7 @@ End Sub
 '
 '   @return   The buffer index in which the sound is playing, or 0 in case of error.
 
-Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
+Public Sub MoveListener(ByVal x As Integer, ByVal y As Integer)
 
     '***************************************************
     'Author: Juan Martin Sotuyo Dodero (Maraxus)
@@ -469,14 +469,14 @@ Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
     
     If sEffectsActivated = False Then Exit Sub
     
-    deltaX = X - lastPosX
-    deltaY = Y - lastPosY
+    deltaX = x - lastPosX
+    deltaY = y - lastPosY
     
     For I = 1 To NumSoundBuffers
 
         If Not DSBuffers(I).buffer Is Nothing Then
             If DSBuffers(I).buffer.GetStatus And DSBSTATUS_PLAYING Then
-                If DSBuffers(I).X <> 0 And DSBuffers(I).Y <> 0 Then
+                If DSBuffers(I).x <> 0 And DSBuffers(I).y <> 0 Then
                     Call Update3DSound(I, deltaX, deltaY)
 
                 End If
@@ -487,8 +487,8 @@ Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
 
     Next I
     
-    lastPosX = X
-    lastPosY = Y
+    lastPosX = x
+    lastPosY = y
 
 End Sub
 

@@ -23,8 +23,8 @@ Private Type tPasos
 
     Pasos       As Integer
     VidaPasos   As Integer
-    X           As Integer
-    Y           As Integer
+    x           As Integer
+    y           As Integer
 
 End Type
 
@@ -66,12 +66,12 @@ Public Sub RenderPasos(ByVal PixelOffSetXTemp As Integer, _
 
 End Sub
 
-Public Sub CreatePasos(ByVal X As Integer, ByVal Y As Integer, ByVal Pasos As Integer)
+Public Sub CreatePasos(ByVal x As Integer, ByVal y As Integer, ByVal Pasos As Integer)
 
     On Error GoTo 0
 
-    If Not InMapBounds(X, Y) Then Exit Sub
-    If HayAgua(X, Y) Then Exit Sub
+    If Not InMapBounds(x, y) Then Exit Sub
+    If HayAgua(x, y) Then Exit Sub
     If Pasos = 0 Then Exit Sub
     
     Dim I    As Byte
@@ -92,14 +92,14 @@ Public Sub CreatePasos(ByVal X As Integer, ByVal Y As Integer, ByVal Pasos As In
     If slot > LastPaso Then LastPaso = slot
     
     With cPasos(slot)
-        .X = X
-        .Y = Y
+        .x = x
+        .y = y
         .Pasos = Pasos
         .VidaPasos = 250
 
     End With
     
-    MapData(X, Y).PasosIndex = slot
+    MapData(x, y).PasosIndex = slot
     
 End Sub
 
@@ -110,12 +110,12 @@ Public Sub RemovePaso(ByVal I As Integer)
     With cPasos(I)
 
         If I = LastPaso Then LastPaso = LastPaso - 1
-        If .X <> 0 And .Y <> 0 Then
-            MapData(.X, .Y).PasosIndex = 0
+        If .x <> 0 And .y <> 0 Then
+            MapData(.x, .y).PasosIndex = 0
             .Pasos = 0
             .VidaPasos = 0
-            .X = 0
-            .Y = 0
+            .x = 0
+            .y = 0
 
         End If
 

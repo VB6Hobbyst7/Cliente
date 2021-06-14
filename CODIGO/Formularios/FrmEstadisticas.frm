@@ -1387,14 +1387,14 @@ Sub CalcularBarra(I As Integer)
 
 End Sub
 
-Private Sub bAgregar_Click(index As Integer)
+Private Sub bAgregar_Click(Index As Integer)
 
     Dim I As Integer
 
     Call Audio.PlayWave(SND_CLICKNEW)
 
     If SkillPoints > 0 And SPLibres > 0 Then
-        I = index + 1
+        I = Index + 1
 
         If UserSkillsMod(I) < 100 Then
             SPLibres = SPLibres - 1
@@ -1410,27 +1410,27 @@ Private Sub bAgregar_Click(index As Integer)
 
 End Sub
 
-Private Sub bAgregar_MouseMove(index As Integer, _
+Private Sub bAgregar_MouseMove(Index As Integer, _
                                Button As Integer, _
                                Shift As Integer, _
-                               X As Single, _
-                               Y As Single)
+                               x As Single, _
+                               y As Single)
 
-    If bAgregar(index).Tag = "0" Then
-        LimpiarBtnsDer (index)
+    If bAgregar(Index).Tag = "0" Then
+        LimpiarBtnsDer (Index)
 
     End If
 
 End Sub
 
-Private Sub bQuitar_Click(index As Integer)
+Private Sub bQuitar_Click(Index As Integer)
 
     Dim I As Integer
 
     Call Audio.PlayWave(SND_CLICKNEW)
 
     If SkillPoints > 0 And SPLibres < SkillPoints Then
-        I = index + 1
+        I = Index + 1
 
         If UserSkillsMod(I) > UserSkills(I) Then
             SPLibres = SPLibres + 1
@@ -1451,26 +1451,26 @@ Private Sub bQuitar_Click(index As Integer)
 
 End Sub
 
-Private Sub bQuitar_MouseMove(index As Integer, _
+Private Sub bQuitar_MouseMove(Index As Integer, _
                               Button As Integer, _
                               Shift As Integer, _
-                              X As Single, _
-                              Y As Single)
+                              x As Single, _
+                              y As Single)
 
-    If bQuitar(index).Tag = "0" Then
-        LimpiarBtnsIzq (index)
+    If bQuitar(Index).Tag = "0" Then
+        LimpiarBtnsIzq (Index)
 
     End If
 
 End Sub
 
-Sub LimpiarBtnsIzq(index As Integer)
+Sub LimpiarBtnsIzq(Index As Integer)
 
     Dim I As Integer
 
     For I = 0 To bQuitar.UBound
 
-        If I <> index Then
+        If I <> Index Then
             If bQuitar(I).Tag = "1" Then
                 bQuitar(I).Picture = Nothing
                 bQuitar(I).Tag = "0"
@@ -1487,13 +1487,13 @@ Sub LimpiarBtnsIzq(index As Integer)
 
 End Sub
 
-Sub LimpiarBtnsDer(index As Integer)
+Sub LimpiarBtnsDer(Index As Integer)
 
     Dim I As Integer
 
     For I = 0 To bAgregar.UBound
 
-        If I <> index Then
+        If I <> Index Then
             If bAgregar(I).Tag = "1" Then
                 bAgregar(I).Picture = Nothing
                 bAgregar(I).Tag = "0"
@@ -1527,13 +1527,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LimpiarBtnsIzq (-1)
     LimpiarBtnsDer (-1)
     LastPressed.ToggleToNormal
@@ -1569,8 +1569,8 @@ End Sub
 
 Private Sub imgCerrar_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                X As Single, _
-                                Y As Single)
+                                x As Single, _
+                                y As Single)
 
     If imgCerrar.Tag = "1" Then
         imgCerrar.Picture = LoadPictureEX("BotonCerrarApretadoEstadisticas.jpg")

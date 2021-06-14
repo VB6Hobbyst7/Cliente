@@ -91,8 +91,8 @@ Private Declare Function CreateDIBSection _
 
 Private Declare Function BitBlt _
                 Lib "gdi32" (ByVal hDestDC As Long, _
-                             ByVal X As Long, _
-                             ByVal Y As Long, _
+                             ByVal x As Long, _
+                             ByVal y As Long, _
                              ByVal nWidth As Long, _
                              ByVal nHeight As Long, _
                              ByVal hSrcDC As Long, _
@@ -383,7 +383,7 @@ Public Sub RandomiseBits(Optional ByVal bGray As Boolean = False)
 
     Dim bDib() As Byte
 
-    Dim X      As Long, Y As Long
+    Dim x      As Long, y As Long
 
     Dim lC     As Long
 
@@ -412,24 +412,24 @@ Public Sub RandomiseBits(Optional ByVal bGray As Boolean = False)
 
     If (bGray) Then
 
-        For Y = 0 To m_tBI.bmiHeader.biHeight - 1
-            For X = 0 To xEnd Step 3
+        For y = 0 To m_tBI.bmiHeader.biHeight - 1
+            For x = 0 To xEnd Step 3
                 lC = Rnd * 255
-                bDib(X, Y) = lC
-                bDib(X + 1, Y) = lC
-                bDib(X + 2, Y) = lC
-            Next X
-        Next Y
+                bDib(x, y) = lC
+                bDib(x + 1, y) = lC
+                bDib(x + 2, y) = lC
+            Next x
+        Next y
 
     Else
 
-        For X = 0 To xEnd Step 3
-            For Y = 0 To m_tBI.bmiHeader.biHeight - 1
-                bDib(X, Y) = 0
-                bDib(X + 1, Y) = Rnd * 255
-                bDib(X + 2, Y) = Rnd * 255
-            Next Y
-        Next X
+        For x = 0 To xEnd Step 3
+            For y = 0 To m_tBI.bmiHeader.biHeight - 1
+                bDib(x, y) = 0
+                bDib(x + 1, y) = Rnd * 255
+                bDib(x + 2, y) = Rnd * 255
+            Next y
+        Next x
 
     End If
     
@@ -521,7 +521,7 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
 
     Dim yScale As Single
 
-    Dim X      As Long, Y As Long, xEnd As Long, xOut As Long
+    Dim x      As Long, y As Long, xEnd As Long, xOut As Long
 
     Dim fX     As Single, fY As Single
 
@@ -544,14 +544,14 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
     
     xEnd = cDibTo.Width - 1
         
-    For Y = 0 To cDibTo.Height - 1
+    For y = 0 To cDibTo.Height - 1
         
-        fY = Y * yScale
+        fY = y * yScale
         ifY = Int(fY)
         dy = fY - ifY
         
-        For X = 0 To xEnd
-            fX = X * xScale
+        For x = 0 To xEnd
+            fX = x * xScale
             ifX = Int(fX)
             dX = fX - ifX
             
@@ -579,14 +579,14 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
 
             End If
 
-            xOut = X * 3
-            bDibTo(xOut, Y) = b
-            bDibTo(xOut + 1, Y) = G
-            bDibTo(xOut + 2, Y) = R
+            xOut = x * 3
+            bDibTo(xOut, y) = b
+            bDibTo(xOut + 1, y) = G
+            bDibTo(xOut + 2, y) = R
             
-        Next X
+        Next x
         
-    Next Y
+    Next y
 
     ' Clear the temporary array descriptor
     ' (This does not appear to be necessary, but

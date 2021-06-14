@@ -429,13 +429,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -475,8 +475,8 @@ End Sub
 
 Private Sub txtMiembro_MouseMove(Button As Integer, _
                                  Shift As Integer, _
-                                 X As Single, _
-                                 Y As Single)
+                                 x As Single, _
+                                 y As Single)
     LastPressed.ToggleToNormal
 
 End Sub

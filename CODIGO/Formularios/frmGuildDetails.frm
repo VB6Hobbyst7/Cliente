@@ -299,13 +299,13 @@ Private Sub LoadButtons()
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 
     If Button = 1 Then MoverVentana (Me.hwnd)
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
@@ -358,17 +358,17 @@ Private Sub imgSalir_Click()
 
 End Sub
 
-Private Sub txtCodex1_Change(index As Integer)
+Private Sub txtCodex1_Change(Index As Integer)
 
-    If Len(txtCodex1.item(index).Text) > MAX_CODEX_LENGTH Then txtCodex1.item(index).Text = Left$(txtCodex1.item(index).Text, MAX_CODEX_LENGTH)
+    If Len(txtCodex1.item(Index).Text) > MAX_CODEX_LENGTH Then txtCodex1.item(Index).Text = Left$(txtCodex1.item(Index).Text, MAX_CODEX_LENGTH)
 
 End Sub
 
-Private Sub txtCodex1_MouseMove(index As Integer, _
+Private Sub txtCodex1_MouseMove(Index As Integer, _
                                 Button As Integer, _
                                 Shift As Integer, _
-                                X As Single, _
-                                Y As Single)
+                                x As Single, _
+                                y As Single)
     LastPressed.ToggleToNormal
 
 End Sub
