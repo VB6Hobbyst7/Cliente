@@ -2405,7 +2405,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
                 'fix Lluvia idea SenSui, Helios 06/06/2021
                 For Y = 0 To 6
                     For X = 0 To 7
-                        Call Engine_Render_Rectangle(LTLluvia(X), LTLluvia(Y) + 40, RLluvia(iFrameIndex).Right + 30 - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
+                        Call Engine_Render_Rectangle(LTLluvia(X) - 256, LTLluvia(Y) + 40 - 256, RLluvia(iFrameIndex).Right + 30 - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
                     Next X
                 Next Y
 
@@ -2474,11 +2474,11 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
         'Mensaje al cambiar de zona
         #If RenderFull = 0 Then
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(160, 140, 814, 220), DT_CENTER)
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(160, 145, 814, 220), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 140, 1024, 220), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 145, 1024, 220), DT_CENTER)
 
             If CambioSegura Then
-                Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 404, 214, D3DColorRGBA(255, 0, 0, tmpInt))
+                Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 420, 214, D3DColorRGBA(255, 0, 0, tmpInt))
 
             End If
 
