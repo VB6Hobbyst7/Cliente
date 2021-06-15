@@ -33,7 +33,7 @@ Attribute VB_Name = "ModAreas"
 
 Option Explicit
 
-Public Const TilesBuffer As Byte = 4
+Public Const TilesBuffer As Byte = 4 'neo prueba va 4
 
 'LAS GUARDAMOS PARA PROCESAR LOS MPs y sabes si borrar personajes
 Public Const MargenX     As Integer = 16
