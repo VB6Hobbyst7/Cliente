@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{BF3128D8-55B8-11D4-8ED4-00E07D815373}#1.0#0"; "mbprgbar.ocx"
 Begin VB.Form frmMain2 
    Appearance      =   0  'Flat
@@ -1629,7 +1629,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    picture1.Visible = True
+    Picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -2169,7 +2169,7 @@ Private Sub Lblmagia_Click()
         picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        picture1.Visible = False
+        Picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2181,7 +2181,7 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         picHechiz.Visible = True
-        picture1.Visible = True
+        Picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         'LanzarImg.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & "14956.png", , , , , True)
@@ -3338,7 +3338,7 @@ Private Sub Form_Load()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos_R.bmp")
     'btnInventario.Picture = LoadPictureEX("btnInventario_R.bmp")
     'neo parcheo ruta
-    imgMiniMapa.Picture = LoadPicture(PathRecursosCliente & "\Recursos\minimapadefault.bmp")
+    imgMiniMapa.Picture = LoadPicture(PathRecursosCliente & "\minimapadefault.bmp")
     ' imgMiniMapa.Picture = LoadPicture(App.path & "\Recursos\minimapadefault.bmp")
     'MANShp.Picture = LoadPictureEX("barMana.jpg")
     'Hpshp.Picture = LoadPictureEX("BarHp.jpg")

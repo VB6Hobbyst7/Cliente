@@ -120,7 +120,7 @@ Public Function DirMidi() As String
 End Function
 
 Public Function DirRecursos() As String
-    DirRecursos = PathRecursosCliente & "\Recursos\"
+    DirRecursos = PathRecursosCliente & "\"
 
 End Function
 
@@ -491,7 +491,7 @@ Sub SetConnected()
     'Unload the connect form
     Unload frmCrearPersonaje
     
-    frmMain.Label8.Caption = UserName
+    frmMain.label8.Caption = UserName
     'Load main form
     frmMain.Visible = True
     
@@ -1044,12 +1044,12 @@ Sub Main()
     Set curProyectil = New clsAniCursor
     Set curProyectilPequena = New clsAniCursor
 
-    Set picMouseIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Baston.ico")
-    curGeneral.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\General.ani"
-    curGeneralCrimi.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\GeneralCrimi.ani"
-    curGeneralCiuda.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\GeneralCiuda.ani"
-    curProyectil.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\Mira.ani"
-    curProyectilPequena.AniFile = PathRecursosCliente & "\Recursos\MouseIcons\MiraPequena.ani"
+    Set picMouseIcon = LoadPicture(PathRecursosCliente & "\MouseIcons\Baston.ico")
+    curGeneral.AniFile = PathRecursosCliente & "\MouseIcons\General.ani"
+    curGeneralCrimi.AniFile = PathRecursosCliente & "\MouseIcons\GeneralCrimi.ani"
+    curGeneralCiuda.AniFile = PathRecursosCliente & "\MouseIcons\GeneralCiuda.ani"
+    curProyectil.AniFile = PathRecursosCliente & "\MouseIcons\Mira.ani"
+    curProyectilPequena.AniFile = PathRecursosCliente & "\MouseIcons\MiraPequena.ani"
 
     curGeneral.CursorOn frmMain.hwnd
     curGeneral.CursorOn frmMain.pRender.hwnd
@@ -1065,13 +1065,13 @@ Sub Main()
 
     Dim picMousePointIcon As Picture
 
-    Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Point.ico")
+    Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\MouseIcons\Point.ico")
     '    frmMain.Image1(0).MouseIcon = picMousePointIcon    'Opciones
     '    frmMain.Image1(1).MouseIcon = picMousePointIcon    'Stats
     '    frmMain.Image1(2).MouseIcon = picMousePointIcon    'Clanes
     '    frmMain.Image1(3).MouseIcon = picMousePointIcon    'Quests
     '    'frmMain.Image1(4).MouseIcon = picMousePointIcon 'Party
-    '    'Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\Recursos\MouseIcons\Espada.ico")
+    '    'Set picMousePointIcon = LoadPicture(PathRecursosCliente & "\MouseIcons\Espada.ico")
     '    'frmMain.btnInventario.MouseIcon = picMousePointIcon
     'aura
     CargarAuras
