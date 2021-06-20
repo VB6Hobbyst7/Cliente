@@ -109,7 +109,8 @@ Public Function LoadPictureEX(ByVal FileName As String) As IPicture
 
         Dim b() As Byte
 
-        Call Get_File_Data("Interface", FileName, b)
+        Call Get_File_Data(DirRecursos & "Interface.ao" & "Interface", FileName, b) 'neo carga de interface.ao
+        'Call Get_File_Data("Interface", FileName, b)
         Set LoadPictureEX = PictureFromByteStream(b)
 
     End If
