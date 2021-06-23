@@ -3696,20 +3696,10 @@ Private Sub HandleUpdateUserStats()
     '    frmMain.exp.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
     '    frmMain.Experiencia.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
     '    frmMain.exp.ToolTipText = "Exp: " & UserExp & "/" & UserPasarNivel
-    If UserPasarNivel > 0 Then
-        frmMain.Experiencia.max = UserPasarNivel
-        
-        'frmMain.exp.Width = 127 * Round(CDbl(UserExp) / CDbl(UserPasarNivel), 2) + 4
-        ' frmMain.Experiencia.Left = frmMain.iBEXP.Left + frmMain.iBEXP.Width
-    Else
-        frmMain.Experiencia.max = 1
-
-        'frmMain.exp.Width = 131
-        'frmMain.iBEXPE.Left = frmMain.iBEXP.Left + frmMain.iBEXP.Width
-    End If
+ 
 
     #If RenderFull = 0 Then
-        frmMain.Experiencia.Value = UserExp
+       
         'Form1.BarraCir.Value = UserExp
         frmMain.bar_salud(0).max = UserMaxHP
         frmMain.bar_salud(0).Value = UserMinHP
@@ -4146,55 +4136,64 @@ End Sub
 
 Private Sub HandleChangeSpellSlot()
 
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 05/17/06
-    '
-    '***************************************************
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'
+'***************************************************
     If incomingData.Length < 6 Then
-        NotEnoughData = True
+        err.Raise incomingData.NotEnoughDataErrCode
         Exit Sub
-
     End If
     
-    On Error GoTo ErrHandler
-
+On Error GoTo ErrHandler
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim buffer As New clsByteQueue
-
     Call buffer.CopyBuffer(incomingData)
     
     'Remove packet ID
     Call buffer.ReadByte
     
     Dim slot As Byte
-
+    Dim spell_Name  As String
+    Dim spell_Gra As Integer
     slot = buffer.ReadByte()
     
     UserHechizos(slot) = buffer.ReadInteger()
     
+    spell_Name = buffer.ReadASCIIString()
+   
     If slot <= frmMain.hlst.ListCount Then
-        frmMain.hlst.List(slot - 1) = buffer.ReadASCIIString()
+        frmMain.hlst.List(slot - 1) = spell_Name
     Else
-        Call frmMain.hlst.AddItem(buffer.ReadASCIIString())
-
+        Call frmMain.hlst.AddItem(spell_Name)
+    End If
+    
+    If spell_Name <> "(None)" Then
+      spell_Gra = buffer.ReadInteger()
+        If spell_Gra = 0 Then
+        Call invSpells.SetItem(slot, UserHechizos(slot), 0, 0, 609, 0, 0, 0, 0, 0, 0, spell_Name, 1)
+        Else
+         
+        Call invSpells.SetItem(slot, UserHechizos(slot), 0, 0, spell_Gra, 0, 0, 0, 0, 0, 0, spell_Name, 1)
+        End If
+    Else
+        Call invSpells.SetItem(slot, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, vbNullString, 1)
     End If
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(buffer)
     
 ErrHandler:
-
     Dim Error As Long
-
     Error = err.Number
-
-    On Error GoTo 0
+On Error GoTo 0
     
     'Destroy auxiliar buffer
     Set buffer = Nothing
-
-    If Error <> 0 Then err.Raise Error
+ 
+    If Error <> 0 Then _
+        err.Raise Error
 
 End Sub
 
@@ -5385,7 +5384,7 @@ Private Sub HandleGuildNews()
 
     Dim I           As Long
 
-    Dim sTemp       As String
+    Dim Stemp       As String
     
     'Get news' string
     frmGuildNews.news = buffer.ReadASCIIString()
@@ -5394,16 +5393,16 @@ Private Sub HandleGuildNews()
     guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     For I = 0 To UBound(guildList)
-        sTemp = frmGuildNews.txtClanesGuerra.Text
-        frmGuildNews.txtClanesGuerra.Text = sTemp & guildList(I) & vbCrLf
+        Stemp = frmGuildNews.txtClanesGuerra.Text
+        frmGuildNews.txtClanesGuerra.Text = Stemp & guildList(I) & vbCrLf
     Next I
     
     'Get Allied guilds list
     guildList = Split(buffer.ReadASCIIString(), SEPARATOR)
     
     For I = 0 To UBound(guildList)
-        sTemp = frmGuildNews.txtClanesAliados.Text
-        frmGuildNews.txtClanesAliados.Text = sTemp & guildList(I) & vbCrLf
+        Stemp = frmGuildNews.txtClanesAliados.Text
+        frmGuildNews.txtClanesAliados.Text = Stemp & guildList(I) & vbCrLf
     Next I
     
     If mOpciones.GuildNews = True Then
@@ -8281,7 +8280,7 @@ End Sub
 ' @param    slot Spell List slot where the spell which's info is requested is.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteMoveSpell(ByVal upwards As Boolean, ByVal slot As Byte)
+Public Sub WriteMoveSpell(ByVal slotANT As Byte, ByVal slotNW As Byte)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8291,12 +8290,14 @@ Public Sub WriteMoveSpell(ByVal upwards As Boolean, ByVal slot As Byte)
     With outgoingData
         Call .WriteByte(ClientPacketID.MoveSpell)
         
-        Call .WriteBoolean(upwards)
-        Call .WriteByte(slot)
+        Call .WriteByte(slotANT)
+        Call .WriteByte(slotNW)
 
     End With
 
 End Sub
+
+
 
 ''
 ' Writes the "MoveBank" message to the outgoing data buffer.

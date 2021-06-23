@@ -227,7 +227,7 @@ Public Type Char
     
     Criminal As Byte
     
-    Nombre As String
+    nombre As String
     
     scrollDirectionX As Integer
     scrollDirectionY As Integer
@@ -768,7 +768,7 @@ Sub ResetCharInfo(ByVal CharIndex As Integer)
         .Alpha = 255
         .iTick = 0
         .ContadorInvi = 0
-        .Nombre = ""
+        .nombre = ""
         .pie = False
         .Pos.x = 0
         .Pos.y = 0
@@ -1433,7 +1433,7 @@ Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
         With charlist(CharIndex)
 
             ' Si no es casper, no puede pasar
-            If .muerto = False Or .Nombre = "" Then
+            If .muerto = False Or .nombre = "" Then
                 Exit Function
             Else
 
@@ -2481,8 +2481,8 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
         'Mensaje al cambiar de zona
         #If RenderFull = 0 Then
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).Nombre, DDRect(0, 140, 1024, 220), DT_CENTER)
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).Nombre, DDRect(0, 145, 1024, 220), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 140, 1024, 220), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 145, 1024, 220), DT_CENTER)
 
             If CambioSegura Then
                 Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 420, 214, D3DColorRGBA(255, 0, 0, tmpInt))
@@ -2490,8 +2490,8 @@ Sub RenderScreen(ByVal TileX As Integer, _
             End If
 
         #Else
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).Nombre, DDRect(0, 10, 814, 220), DT_CENTER)
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).Nombre, DDRect(5, 15, 814, 220), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 10, 814, 220), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(5, 15, 814, 220), DT_CENTER)
 
             If CambioSegura Then
                 Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 318, 89, D3DColorRGBA(255, 0, 0, tmpInt))
@@ -2640,7 +2640,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
                 I = BuscarZona(x, y)
 
                 If I > 0 Then
-                    Call DrawFont(Zonas(I).Nombre, frmMain.MouseX - 10, frmMain.MouseY + 26, D3DColorRGBA(255, 255, 255, 200))
+                    Call DrawFont(Zonas(I).nombre, frmMain.MouseX - 10, frmMain.MouseY + 26, D3DColorRGBA(255, 255, 255, 200))
 
                 End If
 
@@ -2654,8 +2654,8 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Call Engine_Render_Rectangle(60 + (UserPos.x - 571) * 2.21105527638191, 5 + (UserPos.y - 311) * 2.21105527638191, 5, 5, 0, 0, 5, 5, , , , 1, Color, Color, Color, Color)
         Else
             'Mensaje al cambiar de zona
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, 200), Zonas(ZonaActual).Nombre, DDRect(0, 10, 736, 200), DT_CENTER)
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, 200), Zonas(ZonaActual).Nombre, DDRect(5, 15, 736, 200), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, 200), Zonas(ZonaActual).nombre, DDRect(0, 10, 736, 200), DT_CENTER)
+            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, 200), Zonas(ZonaActual).nombre, DDRect(5, 15, 736, 200), DT_CENTER)
 
         End If
 
@@ -2809,11 +2809,87 @@ Sub RenderScreen(ByVal TileX As Integer, _
         Call Engine_Render_Rectangle(1, 1, 1024, 782, 0, 0, 1024, 782, , , 0, 14941)
         
         If MmenuBarras = True Then
-            Call Engine_Render_Rectangle(13, 0, 250, 250, 0, 0, 250, 250, , , 0, 14936) ' vida Helios
-            Call DrawFont(CStr(UserLvl), 57, 39, D3DColorRGBA(255, 255, 0, 190)) 'Helios UserNivel
-            Call DrawFont(CStr(UserName), 54, 88, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
-            Call DrawFont(" " & CStr(UserGLD), 174, 88, D3DColorRGBA(256, 239, 239, 160), True) 'ORO Helios
+            'Call Engine_Render_Rectangle(13, 0, 250, 250, 0, 0, 250, 250, , , 0, 14936) ' vida Helios
+            'Call DrawFont(CStr(UserLvl), 57, 39, D3DColorRGBA(255, 255, 0, 190)) 'Helios UserNivel
+            'Call DrawFont(CStr(UserName), 54, 88, D3DColorRGBA(255, 255, 255, 255)) ' user Name Helios
+            'Call DrawFont(" " & CStr(UserGLD), 174, 88, D3DColorRGBA(256, 239, 239, 160), True) 'ORO Helios
 
+
+        
+
+        Call Engine_Render_Rectangle(2, -10, 400, 300, 0, 0, 400, 300, , , 0, 14936)
+      
+        
+        Dim CantAgua As Integer
+        Dim CantHam As Integer
+        Dim CantVida As Integer
+        Dim CantMana As Integer
+        Dim CantStamina As Integer
+        Dim CantExp As Integer
+        Dim CantExp2 As Integer
+        'experiencia
+        CantExp = 67 * Round(CDbl(UserExp) / CDbl(UserPasarNivel / 2), 2)
+
+        'Call Engine_Render_Rectangle(309, 275, 91, 89, 0, 0, 91, 89, , , 0, 14801)
+        If CantExp >= 67 Then
+            CantExp2 = CantExp - 67
+            CantExp = 67
+
+
+
+        End If
+
+        Call Engine_Render_Rectangle(96, 87, -33, -CantExp2, 0, 0, -33, -CantExp2, , , 0, 14948)
+        Call Engine_Render_Rectangle(31, 20, 33, CantExp, 0, 0, 33, CantExp, , , 0, 14948)
+
+        Call DrawFont(Round((UserExp / UserPasarNivel) * 100) & "%", 68, 60, D3DColorRGBA(255, 255, 255, 200), True)
+        Call D3DX.DrawText(FontRender, D3DColorRGBA(255, 255, 255, 200), CStr(UserLvl), DDRect(0, 30, 130, 0), DT_CENTER)
+
+        'experiencia
+
+        'vida
+        CantVida = (((UserMinHP / 211) / (UserMaxHP / 211)) * 211)
+
+        Call Engine_Render_Rectangle(105, 13, CantVida, 33, 0, 0, CantVida, 33, , , 0, 14945)
+        Call DrawFont(UserMinHP & " / " & UserMaxHP, 215, 22, D3DColorRGBA(255, 255, 255, 200), True)
+        'vida
+
+        'mana
+        If UserMaxMAN > 0 Then
+            CantMana = (((UserMinMAN / 211) / (UserMaxMAN / 211)) * 211)
+        End If
+        Call Engine_Render_Rectangle(105, 43, CantMana, 33, 0, 0, CantMana, 33, , , 0, 14946)
+        Call DrawFont(UserMinMAN & " / " & UserMaxMAN, 215, 52, D3DColorRGBA(255, 255, 255, 200), True)
+        'mana
+
+        'stamina
+        CantStamina = (((UserMinSTA / 210) / (UserMaxSTA / 210)) * 210)
+
+        Call Engine_Render_Rectangle(105, 74, CantStamina, 21, 0, 0, CantStamina, 21, , , 0, 14947)
+        Call DrawFont(UserMinSTA & " / " & UserMaxSTA, 215, 77, D3DColorRGBA(255, 255, 255, 200), True)
+        'stamina
+
+        'agua
+        CantAgua = -(((UserMinAGU / 41) / (UserMaxAGU / 41)) * 41)
+
+        Call Engine_Render_Rectangle(145, 136, 45, CantAgua, 0, 0, 45, CantAgua, , , 0, 14943)
+        Call DrawFont(Round((-CantAgua * 100) / 41), 167, 108, D3DColorRGBA(255, 255, 255, 160), True)
+        'agua
+
+
+        'comida
+        CantHam = -(((UserMinHAM / 41) / (UserMaxHAM / 41)) * 41)
+
+        Call Engine_Render_Rectangle(187, 136, 45, CantHam, 0, 0, 45, CantHam, , , 0, 14944)
+        Call DrawFont(Round((-CantHam * 100) / 41), 208, 108, D3DColorRGBA(255, 255, 255, 160), True)
+        'comida
+         Call Engine_Render_Rectangle(10, 115, 32, 32, 0, 0, 32, 32, , , 0, 510)
+        If UserGLD <> 0 Then
+        Call DrawFont(Format$(UserGLD, "##,##"), 55, 123, D3DColorRGBA(255, 255, 0, 160), True)
+       Else
+       Call DrawFont(Round(UserGLD), 55, 123, D3DColorRGBA(255, 255, 0, 160), True)
+        End If
+        Call DrawFont(UserName, 65, 102, D3DColorRGBA(255, 255, 0, 160), True)
         End If
 
         Call Engine_Render_Rectangle(574, 0, 76, 35, 0, 0, 76, 35, , , 0, 14954) 'user onlie Helios
@@ -2833,8 +2909,8 @@ Sub RenderScreen(ByVal TileX As Integer, _
         End If
         
         If MostrarMenuInventario = True Then
-            Call Engine_Render_Rectangle(927, 209, 75, 36, 0, 0, 75, 36, , , 0, 14957) ' Helios menu elegir inventario hechizos
-
+            'Call Engine_Render_Rectangle(927, 209, 75, 36, 0, 0, 75, 36, , , 0, 14957) ' Helios menu elegir inventario hechizos
+        Call Engine_Render_Rectangle(963, 209, 52, 408, 0, 0, 52, 408, , , 0, 14959)
         End If
 
         'Call Engine_Render_Rectangle(262, 690, 50, 39, 0, 0, 50, 39, , , 0, 14942) ' engranaje
@@ -2847,9 +2923,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
     
         If frmMain.imgMiniMapa.Visible = True Then 'Helios escondo letras 04/06/2021 0:08
             If Zonas(ZonaActual).Segura = 1 Then
-                Call DrawFont(Zonas(ZonaActual).Nombre, 938, 143, D3DColorRGBA(0, 255, 0, 160), True)
+                Call DrawFont(Zonas(ZonaActual).nombre, 938, 143, D3DColorRGBA(0, 255, 0, 160), True)
             Else
-                Call DrawFont(Zonas(ZonaActual).Nombre, 938, 143, D3DColorRGBA(255, 0, 0, 160), True)
+                Call DrawFont(Zonas(ZonaActual).nombre, 938, 143, D3DColorRGBA(255, 0, 0, 160), True)
 
             End If
 
@@ -3199,8 +3275,8 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 frmMain.picHechiz.Visible = False
                 frmMain.BarraHechiz.Visible = False
                 frmMain.invHechisos.Visible = False
-                frmMain.cmdINFO.Visible = False
-                frmMain.Picture1.Visible = False
+                frmMain.cmdinfo.Visible = False
+                frmMain.picture1.Visible = False
                 'frmMain.Menu.Visible = False
                 'Helios Barras
                 frmMain.bar_salud(0).Visible = False
@@ -3209,11 +3285,14 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 frmMain.Bar_Mana(1).Visible = False
                 frmMain.bar_sta.Visible = False
                 frmMain.bar_comida.Visible = False
+                MostrarMenuInventario = False
                 'Fin Helios Barras
                 'frmMain.picfondoinve.Visible = False Helios elije Menuinventario
                 frmMain.Bar_Agua.Visible = False 'Helios Barras
-                frmMain.Experiencia.Visible = False 'Helios Barra exp
-                frmMain.PicInv.Visible = False
+                'Helios Barra exp
+                frmMain.picInv.Visible = False
+                frmMain.PicSpells.Visible = False
+                frmMain.barritaa.Visible = False
                 frmMain.imgMiniMapa.Visible = False
                 frmMain.LanzarImg.Visible = False
                 Call RenderConectar
@@ -3223,7 +3302,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 'frmMain.picInv.Visible = True
                 ' frmMain.imgMiniMapa.Visible = True
 
-                frmMain.Experiencia.Visible = True
+               
                 ' frmMain.Menu.Visible = False
                 '                frmMain.bar_salud(0).Visible = True
                 '                frmMain.Bar_Mana(0).Visible = True
@@ -3392,9 +3471,9 @@ Public Sub CharRender(ByRef rChar As Char, _
     With rChar
 
         If .Moving Then
-            If .Nombre = "" Then
+            If .nombre = "" Then
                 VelChar = 0.75
-            ElseIf Left(.Nombre, 1) = "!" Then
+            ElseIf Left(.nombre, 1) = "!" Then
                 VelChar = 0.75
             Else
                 VelChar = 1.2
@@ -3684,11 +3763,11 @@ Public Sub CharRender(ByRef rChar As Char, _
                 If .Escudo.ShieldWalk(.Heading).GrhIndex Then Call DrawGrhShadowOff(.Escudo.ShieldWalk(.Heading), TempBodyOffsetX, TempBodyOffsetY, 1, 0.5, ColorPj, .Chiquito)
 
                 'Draw name over head
-                If LenB(.Nombre) > 0 And (ShowPJ = 2 Or ShowPJ = 1) And .priv <> 10 Then
+                If LenB(.nombre) > 0 And (ShowPJ = 2 Or ShowPJ = 1) And .priv <> 10 Then
                     If Nombres Then
-                        Pos = InStr(.Nombre, "<")
+                        Pos = InStr(.nombre, "<")
 
-                        If Pos = 0 Then Pos = Len(.Nombre) + 2
+                        If Pos = 0 Then Pos = Len(.nombre) + 2
 
                         If .invisible = True Then
                             Color = D3DColorRGBA(200, 200, 200, ShowPJ_Alpha)
@@ -3707,7 +3786,7 @@ Public Sub CharRender(ByRef rChar As Char, _
                         End If
 
                         'Nick
-                        line = Left$(.Nombre, Pos - 2)
+                        line = Left$(.nombre, Pos - 2)
 
                         If Left(line, 1) = "!" Then
                             line = Right(line, Len(line) - 1)
@@ -3718,7 +3797,7 @@ Public Sub CharRender(ByRef rChar As Char, _
                         Call RenderTextCentered(PixelOffSetX + TilePixelWidth \ 2, PixelOffSetY + 30, line, Color)
 
                         'Clan
-                        line = mid$(.Nombre, Pos)
+                        line = mid$(.nombre, Pos)
                         Call RenderTextCentered(PixelOffSetX + TilePixelWidth \ 2, PixelOffSetY + 45, line, Color)
 
                         '                            If .logged Then
@@ -3849,10 +3928,10 @@ Public Function charEsClan(ByVal Char As Integer) As Boolean
         Dim miTempPos As Integer
 
         With charlist(Char)
-            miTempPos = getTagPosition(charlist(UserCharIndex).Nombre)
-            miTag = mid$(charlist(UserCharIndex).Nombre, miTempPos)
-            tempPos = getTagPosition(.Nombre)
-            tempTag = mid$(.Nombre, tempPos)
+            miTempPos = getTagPosition(charlist(UserCharIndex).nombre)
+            miTag = mid$(charlist(UserCharIndex).nombre, miTempPos)
+            tempPos = getTagPosition(.nombre)
+            tempTag = mid$(.nombre, tempPos)
 
             If tempTag = miTag And miTag <> "" And tempTag <> "" Then
                 charEsClan = True

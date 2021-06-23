@@ -498,31 +498,33 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
 
     On Error Resume Next
 
-    Dim srcRect     As RECT
+    Dim srcRect As RECT
 
-    Dim TempRect    As RECT
+    Dim TempRect As RECT
 
-    Dim destRect    As RECT
+    Dim destRect As RECT
 
     Dim SrcRectSlot As RECT
 
-    Dim fileIndex   As Integer
+    Dim fileIndex As Integer
 
-    Dim BufferBMP   As Long
+    Dim BufferBMP As Long
+    Dim fileIndex2 As Integer
 
+    Dim BufferBMP2 As Long
     With TempRect
         .Bottom = ownTilePixelHeight
         .Right = ownTilePixelWidth
 
     End With
-    
+
     Dim upperLeftSlot As Integer
 
     upperLeftSlot = InventoryOffset * (InventoryWindow.ScaleWidth \ ownTilePixelWidth) + 1
-    
+
     'If not in renderable area we exit
     If slot < upperLeftSlot Then Exit Sub
-    
+
     With destRect
         .Top = ((slot - upperLeftSlot) \ ((InventoryWindow.ScaleWidth - OffSetX) \ ownTilePixelWidth)) * ownTilePixelHeight + OffSetY
         .Left = ((slot - 1) Mod ((InventoryWindow.ScaleWidth - OffSetX) \ ownTilePixelWidth)) * ownTilePixelWidth + OffSetX
@@ -530,18 +532,21 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
         .Right = ownTilePixelWidth
 
     End With
-    
+
     'Clear the slot area
     'Call InvSurface.BltColorFill(TempRect, InventoryWindow.BackColor)
     If EsMain Then
-        Call TransparentBlt(InventoryWindow.hDC, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, vbRed)
+        fileIndex2 = 14949
+
+        BufferBMP2 = Grafico(fileIndex2)
+        Call TransparentBlt(InventoryWindow.hDC, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, BufferBMP2, 0, 0, 32, 32, vbRed)
     Else
         Call TransparentBlt(InventoryWindow.hDC, destRect.Left - 1, destRect.Top - 1, destRect.Right + 1, destRect.Bottom + 1, FONDO, 0, 0, 32, 32, vbRed)
 
     End If
-    
+
     If Inventory(slot).GrhIndex Then
-     
+
         'Get source rect
         With srcRect
             .Left = GrhData(Inventory(slot).GrhIndex).sX
@@ -550,62 +555,62 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
             .Bottom = .Top + TilePixelHeight
 
         End With
-        
+
         fileIndex = GrhData(Inventory(slot).GrhIndex).FileNum
-            
+
         BufferBMP = Grafico(fileIndex)
-        
+
         Call TransparentBlt(InventoryWindow.hDC, destRect.Left, destRect.Top, destRect.Right, destRect.Bottom, BufferBMP, srcRect.Left, srcRect.Top, srcRect.Right, srcRect.Bottom, vbBlack)
-            
-        If ShowValue Then
-            'Render the item grh and the amount
-            InventoryWindow.CurrentX = destRect.Left - 2
-            InventoryWindow.CurrentY = destRect.Top - 1
-            InventoryWindow.ForeColor = 0
-            InventoryWindow.Print IIf(Inventory(slot).Amount = 10000, "10k", Inventory(slot).Amount)
-            InventoryWindow.CurrentX = destRect.Left - 1
-            InventoryWindow.CurrentY = destRect.Top
-            InventoryWindow.ForeColor = vbWhite
-            InventoryWindow.Print IIf(Inventory(slot).Amount = 10000, "10k", Inventory(slot).Amount)
+        If Inventory(slot).Amount <> 0 Then
+            If ShowValue Then
+                'Render the item grh and the amount
+                InventoryWindow.CurrentX = destRect.Left - 2
+                InventoryWindow.CurrentY = destRect.Top - 1
+                InventoryWindow.ForeColor = 0
+                InventoryWindow.Print IIf(Inventory(slot).Amount = 10000, "10k", Inventory(slot).Amount)
+                InventoryWindow.CurrentX = destRect.Left - 1
+                InventoryWindow.CurrentY = destRect.Top
+                InventoryWindow.ForeColor = vbWhite
+                InventoryWindow.Print IIf(Inventory(slot).Amount = 10000, "10k", Inventory(slot).Amount)
 
-        End If
-        
-        'If equipped we render "E"
-        If Inventory(slot).Equipped Then
-            InventoryWindow.CurrentX = destRect.Left + 23
-            InventoryWindow.CurrentY = destRect.Top + 19
-            InventoryWindow.ForeColor = 0
-            InventoryWindow.Print "+"
-            InventoryWindow.CurrentX = destRect.Left + 24
-            InventoryWindow.CurrentY = destRect.Top + 20
-            InventoryWindow.ForeColor = vbYellow
-            InventoryWindow.Print "+"
+            End If
 
-        End If
-        
-        'If equipped we render "E"
-        If Inventory(slot).PuedeUsarItem = 1 Then
-            InventoryWindow.CurrentX = destRect.Left + 4
-            InventoryWindow.CurrentY = destRect.Top + 19
-            InventoryWindow.ForeColor = 0
-            InventoryWindow.Print "Equip"
-            InventoryWindow.CurrentX = destRect.Left + 5
-            InventoryWindow.CurrentY = destRect.Top + 20
-            InventoryWindow.ForeColor = vbCyan 'vbRed
-            InventoryWindow.Print "Equip"
+            'If equipped we render "E"
+            If Inventory(slot).Equipped Then
+                InventoryWindow.CurrentX = destRect.Left + 23
+                InventoryWindow.CurrentY = destRect.Top + 19
+                InventoryWindow.ForeColor = 0
+                InventoryWindow.Print "+"
+                InventoryWindow.CurrentX = destRect.Left + 24
+                InventoryWindow.CurrentY = destRect.Top + 20
+                InventoryWindow.ForeColor = vbYellow
+                InventoryWindow.Print "+"
 
+            End If
+
+            'If equipped we render "E"
+            If Inventory(slot).PuedeUsarItem = 1 Then
+                InventoryWindow.CurrentX = destRect.Left + 4
+                InventoryWindow.CurrentY = destRect.Top + 19
+                InventoryWindow.ForeColor = 0
+                InventoryWindow.Print "Equip"
+                InventoryWindow.CurrentX = destRect.Left + 5
+                InventoryWindow.CurrentY = destRect.Top + 20
+                InventoryWindow.ForeColor = vbCyan    'vbRed
+                InventoryWindow.Print "Equip"
+
+            End If
         End If
-        
         'Render a box around the selected item
         If InvSelectedItem = slot Then
             InventoryWindow.ForeColor = RGB(211, 21, 20)
             InventoryWindow.FillStyle = 1
             InventoryWindow.DrawStyle = 3
-            
+
             InventoryWindow.Line (destRect.Left, destRect.Top)-(destRect.Left + TilePixelWidth - 2, destRect.Top + TilePixelHeight - 2), , B
 
         End If
-        
+
     End If
 
     Call InventoryWindow.Refresh

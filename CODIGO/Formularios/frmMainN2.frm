@@ -1,15 +1,15 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{BF3128D8-55B8-11D4-8ED4-00E07D815373}#1.0#0"; "mbprgbar.ocx"
+Object = "{BF3128D8-55B8-11D4-8ED4-00E07D815373}#1.0#0"; "MBPrgBar.ocx"
 Begin VB.Form frmMain2 
    Appearance      =   0  'Flat
    BackColor       =   &H00FFFFFF&
    BorderStyle     =   0  'None
    Caption         =   "AoYind 3"
-   ClientHeight    =   11730
+   ClientHeight    =   11685
    ClientLeft      =   0
    ClientTop       =   555
-   ClientWidth     =   15390
+   ClientWidth     =   15330
    BeginProperty Font 
       Name            =   "Tahoma"
       Size            =   8.25
@@ -21,14 +21,26 @@ Begin VB.Form frmMain2
    EndProperty
    Icon            =   "frmMainN2.frx":0000
    KeyPreview      =   -1  'True
-   ScaleHeight     =   782
+   ScaleHeight     =   779
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   1026
+   ScaleWidth      =   1022
    StartUpPosition =   2  'CenterScreen
+   Begin VB.PictureBox barritaa 
+      BorderStyle     =   0  'None
+      Height          =   5175
+      Left            =   15180
+      Picture         =   "frmMainN2.frx":0CCA
+      ScaleHeight     =   5175
+      ScaleWidth      =   180
+      TabIndex        =   54
+      Top             =   3480
+      Visible         =   0   'False
+      Width           =   180
+   End
    Begin MBProgressBar.ProgressBar bar_sta 
       Height          =   150
       Left            =   1830
-      TabIndex        =   26
+      TabIndex        =   25
       Top             =   840
       Visible         =   0   'False
       Width           =   1590
@@ -49,15 +61,15 @@ Begin VB.Form frmMain2
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN2.frx":0CCA
-      BarPicture      =   "frmMainN2.frx":DA24
+      BackPicture     =   "frmMainN2.frx":7180
+      BarPicture      =   "frmMainN2.frx":13EDA
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar Bar_Mana 
       Height          =   150
       Index           =   0
       Left            =   1830
-      TabIndex        =   25
+      TabIndex        =   24
       Top             =   600
       Visible         =   0   'False
       Width           =   1590
@@ -78,15 +90,15 @@ Begin VB.Form frmMain2
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN2.frx":E7D4
-      BarPicture      =   "frmMainN2.frx":1B52E
+      BackPicture     =   "frmMainN2.frx":14C8A
+      BarPicture      =   "frmMainN2.frx":219E4
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar bar_salud 
       Height          =   150
       Index           =   0
       Left            =   1830
-      TabIndex        =   24
+      TabIndex        =   23
       Top             =   360
       Visible         =   0   'False
       Width           =   1590
@@ -107,15 +119,15 @@ Begin VB.Form frmMain2
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN2.frx":1C2DE
-      BarPicture      =   "frmMainN2.frx":29038
+      BackPicture     =   "frmMainN2.frx":22794
+      BarPicture      =   "frmMainN2.frx":2F4EE
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar bar_salud 
       Height          =   180
       Index           =   1
       Left            =   7380
-      TabIndex        =   37
+      TabIndex        =   35
       Top             =   6600
       Visible         =   0   'False
       Width           =   1020
@@ -136,15 +148,15 @@ Begin VB.Form frmMain2
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN2.frx":29DE8
-      BarPicture      =   "frmMainN2.frx":36B42
+      BackPicture     =   "frmMainN2.frx":3029E
+      BarPicture      =   "frmMainN2.frx":3CFF8
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar Bar_Mana 
       Height          =   180
       Index           =   1
       Left            =   7380
-      TabIndex        =   38
+      TabIndex        =   36
       Top             =   6840
       Visible         =   0   'False
       Width           =   1035
@@ -165,8 +177,8 @@ Begin VB.Form frmMain2
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN2.frx":378F2
-      BarPicture      =   "frmMainN2.frx":4464C
+      BackPicture     =   "frmMainN2.frx":3DDA8
+      BarPicture      =   "frmMainN2.frx":4AB02
       Style           =   1
    End
    Begin VB.PictureBox picarmadura 
@@ -177,7 +189,7 @@ Begin VB.Form frmMain2
       Left            =   1425
       ScaleHeight     =   450
       ScaleWidth      =   450
-      TabIndex        =   31
+      TabIndex        =   30
       TabStop         =   0   'False
       Top             =   10815
       Visible         =   0   'False
@@ -265,37 +277,10 @@ Begin VB.Form frmMain2
       Visible         =   0   'False
       Width           =   11820
    End
-   Begin MBProgressBar.ProgressBar Experiencia 
-      Height          =   75
-      Left            =   4875
-      TabIndex        =   22
-      Top             =   195
-      Visible         =   0   'False
-      Width           =   3720
-      _ExtentX        =   6562
-      _ExtentY        =   132
-      BorderStyle     =   0
-      Value           =   50
-      Percentage      =   50
-      Smooth          =   -1  'True
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Tahoma"
-         Size            =   6
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BackPicture     =   "frmMainN2.frx":453FC
-      BarPicture      =   "frmMainN2.frx":467B0
-      TextAfterCaption=   "%"
-      Style           =   1
-   End
    Begin MBProgressBar.ProgressBar Bar_Agua 
       Height          =   120
       Left            =   1800
-      TabIndex        =   27
+      TabIndex        =   26
       Top             =   1020
       Visible         =   0   'False
       Width           =   1650
@@ -317,14 +302,14 @@ Begin VB.Form frmMain2
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN2.frx":47B64
-      BarPicture      =   "frmMainN2.frx":48618
+      BackPicture     =   "frmMainN2.frx":4B8B2
+      BarPicture      =   "frmMainN2.frx":4C366
       Style           =   1
    End
    Begin MBProgressBar.ProgressBar bar_comida 
       Height          =   120
       Left            =   1800
-      TabIndex        =   28
+      TabIndex        =   27
       Top             =   1185
       Visible         =   0   'False
       Width           =   1650
@@ -345,8 +330,8 @@ Begin VB.Form frmMain2
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      BackPicture     =   "frmMainN2.frx":490CC
-      BarPicture      =   "frmMainN2.frx":49B80
+      BackPicture     =   "frmMainN2.frx":4CE1A
+      BarPicture      =   "frmMainN2.frx":4D8CE
       Style           =   1
    End
    Begin VB.PictureBox pRender 
@@ -355,13 +340,91 @@ Begin VB.Form frmMain2
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   12225
-      Left            =   0
+      Left            =   -480
       ScaleHeight     =   815
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   1088
+      ScaleWidth      =   1080
       TabIndex        =   4
       Top             =   0
-      Width           =   16320
+      Width           =   16200
+      Begin VB.PictureBox PicSpells 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         AutoSize        =   -1  'True
+         BackColor       =   &H000000FF&
+         BorderStyle     =   0  'None
+         CausesValidation=   0   'False
+         ClipControls    =   0   'False
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   6.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   2385
+         Left            =   14670
+         ScaleHeight     =   159
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   128
+         TabIndex        =   55
+         Top             =   6120
+         Visible         =   0   'False
+         Width           =   1920
+         Begin VB.Label Label2 
+            Alignment       =   2  'Center
+            BackStyle       =   0  'Transparent
+            ForeColor       =   &H00E0E0E0&
+            Height          =   495
+            Left            =   480
+            TabIndex        =   56
+            Top             =   3600
+            Visible         =   0   'False
+            Width           =   2175
+         End
+      End
+      Begin VB.PictureBox picInv 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         AutoSize        =   -1  'True
+         BackColor       =   &H000000FF&
+         BorderStyle     =   0  'None
+         CausesValidation=   0   'False
+         ClipControls    =   0   'False
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   6.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   2385
+         Left            =   14670
+         ScaleHeight     =   159
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   128
+         TabIndex        =   51
+         Top             =   3675
+         Visible         =   0   'False
+         Width           =   1920
+         Begin VB.Label Label1 
+            Alignment       =   2  'Center
+            BackStyle       =   0  'Transparent
+            ForeColor       =   &H00E0E0E0&
+            Height          =   495
+            Left            =   480
+            TabIndex        =   52
+            Top             =   3600
+            Visible         =   0   'False
+            Width           =   2175
+         End
+      End
       Begin VB.PictureBox cmdinfo 
          Appearance      =   0  'Flat
          AutoRedraw      =   -1  'True
@@ -371,11 +434,11 @@ Begin VB.Form frmMain2
          ForeColor       =   &H80000008&
          Height          =   225
          Left            =   15180
-         Picture         =   "frmMainN2.frx":4A634
+         Picture         =   "frmMainN2.frx":4E382
          ScaleHeight     =   15
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   8
-         TabIndex        =   54
+         TabIndex        =   50
          TabStop         =   0   'False
          Top             =   3480
          Width           =   120
@@ -391,7 +454,7 @@ Begin VB.Form frmMain2
          Left            =   15135
          ScaleHeight     =   660
          ScaleWidth      =   300
-         TabIndex        =   51
+         TabIndex        =   47
          TabStop         =   0   'False
          Top             =   6510
          Width           =   300
@@ -405,10 +468,10 @@ Begin VB.Form frmMain2
             Height          =   285
             Index           =   0
             Left            =   0
-            Picture         =   "frmMainN2.frx":4A7E0
+            Picture         =   "frmMainN2.frx":4E52E
             ScaleHeight     =   285
             ScaleWidth      =   210
-            TabIndex        =   53
+            TabIndex        =   49
             TabStop         =   0   'False
             Top             =   350
             Width           =   210
@@ -423,10 +486,10 @@ Begin VB.Form frmMain2
             Height          =   282
             Index           =   1
             Left            =   0
-            Picture         =   "frmMainN2.frx":4AB68
+            Picture         =   "frmMainN2.frx":4E8B6
             ScaleHeight     =   285
             ScaleWidth      =   210
-            TabIndex        =   52
+            TabIndex        =   48
             TabStop         =   0   'False
             Top             =   0
             Width           =   210
@@ -438,10 +501,10 @@ Begin VB.Form frmMain2
          BackColor       =   &H80000005&
          ForeColor       =   &H80000008&
          Height          =   675
-         Left            =   13350
+         Left            =   13200
          ScaleHeight     =   645
          ScaleWidth      =   645
-         TabIndex        =   50
+         TabIndex        =   46
          TabStop         =   0   'False
          Top             =   5235
          Visible         =   0   'False
@@ -465,11 +528,11 @@ Begin VB.Form frmMain2
          ForeColor       =   &H80000008&
          Height          =   2595
          Left            =   15135
-         Picture         =   "frmMainN2.frx":4AEF0
+         Picture         =   "frmMainN2.frx":4EC3E
          ScaleHeight     =   173
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   16
-         TabIndex        =   48
+         TabIndex        =   44
          TabStop         =   0   'False
          Top             =   3885
          Visible         =   0   'False
@@ -492,45 +555,15 @@ Begin VB.Form frmMain2
             ForeColor       =   &H80000008&
             Height          =   105
             Left            =   15
-            Picture         =   "frmMainN2.frx":4CFA2
+            Picture         =   "frmMainN2.frx":50CF0
             ScaleHeight     =   7
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   14
-            TabIndex        =   49
+            TabIndex        =   45
             TabStop         =   0   'False
             Top             =   240
             Width           =   210
          End
-      End
-      Begin VB.PictureBox picInv2 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         CausesValidation=   0   'False
-         ClipControls    =   0   'False
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   6.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   5550
-         Left            =   13920
-         Picture         =   "frmMainN2.frx":4D118
-         ScaleHeight     =   370
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   38
-         TabIndex        =   47
-         TabStop         =   0   'False
-         Top             =   3705
-         Visible         =   0   'False
-         Width           =   570
       End
       Begin VB.PictureBox picHechiz 
          Appearance      =   0  'Flat
@@ -543,12 +576,12 @@ Begin VB.Form frmMain2
          DrawStyle       =   3  'Dash-Dot
          ForeColor       =   &H00FFFFFF&
          Height          =   3405
-         Left            =   13965
+         Left            =   12120
          MousePointer    =   99  'Custom
          ScaleHeight     =   227
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   73
-         TabIndex        =   35
+         TabIndex        =   33
          Top             =   3705
          Visible         =   0   'False
          Width           =   1095
@@ -556,19 +589,19 @@ Begin VB.Form frmMain2
       Begin VB.PictureBox invHechisos 
          BorderStyle     =   0  'None
          Height          =   3465
-         Left            =   13965
-         Picture         =   "frmMainN2.frx":51A9F
+         Left            =   10680
+         Picture         =   "frmMainN2.frx":50E66
          ScaleHeight     =   3465
          ScaleWidth      =   1140
-         TabIndex        =   41
-         Top             =   3705
+         TabIndex        =   39
+         Top             =   3720
          Visible         =   0   'False
          Width           =   1140
          Begin VB.Image CmdLanzar 
             Height          =   315
             Left            =   15
             MousePointer    =   99  'Custom
-            Picture         =   "frmMainN2.frx":5792C
+            Picture         =   "frmMainN2.frx":56CF3
             Top             =   3375
             Visible         =   0   'False
             Width           =   1125
@@ -578,11 +611,11 @@ Begin VB.Form frmMain2
          BorderStyle     =   0  'None
          Height          =   1498
          Left            =   13440
-         Picture         =   "frmMainN2.frx":5A3CF
+         Picture         =   "frmMainN2.frx":59796
          ScaleHeight     =   1500
          ScaleMode       =   0  'User
          ScaleWidth      =   1100
-         TabIndex        =   36
+         TabIndex        =   34
          Top             =   570
          Width           =   1500
          Begin VB.Shape shpMiniMapaVision 
@@ -602,44 +635,16 @@ Begin VB.Form frmMain2
             Width           =   45
          End
       End
-      Begin VB.PictureBox picInv 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         CausesValidation=   0   'False
-         ClipControls    =   0   'False
-         BeginProperty Font 
-            Name            =   "Tahoma"
-            Size            =   6.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   5550
-         Left            =   14490
-         Picture         =   "frmMainN2.frx":61943
-         ScaleHeight     =   370
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   38
-         TabIndex        =   34
-         Top             =   3705
-         Visible         =   0   'False
-         Width           =   570
-      End
       Begin VB.PictureBox picfondoinve 
          AutoSize        =   -1  'True
          BackColor       =   &H80000001&
          BorderStyle     =   0  'None
          Height          =   570
          Left            =   13920
-         Picture         =   "frmMainN2.frx":662CA
+         Picture         =   "frmMainN2.frx":60D0A
          ScaleHeight     =   570
          ScaleWidth      =   1125
-         TabIndex        =   33
+         TabIndex        =   32
          Top             =   3135
          Visible         =   0   'False
          Width           =   1125
@@ -647,7 +652,7 @@ Begin VB.Form frmMain2
             BackStyle       =   0  'Transparent
             Height          =   375
             Left            =   585
-            TabIndex        =   43
+            TabIndex        =   41
             Top             =   135
             Width           =   480
          End
@@ -655,7 +660,7 @@ Begin VB.Form frmMain2
             BackStyle       =   0  'Transparent
             Height          =   405
             Left            =   150
-            TabIndex        =   42
+            TabIndex        =   40
             Top             =   90
             Width           =   360
          End
@@ -681,7 +686,7 @@ Begin VB.Form frmMain2
          ScaleHeight     =   90
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   788
-         TabIndex        =   32
+         TabIndex        =   31
          Top             =   1650
          Visible         =   0   'False
          Width           =   11820
@@ -807,19 +812,15 @@ Begin VB.Form frmMain2
          Visible         =   0   'False
          Width           =   2700
       End
-      Begin VB.Label label8 
-         Alignment       =   2  'Center
-         Appearance      =   0  'Flat
-         AutoSize        =   -1  'True
-         BackColor       =   &H80000005&
-         BackStyle       =   0  'Transparent
-         Caption         =   "Sensui"
-         ForeColor       =   &H0000FFFF&
-         Height          =   195
-         Left            =   10620
-         TabIndex        =   46
-         Top             =   3945
-         Width           =   555
+      Begin VB.PictureBox barritaaa 
+         Height          =   2295
+         Left            =   0
+         ScaleHeight     =   2235
+         ScaleWidth      =   315
+         TabIndex        =   53
+         Top             =   0
+         Visible         =   0   'False
+         Width           =   375
       End
    End
    Begin VB.PictureBox BarraConsola 
@@ -840,11 +841,11 @@ Begin VB.Form frmMain2
       ForeColor       =   &H80000008&
       Height          =   1367
       Left            =   8880
-      Picture         =   "frmMainN2.frx":69DF9
+      Picture         =   "frmMainN2.frx":64839
       ScaleHeight     =   91
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   18
-      TabIndex        =   39
+      TabIndex        =   37
       TabStop         =   0   'False
       Top             =   7680
       Width           =   270
@@ -866,11 +867,11 @@ Begin VB.Form frmMain2
          ForeColor       =   &H80000008&
          Height          =   105
          Left            =   30
-         Picture         =   "frmMainN2.frx":6B223
+         Picture         =   "frmMainN2.frx":65C63
          ScaleHeight     =   7
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   14
-         TabIndex        =   40
+         TabIndex        =   38
          TabStop         =   0   'False
          Top             =   1020
          Width           =   210
@@ -884,7 +885,7 @@ Begin VB.Form frmMain2
       ForeColor       =   &H00FFFFFF&
       Height          =   495
       Left            =   11295
-      TabIndex        =   45
+      TabIndex        =   43
       Top             =   10650
       Width           =   3135
    End
@@ -895,7 +896,7 @@ Begin VB.Form frmMain2
       ForeColor       =   &H00E0E0E0&
       Height          =   195
       Left            =   0
-      TabIndex        =   44
+      TabIndex        =   42
       Top             =   0
       Visible         =   0   'False
       Width           =   210
@@ -929,7 +930,7 @@ Begin VB.Form frmMain2
       ForeColor       =   &H80000008&
       Height          =   270
       Left            =   12300
-      TabIndex        =   30
+      TabIndex        =   29
       Top             =   7485
       Width           =   1035
    End
@@ -940,7 +941,7 @@ Begin VB.Form frmMain2
       ForeColor       =   &H80000008&
       Height          =   195
       Left            =   13980
-      TabIndex        =   29
+      TabIndex        =   28
       Top             =   7515
       Width           =   1005
    End
@@ -960,7 +961,7 @@ Begin VB.Form frmMain2
       ForeColor       =   &H8000000E&
       Height          =   210
       Left            =   6375
-      TabIndex        =   23
+      TabIndex        =   22
       Top             =   195
       Width           =   765
    End
@@ -1226,6 +1227,9 @@ Attribute VB_Exposed = False
 'Pablo Ignacio Márquez
 
 Option Explicit
+Dim s_Index     As Integer  '< Número de slot.
+Dim PicMoveX As Single
+Dim PicMoveY As Single
 
 Public tX                As Integer
 
@@ -1629,7 +1633,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    Picture1.Visible = True
+    picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -1650,7 +1654,7 @@ Private Sub cmdMoverHechi_Click(Index As Integer)
 
     If hlst.ListIndex = -1 Then Exit Sub
 
-    Dim sTemp As String
+    Dim Stemp As String
 
     Select Case Index
 
@@ -1669,15 +1673,15 @@ Private Sub cmdMoverHechi_Click(Index As Integer)
     Select Case Index
 
         Case 1 'subir
-            sTemp = hlst.List(hlst.ListIndex - 1)
+            Stemp = hlst.List(hlst.ListIndex - 1)
             hlst.List(hlst.ListIndex - 1) = hlst.List(hlst.ListIndex)
-            hlst.List(hlst.ListIndex) = sTemp
+            hlst.List(hlst.ListIndex) = Stemp
             hlst.ListIndex = hlst.ListIndex - 1
 
         Case 0 'bajar
-            sTemp = hlst.List(hlst.ListIndex + 1)
+            Stemp = hlst.List(hlst.ListIndex + 1)
             hlst.List(hlst.ListIndex + 1) = hlst.List(hlst.ListIndex)
-            hlst.List(hlst.ListIndex) = sTemp
+            hlst.List(hlst.ListIndex) = Stemp
             hlst.ListIndex = hlst.ListIndex + 1
 
     End Select
@@ -2144,22 +2148,6 @@ Private Sub lblinve_Click()
        
 End Sub
 
-Private Sub lblinve_DblClick()
-
-    If picInv2.Visible = True Then
-        ' picfondoinve.Visible = True
-        picInv2.Visible = False
-        Exit Sub
-    Else
-
-        ' picfondoinve.Visible = True
-        picInv2.Visible = True
-        Exit Sub
-
-    End If
-    
-End Sub
-
 Private Sub Lblmagia_Click()
 
     Call Audio.PlayWave(214)
@@ -2169,7 +2157,7 @@ Private Sub Lblmagia_Click()
         picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        Picture1.Visible = False
+        picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2181,17 +2169,90 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         picHechiz.Visible = True
-        Picture1.Visible = True
+        picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         'LanzarImg.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & "14956.png", , , , , True)
         picInv.Visible = False
-        picInv2.Visible = False
+       
         Exit Sub
 
     End If
 
 End Sub
+
+Private Sub PicSpells_DblClick()
+s_Index = invSpells.SelectedItem
+ 
+'No hay
+If (s_Index = 0) Then Exit Sub
+ 
+hlst.ListIndex = s_Index - 1
+
+Call cmdLanzar_Click
+End Sub
+
+Private Sub PicSpells_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+InvX = x
+    InvY = y
+ 
+    
+    If Button = 2 And Not Comerciando Then
+        If invSpells.GrhIndex(invSpells.SelectedItem) > 0 Then
+          
+            DragAndDrop = True
+            Me.MouseIcon = GetIcon(invSpells.Grafico(GrhData(invSpells.GrhIndex(invSpells.SelectedItem)).FileNum), 0, 0, Halftone, True, RGB(255, 0, 255))
+            Me.MousePointer = 99
+
+        End If
+
+    End If
+End Sub
+
+Private Sub PicSpells_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Dim Stemp As String
+   s_Index = invSpells.SelectedItem
+If DragAndDrop Then
+        frmMain.MouseIcon = Nothing
+        frmMain.MousePointer = 99
+        Call SetCursor(General)
+
+    End If
+
+    If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
+        If x >= invSpells.OffSetX And y >= invSpells.OffSetY And x <= PicSpells.Width And y <= PicSpells.Height Then
+
+            Dim NewPosInv As Integer
+              
+            NewPosInv = invSpells.ClickItem(x, y)
+
+            If NewPosInv > 0 Then
+              
+                
+                  Dim NewLugar As Integer
+    Dim AntLugar As Integer
+      Dim AntText As String
+    NewLugar = NewPosInv
+    AntLugar = s_Index
+   
+      Call WriteMoveSpell(AntLugar, NewLugar)
+   
+   AntText = hlst.List(NewLugar - 1)
+    hlst.List(NewLugar - 1) = hlst.List(AntLugar - 1)
+    hlst.List(AntLugar - 1) = AntText
+   
+                Call WriteIntercambiarInv(invSpells.SelectedItem, NewPosInv, False)
+                Call invSpells.Intercambiar(NewPosInv)
+
+            End If
+    
+       End If
+End If
+           
+
+    DragAndDrop = False
+End Sub
+
 
 Private Sub pRender_KeyDown(KeyCode As Integer, Shift As Integer)
 
@@ -2761,39 +2822,39 @@ Private Sub pRender_Click()
 
     If Conectar Then Exit Sub
     If Cartel Then Cartel = False
-    
+
     'Helios 03/06/2021 "coordenadas del raton"
     If MouseX > 661 And MouseX < 681 And MouseY > 5 And MouseY < 25 Then
-        Call ImgLanzar_Click(2) 'Helios Clanes 04/06/2021
+        Call ImgLanzar_Click(2)    'Helios Clanes 04/06/2021
         Call Audio.PlayWave(SND_CLICKNEW)
         Exit Sub
 
     End If
-    
+
     If MouseX > 688 And MouseX < 712 And MouseY > 5 And MouseY < 25 Then
-        Call ImgLanzar_Click(1) ' Estadisticas
+        Call ImgLanzar_Click(1)    ' Estadisticas
         Call Audio.PlayWave(SND_CLICKNEW)
         Exit Sub
 
     End If
-    
+
     'Mostrar el Minipa helios 06/06/2021
     If MouseX > 719 And MouseX < 739 And MouseY > 5 And MouseY < 25 Then
         Call Audio.PlayWave(SND_CLICKNEW)
 
         If frmMain.imgMiniMapa.Visible = True Then
             frmMain.imgMiniMapa.Visible = False
-            
+
         Else
-        
+
             frmMain.imgMiniMapa.Visible = True
-              
+
         End If
 
         Exit Sub
 
     End If
-        
+
     'Helios Misiones 04/06/2021
     If MouseX > 749 And MouseX < 764 And MouseY > 5 And MouseY < 25 Then
         Call Audio.PlayWave(SND_CLICKNEW)
@@ -2803,28 +2864,28 @@ Private Sub pRender_Click()
         'helios 06/06/2021
         If FrmQuests.Visible = True Then Unload FrmQuests: Exit Sub
         Call WriteQuestListRequest
-        
+
         Exit Sub
 
     End If
-    
+
     If MouseX > 774 And MouseX < 794 And MouseY > 5 And MouseY < 25 Then
         Call Audio.PlayWave(SND_CLICKNEW)
 
         'helios 06/06/2021
         If frmParty.Visible = True Then Unload frmParty: Exit Sub
-        Call ImgLanzar_Click(3) ' Helios PArty 04/06/2021
+        Call ImgLanzar_Click(3)    ' Helios PArty 04/06/2021
         Exit Sub
 
     End If
-    
+
     If MouseX > 803 And MouseX < 824 And MouseY > 5 And MouseY < 25 Then
-        Call ImgLanzar_Click(0) ' Helios Opciones 04/06/2021
+        Call ImgLanzar_Click(0)    ' Helios Opciones 04/06/2021
         Call Audio.PlayWave(SND_CLICKNEW)
         Exit Sub
 
     End If
-    
+
     If MouseX > 854 And MouseX < 878 And MouseY > 5 And MouseY < 25 Then
         CTextos = CTextos + 1
 
@@ -2838,14 +2899,14 @@ Private Sub pRender_Click()
             Next a
 
         Else
-       
+
             sintextos = True
             CTextos = 0
 
         End If
 
     End If
-    
+
     'helios esconder Barras 07/06/2021
     If MouseX > 882 And MouseX < 903 And MouseY > 5 And MouseY < 25 Then
         PulsarEsconder = PulsarEsconder + 1
@@ -2853,19 +2914,11 @@ Private Sub pRender_Click()
 
         If PulsarEsconder = 1 Then
             MmenuBarras = True
-            bar_salud(0).Visible = True
-            Bar_Mana(0).Visible = True
-            bar_sta.Visible = True
-            Bar_Agua.Visible = True
-            bar_comida.Visible = True
-            
+
+
         Else
             MmenuBarras = False
-            bar_salud(0).Visible = False
-            Bar_Mana(0).Visible = False
-            bar_sta.Visible = False
-            Bar_Agua.Visible = False
-            bar_comida.Visible = False
+
             PulsarEsconder = 0
 
         End If
@@ -2873,10 +2926,10 @@ Private Sub pRender_Click()
         Exit Sub
 
     End If
-    
+
     If MouseX > 1003 And MouseX < 1018 And MouseY > 6 And MouseY < 19 Then
         'helios 06/06/2021
-        Call Audio.PlayWave(SND_CLICKNEW) ' Desconectar
+        Call Audio.PlayWave(SND_CLICKNEW)    ' Desconectar
 
         If frmCerrar.Visible Then Exit Sub
 
@@ -2888,7 +2941,7 @@ Private Sub pRender_Click()
             Set mForm = Nothing
         Next
         frmCerrar.Show , Me
-        
+
         'Call WriteQuit
         Exit Sub
 
@@ -2896,220 +2949,312 @@ Private Sub pRender_Click()
 
     If MouseX > 828 And MouseX < 850 And MouseY > 5 And MouseY < 25 Then
 
-        'helios 06/06/2021
-        If picInv.Visible = True Then Exit Sub
-        If picHechiz.Visible = True Then Exit Sub
+
+
         ContarClip = ContarClip + 1
 
         If ContarClip = 1 Then
-           
+
             Call Audio.PlayWave(SND_CLICKNEW)
+            'invHechisos.Visible = True
+            'picHechiz.Visible = True
+            'CmdLanzar.Visible = False
+            'BarraHechiz.Visible = True
+            'LanzarImg.Visible = True
+            'picfondoinve.Visible = True
+            picInv.Visible = True
+            PicSpells.Visible = True
             MostrarMenuInventario = True
+            
+            barritaa.Visible = True
+
         Else
+        PicSpells.Visible = False
+            invHechisos.Visible = False
+            picHechiz.Visible = False
+            'CmdLanzar.Visible = False
+            BarraHechiz.Visible = False
+            LanzarImg.Visible = False
+            'picfondoinve.Visible = True
+            picInv.Visible = False
             MostrarMenuInventario = False
+            barritaa.Visible = False
             ContarClip = 0
 
         End If
+   
+    Exit Sub
+
+End If
+
+'helios 06/06/2021
+If MouseX > 902 And MouseX < 925 And MouseY > 182 And MouseY < 1237 Then
+    If frmMain.invHechisos.Visible = True Then
+        Call Audio.PlayWave(SND_CLICKNEW)
+
+        Call LanzarImg_Click    ' Lanzar Magia
+
+    End If
+
+    Exit Sub
+
+End If
+
+'helios 06/06/2021
+
+If ContarClip = 1 Then
   
-        Exit Sub
+    If MouseX > 977 And MouseX < 989 And MouseY > 230 And MouseY < 242 Then
 
-    End If
 
-    'helios 06/06/2021
-    If MouseX > 902 And MouseX < 925 And MouseY > 182 And MouseY < 1237 Then
-        If frmMain.invHechisos.Visible = True Then
-            Call Audio.PlayWave(SND_CLICKNEW)
-          
-            Call LanzarImg_Click ' Lanzar Magia
+        If picInv.Left = 978 Then
+
+            picInv.Left = 946
+            Exit Sub
 
         End If
 
-        Exit Sub
+        If picInv.Left = 946 Then
+            picInv.Left = 914
+            Exit Sub
+        End If
+
+        If picInv.Left = 914 Then
+            picInv.Left = 882
+            Exit Sub
+        End If
 
     End If
 
-    'helios 06/06/2021
-    If ContarClip = 1 Then
-        If MouseX > 936 And MouseX < 960 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Inventrario
-            If picInv.Visible = True Then
-                
-                Call lblinve_DblClick
+    If MouseX > 993 And MouseX < 1007 And MouseY > 228 And MouseY < 243 Then
+
+
+
+        If picInv.Left = 882 Then
+
+            picInv.Left = 914
+
+            Exit Sub
+        End If
+
+        If picInv.Left = 914 Then
+            picInv.Left = 946
+            Exit Sub
+        End If
+
+        If picInv.Left = 946 Then
+            picInv.Left = 978
+            Exit Sub
+        End If
+
+    End If
+
+End If
+
+If ContarClip = 1 Then
+  
+    If MouseX > 977 And MouseX < 989 And MouseY > 568 And MouseY < 581 Then
+
+
+        If PicSpells.Left = 978 Then
+
+            PicSpells.Left = 946
+            Exit Sub
+
+        End If
+
+        If PicSpells.Left = 946 Then
+           PicSpells.Left = 914
+            Exit Sub
+        End If
+
+        If PicSpells.Left = 914 Then
+            PicSpells.Left = 882
+            Exit Sub
+        End If
+
+    End If
+
+    If MouseX > 993 And MouseX < 1007 And MouseY > 567 And MouseY < 579 Then
+
+
+
+        If PicSpells.Left = 882 Then
+
+            PicSpells.Left = 914
+
+            Exit Sub
+        End If
+
+        If PicSpells.Left = 914 Then
+            PicSpells.Left = 946
+            Exit Sub
+        End If
+
+        If PicSpells.Left = 946 Then
+           PicSpells.Left = 978
+            Exit Sub
+        End If
+
+    End If
+
+End If
+
+'helios 06/06/2021
+
+'Fin Helios 03/06/2021 "coordenadas del raton"
+
+If UserEmbarcado Then
+    If Not Barco(0) Is Nothing Then
+        If Barco(0).TickPuerto = 0 And Barco(0).Embarcado = True Then
+            Exit Sub
+
+        End If
+
+    End If
+
+    If Not Barco(1) Is Nothing Then
+        If Barco(1).TickPuerto = 0 And Barco(1).Embarcado = True Then
+            Exit Sub
+
+        End If
+
+    End If
+
+End If
+
+#If SeguridadAlkon Then
+
+    If LOGGING Then Call CheatingDeath.StoreKey(MouseBoton, True)
+#End If
+
+If Not Comerciando Then
+
+    If SendTxt.Visible = True Then
+        SendTxt.SetFocus
+    ElseIf SendCMSTXT.Visible = True Then
+        SendCMSTXT.SetFocus
+
+    End If
+
+    Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
+    Debug.Print "Coordenada X: " & MouseX & " Coordenada Y: " & MouseY & " --- " & tX & " - " & tY
+
+    If Not InGameArea() Then Exit Sub
+    If Not InMapBounds(tX, tY) Then Exit Sub
+
+    If MouseShift = 0 And (MapData(tX, tY).Graphic(4).GrhIndex = 0 Or bTecho) Then
+
+        'If MouseBoton <> vbRightButton Then
+        If MouseBoton Then
+            If UsingSkill = 0 Then
+                Call WriteLeftClick(tX, tY)
             Else
-                Call lblinve_Click
 
-            End If
+                If macrotrabajo.Enabled Then DesactivarMacroTrabajo
 
-            Exit Sub
+                '                    If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
+                '                        'frmMain.MousePointer = vbDefault
+                '                        Call SetCursor(General)
+                '                        UsingSkill = 0
+                '                        With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                '                            Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
+                '                        End With
+                '                        Exit Sub
+                '                    End If
 
-        End If
+                'Splitted because VB isn't lazy!
+                If UsingSkill = Proyectiles Then
+                    If Not MainTimer.Check(TimersIndex.PuedeFlechas) Then
+                        frmMain.MousePointer = vbDefault
+                        Call SetCursor(General)
+                        UsingSkill = 0
 
-    End If
+                        With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                            Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
 
-    'helios 06/06/2021
-    If ContarClip = 1 Then
-        If MouseX > 968 And MouseX < 991 And MouseY > 210 And MouseY < 237 Then ' Menu elegir Magia
-            Call Lblmagia_Click
-            Exit Sub
+                        End With
 
-        End If
-    
-    End If
-
-    'Fin Helios 03/06/2021 "coordenadas del raton"
-     
-    If UserEmbarcado Then
-        If Not Barco(0) Is Nothing Then
-            If Barco(0).TickPuerto = 0 And Barco(0).Embarcado = True Then
-                Exit Sub
-
-            End If
-
-        End If
-
-        If Not Barco(1) Is Nothing Then
-            If Barco(1).TickPuerto = 0 And Barco(1).Embarcado = True Then
-                Exit Sub
-
-            End If
-
-        End If
-
-    End If
-
-    #If SeguridadAlkon Then
-
-        If LOGGING Then Call CheatingDeath.StoreKey(MouseBoton, True)
-    #End If
-
-    If Not Comerciando Then
-
-        If SendTxt.Visible = True Then
-            SendTxt.SetFocus
-        ElseIf SendCMSTXT.Visible = True Then
-            SendCMSTXT.SetFocus
-
-        End If
-
-        Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
-        Debug.Print "Coordenada X: " & MouseX & " Coordenada Y: " & MouseY & " --- " & tX & " - " & tY
-
-        If Not InGameArea() Then Exit Sub
-        If Not InMapBounds(tX, tY) Then Exit Sub
-
-        If MouseShift = 0 And (MapData(tX, tY).Graphic(4).GrhIndex = 0 Or bTecho) Then
-
-            'If MouseBoton <> vbRightButton Then
-            If MouseBoton Then
-                If UsingSkill = 0 Then
-                    Call WriteLeftClick(tX, tY)
-                Else
-
-                    If macrotrabajo.Enabled Then DesactivarMacroTrabajo
-
-                    '                    If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
-                    '                        'frmMain.MousePointer = vbDefault
-                    '                        Call SetCursor(General)
-                    '                        UsingSkill = 0
-                    '                        With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                    '                            Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
-                    '                        End With
-                    '                        Exit Sub
-                    '                    End If
-
-                    'Splitted because VB isn't lazy!
-                    If UsingSkill = Proyectiles Then
-                        If Not MainTimer.Check(TimersIndex.PuedeFlechas) Then
-                            frmMain.MousePointer = vbDefault
-                            Call SetCursor(General)
-                            UsingSkill = 0
-
-                            With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                                Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
-
-                            End With
-
-                            Exit Sub
-
-                        End If
+                        Exit Sub
 
                     End If
 
-                    'Splitted because VB isn't lazy!
-                    If UsingSkill = Magia Then
-                        If Not MainTimer.Check(TimersIndex.PuedeLanzarHechizo) Then  'Corto intervalo de Golpe-Magia
-                            frmMain.MousePointer = vbDefault
-                            Call SetCursor(General)
-                            UsingSkill = 0
+                End If
 
-                            With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                                Call AddtoRichPicture("No puedes lanzar hechizos tan rápido.", .red, .green, .blue, .bold, .italic)
+                'Splitted because VB isn't lazy!
+                If UsingSkill = Magia Then
+                    If Not MainTimer.Check(TimersIndex.PuedeLanzarHechizo) Then  'Corto intervalo de Golpe-Magia
+                        frmMain.MousePointer = vbDefault
+                        Call SetCursor(General)
+                        UsingSkill = 0
 
-                            End With
+                        With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                            Call AddtoRichPicture("No puedes lanzar hechizos tan rápido.", .red, .green, .blue, .bold, .italic)
 
-                            Exit Sub
+                        End With
 
-                        End If
-
-                    End If
-
-                    'Splitted because VB isn't lazy!
-                    If (UsingSkill = Pesca Or UsingSkill = Robar Or UsingSkill = Talar Or UsingSkill = Mineria Or UsingSkill = FundirMetal) Then
-                        If Not MainTimer.Check(TimersIndex.Work) Then
-                            frmMain.MousePointer = vbDefault
-                            Call SetCursor(General)
-                            UsingSkill = 0
-                            Exit Sub
-
-                        End If
+                        Exit Sub
 
                     End If
 
-                    'If frmMain.MousePointer <> 99 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
+                End If
 
-                    frmMain.MousePointer = vbDefault
+                'Splitted because VB isn't lazy!
+                If (UsingSkill = Pesca Or UsingSkill = Robar Or UsingSkill = Talar Or UsingSkill = Mineria Or UsingSkill = FundirMetal) Then
+                    If Not MainTimer.Check(TimersIndex.Work) Then
+                        frmMain.MousePointer = vbDefault
+                        Call SetCursor(General)
+                        UsingSkill = 0
+                        Exit Sub
 
-                    If UsingSecondSkill = 1 Then
-                        If UserNavegando = True Then
-                            Call WriteCreateEfectoClient(tX, tY, eEffects.Bala)
-                            UsingSecondSkill = 0
-                        Else
+                    End If
 
-                            With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                                Call AddtoRichPicture("Debes estar navegando para usar el cañon.", .red, .green, .blue, .bold, .italic)
+                End If
 
-                            End With
+                'If frmMain.MousePointer <> 99 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
 
-                        End If
+                frmMain.MousePointer = vbDefault
 
+                If UsingSecondSkill = 1 Then
+                    If UserNavegando = True Then
+                        Call WriteCreateEfectoClient(tX, tY, eEffects.Bala)
+                        UsingSecondSkill = 0
                     Else
-                        Call WriteWorkLeftClick(tX, tY, UsingSkill)
+
+                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                            Call AddtoRichPicture("Debes estar navegando para usar el cañon.", .red, .green, .blue, .bold, .italic)
+
+                        End With
 
                     End If
 
-                    frmMain.MousePointer = vbDefault
-                    Call SetCursor(General)
-
-                    UsingSkill = 0
-                    UsingSecondSkill = 0
+                Else
+                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
 
                 End If
 
-            Else
-                Call AbrirMenuViewPort
+                frmMain.MousePointer = vbDefault
+                Call SetCursor(General)
+
+                UsingSkill = 0
+                UsingSecondSkill = 0
 
             End If
 
-        ElseIf (MouseShift And 1) = 1 Then
+        Else
+            Call AbrirMenuViewPort
 
-            If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
-                If MainTimer.Check(TimersIndex.Telep) And Not UserEmbarcado And Not UserNadando And UserMoving = 0 Then
-                    If MouseBoton = vbLeftButton And charlist(UserCharIndex).priv > 0 And charlist(UserCharIndex).priv < 5 Then
-                        If VerMapa Then
-                            Call WriteWarpMeToTarget(Int((frmMain.MouseX - PosMapX + 32) / RelacionMiniMapa), Int((frmMain.MouseY - PosMapY + 32) / RelacionMiniMapa))
-                        Else
-                            Call WriteWarpMeToTarget(tX, tY)
+        End If
 
-                        End If
+    ElseIf (MouseShift And 1) = 1 Then
+
+        If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
+            If MainTimer.Check(TimersIndex.Telep) And Not UserEmbarcado And Not UserNadando And UserMoving = 0 Then
+                If MouseBoton = vbLeftButton And charlist(UserCharIndex).priv > 0 And charlist(UserCharIndex).priv < 5 Then
+                    If VerMapa Then
+                        Call WriteWarpMeToTarget(Int((frmMain.MouseX - PosMapX + 32) / RelacionMiniMapa), Int((frmMain.MouseY - PosMapY + 32) / RelacionMiniMapa))
+                    Else
+                        Call WriteWarpMeToTarget(tX, tY)
 
                     End If
 
@@ -3120,6 +3265,8 @@ Private Sub pRender_Click()
         End If
 
     End If
+
+End If
 
 End Sub
 
@@ -3338,7 +3485,7 @@ Private Sub Form_Load()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos_R.bmp")
     'btnInventario.Picture = LoadPictureEX("btnInventario_R.bmp")
     'neo parcheo ruta
-    imgMiniMapa.Picture = LoadPicture(PathRecursosCliente & "\minimapadefault.bmp")
+    imgMiniMapa.Picture = LoadPicture(PathRecursosCliente & "\Recursos\minimapadefault.bmp")
     ' imgMiniMapa.Picture = LoadPicture(App.path & "\Recursos\minimapadefault.bmp")
     'MANShp.Picture = LoadPictureEX("barMana.jpg")
     'Hpshp.Picture = LoadPictureEX("BarHp.jpg")
@@ -3994,6 +4141,27 @@ Private Sub imgMiniMapa_MouseDown(Button As Integer, _
     If Button = vbRightButton Then
         Call WriteWarpChar("YO", UserMap, CInt(x - 1), CInt(y - 1))
         Call RefreshMiniMap
+
+    End If
+
+End Sub
+
+Private Sub cmdLanzar_Click()
+
+    If hlst.List(hlst.ListIndex) <> "(None)" And MainTimer.Check(TimersIndex.HabilitaLanzarHechizo) Then
+        If UserEstado = 1 Then
+
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+            End With
+
+        Else
+            Call WriteCastSpell(hlst.ListIndex + 1)
+            Call WriteWork(eSkill.Magia)
+            UsaMacro = True
+
+        End If
 
     End If
 

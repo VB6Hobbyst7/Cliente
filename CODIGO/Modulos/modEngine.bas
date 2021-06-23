@@ -79,6 +79,12 @@ Public MainFontBigDesc      As IFont
 
 Public fnt2                 As New StdFont
 
+Public FontRender           As D3DXFont
+
+Public FontRenderDesc       As IFont
+
+Public fntRender            As New StdFont
+
 Public pRenderTexture       As Direct3DTexture8
 
 Public pRenderSurface       As Direct3DSurface8
@@ -228,12 +234,17 @@ Public Sub CargarFont()
     fnt2.Size = 72
     fnt2.bold = False
     Set MainFontBigDesc = fnt2
+    
+    fntRender.Name = "Arial"
+    fntRender.Size = 22
+    fntRender.bold = False
+    Set FontRenderDesc = fntRender
     'hFont = GetStockObject(ANSI_FIXED_FONT)
     
     Set MainFont = D3DX.CreateFont(D3DDevice, MainFontDesc.hFont)
     Set MainFontBig = D3DX.CreateFont(D3DDevice, MainFontBigDesc.hFont)
     Set FontCartel = D3DX.CreateFont(D3DDevice, FontCartelDesc.hFont)
-
+Set FontRender = D3DX.CreateFont(D3DDevice, FontRenderDesc.hFont)
 End Sub
 
 Public Sub DrawFont(Texto As String, _

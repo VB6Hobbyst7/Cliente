@@ -31,6 +31,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
+Public invSpells    As New clsGrapchicalInventory
 
 Public NieveOn        As Boolean
 
