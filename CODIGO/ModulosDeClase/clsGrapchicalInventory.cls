@@ -600,17 +600,26 @@ Private Sub DrawInventorySlot(ByVal slot As Integer)
                 InventoryWindow.Print "Equip"
 
             End If
-        End If
+            'Render a box around the selected item
+            If InvSelectedItem = slot Then
+                InventoryWindow.ForeColor = RGB(211, 21, 20)
+                InventoryWindow.FillStyle = 1
+                InventoryWindow.DrawStyle = 3
+
+                InventoryWindow.Line (destRect.Left, destRect.Top)-(destRect.Left + TilePixelWidth - 2, destRect.Top + TilePixelHeight - 2), , B
+
+            End If
+       Else
         'Render a box around the selected item
         If InvSelectedItem = slot Then
-            InventoryWindow.ForeColor = RGB(211, 21, 20)
+            InventoryWindow.ForeColor = RGB(0, 255, 0)
             InventoryWindow.FillStyle = 1
             InventoryWindow.DrawStyle = 3
 
             InventoryWindow.Line (destRect.Left, destRect.Top)-(destRect.Left + TilePixelWidth - 2, destRect.Top + TilePixelHeight - 2), , B
 
         End If
-
+      End If
     End If
 
     Call InventoryWindow.Refresh

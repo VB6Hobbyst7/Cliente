@@ -2119,6 +2119,13 @@ Sub RenderScreen(ByVal TileX As Integer, _
     
     BufferX4 = HalfWindowTileWidth + 16
     BufferY4 = HalfWindowTileHeight + 16
+    
+       'Particulas
+    '*********
+    ParticleOffsetX = (Engine_PixelPosX(TileX - 17) - PixelOffSetX)
+    ParticleOffsetY = (Engine_PixelPosY(TileY - 12) - PixelOffSetY)
+    'Particulas
+    '***************
 
     'Dim CambioHora As Boolean
     'Cargar mapa
@@ -2344,6 +2351,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
     Effect_UpdateAll
 
+
+    'Clear the shift-related variables
+    LastOffsetX = ParticleOffsetX
+    LastOffsetY = ParticleOffsetY
     'Particuas
     '****************
 
@@ -2885,7 +2896,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         'comida
          Call Engine_Render_Rectangle(10, 115, 32, 32, 0, 0, 32, 32, , , 0, 510)
         If UserGLD <> 0 Then
-        Call DrawFont(Format$(UserGLD, "##,##"), 55, 123, D3DColorRGBA(255, 255, 0, 160), True)
+        Call DrawFont(Format$(UserGLD, "##,##"), 70, 123, D3DColorRGBA(255, 255, 0, 160), True)
        Else
        Call DrawFont(Round(UserGLD), 55, 123, D3DColorRGBA(255, 255, 0, 160), True)
         End If

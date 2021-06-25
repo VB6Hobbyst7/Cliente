@@ -338,7 +338,7 @@ Public Sub RefreshAllChars()
     For LoopC = 1 To LastChar
 
         If charlist(LoopC).ACTIVE = 1 Then
-            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
+            MapData(charlist(LoopC).Pos.x, charlist(LoopC).Pos.y).CharIndex = LoopC
 
         End If
 
@@ -535,16 +535,16 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     Select Case Direccion
 
         Case E_Heading.north
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
+            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y - 1)
 
         Case E_Heading.east
-            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
+            LegalOk = MoveToLegalPos(UserPos.x + 1, UserPos.y)
 
         Case E_Heading.south
-            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
+            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y + 1)
 
         Case E_Heading.west
-            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
+            LegalOk = MoveToLegalPos(UserPos.x - 1, UserPos.y)
 
     End Select
     
@@ -573,7 +573,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     Call frmMain.RefreshMiniMap
     
     ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.X, UserPos.Y)
+    Call Audio.MoveListener(UserPos.x, UserPos.y)
     
     CheckZona
 
@@ -649,7 +649,7 @@ Private Sub CheckKeys()
             End If
                         
             ' We haven't moved - Update 3D sounds!
-            Call Audio.MoveListener(UserPos.X, UserPos.Y)
+            Call Audio.MoveListener(UserPos.x, UserPos.y)
         Else
 
             Dim kp As Boolean
@@ -660,11 +660,11 @@ Private Sub CheckKeys()
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
-                Call Audio.MoveListener(UserPos.X, UserPos.Y)
+                Call Audio.MoveListener(UserPos.x, UserPos.y)
 
             End If
             
-            frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
+            frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
             CheckZona
 
         End If
@@ -681,9 +681,9 @@ Sub CargarMap(ByVal Map As Integer)
     'Formato de mapas optimizado para reducir el espacio que ocupan.
     'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
     '**************************************************************
-    Dim Y       As Long
+    Dim y       As Long
 
-    Dim X       As Long
+    Dim x       As Long
 
     Dim tempint As Integer
 
@@ -790,18 +790,18 @@ Sub CargarMap(ByVal Map As Integer)
 
     End If
     
-    For Y = 1 To YMaxMapSize
-        For X = 1 To XMaxMapSize
+    For y = 1 To YMaxMapSize
+        For x = 1 To XMaxMapSize
 
-            If MapData(X, Y).CharIndex > 0 Then
-                Call EraseChar(MapData(X, Y).CharIndex)
+            If MapData(x, y).CharIndex > 0 Then
+                Call EraseChar(MapData(x, y).CharIndex)
 
             End If
 
             'Erase OBJs
-            MapData(X, Y).ObjGrh.GrhIndex = 0
-        Next X
-    Next Y
+            MapData(x, y).ObjGrh.GrhIndex = 0
+        Next x
+    Next y
     
 End Sub
 
@@ -814,7 +814,7 @@ Sub SwitchMap(ByVal Map As Integer)
     CurMap = Map
     
     CargarMap (Map)
-  
+  Call Effect_RedFountain_Begin(Engine_PixelPosX(302), Engine_PixelPosY(859), 1, 1000)
     Call Effect_Snow_Begin(13, 100)
 
 End Sub
@@ -1428,8 +1428,8 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer acá....
-Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
-    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And MapData(X, Y).Graphic(2).GrhIndex = 0
+Function HayAgua(ByVal x As Integer, ByVal y As Integer) As Boolean
+    HayAgua = ((MapData(x, y).Graphic(1).GrhIndex >= 1505 And MapData(x, y).Graphic(1).GrhIndex <= 1520) Or (MapData(x, y).Graphic(1).GrhIndex >= 5665 And MapData(x, y).Graphic(1).GrhIndex <= 5680) Or (MapData(x, y).Graphic(1).GrhIndex >= 13547 And MapData(x, y).Graphic(1).GrhIndex <= 13562)) And MapData(x, y).Graphic(2).GrhIndex = 0
                 
 End Function
 
@@ -1768,7 +1768,7 @@ Public Sub CloseClient()
 
 End Sub
 
-Public Function BuscarZona(ByVal X As Integer, ByVal Y As Integer) As Integer
+Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
 
     Dim I        As Integer
 
@@ -1780,7 +1780,7 @@ Public Function BuscarZona(ByVal X As Integer, ByVal Y As Integer) As Integer
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And X >= Zonas(I).X1 And X <= Zonas(I).X2 And Y >= Zonas(I).Y1 And Y <= Zonas(I).Y2 Then
+        If UserMap = Zonas(I).Mapa And x >= Zonas(I).X1 And x <= Zonas(I).X2 And y >= Zonas(I).Y1 And y <= Zonas(I).Y2 Then
             BuscarZona = I
             Encontro = True
 
@@ -1791,7 +1791,7 @@ Public Function BuscarZona(ByVal X As Integer, ByVal Y As Integer) As Integer
     Next I
 
     If Not Encontro And UserMap > 0 Then
-        I = IIf(HayAgua(X, Y), 24, 23)
+        I = IIf(HayAgua(x, y), 24, 23)
         BuscarZona = I
 
     End If
@@ -1810,7 +1810,7 @@ Public Sub CheckZona()
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And UserPos.X >= Zonas(I).X1 And UserPos.X <= Zonas(I).X2 And UserPos.Y >= Zonas(I).Y1 And UserPos.Y <= Zonas(I).Y2 Then
+        If UserMap = Zonas(I).Mapa And UserPos.x >= Zonas(I).X1 And UserPos.x <= Zonas(I).X2 And UserPos.y >= Zonas(I).Y1 And UserPos.y <= Zonas(I).Y2 Then
             If ZonaActual <> I Then
                 If ZonaActual > 0 Then
                     If Zonas(ZonaActual).Segura <> Zonas(I).Segura Then
@@ -1838,7 +1838,7 @@ Public Sub CheckZona()
     Next I
 
     If Not Encontro And UserMap > 0 Then
-        I = IIf(HayAgua(UserPos.X, UserPos.Y), 24, 23)
+        I = IIf(HayAgua(UserPos.x, UserPos.y), 24, 23)
 
         If ZonaActual <> I Then
             ZonaActual = I
@@ -1891,23 +1891,23 @@ Sub ClosePj()
     Call Audio.StopWave
     frmMain.IsPlaying = PlayLoop.plNone
     
-    Dim X As Integer
+    Dim x As Integer
 
-    Dim Y As Integer
+    Dim y As Integer
 
-    For X = 1 To XMaxMapSize
-        For Y = 1 To YMaxMapSize
-            MapData(X, Y).CharIndex = 0
+    For x = 1 To XMaxMapSize
+        For y = 1 To YMaxMapSize
+            MapData(x, y).CharIndex = 0
 
-            If MapData(X, Y).ObjGrh.GrhIndex = GrhFogata Then
-                MapData(X, Y).Graphic(3).GrhIndex = 0
-                Call Light_Destroy_ToMap(X, Y)
+            If MapData(x, y).ObjGrh.GrhIndex = GrhFogata Then
+                MapData(x, y).Graphic(3).GrhIndex = 0
+                Call Light_Destroy_ToMap(x, y)
 
             End If
 
-            MapData(X, Y).ObjGrh.GrhIndex = 0
-        Next Y
-    Next X
+            MapData(x, y).ObjGrh.GrhIndex = 0
+        Next y
+    Next x
 
     On Local Error Resume Next
     frmMain.SendTxt.Visible = False
@@ -2293,27 +2293,27 @@ Public Sub Engine_Init_ParticleEngine()
  
 End Sub
  
-Function Engine_PixelPosX(ByVal X As Long) As Long
+Function Engine_PixelPosX(ByVal x As Long) As Long
     '*****************************************************************
     'Converts a tile position to a screen position
     'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX]http://www.vbgore.com/GameClient.TileEn ... _PixelPosX[/url]
     '*****************************************************************
  
-    Engine_PixelPosX = (X - 1) * TilePixelWidth
+    Engine_PixelPosX = (x - 1) * TilePixelWidth
  
 End Function
  
-Function Engine_PixelPosY(ByVal Y As Long) As Long
+Function Engine_PixelPosY(ByVal y As Long) As Long
     '*****************************************************************
     'Converts a tile position to a screen position
     'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY]http://www.vbgore.com/GameClient.TileEn ... _PixelPosY[/url]
     '*****************************************************************
  
-    Engine_PixelPosY = (Y - 1) * TilePixelHeight
+    Engine_PixelPosY = (y - 1) * TilePixelHeight
  
 End Function
  
-Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
+Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
  
     '************************************************************
     'Tile Position to Screen Position
@@ -2324,7 +2324,7 @@ Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
  
 End Function
  
-Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
+Public Function Engine_TPtoSPY(ByVal y As Byte) As Long
  
     '************************************************************
     'Tile Position to Screen Position
