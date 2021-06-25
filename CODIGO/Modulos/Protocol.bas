@@ -2203,73 +2203,75 @@ End Sub
 
 Private Sub HandleUserHitNPC()
 
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 05/17/06
-    '
-    '***************************************************
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'
+'***************************************************
     If incomingData.Length < 7 Then
         NotEnoughData = True
         Exit Sub
 
     End If
-    
-    Dim Golpe     As Integer
+
+    Dim Golpe As Integer
 
     Dim CharIndex As Integer
 
-    Dim HitArea   As Byte
+    Dim HitArea As Byte
 
-    Dim NpcType   As Byte
-    
+    Dim NpcType As Byte
+
     'Remove packet ID
     Call incomingData.ReadByte
-    
+
     Golpe = incomingData.ReadInteger()
     CharIndex = incomingData.ReadInteger()
     HitArea = incomingData.ReadByte()
     NpcType = incomingData.ReadByte()
-    
+    Colorsangre = incomingData.ReadByte()
     If HitArea > 0 Then
         Call AddtoRichPicture("La onda expansiva ha alcanzado a la criatura.", 255, 0, 0, False, False, False)
 
     End If
-    
+
     Select Case NpcType
 
-        Case eNPCType.Guardia
-            Call AddtoRichPicture(MENSAJE_PRODUCE_IMPACTO_1 & "al guardia por " & CStr(Golpe) & MENSAJE_2, 255, 0, 0, True, False, False)
+    Case eNPCType.Guardia
+        Call AddtoRichPicture(MENSAJE_PRODUCE_IMPACTO_1 & "al guardia por " & CStr(Golpe) & MENSAJE_2, 255, 0, 0, True, False, False)
 
-        Case eNPCType.Montura
-            Call AddtoRichPicture(MENSAJE_PRODUCE_IMPACTO_1 & "al animal salvaje por " & CStr(Golpe) & MENSAJE_2, 255, 0, 0, True, False, False)
+    Case eNPCType.Montura
+        Call AddtoRichPicture(MENSAJE_PRODUCE_IMPACTO_1 & "al animal salvaje por " & CStr(Golpe) & MENSAJE_2, 255, 0, 0, True, False, False)
 
-        Case Else
-            Call AddtoRichPicture(MENSAJE_PRODUCE_IMPACTO_1 & "a la criatura por " & CStr(Golpe) & MENSAJE_2, 255, 0, 0, True, False, False)
+    Case Else
+        Call AddtoRichPicture(MENSAJE_PRODUCE_IMPACTO_1 & "a la criatura por " & CStr(Golpe) & MENSAJE_2, 255, 0, 0, True, False, False)
 
     End Select
-    
+
     If charlist(CharIndex).Pos.x > 0 Then
-     'sangre
-     Dim CorSanX As Integer
+        'sangre
+        Dim CorSanX As Integer
         Dim CorSanY As Integer
         Select Case charlist(UserCharIndex).Heading
         Case E_Heading.north
             CorSanX = 0
             CorSanY = -30
         Case E_Heading.east
-          CorSanX = 30
+            CorSanX = 30
             CorSanY = 0
         Case E_Heading.south
-             CorSanX = 0
+            CorSanX = 0
             CorSanY = 30
         Case E_Heading.west
             CorSanX = -30
             CorSanY = 0
 
         End Select
-       
+
         Effect_BloodSpray_Begin ParticulaX(charlist(CharIndex).Pos.x, charlist(UserCharIndex).Pos.x) + CorSanX, ParticulaY(charlist(CharIndex).Pos.y, charlist(UserCharIndex).Pos.y) + CorSanY, 7 + Rnd * 10, 200, 1
-'sangre
+
+
+        'sangre
 
         Dim c As New clsToolTip
 

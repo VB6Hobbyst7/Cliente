@@ -79,6 +79,7 @@ Public Const EffectNum_Smoke As Byte = 16
 Public Const EffectNum_BloodSpray As Byte = 17
 Public Const EffectNum_BloodSplatter As Byte = 18
 
+
 Private Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (ByRef Destination As Any, ByVal Length As Long)
  
 Function Effect_EquationTemplate_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 1) As Integer
@@ -1244,6 +1245,7 @@ Dim loopc As Long
             If Effect(loopc).EffectNum = EffectNum_RedFountain Then Effect_RedFountain_Update loopc
             If Effect(loopc).EffectNum = EffectNum_Smoke Then Effect_Smoke_Update loopc
             If Effect(loopc).EffectNum = EffectNum_BloodSpray Then Effect_BloodSpray_Update loopc
+            
             'Render the effect
             If NieveOn = True And ZonaActual <> 1 Then
             Effect_Render loopc, False
@@ -2818,7 +2820,7 @@ Sub Engine_Blood_Create(ByVal x As Single, ByVal y As Single, ByVal Size As Byte
     Loop While BloodList(BloodIndex).Life > 0
 
     'Set the blood's lfie
-    BloodList(BloodIndex).Life = GetTickCount + 7000
+    BloodList(BloodIndex).Life = GetTickCount + 2200
 
     'Get a random size if none is specified
 
@@ -3129,16 +3131,25 @@ Public Sub Engine_Render_Blood()
     Dim J As Long
     Dim Tex As Direct3DTexture8
     Dim srdesc As D3DSURFACE_DESC
+    Dim NumGra As String
 
     'Check if Render Blood option is enabled
 
     'If Config.renderBlood = 0 Then Exit Sub
 
     'Check for any blood
-
+     If Colorsangre <> 0 Then
+     NumGra = "25006"
+     Else
+     NumGra = "25005"
+     End If
+     
+     
     If LastBlood = 0 Then Exit Sub
-
-    Set Tex = D3DX.CreateTextureFromFileEx(D3DDevice, App.path & "\RECURSOS\25005.png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+   
+    Set Tex = D3DX.CreateTextureFromFileEx(D3DDevice, App.path & "\RECURSOS\" & NumGra & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+    
+ 
     Tex.GetLevelDesc 0, srdesc
 
     'Create the vertex list
@@ -3193,6 +3204,9 @@ Public Sub Engine_Render_Blood()
 
 End Sub
 
+
+
+
 Public Function Engine_SPtoTPX(ByVal x As Long) As Long
 '************************************************************
 'Screen Position to Tile Position
@@ -3208,5 +3222,6 @@ Public Function Engine_SPtoTPY(ByVal y As Long) As Long
 '************************************************************
     Engine_SPtoTPY = UserPos.y + y \ TilePixelHeight - 768 \ 2
 End Function
+
 
 

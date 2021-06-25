@@ -31,6 +31,10 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
+Public ScreenXOre As Integer
+Public ScreenYOre As Integer
+Public ParticlesORE As New clsOreParticles
+Public Colorsangre As Byte
 Public invSpells As New clsGrapchicalInventory
 
 Public NieveOn As Boolean
@@ -872,10 +876,10 @@ Private Type tZona
 
     nombre As String
     Mapa As Byte
-    X1 As Integer
-    Y1 As Integer
-    X2 As Integer
-    Y2 As Integer
+    x1 As Integer
+    y1 As Integer
+    x2 As Integer
+    y2 As Integer
     Segura As Byte
     Acoplar As Byte
     Terreno As Byte

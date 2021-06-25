@@ -228,10 +228,10 @@ Sub CargarZonas()
         With Zonas(I)
             .nombre = GetVar(archivoC, "Zona" & CStr(I), "Nombre")
             .Mapa = CByte(GetVar(archivoC, "Zona" & CStr(I), "Mapa"))
-            .X1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X1"))
-            .Y1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y1"))
-            .X2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X2"))
-            .Y2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y2"))
+            .x1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X1"))
+            .y1 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y1"))
+            .x2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "X2"))
+            .y2 = CInt(GetVar(archivoC, "Zona" & CStr(I), "Y2"))
             .Segura = CByte(GetVar(archivoC, "Zona" & CStr(I), "Segura"))
             .Acoplar = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "Acoplar")))
             .Terreno = CByte(Val(GetVar(archivoC, "Zona" & CStr(I), "Terreno")))
@@ -814,7 +814,8 @@ Sub SwitchMap(ByVal Map As Integer)
     CurMap = Map
     
     CargarMap (Map)
-  Call Effect_RedFountain_Begin(Engine_PixelPosX(302), Engine_PixelPosY(859), 1, 1000)
+  'Call Effect_RedFountain_Begin(Engine_PixelPosX(302), Engine_PixelPosY(859), 1, 1000)
+    Call General_Particle_Create(5, 305, 855)
     Call Effect_Snow_Begin(13, 100)
 
 End Sub
@@ -1739,6 +1740,7 @@ Public Sub CloseClient()
     Set MainTimer = Nothing
     Set incomingData = Nothing
     Set outgoingData = Nothing
+    Set ParticlesORE = Nothing
     Set Barco(0) = Nothing
     Set Barco(1) = Nothing
     Set curGeneral = Nothing
@@ -1780,7 +1782,7 @@ Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And x >= Zonas(I).X1 And x <= Zonas(I).X2 And y >= Zonas(I).Y1 And y <= Zonas(I).Y2 Then
+        If UserMap = Zonas(I).Mapa And x >= Zonas(I).x1 And x <= Zonas(I).x2 And y >= Zonas(I).y1 And y <= Zonas(I).y2 Then
             BuscarZona = I
             Encontro = True
 
@@ -1810,7 +1812,7 @@ Public Sub CheckZona()
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And UserPos.x >= Zonas(I).X1 And UserPos.x <= Zonas(I).X2 And UserPos.y >= Zonas(I).Y1 And UserPos.y <= Zonas(I).Y2 Then
+        If UserMap = Zonas(I).Mapa And UserPos.x >= Zonas(I).x1 And UserPos.x <= Zonas(I).x2 And UserPos.y >= Zonas(I).y1 And UserPos.y <= Zonas(I).y2 Then
             If ZonaActual <> I Then
                 If ZonaActual > 0 Then
                     If Zonas(ZonaActual).Segura <> Zonas(I).Segura Then
@@ -1987,14 +1989,14 @@ Sub ClosePj()
 
 End Sub
 
-Public Function General_Distance_Get(ByVal X1 As Integer, _
-                                     ByVal Y1 As Integer, _
-                                     X2 As Integer, _
-                                     Y2 As Integer) As Integer
+Public Function General_Distance_Get(ByVal x1 As Integer, _
+                                     ByVal y1 As Integer, _
+                                     x2 As Integer, _
+                                     y2 As Integer) As Integer
 
     Dim Dist As Long
 
-    Dist = Sqr((X1 - X2) ^ 2 + (Y1 - Y2) ^ 2)
+    Dist = Sqr((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
     General_Distance_Get = Dist
 
 End Function

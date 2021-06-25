@@ -34,10 +34,22 @@ Public Type TLVERTEX
     y As Single
     z As Single
     rhw As Single
-    Color As Long
+    color As Long
     tu As Single
     tv As Single
 
+End Type
+
+Public Type TLVERTEXDos
+
+    x As Single
+    y As Single
+    z As Single
+    rhw As Single
+    color As Long
+    tu As Single
+    tv As Single
+    Specular As Long
 End Type
 
 Public Type TexInfo
@@ -51,8 +63,8 @@ Private Type PosC
 
     x As Long
     y As Long
-    X2 As Long
-    Y2 As Long
+    x2 As Long
+    y2 As Long
 
 End Type
 
@@ -111,11 +123,11 @@ Dim End_Time                As Currency
 
 Dim timer_freq              As Currency
 
-Public Function DDRect(x, y, X1, Y1) As RECT
-    DDRect.Bottom = Y1
+Public Function DDRect(x, y, x1, y1) As RECT
+    DDRect.Bottom = y1
     DDRect.Top = y
     DDRect.Left = x
-    DDRect.Right = X1
+    DDRect.Right = x1
 
 End Function
 
@@ -250,7 +262,7 @@ End Sub
 Public Sub DrawFont(Texto As String, _
                     ByVal x As Long, _
                     ByVal y As Long, _
-                    ByVal Color As Long, _
+                    ByVal color As Long, _
                     Optional Centrado As Boolean = False)
 
     Dim I     As Integer
@@ -265,7 +277,7 @@ Public Sub DrawFont(Texto As String, _
 
         For I = 1 To Len(Texto)
             CharC = Asc(mid$(Texto, I, 1))
-            SumaL = SumaL + Caracteres(CharC).X2 - 2
+            SumaL = SumaL + Caracteres(CharC).x2 - 2
         Next I
 
         SumaL = SumaL / 2
@@ -275,9 +287,9 @@ Public Sub DrawFont(Texto As String, _
     For I = 1 To Len(Texto)
         CharC = Asc(mid$(Texto, I, 1))
         'Call Engine_Render_D3DXSprite(X - SumaL + SumaX, Y, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, Caracteres(CharC).X + 1, Caracteres(CharC).Y + 1, Color, 14324, 0)
-        Call Engine_Render_Rectangle(x - SumaL + SumaX, y, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, Caracteres(CharC).x + 1, Caracteres(CharC).y + 1, Caracteres(CharC).X2 + 2, Caracteres(CharC).Y2 + 2, , , , 14324, Color, Color, Color, Color)
+        Call Engine_Render_Rectangle(x - SumaL + SumaX, y, Caracteres(CharC).x2 + 2, Caracteres(CharC).y2 + 2, Caracteres(CharC).x + 1, Caracteres(CharC).y + 1, Caracteres(CharC).x2 + 2, Caracteres(CharC).y2 + 2, , , , 14324, color, color, color, color)
     
-        SumaX = SumaX + Caracteres(CharC).X2 - 2
+        SumaX = SumaX + Caracteres(CharC).x2 - 2
     Next I
 
 End Sub
@@ -306,19 +318,19 @@ Public Function IniciarDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS) As Boolean
     'End If
     frmMain.SetRender (True)
 
-    RectJuego.X1 = 0
-    RectJuego.Y1 = 0
+    RectJuego.x1 = 0
+    RectJuego.y1 = 0
     #If RenderFull = 0 Then
-        RectJuego.X2 = 1024
-        RectJuego.Y2 = 782
+        RectJuego.x2 = 1024
+        RectJuego.y2 = 782
 
         If Not D3DDevice Is Nothing Then Set D3DDevice = Nothing
         Set D3DDevice = D3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.pRender.hwnd, D3DCREATEFLAGS, D3DWindow)
     #Else
-        RectJuego.X1 = 0
-        RectJuego.Y1 = 0
-        RectJuego.X2 = 800
-        RectJuego.Y2 = 608
+        RectJuego.x1 = 0
+        RectJuego.y1 = 0
+        RectJuego.x2 = 800
+        RectJuego.y2 = 608
 
         If Not D3DDevice Is Nothing Then Set D3DDevice = Nothing
         Set D3DDevice = D3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.pRender.hwnd, D3DCREATEFLAGS, D3DWindow)
@@ -342,7 +354,7 @@ Public Function IniciarDevice(D3DCREATEFLAGS As CONST_D3DCREATEFLAGS) As Boolean
 
         'Create the motion-blur vertex array
         For T = 0 To 3
-            BlurTA(T).Color = D3DColorXRGB(255, 255, 255)
+            BlurTA(T).color = D3DColorXRGB(255, 255, 255)
             BlurTA(T).rhw = 1
         Next T
 
@@ -469,7 +481,7 @@ Public Sub Engine_Render_D3DXTexture(ByVal x As Single, _
                                      ByVal srcX As Single, _
                                      ByVal srcY As Single, _
                                      ByVal Light As Long, _
-                                     ByVal Texture As Direct3DTexture8, _
+                                     ByVal texture As Direct3DTexture8, _
                                      ByVal Degrees As Single)
 
     Dim srcRect As RECT
@@ -510,7 +522,7 @@ Public Sub Engine_Render_D3DXTexture(ByVal x As Single, _
     v3.y = y
 
     'Draw the sprite
-    Sprite.Draw Texture, srcRect, SpriteScaleVector, v2, Degrees, v3, Light
+    Sprite.Draw texture, srcRect, SpriteScaleVector, v2, Degrees, v3, Light
     
 End Sub
 
@@ -585,10 +597,10 @@ Sub Engine_Render_Rectangle(ByVal x As Single, _
     VertexArray(3).rhw = 1
     
     'Apply the colors
-    VertexArray(0).Color = Color0
-    VertexArray(1).Color = Color1
-    VertexArray(2).Color = Color2
-    VertexArray(3).Color = Color3
+    VertexArray(0).color = Color0
+    VertexArray(1).color = Color1
+    VertexArray(2).color = Color2
+    VertexArray(3).color = Color3
 
     If Shadow Then
 
@@ -765,7 +777,7 @@ End Function
 
 Public Sub RenderCuentaRegresiva()
 
-    Dim Color        As Long
+    Dim color        As Long
 
     Static last_tick As Long
     
@@ -778,15 +790,15 @@ Public Sub RenderCuentaRegresiva()
 
     End If
     
-    Color = D3DColorRGBA(255, 255, 255, AlphaCuenta)
+    color = D3DColorRGBA(255, 255, 255, AlphaCuenta)
 
-    Call Engine_Render_D3DXSprite(525, 410, 256, 256, 0, 0, Color, 4000 + CUENTA, 0)
+    Call Engine_Render_D3DXSprite(525, 410, 256, 256, 0, 0, color, 4000 + CUENTA, 0)
 
 End Sub
 
 Public Sub RenderUserDieBlood()
 
-    Dim Color        As Long
+    Dim color        As Long
 
     Static last_tick As Long
     
@@ -799,15 +811,15 @@ Public Sub RenderUserDieBlood()
 
     End If
     
-    Color = D3DColorRGBA(255, 255, 255, AlphaBloodUserDie)
+    color = D3DColorRGBA(255, 255, 255, AlphaBloodUserDie)
     'helios Grafico Muerto 06/06/2021
-    Call Engine_Render_D3DXSprite(500, 330, 1024, 768, 0, 0, Color, 4011, 0)
+    Call Engine_Render_D3DXSprite(500, 330, 1024, 768, 0, 0, color, 4011, 0)
 
 End Sub
 
 Public Sub RenderBlood()
 
-    Dim Color        As Long
+    Dim color        As Long
 
     Static last_tick As Long
     
@@ -820,15 +832,15 @@ Public Sub RenderBlood()
 
     End If
     
-    Color = D3DColorRGBA(255, 255, 255, AlphaBlood)
+    color = D3DColorRGBA(255, 255, 255, AlphaBlood)
 
-    Call Engine_Render_D3DXSprite(250, 100, 1024, 768, 0, 0, Color, 3999, 0)
+    Call Engine_Render_D3DXSprite(250, 100, 1024, 768, 0, 0, color, 3999, 0)
 
 End Sub
 
 Public Sub RenderCeguera()
 
-    Dim Color        As Long
+    Dim color        As Long
 
     Static last_tick As Long
     
@@ -850,16 +862,16 @@ Public Sub RenderCeguera()
 
     End If
     
-    Color = D3DColorRGBA(0, 0, 0, AlphaCeguera)
+    color = D3DColorRGBA(0, 0, 0, AlphaCeguera)
 
-    Call Engine_Render_D3DXSprite(255, 255, 1024, 768, 0, 0, Color, 14706, 0)
+    Call Engine_Render_D3DXSprite(255, 255, 1024, 768, 0, 0, color, 14706, 0)
     'Call Engine_Render_D3DXSprite(400, 325, 1024, 768, 0, 0, color, 4011, 0)
 
 End Sub
 
 Public Sub RenderTextKills()
 
-    Dim Color        As Long
+    Dim color        As Long
 
     Static last_tick As Long
     
@@ -872,9 +884,9 @@ Public Sub RenderTextKills()
 
     End If
     
-    Color = D3DColorRGBA(255, 255, 255, AlphaTextKills)
+    color = D3DColorRGBA(255, 255, 255, AlphaTextKills)
     
-    Call Engine_Render_D3DXSprite(525, 450, 257, 58, 0, 0, Color, 4130 + TextKillsType, 0)
+    Call Engine_Render_D3DXSprite(525, 450, 257, 58, 0, 0, color, 4130 + TextKillsType, 0)
 
 End Sub
 
@@ -905,7 +917,7 @@ Public Sub RenderRelampago()
     'Dim color As Long
     Static last_tick As Long
 
-    Dim Color        As Long
+    Dim color        As Long
     
     If AlphaRelampago > 0 Then
         If (GetTickCount And &H7FFFFFFF) - last_tick >= 18 Then
@@ -931,7 +943,7 @@ End Sub
 
 Public Sub RenderSaliendo()
 
-    Dim Color        As Long
+    Dim color        As Long
 
     Static last_tick As Long
     
@@ -947,9 +959,9 @@ Public Sub RenderSaliendo()
 
     End If
     
-    Color = D3DColorRGBA(0, 0, 0, AlphaSalir)
+    color = D3DColorRGBA(0, 0, 0, AlphaSalir)
 
-    Call Engine_Render_D3DXSprite(255, 255, 1024, 768, 0, 0, Color, 14706, 0)
+    Call Engine_Render_D3DXSprite(255, 255, 1024, 768, 0, 0, color, 14706, 0)
     
 End Sub
 
