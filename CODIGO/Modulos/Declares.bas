@@ -31,26 +31,26 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
-Public invSpells    As New clsGrapchicalInventory
+Public invSpells As New clsGrapchicalInventory
 
-Public NieveOn        As Boolean
+Public NieveOn As Boolean
 
-Public SimboloY       As Integer
+Public SimboloY As Integer
 
-Public SimboloOn      As Boolean
+Public SimboloOn As Boolean
 
-Public COLOR_AZUL     As Long
+Public COLOR_AZUL As Long
 
 Public Movement_Speed As Single
 
 'aura
-Public OpcionesPath   As String
+Public OpcionesPath As String
 
-Public ActivarAuras   As String
+Public ActivarAuras As String
 
-Public RotarActivado  As String
+Public RotarActivado As String
 
-Public Rotacion       As Single
+Public Rotacion As Single
 
 'aura
 Public Enum eMessages
@@ -153,78 +153,78 @@ Public Enum eEffects
 
 End Enum
 
-Public sintextos                                  As Boolean 'helios consola
+Public sintextos As Boolean            'helios consola
 
-Public MostrarMenuInventario                      As Boolean 'helios 2/06/2021
+Public MostrarMenuInventario As Boolean            'helios 2/06/2021
 
-Public MmenuBarras                                As Boolean 'helios 2/06/2021
+Public MmenuBarras As Boolean            'helios 2/06/2021
 
-Public ScreenShooterCapturePending                As Boolean
+Public ScreenShooterCapturePending As Boolean
 
-Public FragShooterEsperandoLevel                  As Boolean
+Public FragShooterEsperandoLevel As Boolean
 
-Public AngMareoMuerto                             As Single
+Public AngMareoMuerto As Single
 
-Public RadioMareoMuerto                           As Single
+Public RadioMareoMuerto As Single
 
-Public TiempoHome                                 As Integer
+Public TiempoHome As Integer
 
-Public GoingHome                                  As Byte
+Public GoingHome As Byte
 
 'Objetos públicos
-Public DialogosClanes                             As New clsGuildDlg
+Public DialogosClanes As New clsGuildDlg
 
-Public Dialogos                                   As New clsDialogs
+Public Dialogos As New clsDialogs
 
-Public Audio                                      As New clsAudio
+Public Audio As New clsAudio
 
-Public vPasos                                     As New clsPasos
+Public vPasos As New clsPasos
 
-Public Inventario                                 As New clsGrapchicalInventory
+Public Inventario As New clsGrapchicalInventory
 
-Public InvBanco(1)                                As New clsGrapchicalInventory
+Public InvBanco(1) As New clsGrapchicalInventory
 
 'Inventarios de comercio con usuario
-Public InvComUsu                                  As New clsGrapchicalInventory ' Inventario del usuario visible en el comercio
+Public InvComUsu As New clsGrapchicalInventory                               ' Inventario del usuario visible en el comercio
 
-Public InvOroComUsu(2)                            As New clsGrapchicalInventory ' Inventarios de oro (ambos usuarios)
+Public InvOroComUsu(2) As New clsGrapchicalInventory    ' Inventarios de oro (ambos usuarios)
 
-Public InvOfferComUsu(1)                          As New clsGrapchicalInventory ' Inventarios de ofertas (ambos usuarios)
+Public InvOfferComUsu(1) As New clsGrapchicalInventory    ' Inventarios de ofertas (ambos usuarios)
 
-Public InvComNpc                                  As New clsGrapchicalInventory
+Public InvComNpc As New clsGrapchicalInventory
 
 'Inventarios de herreria
-Public Const MAX_LIST_ITEMS                       As Byte = 4
+Public Const MAX_LIST_ITEMS As Byte = 4
 
-Public InvLingosHerreria(1 To MAX_LIST_ITEMS)     As New clsGrapchicalInventory
+Public InvLingosHerreria(1 To MAX_LIST_ITEMS) As New clsGrapchicalInventory
 
 Public InvMaderasCarpinteria(1 To MAX_LIST_ITEMS) As New clsGrapchicalInventory
 
-Public SurfaceDB                                  As clsSurfaceManager   'No va new porque es una interfaz, el new se pone al decidir que clase de objeto es
+Public SurfaceDB As clsSurfaceManager                        'No va new porque es una interfaz, el new se pone al decidir que clase de objeto es
 
-Public CustomKeys                                 As New clsCustomKeys
+Public CustomKeys As New clsCustomKeys
 
-Public CustomMessages                             As New clsCustomMessages
+Public CustomMessages As New clsCustomMessages
 
-Public incomingData                               As New clsByteQueue
+Public incomingData As New clsByteQueue
 
-Public outgoingData                               As New clsByteQueue
+Public outgoingData As New clsByteQueue
 
-Public DummyCode()                                As Byte
+Public DummyCode() As Byte
 
-Public iServer                                    As Integer
+Public iServer As Integer
 
-Public iCliente                                   As Integer
+Public iCliente As Integer
 
-Public ContarClip                                 As Long 'Helios 28/06/2021
+Public ContarClip As Long         'Helios 28/06/2021
 
-Public PulsarEsconder                             As Long 'Helios 07/06/2021
+Public PulsarEsconder As Long         'Helios 07/06/2021
 
-Public CTextos                                    As Long 'helios 2/06/2021
+Public CTextos As Long         'helios 2/06/2021
 
 ''
 'The main timer of the game.
-Public MainTimer                                  As New clsTimer
+Public MainTimer As New clsTimer
 
 #If SeguridadAlkon Then
 
@@ -232,39 +232,39 @@ Public MainTimer                                  As New clsTimer
 #End If
 
 'Sonidos
-Public Const SND_CLICKNEW       As Integer = 210
+Public Const SND_CLICKNEW As Integer = 210
 
-Public Const SND_CLICKOFF       As Integer = 212
+Public Const SND_CLICKOFF As Integer = 212
 
-Public Const SND_MOUSEOVER      As Integer = 211
+Public Const SND_MOUSEOVER As Integer = 211
 
-Public Const SND_CLICK          As Integer = 221
+Public Const SND_CLICK As Integer = 221
 
-Public Const SND_PASOS1         As Integer = 23
+Public Const SND_PASOS1 As Integer = 23
 
-Public Const SND_PASOS2         As Integer = 24
+Public Const SND_PASOS2 As Integer = 24
 
-Public Const SND_NAVEGANDO      As Integer = 50
+Public Const SND_NAVEGANDO As Integer = 50
 
-Public Const SND_OVER           As Integer = 222
+Public Const SND_OVER As Integer = 222
 
-Public Const SND_CADENAS        As Integer = 220
+Public Const SND_CADENAS As Integer = 220
 
-Public Const SND_LLUVIAINEND    As Integer = 224
+Public Const SND_LLUVIAINEND As Integer = 224
 
-Public Const SND_LLUVIAOUTEND   As Integer = 225
+Public Const SND_LLUVIAOUTEND As Integer = 225
 
-Public Const SND_LLUVIAIN       As Integer = 226
+Public Const SND_LLUVIAIN As Integer = 226
 
-Public Const SND_LLUVIAOUT      As Integer = 227
+Public Const SND_LLUVIAOUT As Integer = 227
 
-Public Const SND_LLUVIAINSTART  As Integer = 228
+Public Const SND_LLUVIAINSTART As Integer = 228
 
 Public Const SND_LLUVIAOUTSTART As Integer = 229
 
-Public Const SND_FUEGO          As Integer = 230
+Public Const SND_FUEGO As Integer = 230
 
-Public Const SND_SNAPSHOT       As Integer = 231
+Public Const SND_SNAPSHOT As Integer = 231
 
 Public Const SND_APUÑALAR As Integer = 173
 
@@ -281,67 +281,67 @@ End Enum
 
 ' Constantes de intervalo
 'INTERVALOS DE COMBATE
-Public Const INT_PUEDE_RPU_MOVER               As Integer = 25 'Puede moverse despues de pedir RPU o Colisionar
+Public Const INT_PUEDE_RPU_MOVER As Integer = 25    'Puede moverse despues de pedir RPU o Colisionar
 
-Public Const INT_PUEDE_MOVER                   As Integer = 38 'Puede caminar
+Public Const INT_PUEDE_MOVER As Integer = 38                 'Puede caminar
 
-Public Const INT_PUEDE_MOVER_EQUITANDO         As Integer = 36 'Puede equitar
+Public Const INT_PUEDE_MOVER_EQUITANDO As Integer = 36    'Puede equitar
 
-Public Const INT_RPU_MOVE                      As Integer = 125 'Puede moverse luego de RPU
+Public Const INT_RPU_MOVE As Integer = 125                  'Puede moverse luego de RPU
 
-Public Const INT_PUEDE_GOLPE                   As Integer = 500 'Puede golpear con arma o puño
+Public Const INT_PUEDE_GOLPE As Integer = 500                  'Puede golpear con arma o puño
 
-Public Const INT_HABILITA_ICONO_LANZAR_HECHIZO As Integer = 450 ' Te habilita el icono para lanzar hechizo
+Public Const INT_HABILITA_ICONO_LANZAR_HECHIZO As Integer = 450    ' Te habilita el icono para lanzar hechizo
 
-Public Const INT_LANZAR_HECHIZO                As Integer = 1000 'Puede lanzar un hechizo
+Public Const INT_LANZAR_HECHIZO As Integer = 1000    'Puede lanzar un hechizo
 
-Public Const INT_GOLPE_MAGIA                   As Integer = 800 'Puede lanzar un hechizo luego de golpear con arma o puño
+Public Const INT_GOLPE_MAGIA As Integer = 800                  'Puede lanzar un hechizo luego de golpear con arma o puño
 
-Public Const INT_MAGIA_GOLPE                   As Integer = 600 'Puede golpear luego de haber tirado un hechizo
+Public Const INT_MAGIA_GOLPE As Integer = 600                  'Puede golpear luego de haber tirado un hechizo
 
-Public Const INT_FLECHAS                       As Integer = 1180 'Puede lanzar proyectil
+Public Const INT_FLECHAS As Integer = 1180                   'Puede lanzar proyectil
 
-Public Const INT_PUEDE_USAR                    As Integer = 450 'Puede usar item
+Public Const INT_PUEDE_USAR As Integer = 450                  'Puede usar item
 
-Public Const INT_PUEDE_USAR_DOBLECLICK         As Integer = 125 'Puede usar item haciendo doble click constante
+Public Const INT_PUEDE_USAR_DOBLECLICK As Integer = 125    'Puede usar item haciendo doble click constante
 
-Public Const INT_GOLPE_USAR                    As Integer = 700 'Puede usar un item luego de haber golpeado con arma o puño
+Public Const INT_GOLPE_USAR As Integer = 700                  'Puede usar un item luego de haber golpeado con arma o puño
 
 'INTERVALOS
-Public Const INT_WORK                          As Integer = 700 'Puede trabajar
+Public Const INT_WORK As Integer = 700                  'Puede trabajar
 
-Public Const INT_SENTRPU                       As Integer = 800 'Puede reniciar su posición "L"
+Public Const INT_SENTRPU As Integer = 800                  'Puede reniciar su posición "L"
 
-Public Const INT_HIDE                          As Integer = 800 'Puede ocultarse
+Public Const INT_HIDE As Integer = 800                  'Puede ocultarse
 
-Public Const INT_BUY                           As Integer = 150 'Puede comprar un item en el comercio de NPCS
+Public Const INT_BUY As Integer = 150                  'Puede comprar un item en el comercio de NPCS
 
-Public Const INTERVALO_INVI                    As Byte = 120 'Intervalo de invisibilidad
+Public Const INTERVALO_INVI As Byte = 120               'Intervalo de invisibilidad
 
-Public Const INT_MONTAR                        As Integer = 600 'Puede montar/desmontar una criatura
+Public Const INT_MONTAR As Integer = 600                  'Puede montar/desmontar una criatura
 
-Public Const INT_ANCLAR                        As Integer = 600 'Puede anclar/desanclar embarcación (nadar)
+Public Const INT_ANCLAR As Integer = 600                  'Puede anclar/desanclar embarcación (nadar)
 
-Public Const INT_MACRO_HECHIS                  As Integer = 2788 'INT macro de hechizos
+Public Const INT_MACRO_HECHIS As Integer = 2788    'INT macro de hechizos
 
-Public Const INT_MACRO_TRABAJO                 As Integer = 900 'INT macro de trabajo
+Public Const INT_MACRO_TRABAJO As Integer = 900    'INT macro de trabajo
 
-Public Const INT_TELEP                         As Integer = 350 'Puede teletransportarse con shift + click
+Public Const INT_TELEP As Integer = 350                  'Puede teletransportarse con shift + click
 
-Public MacroBltIndex                           As Integer
+Public MacroBltIndex As Integer
 
-Public Const CASPER_HEAD                       As Integer = 500
+Public Const CASPER_HEAD As Integer = 500
 
-Public Const CASPER_HEAD_CRIMI                 As Integer = 501
+Public Const CASPER_HEAD_CRIMI As Integer = 501
 
-Public Const FRAGATA_FANTASMAL                 As Integer = 87
+Public Const FRAGATA_FANTASMAL As Integer = 87
 
-Public Const NUMATRIBUTES                      As Byte = 5
+Public Const NUMATRIBUTES As Byte = 5
 
 'Musica
-Public Const MIdi_Inicio                       As Byte = 6
+Public Const MIdi_Inicio As Byte = 6
 
-Public RawServersList                          As String
+Public RawServersList As String
 
 Public Type tColor
 
@@ -362,38 +362,38 @@ Public Type tServerInfo
 
 End Type
 
-Public ServersLst()       As tServerInfo
+Public ServersLst() As tServerInfo
 
-Public ServersRecibidos   As Boolean
+Public ServersRecibidos As Boolean
 
-Public CurServer          As Integer
+Public CurServer As Integer
 
-Public CreandoClan        As Boolean
+Public CreandoClan As Boolean
 
-Public ClanName           As String
+Public ClanName As String
 
-Public Site               As String
+Public Site As String
 
 'USER FLAGS
-Public UserCiego          As Boolean
+Public UserCiego As Boolean
 
-Public UserEstupido       As Boolean
+Public UserEstupido As Boolean
 
-Public UserEquitando      As Boolean
+Public UserEquitando As Boolean
 
-Public UserCongelado      As Boolean
+Public UserCongelado As Boolean
 
-Public UserChiquito       As Boolean
+Public UserChiquito As Boolean
 
-Public UserNadando        As Boolean
+Public UserNadando As Boolean
 
-Public NoRes              As Boolean 'no cambiar la resolucion
+Public NoRes As Boolean            'no cambiar la resolucion
 
-Public GraphicsFile       As String 'Que graficos.ind usamos
+Public GraphicsFile As String    'Que graficos.ind usamos
 
-Public RainBufferIndex    As Long
+Public RainBufferIndex As Long
 
-Public FogataBufferIndex  As Long
+Public FogataBufferIndex As Long
 
 Public TerrenoBufferIndex As Long
 
@@ -418,31 +418,31 @@ Public Const PrimerBodyBarco = 84
 
 Public Const UltimoBodyBarco = 87
 
-Public NumEscudosAnims                                   As Integer
+Public NumEscudosAnims As Integer
 
-Public ArmasHerrero()                                    As tItemsConstruibles
+Public ArmasHerrero() As tItemsConstruibles
 
-Public ArmadurasHerrero()                                As tItemsConstruibles
+Public ArmadurasHerrero() As tItemsConstruibles
 
-Public ObjCarpintero()                                   As tItemsConstruibles
+Public ObjCarpintero() As tItemsConstruibles
 
-Public CarpinteroMejorar()                               As tItemsConstruibles
+Public CarpinteroMejorar() As tItemsConstruibles
 
-Public HerreroMejorar()                                  As tItemsConstruibles
+Public HerreroMejorar() As tItemsConstruibles
 
-Public UsaMacro                                          As Boolean
+Public UsaMacro As Boolean
 
-Public CnTd                                              As Byte
+Public CnTd As Byte
 
 '[KEVIN]
-Public Const MAX_BANCOINVENTORY_SLOTS                    As Byte = 40
+Public Const MAX_BANCOINVENTORY_SLOTS As Byte = 40
 
 Public UserBancoInventory(1 To MAX_BANCOINVENTORY_SLOTS) As Inventory
 '[/KEVIN]
 
-Public Tips()                                            As String * 255
+Public Tips() As String * 255
 
-Public Const LoopAdEternum                               As Integer = 999
+Public Const LoopAdEternum As Integer = 999
 
 'Direcciones
 Enum E_Heading
@@ -455,27 +455,27 @@ Enum E_Heading
 End Enum
 
 'Objetos
-Public Const MAX_INVENTORY_OBJS         As Integer = 10000
+Public Const MAX_INVENTORY_OBJS As Integer = 10000
 
-Public Const MAX_INVENTORY_SLOTS        As Byte = 20
+Public Const MAX_INVENTORY_SLOTS As Byte = 20
 
 Public Const MAX_NORMAL_INVENTORY_SLOTS As Byte = 20
 
-Public Const MAX_NPC_INVENTORY_SLOTS    As Byte = 50
+Public Const MAX_NPC_INVENTORY_SLOTS As Byte = 50
 
-Public Const MAXHECHI                   As Byte = 35
+Public Const MAXHECHI As Byte = 35
 
-Public Const MAXSKILLPOINTS             As Byte = 100
+Public Const MAXSKILLPOINTS As Byte = 100
 
-Public Const INV_OFFER_SLOTS            As Byte = 20
+Public Const INV_OFFER_SLOTS As Byte = 20
 
-Public Const INV_GOLD_SLOTS             As Byte = 1
+Public Const INV_GOLD_SLOTS As Byte = 1
 
-Public Const FLAGORO                    As Integer = MAX_INVENTORY_SLOTS + 1
+Public Const FLAGORO As Integer = MAX_INVENTORY_SLOTS + 1
 
-Public Const GOLD_OFFER_SLOT            As Integer = INV_OFFER_SLOTS + 1
+Public Const GOLD_OFFER_SLOT As Integer = INV_OFFER_SLOTS + 1
 
-Public Const Fogata                     As Integer = 1521
+Public Const Fogata As Integer = 1521
 
 Public Enum eClass
 
@@ -617,27 +617,27 @@ Public Enum ePicRenderType
 End Enum
 
 'Alpha Efectos
-Public CUENTA            As Integer
+Public CUENTA As Integer
 
-Public AlphaCuenta       As Integer
+Public AlphaCuenta As Integer
 
-Public AlphaBlood        As Integer
+Public AlphaBlood As Integer
 
 Public AlphaBloodUserDie As Integer
 
-Public AlphaCeguera      As Single
+Public AlphaCeguera As Single
 
-Public AlphaSalir        As Integer
+Public AlphaSalir As Integer
 
-Public OrigHora          As Byte
+Public OrigHora As Byte
 
-Public AlphaRelampago    As Integer
+Public AlphaRelampago As Integer
 
-Public HayRelampago      As Boolean
+Public HayRelampago As Boolean
 
-Public TextKillsType     As Byte
+Public TextKillsType As Byte
 
-Public AlphaTextKills    As Integer
+Public AlphaTextKills As Integer
 
 '''''''''''''''''''' CURSOR '''''''''''''''''''''''
 Public Enum eCursor
@@ -649,17 +649,17 @@ Public Enum eCursor
 
 End Enum
 
-Public curGeneral          As New clsAniCursor
+Public curGeneral As New clsAniCursor
 
-Public curGeneralCrimi     As New clsAniCursor
+Public curGeneralCrimi As New clsAniCursor
 
-Public curGeneralCiuda     As New clsAniCursor
+Public curGeneralCiuda As New clsAniCursor
 
-Public curProyectil        As New clsAniCursor
+Public curProyectil As New clsAniCursor
 
 Public curProyectilPequena As New clsAniCursor
 
-Public Const FundirMetal   As Integer = 88
+Public Const FundirMetal As Integer = 88
 
 '
 ' Mensajes
@@ -686,102 +686,102 @@ Public Enum eNPCType
 
 End Enum
 
-Public Const MENSAJE_CRIATURA_FALLA_GOLPE              As String = " fallo el golpe!!!"
+Public Const MENSAJE_CRIATURA_FALLA_GOLPE As String = " fallo el golpe!!!"
 
-Public Const MENSAJE_CRIATURA_MATADO                   As String = " te ha matado!!!"
+Public Const MENSAJE_CRIATURA_MATADO As String = " te ha matado!!!"
 
-Public Const MENSAJE_RECHAZO_ATAQUE_ESCUDO             As String = "¡Has rechazado el ataque con el escudo!"
+Public Const MENSAJE_RECHAZO_ATAQUE_ESCUDO As String = "¡Has rechazado el ataque con el escudo!"
 
-Public Const MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO     As String = "¡El usuario rechazo el ataque con su escudo!"
+Public Const MENSAJE_USUARIO_RECHAZO_ATAQUE_ESCUDO As String = "¡El usuario rechazo el ataque con su escudo!"
 
-Public Const MENSAJE_FALLADO_GOLPE                     As String = "¡Has fallado el golpe!"
+Public Const MENSAJE_FALLADO_GOLPE As String = "¡Has fallado el golpe!"
 
-Public Const MENSAJE_SEGURO_ACTIVADO                   As String = ">>SEGURO DE COMBATE ACTIVADO<<"
+Public Const MENSAJE_SEGURO_ACTIVADO As String = ">>SEGURO DE COMBATE ACTIVADO<<"
 
-Public Const MENSAJE_SEGURO_DESACTIVADO                As String = ">>SEGURO DE COMBATE DESACTIVADO<<"
+Public Const MENSAJE_SEGURO_DESACTIVADO As String = ">>SEGURO DE COMBATE DESACTIVADO<<"
 
-Public Const MENSAJE_PIERDE_NOBLEZA                    As String = "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades."
+Public Const MENSAJE_PIERDE_NOBLEZA As String = "¡¡Has perdido puntaje de nobleza y ganado puntaje de criminalidad!! Si sigues ayudando a criminales te convertirás en uno de ellos y serás perseguido por las tropas de las ciudades."
 
-Public Const MENSAJE_USAR_MEDITANDO                    As String = "¡Estás meditando! Debes dejar de meditar para usar objetos."
+Public Const MENSAJE_USAR_MEDITANDO As String = "¡Estás meditando! Debes dejar de meditar para usar objetos."
 
-Public Const MENSAJE_SEGURO_RESU_ON                    As String = ">>SEGURO DE RESURRECCION ACTIVADO<<"
+Public Const MENSAJE_SEGURO_RESU_ON As String = ">>SEGURO DE RESURRECCION ACTIVADO<<"
 
-Public Const MENSAJE_SEGURO_RESU_OFF                   As String = ">>SEGURO DE RESURRECCION DESACTIVADO<<"
+Public Const MENSAJE_SEGURO_RESU_OFF As String = ">>SEGURO DE RESURRECCION DESACTIVADO<<"
 
-Public Const MENSAJE_GOLPE_CABEZA                      As String = " te ha pegado en la cabeza por "
+Public Const MENSAJE_GOLPE_CABEZA As String = " te ha pegado en la cabeza por "
 
-Public Const MENSAJE_GOLPE_BRAZO_IZQ                   As String = " te ha pegado el brazo izquierdo por "
+Public Const MENSAJE_GOLPE_BRAZO_IZQ As String = " te ha pegado el brazo izquierdo por "
 
-Public Const MENSAJE_GOLPE_BRAZO_DER                   As String = " te ha pegado el brazo derecho por "
+Public Const MENSAJE_GOLPE_BRAZO_DER As String = " te ha pegado el brazo derecho por "
 
-Public Const MENSAJE_GOLPE_PIERNA_IZQ                  As String = " te ha pegado la pierna izquierda por "
+Public Const MENSAJE_GOLPE_PIERNA_IZQ As String = " te ha pegado la pierna izquierda por "
 
-Public Const MENSAJE_GOLPE_PIERNA_DER                  As String = " te ha pegado la pierna derecha por "
+Public Const MENSAJE_GOLPE_PIERNA_DER As String = " te ha pegado la pierna derecha por "
 
-Public Const MENSAJE_GOLPE_TORSO                       As String = " te ha pegado en el torso por "
+Public Const MENSAJE_GOLPE_TORSO As String = " te ha pegado en el torso por "
 
 ' MENSAJE_[12]: Aparecen antes y despues del valor de los mensajes anteriores (MENSAJE_GOLPE_*)
-Public Const MENSAJE_1                                 As String = "¡¡"
+Public Const MENSAJE_1 As String = "¡¡"
 
-Public Const MENSAJE_2                                 As String = "!!"
+Public Const MENSAJE_2 As String = "!!"
 
-Public Const MENSAJE_GOLPE_CRIATURA_1                  As String = "Le has pegado "
+Public Const MENSAJE_GOLPE_CRIATURA_1 As String = "Le has pegado "
 
-Public Const MENSAJE_ATAQUE_FALLO                      As String = " te ataco y fallo!!"
+Public Const MENSAJE_ATAQUE_FALLO As String = " te ataco y fallo!!"
 
-Public Const MENSAJE_RECIVE_IMPACTO_CABEZA             As String = " te ha pegado en la cabeza por "
+Public Const MENSAJE_RECIVE_IMPACTO_CABEZA As String = " te ha pegado en la cabeza por "
 
-Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ          As String = " te ha pegado en el brazo izquierdo por "
+Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_IZQ As String = " te ha pegado en el brazo izquierdo por "
 
-Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_DER          As String = " te ha pegado en el brazo derecho por "
+Public Const MENSAJE_RECIVE_IMPACTO_BRAZO_DER As String = " te ha pegado en el brazo derecho por "
 
-Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ         As String = " te ha pegado en la pierna izquierda por "
+Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_IZQ As String = " te ha pegado en la pierna izquierda por "
 
-Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_DER         As String = " te ha pegado en la pierna derecha por "
+Public Const MENSAJE_RECIVE_IMPACTO_PIERNA_DER As String = " te ha pegado en la pierna derecha por "
 
-Public Const MENSAJE_RECIVE_IMPACTO_TORSO              As String = " te ha pegado en el torso por "
+Public Const MENSAJE_RECIVE_IMPACTO_TORSO As String = " te ha pegado en el torso por "
 
-Public Const MENSAJE_PRODUCE_IMPACTO_HECHIZO           As String = "Le has causado "
+Public Const MENSAJE_PRODUCE_IMPACTO_HECHIZO As String = "Le has causado "
 
-Public Const MENSAJE_PRODUCE_IMPACTO_1                 As String = "Le has pegado "
+Public Const MENSAJE_PRODUCE_IMPACTO_1 As String = "Le has pegado "
 
-Public Const MENSAJE_PRODUCE_IMPACTO_CABEZA            As String = " en la cabeza por "
+Public Const MENSAJE_PRODUCE_IMPACTO_CABEZA As String = " en la cabeza por "
 
-Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ         As String = " en el brazo izquierdo por "
+Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_IZQ As String = " en el brazo izquierdo por "
 
-Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_DER         As String = " en el brazo derecho por "
+Public Const MENSAJE_PRODUCE_IMPACTO_BRAZO_DER As String = " en el brazo derecho por "
 
-Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ        As String = " en la pierna izquierda por "
+Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_IZQ As String = " en la pierna izquierda por "
 
-Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_DER        As String = " en la pierna derecha por "
+Public Const MENSAJE_PRODUCE_IMPACTO_PIERNA_DER As String = " en la pierna derecha por "
 
-Public Const MENSAJE_PRODUCE_IMPACTO_TORSO             As String = " en el torso por "
+Public Const MENSAJE_PRODUCE_IMPACTO_TORSO As String = " en el torso por "
 
-Public Const MENSAJE_TRABAJO_MAGIA                     As String = "Haz click sobre el objetivo..."
+Public Const MENSAJE_TRABAJO_MAGIA As String = "Haz click sobre el objetivo..."
 
-Public Const MENSAJE_TRABAJO_PESCA                     As String = "Haz click sobre el sitio donde quieres pescar..."
+Public Const MENSAJE_TRABAJO_PESCA As String = "Haz click sobre el sitio donde quieres pescar..."
 
-Public Const MENSAJE_TRABAJO_ROBAR                     As String = "Haz click sobre la víctima..."
+Public Const MENSAJE_TRABAJO_ROBAR As String = "Haz click sobre la víctima..."
 
-Public Const MENSAJE_TRABAJO_TALAR                     As String = "Haz click sobre el árbol..."
+Public Const MENSAJE_TRABAJO_TALAR As String = "Haz click sobre el árbol..."
 
-Public Const MENSAJE_TRABAJO_MINERIA                   As String = "Haz click sobre el yacimiento..."
+Public Const MENSAJE_TRABAJO_MINERIA As String = "Haz click sobre el yacimiento..."
 
-Public Const MENSAJE_TRABAJO_FUNDIRMETAL               As String = "Haz click sobre la fragua..."
+Public Const MENSAJE_TRABAJO_FUNDIRMETAL As String = "Haz click sobre la fragua..."
 
-Public Const MENSAJE_TRABAJO_PROYECTILES               As String = "Haz click sobre la victima..."
+Public Const MENSAJE_TRABAJO_PROYECTILES As String = "Haz click sobre la victima..."
 
-Public Const MENSAJE_ENTRAR_PARTY_1                    As String = "Si deseas entrar en una party con "
+Public Const MENSAJE_ENTRAR_PARTY_1 As String = "Si deseas entrar en una party con "
 
-Public Const MENSAJE_ENTRAR_PARTY_2                    As String = ", escribe /entrarparty"
+Public Const MENSAJE_ENTRAR_PARTY_2 As String = ", escribe /entrarparty"
 
-Public Const MENSAJE_NENE                              As String = "Cantidad de NPCs: "
+Public Const MENSAJE_NENE As String = "Cantidad de NPCs: "
 
-Public Const MENSAJE_FRAGSHOOTER_TE_HA_MATADO          As String = "te ha matado!"
+Public Const MENSAJE_FRAGSHOOTER_TE_HA_MATADO As String = "te ha matado!"
 
-Public Const MENSAJE_FRAGSHOOTER_HAS_MATADO            As String = "Has matado a"
+Public Const MENSAJE_FRAGSHOOTER_HAS_MATADO As String = "Has matado a"
 
-Public Const MENSAJE_FRAGSHOOTER_HAS_GANADO            As String = "Has ganado "
+Public Const MENSAJE_FRAGSHOOTER_HAS_GANADO As String = "Has ganado "
 
 Public Const MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA As String = "puntos de experiencia."
 
@@ -828,7 +828,7 @@ Type NpCinV
 
 End Type
 
-Type tReputacion 'Fama del usuario
+Type tReputacion    'Fama del usuario
 
     NobleRep As Long
     BurguesRep As Long
@@ -836,7 +836,7 @@ Type tReputacion 'Fama del usuario
     LadronesRep As Long
     BandidoRep As Long
     AsesinoRep As Long
-    
+
     Promedio As Long
 
 End Type
@@ -886,175 +886,175 @@ Private Type tZona
     Musica(1 To 5) As Byte
     CantMusica As Byte
     CantSonidos As Byte
-    
+
     TieneNpcInvocacion As Byte
     NpcInvocadoIndex As Integer
     Sonido(1 To 5) As Byte
 
 End Type
 
-Public Zonas()                                    As tZona
+Public Zonas() As tZona
 
-Public NumZonas                                   As Integer
+Public NumZonas As Integer
 
-Public ZonaActual                                 As Integer
+Public ZonaActual As Integer
 
-Public CambioZona                                 As Single
+Public CambioZona As Single
 
-Public CambioSegura                               As Boolean
+Public CambioSegura As Boolean
 
-Public zTick                                      As Long
+Public zTick As Long
 
-Public zTick2                                     As Long
+Public zTick2 As Long
 
-Public PergaminoTick                              As Long
+Public PergaminoTick As Long
 
-Public PergaminoDireccion                         As Byte
+Public PergaminoDireccion As Byte
 
-Public TiempoAbierto                              As Date
+Public TiempoAbierto As Date
 
-Public LastZona                                   As String
+Public LastZona As String
 
-Public Nombres                                    As Boolean
+Public Nombres As Boolean
 
-Public UserSeguroResu                             As Boolean
+Public UserSeguroResu As Boolean
 
-Public UserSeguro                                 As Boolean
+Public UserSeguro As Boolean
 
 'User status vars
-Global OtroInventario(1 To MAX_INVENTORY_SLOTS)   As Inventory
+Global OtroInventario(1 To MAX_INVENTORY_SLOTS) As Inventory
 
-Public UserHechizos(1 To MAXHECHI)                As Integer
+Public UserHechizos(1 To MAXHECHI) As Integer
 
 Public NPCInventory(1 To MAX_NPC_INVENTORY_SLOTS) As NpCinV
 
-Public UserMeditar                                As Boolean
+Public UserMeditar As Boolean
 
-Public UserAccount                                As String
+Public UserAccount As String
 
-Public UserName                                   As String
+Public UserName As String
 
-Public UserPassword                               As String
+Public UserPassword As String
 
-Public UserMaxHP                                  As Integer
+Public UserMaxHP As Integer
 
-Public UserMinHP                                  As Integer
+Public UserMinHP As Integer
 
-Public UserMaxMAN                                 As Integer
+Public UserMaxMAN As Integer
 
-Public UserMinMAN                                 As Integer
+Public UserMinMAN As Integer
 
-Public UserMaxSTA                                 As Integer
+Public UserMaxSTA As Integer
 
-Public UserMinSTA                                 As Integer
+Public UserMinSTA As Integer
 
-Public UserMaxAGU                                 As Byte
+Public UserMaxAGU As Byte
 
-Public UserMinAGU                                 As Byte
+Public UserMinAGU As Byte
 
-Public UserMaxHAM                                 As Byte
+Public UserMaxHAM As Byte
 
-Public UserMinHAM                                 As Byte
+Public UserMinHAM As Byte
 
-Public UserGLD                                    As Long
+Public UserGLD As Long
 
-Public UserLvl                                    As Integer
+Public UserLvl As Integer
 
-Public UserPort                                   As Integer
+Public UserPort As Integer
 
-Public UserServerIP                               As String
+Public UserServerIP As String
 
-Public UserEstado                                 As Byte '0 = Vivo & 1 = Muerto
+Public UserEstado As Byte         '0 = Vivo & 1 = Muerto
 
-Public UserPasarNivel                             As Long
+Public UserPasarNivel As Long
 
-Public UserExp                                    As Long
+Public UserExp As Long
 
-Public UserReputacion                             As tReputacion
+Public UserReputacion As tReputacion
 
-Public UserEstadisticas                           As tEstadisticasUsu
+Public UserEstadisticas As tEstadisticasUsu
 
-Public UserDescansar                              As Boolean
+Public UserDescansar As Boolean
 
-Public UserEmbarcado                              As Boolean
+Public UserEmbarcado As Boolean
 
-Public BarcoOffSetX                               As Single
+Public BarcoOffSetX As Single
 
-Public BarcoOffSetY                               As Single
+Public BarcoOffSetY As Single
 
-Public tipf                                       As String
+Public tipf As String
 
-Public PrimeraVez                                 As Boolean
+Public PrimeraVez As Boolean
 
-Public FPSFLAG                                    As Boolean
+Public FPSFLAG As Boolean
 
-Public pausa                                      As Boolean
+Public pausa As Boolean
 
-Public UserParalizado                             As Boolean
+Public UserParalizado As Boolean
 
-Public UserNavegando                              As Boolean
+Public UserNavegando As Boolean
 
-Public UserHogar                                  As eCiudad
+Public UserHogar As eCiudad
 
 '<-------------------------NUEVO-------------------------->
-Public Comerciando                                As Boolean
+Public Comerciando As Boolean
 '<-------------------------NUEVO-------------------------->
 
-Public UserClase                                  As eClass
+Public UserClase As eClass
 
-Public UserSexo                                   As eGenero
+Public UserSexo As eGenero
 
-Public UserRaza                                   As eRaza
+Public UserRaza As eRaza
 
-Public UserEmail                                  As String
+Public UserEmail As String
 
-Public UserFaccion                                As Byte
+Public UserFaccion As Byte
 
-Public Const NUMCIUDADES                          As Byte = 6
+Public Const NUMCIUDADES As Byte = 6
 
-Public Const NUMSKILLS                            As Byte = 20
+Public Const NUMSKILLS As Byte = 20
 
-Public Const NUMATRIBUTOS                         As Byte = 5
+Public Const NUMATRIBUTOS As Byte = 5
 
-Public Const NUMCLASES                            As Byte = 12
+Public Const NUMCLASES As Byte = 12
 
-Public Const NUMRAZAS                             As Byte = 5
+Public Const NUMRAZAS As Byte = 5
 
-Public UserSkills(1 To NUMSKILLS)                 As Byte
+Public UserSkills(1 To NUMSKILLS) As Byte
 
-Public UserSkillsMod(1 To NUMSKILLS)              As Byte
+Public UserSkillsMod(1 To NUMSKILLS) As Byte
 
-Public SkillsNames(1 To NUMSKILLS)                As String
+Public SkillsNames(1 To NUMSKILLS) As String
 
-Public UserAtributos(1 To NUMATRIBUTOS)           As Byte
+Public UserAtributos(1 To NUMATRIBUTOS) As Byte
 
-Public AtributosNames(1 To NUMATRIBUTOS)          As String
+Public AtributosNames(1 To NUMATRIBUTOS) As String
 
-Public FuerzaBk                                   As Byte
+Public FuerzaBk As Byte
 
-Public AgilidadBk                                 As Byte
+Public AgilidadBk As Byte
 
-Public Ciudades(1 To NUMCIUDADES)                 As String
+Public Ciudades(1 To NUMCIUDADES) As String
 
-Public ListaRazas(1 To NUMRAZAS)                  As String
+Public ListaRazas(1 To NUMRAZAS) As String
 
-Public ListaClases(1 To NUMCLASES)                As String
+Public ListaClases(1 To NUMCLASES) As String
 
-Public SkillPoints                                As Integer
+Public SkillPoints As Integer
 
-Public SPLibres                                   As Integer
+Public SPLibres As Integer
 
-Public Oscuridad                                  As Integer
+Public Oscuridad As Integer
 
-Public logged                                     As Boolean
+Public logged As Boolean
 
-Public UsingSkill                                 As Integer
+Public UsingSkill As Integer
 
-Public UsingSecondSkill                           As Integer
+Public UsingSecondSkill As Integer
 
-Public MD5HushYo                                  As String * 16
+Public MD5HushYo As String * 16
 
-Public pingTime                                   As Long
+Public pingTime As Long
 
 Public Enum E_MODO
 
@@ -1068,7 +1068,7 @@ Public Enum E_MODO
 End Enum
 
 Public EstadoLogin As E_MODO
-   
+
 Public Enum FxMeditar
 
     CHICO = 4
@@ -1151,25 +1151,25 @@ End Enum
 
 Public Const ORO_INDEX As Integer = 12
 
-Public Const ORO_GRH   As Integer = 511
+Public Const ORO_GRH As Integer = 511
 
 'Server stuff
-Public RequestPosTimer As Integer 'Used in main loop
+Public RequestPosTimer As Integer    'Used in main loop
 
-Public stxtbuffer      As String 'Holds temp raw data from server
+Public stxtbuffer As String    'Holds temp raw data from server
 
-Public stxtbuffercmsg  As String 'Holds temp raw data from server
+Public stxtbuffercmsg As String    'Holds temp raw data from server
 
-Public SendNewChar     As Boolean 'Used during login
+Public SendNewChar As Boolean    'Used during login
 
-Public Connected       As Boolean 'True when connected to server
+Public Connected As Boolean    'True when connected to server
 
-Public DownloadingMap  As Boolean 'Currently downloading a map from server
+Public DownloadingMap As Boolean    'Currently downloading a map from server
 
-Public UserMap         As Integer
+Public UserMap As Integer
 
 'Control
-Public prgRun          As Boolean 'When true the program ends
+Public prgRun As Boolean    'When true the program ends
 
 '
 '********** FUNCIONES API ***********
@@ -1179,20 +1179,20 @@ Public Declare Function GetTickCount Lib "kernel32" () As Long
 
 'para escribir y leer variables
 Public Declare Function writeprivateprofilestring _
-               Lib "kernel32" _
-               Alias "WritePrivateProfileStringA" (ByVal lpApplicationname As String, _
-                                                   ByVal lpKeyname As Any, _
-                                                   ByVal lpString As String, _
-                                                   ByVal lpFileName As String) As Long
+                         Lib "kernel32" _
+                             Alias "WritePrivateProfileStringA" (ByVal lpApplicationname As String, _
+                                                                 ByVal lpKeyname As Any, _
+                                                                 ByVal lpString As String, _
+                                                                 ByVal lpFileName As String) As Long
 
 Public Declare Function getprivateprofilestring _
-               Lib "kernel32" _
-               Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, _
-                                                 ByVal lpKeyname As Any, _
-                                                 ByVal lpdefault As String, _
-                                                 ByVal lpreturnedstring As String, _
-                                                 ByVal nsize As Long, _
-                                                 ByVal lpFileName As String) As Long
+                         Lib "kernel32" _
+                             Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, _
+                                                               ByVal lpKeyname As Any, _
+                                                               ByVal lpdefault As String, _
+                                                               ByVal lpreturnedstring As String, _
+                                                               ByVal nsize As Long, _
+                                                               ByVal lpFileName As String) As Long
 
 'Teclado
 Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
@@ -1205,13 +1205,13 @@ Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 Public Const SW_SHOWNORMAL As Long = 1
 
 Public Declare Function ShellExecute _
-               Lib "shell32.dll" _
-               Alias "ShellExecuteA" (ByVal hwnd As Long, _
-                                      ByVal lpOperation As String, _
-                                      ByVal lpFile As String, _
-                                      ByVal lpParameters As String, _
-                                      ByVal lpDirectory As String, _
-                                      ByVal nShowCmd As Long) As Long
+                         Lib "shell32.dll" _
+                             Alias "ShellExecuteA" (ByVal hwnd As Long, _
+                                                    ByVal lpOperation As String, _
+                                                    ByVal lpFile As String, _
+                                                    ByVal lpParameters As String, _
+                                                    ByVal lpDirectory As String, _
+                                                    ByVal nShowCmd As Long) As Long
 
 'Lista de cabezas
 Public Type tIndiceCabeza
@@ -1252,94 +1252,94 @@ Public Type tOpciones
     SoundEffects As Boolean
     VolMusic As Byte
     VolSound As Byte
-    
+
     'SCREEN SHOOTER
     ScreenShooterNivelSuperior As Boolean
     ScreenShooterNivelSuperiorIndex As Integer
     ScreenShooterAlMorir As Boolean
-    
+
     'GUILDS
     DialogConsole As Boolean
     DialogCantMessages As Byte
     GuildNews As Boolean
-    
+
     'ACCOUNT
     Recordar As Boolean
     RecordarUsuario As String
     RecordarPassword As String
-    
+
     'VIDEO
     TransparencyTree As Boolean
     Shadows As Boolean
     BlurEffects As Boolean
     Niebla As Boolean
-    
+
     'Otros
     CursorFaccionario As Boolean
 
 End Type
 
-Public Const GRH_HALF_STAR       As Integer = 5357
+Public Const GRH_HALF_STAR As Integer = 5357
 
-Public Const GRH_FULL_STAR       As Integer = 5358
+Public Const GRH_FULL_STAR As Integer = 5358
 
-Public Const GRH_GLOW_STAR       As Integer = 5359
+Public Const GRH_GLOW_STAR As Integer = 5359
 
-Public Const LH_GRH              As Integer = 724
+Public Const LH_GRH As Integer = 724
 
-Public Const LP_GRH              As Integer = 725
+Public Const LP_GRH As Integer = 725
 
-Public Const LO_GRH              As Integer = 723
+Public Const LO_GRH As Integer = 723
 
-Public Const MADERA_GRH          As Integer = 550
+Public Const MADERA_GRH As Integer = 550
 
-Public Const MADERA_ELFICA_GRH   As Integer = 1999
+Public Const MADERA_ELFICA_GRH As Integer = 1999
 
-Public GuildNames()              As String
+Public GuildNames() As String
 
-Public GuildMembers()            As String
+Public GuildMembers() As String
 
-Public picMouseIcon              As Picture
+Public picMouseIcon As Picture
 
-Public TradingUserName           As String
+Public TradingUserName As String
 
-Public EsPartyLeader             As Boolean
+Public EsPartyLeader As Boolean
 
-Public MirandoParty              As Boolean
+Public MirandoParty As Boolean
 
-Public TiempoRetos               As Long
+Public TiempoRetos As Long
 
-Public DragAndDrop               As Boolean
+Public DragAndDrop As Boolean
 
-Public Const ColorTransparente   As Long = vbMagenta
+Public Const ColorTransparente As Long = vbMagenta
 
 Public Const ColorTransparenteDX As Long = vbMagenta
 
 'Public VolumenCambio As Integer
-Public MidiCambio                As Byte
+Public MidiCambio As Byte
 
-Public SinMidi                   As Boolean
+Public SinMidi As Boolean
 
-Public iTickMidi                 As Long
+Public iTickMidi As Long
 
 'Particulas
 '*************
-Public LastTexture               As Long
- 
+Public LastTexture As Long
+
 'Public Const ScreenWidth As Long = 800
 'Public Const ScreenHeight As Long = 600
- 
-Public ParticleOffsetX           As Long
+Public Const FVF As Long = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR
+Public ParticleOffsetX As Long
 
-Public ParticleOffsetY           As Long
+Public ParticleOffsetY As Long
 
-Public LastOffsetX               As Long
+Public LastOffsetX As Long
 
-Public LastOffsetY               As Long
- 
-Public End_Time                  As Long
+Public LastOffsetY As Long
 
-Public ElapsedTime               As Single
+Public End_Time As Long
+
+Public ElapsedTime As Single
 'Particulas
 '****************************
 

@@ -14,39 +14,27 @@ Attribute VB_Exposed = False
 Option Explicit
  
 'Values Stored For Each Particle
-Private mvarused          As Boolean
-
-Private mvarsngX          As Single
-
-Private mvarsngY          As Single
-
-Private mvarsngXSpeed     As Single
-
-Private mvarsngYSpeed     As Single
-
-Private mvarsngXAccel     As Single
-
-Private mvarsngYAccel     As Single
-
-Private mvarsngR          As Single
-
-Private mvarsngG          As Single
-
-Private mvarsngB          As Single
-
-Private mvarsngA          As Single
-
+Private mvarused As Boolean
+Private mvarsngX As Single
+Private mvarsngY As Single
+Private mvarsngXSpeed As Single
+Private mvarsngYSpeed As Single
+Private mvarsngXAccel As Single
+Private mvarsngYAccel As Single
+Private mvarsngR As Single
+Private mvarsngG As Single
+Private mvarsngB As Single
+Private mvarsngA As Single
 Private mvarsngAlphaDecay As Single
+Private mvarsngZ As Single
+Private mvarsngZSpeed As Single
+Private mvarsngZAccel As Single
  
-Public Sub ResetColor(sngRed As Single, _
-                      sngGreen As Single, _
-                      sngBlue As Single, _
-                      sngAlpha As Single, _
-                      sngDecay As Single)
-    '************************************************************
-    'Change the particle's color values
-    'More info: [url=http://www.vbgore.com/CommonCode.Particle.ResetColor]http://www.vbgore.com/CommonCode.Particle.ResetColor[/url]
-    '************************************************************
+Public Sub ResetColor(sngRed As Single, sngGreen As Single, sngBlue As Single, sngAlpha As Single, sngDecay As Single)
+'************************************************************
+'Change the particle's color values
+'More info: [url=http://www.vbgore.com/CommonCode.Particle.ResetColor]http://www.vbgore.com/CommonCode.Particle.ResetColor[/url]
+'************************************************************
  
     sngR = sngRed
     sngG = sngGreen
@@ -56,24 +44,32 @@ Public Sub ResetColor(sngRed As Single, _
  
 End Sub
  
+
+
+
 Public Sub ResetIt(x As Single, _
                    y As Single, _
                    XSpeed As Single, _
                    YSpeed As Single, _
                    XAcc As Single, _
-                   YAcc As Single)
-    '************************************************************
-    'Reset the particle's variables
-    'More info: [url=http://www.vbgore.com/CommonCode.Particle.ResetIt]http://www.vbgore.com/CommonCode.Particle.ResetIt[/url]
-    '************************************************************
- 
+                   YAcc As Single, _
+                   Optional Z As Single = 0, _
+                   Optional ZSpeed As Single = 0, _
+                   Optional ZAcc As Single = 0)
+
+'Reset the particle's variables
     sngX = x
     sngY = y
+    sngZ = Z
+
     sngXSpeed = XSpeed
     sngYSpeed = YSpeed
+    sngZSpeed = ZSpeed
+
     sngXAccel = XAcc
     sngYAccel = YAcc
- 
+    sngZAccel = ZAcc
+
 End Sub
  
 Public Property Get sngA() As Single
@@ -171,7 +167,22 @@ Public Property Let sngXSpeed(ByVal vData As Single)
     mvarsngXSpeed = vData
  
 End Property
+
+Public Property Get sngZAccel() As Single
+    sngZAccel = mvarsngZAccel
+End Property
+
+Public Property Let sngZAccel(ByVal vData As Single)
+    mvarsngZAccel = vData
+End Property
  
+ Public Property Get sngZSpeed() As Single
+    sngZSpeed = mvarsngZSpeed
+End Property
+
+Public Property Let sngZSpeed(ByVal vData As Single)
+    mvarsngZSpeed = vData
+End Property
 Public Property Get sngY() As Single
  
     sngY = mvarsngY
@@ -182,6 +193,14 @@ Public Property Let sngY(ByVal vData As Single)
  
     mvarsngY = vData
  
+End Property
+
+Public Property Get sngZ() As Single
+    sngZ = mvarsngZ
+End Property
+
+Public Property Let sngZ(ByVal vData As Single)
+    mvarsngZ = vData
 End Property
  
 Public Property Get sngYAccel() As Single
@@ -208,11 +227,12 @@ Public Property Let sngYSpeed(ByVal vData As Single)
  
 End Property
  
+ 
 Public Sub UpdateParticle(sngTime As Single)
-    '************************************************************
-    'Update the particle's variables
-    'More info: [url=http://www.vbgore.com/CommonCode.Particle.UpdateParticle]http://www.vbgore.com/CommonCode.Partic ... teParticle[/url]
-    '************************************************************
+'************************************************************
+'Update the particle's variables
+'More info: [url=http://www.vbgore.com/CommonCode.Particle.UpdateParticle]http://www.vbgore.com/CommonCode.Partic ... teParticle[/url]
+'************************************************************
  
     sngX = sngX + (LastOffsetX - ParticleOffsetX) + sngXSpeed * sngTime
     sngY = sngY + (LastOffsetY - ParticleOffsetY) + sngYSpeed * sngTime
@@ -234,3 +254,7 @@ Public Property Let used(ByVal vData As Boolean)
  
 End Property
  
+
+
+
+
