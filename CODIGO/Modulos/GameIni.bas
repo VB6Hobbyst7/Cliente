@@ -139,23 +139,23 @@ Public Sub SaveConfig()
         Call Lector.ChangeValue("GUILD", "DialogCantMessages", CByte(.DialogCantMessages))
         
         ' SCREENSHOOTER
-        Call Lector.ChangeValue("SCREENSHOOTER", "ScreenShooterNivelSuperior", mOpciones.ScreenShooterNivelSuperior)
+        Call Lector.ChangeValue("SCREENSHOOTER", "ScreenShooterNivelSuperior", IIf(mOpciones.ScreenShooterNivelSuperior, "True", "False"))
         Call Lector.ChangeValue("SCREENSHOOTER", "ScreenShooterNivelSuperiorIndex", mOpciones.ScreenShooterNivelSuperiorIndex)
-        Call Lector.ChangeValue("SCREENSHOOTER", "ScreenShooterAlMorir", mOpciones.ScreenShooterAlMorir)
+        Call Lector.ChangeValue("SCREENSHOOTER", "ScreenShooterAlMorir", IIf(mOpciones.ScreenShooterAlMorir, "True", "False"))
         
         ' RECORDAR
-        Call Lector.ChangeValue("CUENTA", "Recordar", mOpciones.Recordar)
+        Call Lector.ChangeValue("CUENTA", "Recordar", IIf(mOpciones.Recordar, "True", "False"))
         Call Lector.ChangeValue("CUENTA", "RecordarUsuario", mOpciones.RecordarUsuario)
         Call Lector.ChangeValue("CUENTA", "RecordarPassword", mOpciones.RecordarPassword)
         
         ' VIDEO
-        Call Lector.ChangeValue("VIDEO", "TransparencyTree", mOpciones.TransparencyTree)
-        Call Lector.ChangeValue("VIDEO", "Shadows", mOpciones.Shadows)
-        Call Lector.ChangeValue("VIDEO", "BlurEffects", mOpciones.BlurEffects)
-        Call Lector.ChangeValue("VIDEO", "Niebla", mOpciones.Niebla)
+        Call Lector.ChangeValue("VIDEO", "TransparencyTree", IIf(mOpciones.TransparencyTree, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "Shadows", IIf(mOpciones.Shadows, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "BlurEffects", IIf(mOpciones.BlurEffects, "True", "False"))
+        Call Lector.ChangeValue("VIDEO", "Niebla", IIf(mOpciones.Niebla, "True", "False"))
         
         ' OTROS
-        Call Lector.ChangeValue("OTROS", "CursorFaccionario", mOpciones.CursorFaccionario)
+        Call Lector.ChangeValue("OTROS", "CursorFaccionario", IIf(mOpciones.CursorFaccionario, "True", "False"))
         
     End With
     
