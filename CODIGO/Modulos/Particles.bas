@@ -5,7 +5,7 @@ Public Type TLVERTEX2
 
         x As Single
         y As Single
-        Z As Single
+        z As Single
         rhw As Single
         color As Long
         tu As Single
@@ -29,7 +29,7 @@ Public BloodList()      As BloodData
 
 
 Public LastDamage       As Integer    'Last damage counter text index used
-Dim Z As Integer
+Dim z As Integer
 Public SangreTexture(1 To 4) As Direct3DTexture8
 Private Type Effect
     x As Single                 'Location of effect
@@ -89,7 +89,7 @@ Function Effect_EquationTemplate_Begin(ByVal x As Single, ByVal y As Single, ByV
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Begin]http://www.vbgore.com/CommonCode.Partic ... late_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -118,12 +118,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_EquationTemplate_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_EquationTemplate_Reset EffectIndex, LoopC
+    Next LoopC
  
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -154,34 +154,34 @@ Private Sub Effect_EquationTemplate_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_EquationTemplate_Update]http://www.vbgore.com/CommonCode.Partic ... ate_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
  
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
     Effect(EffectIndex).PreviousFrame = timeGetTime
  
     'Go Through The Particle Loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
  
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
  
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
  
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
  
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Then
  
                     'Reset the particle
-                    Effect_EquationTemplate_Reset EffectIndex, loopc
+                    Effect_EquationTemplate_Reset EffectIndex, LoopC
  
                 Else
  
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
  
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -190,22 +190,22 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
  
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
  
                 End If
  
             Else
  
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
         End If
  
-    Next loopc
+    Next LoopC
  
 End Sub
  
@@ -214,7 +214,7 @@ Function Effect_Bless_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As I
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Begin]http://www.vbgore.com/CommonCode.Partic ... less_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -244,12 +244,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Bless_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Bless_Reset EffectIndex, LoopC
+    Next LoopC
  
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -282,7 +282,7 @@ Private Sub Effect_Bless_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Bless_Update]http://www.vbgore.com/CommonCode.Partic ... ess_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
  
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -292,27 +292,27 @@ Dim loopc As Long
     If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
  
     'Go Through The Particle Loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
  
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
  
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
  
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
  
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Then
  
                     'Reset the particle
-                    Effect_Bless_Reset EffectIndex, loopc
+                    Effect_Bless_Reset EffectIndex, LoopC
  
                 Else
  
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
  
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -321,22 +321,22 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
  
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
  
                 End If
  
             Else
  
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
         End If
  
-    Next loopc
+    Next LoopC
  
 End Sub
  
@@ -345,7 +345,7 @@ Function Effect_Fire_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As In
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Begin]http://www.vbgore.com/CommonCode.Partic ... Fire_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -375,12 +375,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Fire_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Fire_Reset EffectIndex, LoopC
+    Next LoopC
  
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -403,34 +403,34 @@ Private Sub Effect_Fire_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Update]http://www.vbgore.com/CommonCode.Partic ... ire_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
  
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
     Effect(EffectIndex).PreviousFrame = timeGetTime
  
     'Go Through The Particle Loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
  
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
  
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
  
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
  
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression <> 0 Then
  
                     'Reset the particle
-                    Effect_Fire_Reset EffectIndex, loopc
+                    Effect_Fire_Reset EffectIndex, LoopC
  
                 Else
  
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
  
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -439,22 +439,22 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
  
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
  
                 End If
  
             Else
  
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
         End If
  
-    Next loopc
+    Next LoopC
  
 End Sub
  
@@ -477,7 +477,7 @@ Function Effect_Heal_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As In
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Begin]http://www.vbgore.com/CommonCode.Partic ... Heal_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -508,12 +508,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Heal_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Heal_Reset EffectIndex, LoopC
+    Next LoopC
  
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -536,35 +536,35 @@ Private Sub Effect_Heal_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Heal_Update]http://www.vbgore.com/CommonCode.Partic ... eal_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
-Dim i As Integer
+Dim LoopC As Long
+Dim I As Integer
  
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
     Effect(EffectIndex).PreviousFrame = timeGetTime
     
     'Go through the particle loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
  
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
  
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
  
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
  
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression <> 0 Then
  
                     'Reset the particle
-                    Effect_Heal_Reset EffectIndex, loopc
+                    Effect_Heal_Reset EffectIndex, LoopC
  
                 Else
  
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
  
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -573,22 +573,22 @@ Dim i As Integer
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
  
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
  
                 End If
  
             Else
                 
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
         End If
  
-    Next loopc
+    Next LoopC
  
 End Sub
  
@@ -597,16 +597,16 @@ Sub Effect_Kill(ByVal EffectIndex As Integer, Optional ByVal KillAll As Boolean 
 'Kills (stops) a single effect or all effects
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Kill]http://www.vbgore.com/CommonCode.Particles.Effect_Kill[/url]
 '*****************************************************************
-Dim loopc As Long
+Dim LoopC As Long
  
     'Check If To Kill All Effects
     If KillAll = True Then
  
         'Loop Through Every Effect
-        For loopc = 1 To NumEffects
+        For LoopC = 1 To NumEffects
  
             'Stop The Effect
-            Effect(loopc).used = False
+            Effect(LoopC).used = False
  
         Next
         
@@ -652,7 +652,7 @@ Function Effect_Protection_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Begin]http://www.vbgore.com/CommonCode.Partic ... tion_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -682,12 +682,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Protection_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Protection_Reset EffectIndex, LoopC
+    Next LoopC
  
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -808,7 +808,7 @@ Private Sub Effect_Protection_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Protection_Update]http://www.vbgore.com/CommonCode.Partic ... ion_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
  
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -818,27 +818,27 @@ Dim loopc As Long
     If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
  
     'Go through the particle loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
  
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
  
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
  
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
  
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Then
  
                     'Reset the particle
-                    Effect_Protection_Reset EffectIndex, loopc
+                    Effect_Protection_Reset EffectIndex, LoopC
  
                 Else
  
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
  
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -847,22 +847,22 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
  
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
  
                 End If
  
             Else
  
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
         End If
  
-    Next loopc
+    Next LoopC
  
 End Sub
  
@@ -871,8 +871,8 @@ Public Sub Effect_Render(ByVal EffectIndex As Integer, Optional ByVal SetRenderS
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Render]http://www.vbgore.com/CommonCode.Partic ... ect_Render[/url]
 '*****************************************************************
  
-   Dim Count As Long
-    Dim i As Long
+   Dim count As Long
+    Dim I As Long
 
     'Check if we have the device
 
@@ -889,63 +889,63 @@ Public Sub Effect_Render(ByVal EffectIndex As Integer, Optional ByVal SetRenderS
     'Check what type of rendering to do (blood or everything else)
 
     If Effect(EffectIndex).EffectNum = EffectNum_BloodSpray Then
-        Count = Effect(EffectIndex).ParticleCount \ 4
+        count = Effect(EffectIndex).ParticleCount \ 4
         D3DDevice.SetTexture 0, SangreTexture(1)
-        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, Count, Effect(EffectIndex).PartVertex(0), LenB(Effect(EffectIndex).PartVertex(0))
+        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, count, Effect(EffectIndex).PartVertex(0), LenB(Effect(EffectIndex).PartVertex(0))
 
-        For i = 0 To Count - 1
+        For I = 0 To count - 1
 
-            With Effect(EffectIndex).Particles(i)
+            With Effect(EffectIndex).Particles(I)
 
-                If .sngZ < 1 Then Effect(EffectIndex).PartVertex(i).y = Effect(EffectIndex).PartVertex(i).y + .sngZ
-                Effect(EffectIndex).PartVertex(i).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
+                If .sngZ < 1 Then Effect(EffectIndex).PartVertex(I).y = Effect(EffectIndex).PartVertex(I).y + .sngZ
+                Effect(EffectIndex).PartVertex(I).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
             End With
 
-        Next i
+        Next I
 
-        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, Count, Effect(EffectIndex).PartVertex(0), LenB(Effect(EffectIndex).PartVertex(0))
+        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, count, Effect(EffectIndex).PartVertex(0), LenB(Effect(EffectIndex).PartVertex(0))
         D3DDevice.SetTexture 0, SangreTexture(4)
-        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, Count, Effect(EffectIndex).PartVertex(Count - 1), Len(Effect(EffectIndex).PartVertex(0))
+        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, count, Effect(EffectIndex).PartVertex(count - 1), Len(Effect(EffectIndex).PartVertex(0))
 
-        For i = Count To Count - 1 + Count
+        For I = count To count - 1 + count
 
-            With Effect(EffectIndex).Particles(i)
+            With Effect(EffectIndex).Particles(I)
 
-                If .sngZ < 1 Then Effect(EffectIndex).PartVertex(i).y = Effect(EffectIndex).PartVertex(i).y + .sngZ
-                Effect(EffectIndex).PartVertex(i).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
+                If .sngZ < 1 Then Effect(EffectIndex).PartVertex(I).y = Effect(EffectIndex).PartVertex(I).y + .sngZ
+                Effect(EffectIndex).PartVertex(I).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
             End With
 
-        Next i
+        Next I
 
-        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, Count, Effect(EffectIndex).PartVertex(Count - 1), LenB(Effect(EffectIndex).PartVertex(0))
+        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, count, Effect(EffectIndex).PartVertex(count - 1), LenB(Effect(EffectIndex).PartVertex(0))
         D3DDevice.SetTexture 0, SangreTexture(2)
-        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, Count, Effect(EffectIndex).PartVertex((Count * 2) - 1), LenB(Effect(EffectIndex).PartVertex(0))
+        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, count, Effect(EffectIndex).PartVertex((count * 2) - 1), LenB(Effect(EffectIndex).PartVertex(0))
 
-        For i = (Count * 2) To (Count * 2) - 1 + Count
+        For I = (count * 2) To (count * 2) - 1 + count
 
-            With Effect(EffectIndex).Particles(i)
+            With Effect(EffectIndex).Particles(I)
 
-                If .sngZ < 1 Then Effect(EffectIndex).PartVertex(i).y = Effect(EffectIndex).PartVertex(i).y + .sngZ
-                Effect(EffectIndex).PartVertex(i).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
+                If .sngZ < 1 Then Effect(EffectIndex).PartVertex(I).y = Effect(EffectIndex).PartVertex(I).y + .sngZ
+                Effect(EffectIndex).PartVertex(I).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
             End With
 
-        Next i
+        Next I
 
-        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, Count, Effect(EffectIndex).PartVertex((Count * 2) - 1), LenB(Effect(EffectIndex).PartVertex(0))
+        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, count, Effect(EffectIndex).PartVertex((count * 2) - 1), LenB(Effect(EffectIndex).PartVertex(0))
         D3DDevice.SetTexture 0, SangreTexture(3)
-        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, Count, Effect(EffectIndex).PartVertex((Count * 3) - 1), LenB(Effect(EffectIndex).PartVertex(0))
+        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, count, Effect(EffectIndex).PartVertex((count * 3) - 1), LenB(Effect(EffectIndex).PartVertex(0))
 
-        For i = (Count * 3) To Effect(EffectIndex).ParticleCount
+        For I = (count * 3) To Effect(EffectIndex).ParticleCount
 
-            With Effect(EffectIndex).Particles(i)
+            With Effect(EffectIndex).Particles(I)
 
-                If .sngZ < 1 Then Effect(EffectIndex).PartVertex(i).y = Effect(EffectIndex).PartVertex(i).y + .sngZ
-                Effect(EffectIndex).PartVertex(i).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
+                If .sngZ < 1 Then Effect(EffectIndex).PartVertex(I).y = Effect(EffectIndex).PartVertex(I).y + .sngZ
+                Effect(EffectIndex).PartVertex(I).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
             End With
 
-        Next i
+        Next I
 
-        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, Count, Effect(EffectIndex).PartVertex((Count * 3) - 1), LenB(Effect(EffectIndex).PartVertex(0))
+        D3DDevice.DrawPrimitiveUP D3DPT_POINTLIST, count, Effect(EffectIndex).PartVertex((count * 3) - 1), LenB(Effect(EffectIndex).PartVertex(0))
     Else
         'Set the texture
         D3DDevice.SetTexture 0, ParticleTexture(Effect(EffectIndex).Gfx)
@@ -964,7 +964,7 @@ Function Effect_Snow_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As 
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Begin]http://www.vbgore.com/CommonCode.Partic ... Snow_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -990,12 +990,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Snow_Reset EffectIndex, loopc, 1
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Snow_Reset EffectIndex, LoopC, 1
+    Next LoopC
  
     'Set the initial time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -1032,44 +1032,44 @@ Private Sub Effect_Snow_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Snow_Update]http://www.vbgore.com/CommonCode.Partic ... now_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
  
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
     Effect(EffectIndex).PreviousFrame = timeGetTime
  
     'Go through the particle loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
  
         'Check if particle is in use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
  
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
  
             'Check if to reset the particle
-            If Effect(EffectIndex).Particles(loopc).sngX < -200 Then Effect(EffectIndex).Particles(loopc).sngA = 0
-            If Effect(EffectIndex).Particles(loopc).sngX > (ScreenWidth + 200) Then Effect(EffectIndex).Particles(loopc).sngA = 0
-            If Effect(EffectIndex).Particles(loopc).sngY > (ScreenHeight + 200) Then Effect(EffectIndex).Particles(loopc).sngA = 0
+            If Effect(EffectIndex).Particles(LoopC).sngX < -200 Then Effect(EffectIndex).Particles(LoopC).sngA = 0
+            If Effect(EffectIndex).Particles(LoopC).sngX > (ScreenWidth + 200) Then Effect(EffectIndex).Particles(LoopC).sngA = 0
+            If Effect(EffectIndex).Particles(LoopC).sngY > (ScreenHeight + 200) Then Effect(EffectIndex).Particles(LoopC).sngA = 0
  
             'Time for a reset, baby!
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
  
                 'Reset the particle
-                Effect_Snow_Reset EffectIndex, loopc
+                Effect_Snow_Reset EffectIndex, LoopC
  
             Else
  
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
         End If
  
-    Next loopc
+    Next LoopC
  
 End Sub
  
@@ -1078,7 +1078,7 @@ Function Effect_Strengthen_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Begin]http://www.vbgore.com/CommonCode.Partic ... then_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -1108,12 +1108,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Strengthen_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Strengthen_Reset EffectIndex, LoopC
+    Next LoopC
  
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -1144,7 +1144,7 @@ Private Sub Effect_Strengthen_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Strengthen_Update]http://www.vbgore.com/CommonCode.Partic ... hen_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
  
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1154,27 +1154,27 @@ Dim loopc As Long
     If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
  
     'Go through the particle loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
  
         'Check if particle is in use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
  
             'Update the particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
  
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
  
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Then
  
                     'Reset the particle
-                    Effect_Strengthen_Reset EffectIndex, loopc
+                    Effect_Strengthen_Reset EffectIndex, LoopC
  
                 Else
  
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
  
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -1183,22 +1183,22 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
  
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
  
                 End If
  
             Else
  
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
         End If
  
-    Next loopc
+    Next LoopC
  
 End Sub
  
@@ -1207,7 +1207,7 @@ Sub Effect_UpdateAll()
 'Updates all of the effects and renders them
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_UpdateAll]http://www.vbgore.com/CommonCode.Partic ... _UpdateAll[/url]
 '*****************************************************************
-Dim loopc As Long
+Dim LoopC As Long
  
     'Make sure we have effects
     If NumEffects = 0 Then Exit Sub
@@ -1216,42 +1216,42 @@ Dim loopc As Long
     D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
  
     'Update every effect in use
-    For loopc = 1 To NumEffects
+    For LoopC = 1 To NumEffects
  
         'Make sure the effect is in use
-        If Effect(loopc).used Then
+        If Effect(LoopC).used Then
         
             'Update the effect position if the screen has moved
-            Effect_UpdateOffset loopc
+            Effect_UpdateOffset LoopC
         
             'Update the effect position if it is binded
-            Effect_UpdateBinding loopc
+            Effect_UpdateBinding LoopC
  
             'Find out which effect is selected, then update it
-            If Effect(loopc).EffectNum = EffectNum_Fire Then Effect_Fire_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Snow Then Effect_Snow_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Heal Then Effect_Heal_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Bless Then Effect_Bless_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Protection Then Effect_Protection_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Strengthen Then Effect_Strengthen_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Rain Then Effect_Rain_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_EquationTemplate Then Effect_EquationTemplate_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Waterfall Then Effect_Waterfall_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Summon Then Effect_Summon_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Necro Then Effect_Necro_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Atom Then Effect_Atom_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_MeditMAX Then Effect_MeditMAX_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_PortalGroso Then Effect_PortalGroso_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_RedFountain Then Effect_RedFountain_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_Smoke Then Effect_Smoke_Update loopc
-            If Effect(loopc).EffectNum = EffectNum_BloodSpray Then Effect_BloodSpray_Update loopc
+            If Effect(LoopC).EffectNum = EffectNum_Fire Then Effect_Fire_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Snow Then Effect_Snow_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Heal Then Effect_Heal_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Bless Then Effect_Bless_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Protection Then Effect_Protection_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Strengthen Then Effect_Strengthen_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Rain Then Effect_Rain_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_EquationTemplate Then Effect_EquationTemplate_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Waterfall Then Effect_Waterfall_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Summon Then Effect_Summon_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Necro Then Effect_Necro_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Atom Then Effect_Atom_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_MeditMAX Then Effect_MeditMAX_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_PortalGroso Then Effect_PortalGroso_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_RedFountain Then Effect_RedFountain_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_Smoke Then Effect_Smoke_Update LoopC
+            If Effect(LoopC).EffectNum = EffectNum_BloodSpray Then Effect_BloodSpray_Update LoopC
             
             'Render the effect
             If NieveOn = True And ZonaActual <> 1 Then
-            Effect_Render loopc, False
+            Effect_Render LoopC, False
             Else
-               If Effect(loopc).EffectNum <> EffectNum_Snow And ZonaActual = 1 Then
-            Effect_Render loopc, False
+               If Effect(LoopC).EffectNum <> EffectNum_Snow And ZonaActual = 1 Then
+            Effect_Render LoopC, False
                End If
            End If
         End If
@@ -1268,7 +1268,7 @@ Function Effect_Rain_Begin(ByVal Gfx As Integer, ByVal Particles As Integer) As 
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Begin]http://www.vbgore.com/CommonCode.Partic ... Rain_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -1294,12 +1294,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Rain_Reset EffectIndex, loopc, 1
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Rain_Reset EffectIndex, LoopC, 1
+    Next LoopC
  
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -1336,44 +1336,44 @@ Private Sub Effect_Rain_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Rain_Update]http://www.vbgore.com/CommonCode.Partic ... ain_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
  
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
     Effect(EffectIndex).PreviousFrame = timeGetTime
  
     'Go through the particle loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
  
         'Check if the particle is in use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
  
             'Update the particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
  
             'Check if to reset the particle
-            If Effect(EffectIndex).Particles(loopc).sngX < -200 Then Effect(EffectIndex).Particles(loopc).sngA = 0
-            If Effect(EffectIndex).Particles(loopc).sngX > (ScreenWidth + 200) Then Effect(EffectIndex).Particles(loopc).sngA = 0
-            If Effect(EffectIndex).Particles(loopc).sngY > (ScreenHeight + 200) Then Effect(EffectIndex).Particles(loopc).sngA = 0
+            If Effect(EffectIndex).Particles(LoopC).sngX < -200 Then Effect(EffectIndex).Particles(LoopC).sngA = 0
+            If Effect(EffectIndex).Particles(LoopC).sngX > (ScreenWidth + 200) Then Effect(EffectIndex).Particles(LoopC).sngA = 0
+            If Effect(EffectIndex).Particles(LoopC).sngY > (ScreenHeight + 200) Then Effect(EffectIndex).Particles(LoopC).sngA = 0
  
             'Time for a reset, baby!
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
  
                 'Reset the particle
-                Effect_Rain_Reset EffectIndex, loopc
+                Effect_Rain_Reset EffectIndex, LoopC
  
             Else
  
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
         End If
  
-    Next loopc
+    Next LoopC
  
 End Sub
  
@@ -1420,7 +1420,7 @@ Function Effect_Waterfall_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx 
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Begin]http://www.vbgore.com/CommonCode.Partic ... fall_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -1448,12 +1448,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Waterfall_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Waterfall_Reset EffectIndex, LoopC
+    Next LoopC
  
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -1479,7 +1479,7 @@ Private Sub Effect_Waterfall_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Waterfall_Update]http://www.vbgore.com/CommonCode.Partic ... all_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
  
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1489,9 +1489,9 @@ Dim loopc As Long
     If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
  
     'Go through the particle loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
     
-        With Effect(EffectIndex).Particles(loopc)
+        With Effect(EffectIndex).Particles(LoopC)
     
             'Check if the particle is in use
             If .used Then
@@ -1503,14 +1503,14 @@ Dim loopc As Long
                 If (.sngY > Effect(EffectIndex).y + 140) Or (.sngA = 0) Then
     
                     'Reset the particle
-                    Effect_Waterfall_Reset EffectIndex, loopc
+                    Effect_Waterfall_Reset EffectIndex, LoopC
     
                 Else
  
                     'Set the particle information on the particle vertex
-                    Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
-                    Effect(EffectIndex).PartVertex(loopc).x = .sngX
-                    Effect(EffectIndex).PartVertex(loopc).y = .sngY
+                    Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
+                    Effect(EffectIndex).PartVertex(LoopC).x = .sngX
+                    Effect(EffectIndex).PartVertex(LoopC).y = .sngY
     
                 End If
     
@@ -1518,7 +1518,7 @@ Dim loopc As Long
             
         End With
  
-    Next loopc
+    Next LoopC
  
 End Sub
  
@@ -1527,7 +1527,7 @@ Function Effect_Summon_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As 
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Begin]http://www.vbgore.com/CommonCode.Partic ... mmon_Begin[/url]
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
  
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -1556,12 +1556,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
  
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Summon_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Summon_Reset EffectIndex, LoopC
+    Next LoopC
  
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -1596,34 +1596,34 @@ Private Sub Effect_Summon_Update(ByVal EffectIndex As Integer)
 'More info: [url=http://www.vbgore.com/CommonCode.Particles.Effect_Summon_Update]http://www.vbgore.com/CommonCode.Partic ... mon_Update[/url]
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
  
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
     Effect(EffectIndex).PreviousFrame = timeGetTime
  
     'Go Through The Particle Loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
  
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
  
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
  
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
  
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression < 1800 Then
  
                     'Reset the particle
-                    Effect_Summon_Reset EffectIndex, loopc
+                    Effect_Summon_Reset EffectIndex, LoopC
  
                 Else
  
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
  
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -1632,22 +1632,22 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
  
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
  
                 End If
  
             Else
             
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
  
             End If
  
         End If
  
-    Next loopc
+    Next LoopC
  
 End Sub
 
@@ -1657,7 +1657,7 @@ Function Effect_Necro_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As I
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Begin
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -1687,12 +1687,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
     Effect(EffectIndex).TargetAA = 0
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
         'Effect_Necro_Reset EffectIndex, LoopC
-    Next loopc
+    Next LoopC
     
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -1730,7 +1730,7 @@ Private Sub Effect_Necro_Update(ByVal EffectIndex As Integer)
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Update
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1740,28 +1740,28 @@ Dim loopc As Long
     If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
     
     'Go Through The Particle Loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
 
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
 
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
 
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0.5 And RandomNumber(1, 3) = 3 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0.5 And RandomNumber(1, 3) = 3 Then
 
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Or Effect(EffectIndex).Progression = -5000 Then
                     
                     
                     'Reset the particle
-                    Effect_Necro_Reset EffectIndex, loopc
+                    Effect_Necro_Reset EffectIndex, LoopC
                     
                 Else
 
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
 
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -1770,22 +1770,22 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
 
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
 
                 End If
 
             Else
                 
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 
         End If
 
-    Next loopc
+    Next LoopC
 
 End Sub
 
@@ -1793,7 +1793,7 @@ End Sub
 Function Effect_Atom_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Size As Byte = 30, Optional ByVal Time As Single = 10) As Integer
 
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -1823,12 +1823,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
 
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Atom_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Atom_Reset EffectIndex, LoopC
+    Next LoopC
 
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -1871,7 +1871,7 @@ End Sub
 
 Private Sub Effect_Atom_Update(ByVal EffectIndex As Integer)
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
 
     'Calculate the time difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -1881,27 +1881,27 @@ Dim loopc As Long
     If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
 
     'Go through the particle loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
 
         'Check if particle is in use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
 
             'Update the particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
 
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
 
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Then
 
                     'Reset the particle
-                    Effect_Atom_Reset EffectIndex, loopc
+                    Effect_Atom_Reset EffectIndex, LoopC
 
                 Else
 
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
 
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -1910,28 +1910,28 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
 
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
 
                 End If
 
             Else
 
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 
         End If
 
-    Next loopc
+    Next LoopC
 
 End Sub
 
 Function Effect_MeditMAX_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Size As Byte = 30, Optional ByVal Time As Single = 10, Optional R As Single) As Integer
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -1963,12 +1963,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
 
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_MeditMAX_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_MeditMAX_Reset EffectIndex, LoopC
+    Next LoopC
 
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -1986,8 +1986,8 @@ Dim AccX As Single
     
     Do While a > 3 And a < 3.27
         Randomize 1000
-        Z = Z + 1
-        If Z > 6 Then Z = 1
+        z = z + 1
+        If z > 6 Then z = 1
         a = Rnd * 60 * DegreeToRadian * 6
     Loop
     
@@ -2001,7 +2001,7 @@ Dim AccX As Single
 End Sub
 Public Sub Effect_MeditMAX_Update(ByVal EffectIndex As Integer)
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -2011,27 +2011,27 @@ Dim loopc As Long
     'If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
 
     'Go through the particle loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
 
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
 
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
 
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
 
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Then
 
                     'Reset the particle
-                    Effect_MeditMAX_Reset EffectIndex, loopc
+                    Effect_MeditMAX_Reset EffectIndex, LoopC
 
                 Else
 
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
 
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -2040,28 +2040,28 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
 
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
 
                 End If
 
             Else
 
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 
         End If
 
-    Next loopc
+    Next LoopC
 
 End Sub
 
 Function Effect_PortalGroso_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As Integer, ByVal Particles As Integer, Optional ByVal Progression As Single = 1) As Integer
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -2090,12 +2090,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
 
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_PortalGroso_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_PortalGroso_Reset EffectIndex, LoopC
+    Next LoopC
 
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -2124,7 +2124,7 @@ End Sub
 
 Private Sub Effect_PortalGroso_Update(ByVal EffectIndex As Integer)
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
 Dim Owner As Integer
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -2143,31 +2143,31 @@ Dim Owner As Integer
     'End If
     
     'Go Through The Particle Loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
 
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
 
             ''Update The Particle
             'If EffectIndex <> CharList(UserCharIndex).AuraIndex Then
-                Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+                Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
             'Else
              '   Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime, True
             'End If
             
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0 Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0 Then
 
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Then
 
                     'Reset the particle
-                    Effect_PortalGroso_Reset EffectIndex, loopc
+                    Effect_PortalGroso_Reset EffectIndex, LoopC
 
                 Else
 
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
 
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -2176,29 +2176,29 @@ Dim Owner As Integer
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
 
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
 
                 End If
 
             Else
 
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 
         End If
 
-    Next loopc
+    Next LoopC
 
 End Sub
 
 Function Effect_RedFountain_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As Integer, ByVal Particles As Integer) As Integer
 
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
 
 'Get the next open effect slot
 
@@ -2227,12 +2227,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
 
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_RedFountain_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_RedFountain_Reset EffectIndex, LoopC
+    Next LoopC
 
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -2252,7 +2252,7 @@ End Sub
 
 Private Sub Effect_RedFountain_Update(ByVal EffectIndex As Integer)
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -2262,9 +2262,9 @@ Dim loopc As Long
     If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
 
     'Go through the particle loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
     
-        With Effect(EffectIndex).Particles(loopc)
+        With Effect(EffectIndex).Particles(LoopC)
     
             'Check if the particle is in use
             If .used Then
@@ -2276,14 +2276,14 @@ Dim loopc As Long
                 If (.sngA < 0) Or (.sngY > Effect(EffectIndex).y + 100) Then
     
                     'Reset the particle
-                    Effect_RedFountain_Reset EffectIndex, loopc
+                    Effect_RedFountain_Reset EffectIndex, LoopC
     
                 Else
 
                     'Set the particle information on the particle vertex
-                    Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
-                    Effect(EffectIndex).PartVertex(loopc).x = .sngX
-                    Effect(EffectIndex).PartVertex(loopc).y = .sngY
+                    Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(.sngR, .sngG, .sngB, .sngA)
+                    Effect(EffectIndex).PartVertex(LoopC).x = .sngX
+                    Effect(EffectIndex).PartVertex(LoopC).y = .sngY
     
                 End If
     
@@ -2291,7 +2291,7 @@ Dim loopc As Long
             
         End With
 
-    Next loopc
+    Next LoopC
 
 End Sub
 
@@ -2301,7 +2301,7 @@ Function Effect_Smoke_Begin(ByVal x As Single, ByVal y As Single, ByVal Gfx As I
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Begin
 '*****************************************************************
 Dim EffectIndex As Integer
-Dim loopc As Long
+Dim LoopC As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -2331,12 +2331,12 @@ Dim loopc As Long
     ReDim Effect(EffectIndex).PartVertex(0 To Effect(EffectIndex).ParticleCount)
 
     'Create the particles
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_Smoke_Reset EffectIndex, loopc
-    Next loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_Smoke_Reset EffectIndex, LoopC
+    Next LoopC
 
     'Set The Initial Time
     Effect(EffectIndex).PreviousFrame = timeGetTime
@@ -2360,7 +2360,7 @@ Private Sub Effect_Smoke_Update(ByVal EffectIndex As Integer)
 'More info: http://www.vbgore.com/CommonCode.Particles.Effect_Fire_Update
 '*****************************************************************
 Dim ElapsedTime As Single
-Dim loopc As Long
+Dim LoopC As Long
 
     'Calculate The Time Difference
     ElapsedTime = (timeGetTime - Effect(EffectIndex).PreviousFrame) * 0.01
@@ -2370,28 +2370,28 @@ Dim loopc As Long
     If Effect(EffectIndex).Progression > 0 Then Effect(EffectIndex).Progression = Effect(EffectIndex).Progression - ElapsedTime
     
     'Go Through The Particle Loop
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
 
         'Check If Particle Is In Use
-        If Effect(EffectIndex).Particles(loopc).used Then
+        If Effect(EffectIndex).Particles(LoopC).used Then
 
             'Update The Particle
-            Effect(EffectIndex).Particles(loopc).UpdateParticle ElapsedTime
+            Effect(EffectIndex).Particles(LoopC).UpdateParticle ElapsedTime
 
             'Check if the particle is ready to die
-            If Effect(EffectIndex).Particles(loopc).sngA <= 0.3 Or Effect(EffectIndex).Particles(loopc).sngY + Effect(EffectIndex).Modifier * 3 < Effect(EffectIndex).y Then
+            If Effect(EffectIndex).Particles(LoopC).sngA <= 0.3 Or Effect(EffectIndex).Particles(LoopC).sngY + Effect(EffectIndex).Modifier * 3 < Effect(EffectIndex).y Then
 
                 'Check if the effect is ending
                 If Effect(EffectIndex).Progression > 0 Or Effect(EffectIndex).Progression = -5000 Then
                     
                     
                     'Reset the particle
-                    Effect_Smoke_Reset EffectIndex, loopc
+                    Effect_Smoke_Reset EffectIndex, LoopC
                     
                 Else
 
                     'Disable the particle
-                    Effect(EffectIndex).Particles(loopc).used = False
+                    Effect(EffectIndex).Particles(LoopC).used = False
 
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
@@ -2400,22 +2400,22 @@ Dim loopc As Long
                     If Effect(EffectIndex).ParticlesLeft = 0 Then Effect(EffectIndex).used = False
 
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).PartVertex(loopc).color = 0
+                    Effect(EffectIndex).PartVertex(LoopC).color = 0
 
                 End If
 
             Else
                 
                 'Set the particle information on the particle vertex
-                Effect(EffectIndex).PartVertex(loopc).color = D3DColorMake(Effect(EffectIndex).Particles(loopc).sngR, Effect(EffectIndex).Particles(loopc).sngG, Effect(EffectIndex).Particles(loopc).sngB, Effect(EffectIndex).Particles(loopc).sngA)
-                Effect(EffectIndex).PartVertex(loopc).x = Effect(EffectIndex).Particles(loopc).sngX
-                Effect(EffectIndex).PartVertex(loopc).y = Effect(EffectIndex).Particles(loopc).sngY
+                Effect(EffectIndex).PartVertex(LoopC).color = D3DColorMake(Effect(EffectIndex).Particles(LoopC).sngR, Effect(EffectIndex).Particles(LoopC).sngG, Effect(EffectIndex).Particles(LoopC).sngB, Effect(EffectIndex).Particles(LoopC).sngA)
+                Effect(EffectIndex).PartVertex(LoopC).x = Effect(EffectIndex).Particles(LoopC).sngX
+                Effect(EffectIndex).PartVertex(LoopC).y = Effect(EffectIndex).Particles(LoopC).sngY
 
             End If
 
         End If
 
-    Next loopc
+    Next LoopC
 
 End Sub
 
@@ -2427,7 +2427,7 @@ Function Effect_BloodSpray_Begin(ByVal x As Single, _
                                  Optional ByVal Intensity As Single = 1) As Integer
 
     Dim EffectIndex As Integer
-    Dim loopc As Long
+    Dim LoopC As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -2453,13 +2453,13 @@ Function Effect_BloodSpray_Begin(ByVal x As Single, _
 
     'Create the particles
 
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
-        Effect_BloodSpray_Reset EffectIndex, loopc
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
+        Effect_BloodSpray_Reset EffectIndex, LoopC
 
-    Next loopc
+    Next LoopC
 
     'Set the initial time
     Effect(EffectIndex).PreviousFrame = GetTickCount
@@ -2480,7 +2480,7 @@ End Sub
 Private Sub Effect_BloodSpray_Update(ByVal EffectIndex As Integer)
 
     Dim ElapsedTime As Single
-    Dim loopc As Long
+    Dim LoopC As Long
     Dim TileX As Long
     Dim TileY As Long
 
@@ -2490,9 +2490,9 @@ Private Sub Effect_BloodSpray_Update(ByVal EffectIndex As Integer)
 
     'Go through the particle loop
 
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
 
-        With Effect(EffectIndex).Particles(loopc)
+        With Effect(EffectIndex).Particles(LoopC)
 
             'Check if particle is in Use
 
@@ -2521,7 +2521,7 @@ Private Sub Effect_BloodSpray_Update(ByVal EffectIndex As Integer)
 
                 'Blood trails
 
-                If loopc = 0 Or loopc Mod 15 = 0 Then
+                If LoopC = 0 Or LoopC Mod 15 = 0 Then
                     If Int(Rnd * 3) = 0 Then
                         If Int(Rnd * 2) = 0 Then
                             Engine_Blood_Create .sngX + ParticleOffsetX, .sngY + ParticleOffsetY, 2
@@ -2539,7 +2539,7 @@ Private Sub Effect_BloodSpray_Update(ByVal EffectIndex As Integer)
                     'Subtract from the total particle count
                     Effect(EffectIndex).ParticlesLeft = Effect(EffectIndex).ParticlesLeft - 1
                     'Clear the color (dont leave behind any artifacts)
-                    Effect(EffectIndex).Particles(loopc).sngA = 0
+                    Effect(EffectIndex).Particles(LoopC).sngA = 0
 
                     'Check if we lost all the particles
 
@@ -2548,15 +2548,15 @@ Private Sub Effect_BloodSpray_Update(ByVal EffectIndex As Integer)
                     Engine_Blood_Create .sngX + ParticleOffsetX, .sngY + ParticleOffsetY, 0
                 Else
                     'Set the particle information on the particle vertex
-                    Effect(EffectIndex).PartVertex(loopc).color = 1258291200
-                    Effect(EffectIndex).PartVertex(loopc).x = .sngX
-                    Effect(EffectIndex).PartVertex(loopc).y = .sngY
+                    Effect(EffectIndex).PartVertex(LoopC).color = 1258291200
+                    Effect(EffectIndex).PartVertex(LoopC).x = .sngX
+                    Effect(EffectIndex).PartVertex(LoopC).y = .sngY
                 End If
             End If
 
         End With
 
-    Next loopc
+    Next LoopC
 
 End Sub
 
@@ -2565,7 +2565,7 @@ Function Effect_BloodSplatter_Begin(ByVal x As Single, _
                                     ByVal Particles As Integer) As Integer
 
     Dim EffectIndex As Integer
-    Dim loopc As Long
+    Dim LoopC As Long
 
     'Get the next open effect slot
     EffectIndex = Effect_NextOpenSlot
@@ -2589,13 +2589,13 @@ Function Effect_BloodSplatter_Begin(ByVal x As Single, _
 
     'Create the particles
 
-    For loopc = 0 To Effect(EffectIndex).ParticleCount
-        Set Effect(EffectIndex).Particles(loopc) = New Particle
-        Effect(EffectIndex).Particles(loopc).used = True
-        Effect(EffectIndex).PartVertex(loopc).rhw = 1
+    For LoopC = 0 To Effect(EffectIndex).ParticleCount
+        Set Effect(EffectIndex).Particles(LoopC) = New Particle
+        Effect(EffectIndex).Particles(LoopC).used = True
+        Effect(EffectIndex).PartVertex(LoopC).rhw = 1
         'Effect_BloodSplatter_Reset EffectIndex, loopc
 
-    Next loopc
+    Next LoopC
 
     'Set the initial time
     Effect(EffectIndex).PreviousFrame = GetTickCount
@@ -2786,7 +2786,7 @@ Sub Engine_Blood_Create(ByVal x As Single, ByVal y As Single, ByVal Size As Byte
     Const Small8H As Single = 2
 
     Dim BloodIndex As Integer
-    Dim i As Long
+    Dim I As Long
     Dim l As Long
 
     'Find the tile
@@ -2820,7 +2820,7 @@ Sub Engine_Blood_Create(ByVal x As Single, ByVal y As Single, ByVal Size As Byte
     Loop While BloodList(BloodIndex).Life > 0
 
     'Set the blood's lfie
-    BloodList(BloodIndex).Life = GetTickCount + 2200
+    BloodList(BloodIndex).Life = GetTickCount + 1800
 
     'Get a random size if none is specified
 
@@ -2858,9 +2858,9 @@ Sub Engine_Blood_Create(ByVal x As Single, ByVal y As Single, ByVal Size As Byte
         'Large blood
 
         If Size = 3 Then
-            i = Int(Rnd * NumLarge) + 1
+            I = Int(Rnd * NumLarge) + 1
 
-            Select Case i
+            Select Case I
 
                 Case 1
                     .v(4).x = x + Large1W
@@ -2881,9 +2881,9 @@ Sub Engine_Blood_Create(ByVal x As Single, ByVal y As Single, ByVal Size As Byte
 
             'Medium blood
         ElseIf Size = 2 Then
-            i = Int(Rnd * NumMedium) + 1
+            I = Int(Rnd * NumMedium) + 1
 
-            Select Case i
+            Select Case I
 
                 Case 1
                     .v(4).x = x + Med1W
@@ -2984,9 +2984,9 @@ Sub Engine_Blood_Create(ByVal x As Single, ByVal y As Single, ByVal Size As Byte
 
             'Small blood
         Else
-            i = Int(Rnd * NumSmall) + 1
+            I = Int(Rnd * NumSmall) + 1
 
-            Select Case i
+            Select Case I
 
                 Case 1
                     .v(4).x = x + Small1W
@@ -3127,64 +3127,78 @@ Public Sub Engine_Render_Blood()
     Dim BloodVL() As TLVERTEX2   'Vertex list
     Dim BloodCount As Long
     Dim Alpha As Long
-    Dim i As Long
+    Dim I As Long
     Dim J As Long
     Dim Tex As Direct3DTexture8
     Dim srdesc As D3DSURFACE_DESC
-    Dim NumGra As String
-
+    Dim ColGraR As Integer
+    Dim ColGraG As Integer
+    Dim ColGraB As Integer
     'Check if Render Blood option is enabled
 
     'If Config.renderBlood = 0 Then Exit Sub
 
     'Check for any blood
-     If Colorsangre <> 0 Then
-     NumGra = "25006"
-     Else
-     NumGra = "25005"
-     End If
-     
-     
+    Select Case Colorsangre
+    Case 2
+        ColGraR = 0
+        ColGraG = 255
+        ColGraB = 0
+    Case 3
+        ColGraR = 0
+        ColGraG = 0
+        ColGraB = 255
+    Case 4
+        ColGraR = 0
+        ColGraG = 0
+        ColGraB = 0
+    Case Else
+        ColGraR = 255
+        ColGraG = 0
+        ColGraB = 0
+
+    End Select
+
     If LastBlood = 0 Then Exit Sub
-   
-    Set Tex = D3DX.CreateTextureFromFileEx(D3DDevice, App.path & "\RECURSOS\" & NumGra & ".png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
-    
- 
+
+    Set Tex = D3DX.CreateTextureFromFileEx(D3DDevice, App.path & "\RECURSOS\25005.png", D3DX_DEFAULT, D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, &HFF000000, ByVal 0, ByVal 0)
+
+
     Tex.GetLevelDesc 0, srdesc
 
     'Create the vertex list
     ReDim BloodVL(1 To LastBlood * 6) As TLVERTEX2
 
-    For i = 1 To LastBlood
+    For I = 1 To LastBlood
 
-        If BloodList(i).Life <> 0 Then
-            If BloodList(i).Life > GetTickCount Then
-                If BloodList(i).Life - GetTickCount > 3000 Then
+        If BloodList(I).Life <> 0 Then
+            If BloodList(I).Life > GetTickCount Then
+                If BloodList(I).Life - GetTickCount > 3000 Then
                     Alpha = 255
                 Else
-                    Alpha = (BloodList(i).Life - GetTickCount) / 7
+                    Alpha = (BloodList(I).Life - GetTickCount) / 7
 
                     If Alpha > 255 Then Alpha = 255
                 End If
 
                 For J = 1 To 6
-                    BloodVL((BloodCount * 6) + J) = BloodList(i).v(J - 1)
+                    BloodVL((BloodCount * 6) + J) = BloodList(I).v(J - 1)
 
                     With BloodVL((BloodCount * 6) + J)
                         .x = .x - ParticleOffsetX
                         .y = .y - ParticleOffsetY
-                        .color = D3DColorARGB(Alpha, 255, 255, 255)
+                        .color = D3DColorARGB(Alpha, ColGraR, ColGraG, ColGraB)
                     End With
 
                 Next J
 
                 BloodCount = BloodCount + 1
             Else
-                Engine_Blood_Erase i
+                Engine_Blood_Erase I
             End If
         End If
 
-    Next i
+    Next I
 
     D3DDevice.SetTexture 0, Tex
     D3DDevice.SetRenderState D3DRS_TEXTUREFACTOR, D3DColorARGB(Alpha, 0, 0, 0)
