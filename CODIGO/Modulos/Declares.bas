@@ -31,8 +31,9 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
-Public ScreenXOre As Integer
-Public ScreenYOre As Integer
+Public Vidarender As Boolean
+Public Manarender As Boolean
+Public alaPath      As String
 Public ParticlesORE As New clsOreParticles
 Public Colorsangre As Byte
 Public invSpells As New clsGrapchicalInventory
@@ -605,6 +606,7 @@ Public Enum eObjType
     otBotellaVacia = 33
     otBotellaLlena = 34
     otManchas = 35          'No se usa
+    otAlas = 40
     otCualquiera = 1000
 
 End Enum

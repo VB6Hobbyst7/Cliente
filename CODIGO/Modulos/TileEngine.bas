@@ -192,10 +192,18 @@ Type ShieldAnimData
 
 End Type
 
+Type Alas
+    GrhIndex(E_Heading.north To E_Heading.west) As Grh
+End Type
+
+Public alaArray() As Alas
+
 Public NPCMuertos As New Collection
 
 'Apariencia del personaje
 Public Type Char
+    alaIndex As Byte
+    Alas As Alas
     'particulas ore
     particle_count As Integer
     particle_group() As Long
@@ -2196,26 +2204,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
     'sangre
 
 
-    'particulas ORE
 
-    For y = TileY - BufferY2 To TileY + BufferY2
-        For x = TileX - BufferX2 To TileX + BufferX2
-            If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
-                ScreenY = y - TileY + BufferY1
-                ScreenYOre = ScreenY
-                ScreenX = x - TileX + BufferX1
-                ScreenXOre = ScreenX
-
-                With MapData(x, y)
-                    If .particle_group > 0 Then
-                        ParticlesORE.Particle_Group_Render .particle_group, ScreenX * 32 + PixelOffSetX, ScreenY * 32 + PixelOffSetY
-                    End If
-                End With
-            End If
-        Next x
-
-    Next y
-    'Particulas ORE
 
     For y = TileY - BufferY3 - 5 To TileY + BufferY3 + 5
         For x = TileX - BufferX3 To TileX + BufferX3
@@ -2252,6 +2241,53 @@ Sub RenderScreen(ByVal TileX As Integer, _
         End If
 
     Next I
+If Vidarender = True Then
+    Dim CantVidax As Integer
+    Dim CantVidax2 As Integer
+    
+
+'vida abajo del pj
+    CantVidax = 60 * Round(CDbl(UserMinHP) / CDbl(UserMaxHP / 2), 2)
+
+    'Call Engine_Render_Rectangle(309, 275, 91, 89, 0, 0, 91, 89, , , 0, 14801)
+    If CantVidax >= 60 Then
+        CantVidax2 = CantVidax - 60
+        CantVidax = 60
+
+
+
+    End If
+
+   'Call Engine_Render_Rectangle(478, 372, 68, 50, 0, 0, 68, 50, , , 0, 14801)
+
+    Call Engine_Render_Rectangle(552, 432, -40, -CantVidax2, 0, 0, -40, -CantVidax2, , , 0, 14804)
+    Call Engine_Render_Rectangle(472, 372, 40, CantVidax, 0, 0, 40, CantVidax, , , 0, 14804)
+End If
+' vida abajo del pj
+'mana abajo del pj
+  If Manarender = True Then
+ Dim CantManx As Integer
+    Dim CantManx2 As Integer
+  CantManx = 70 * Round(CDbl(UserMinMAN) / CDbl(UserMaxMAN / 2), 2)
+
+    'Call Engine_Render_Rectangle(309, 275, 91, 89, 0, 0, 91, 89, , , 0, 14801)
+    If CantManx >= 70 Then
+        CantManx2 = CantManx - 70
+        CantManx = 70
+
+
+
+    End If
+
+   'Call Engine_Render_Rectangle(478, 372, 68, 50, 0, 0, 68, 50, , , 0, 14801)
+
+    Call Engine_Render_Rectangle(558, 437, -46, -CantManx2, 0, 0, -46, -CantManx2, , , 0, 14805)
+    Call Engine_Render_Rectangle(466, 367, 46, CantManx, 0, 0, 46, CantManx, , , 0, 14805)
+'Call Engine_Render_Rectangle(466, 367, 92, 70, 0, 0, 92, 70, , , 0, 14805)
+End If
+
+
+
 
     'Draw Transparent Layers
     ScreenY = minYOffset
@@ -2338,8 +2374,13 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
                     'Layer 3 Plus FX *****************************************
                     If .fXGrh.Started = 1 Then
+                        D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+                        D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+
                         Call DrawGrh(.fXGrh, PixelOffSetXTemp - FxData(.fX).OffSetX, PixelOffSetYTemp - FxData(.fX).OffSetY, 1, 1)
 
+                        D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+                        D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
                         If .fXGrh.Started = 0 Then .fX = 0
 
                     End If
@@ -2352,6 +2393,25 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
         Next x
     Next y
+
+    'particulas ORE
+
+    For y = TileY - BufferY4 To TileY + BufferY4
+        For x = TileX - BufferX4 To TileX + BufferX4
+            If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
+                ScreenY = y - TileY + BufferY1
+                ScreenX = x - TileX + BufferX1
+
+                With MapData(x, y)
+                    If .particle_group > 0 Then
+                        ParticlesORE.Particle_Group_Render .particle_group, ScreenX * 32 + PixelOffSetX, ScreenY * 32 + PixelOffSetY
+                    End If
+                End With
+            End If
+        Next x
+
+    Next y
+    'Particulas ORE
 
     Dim mArroja As clsArroja
 
@@ -2872,11 +2932,12 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
             Dim CantAgua As Integer
             Dim CantHam As Integer
-            Dim CantVida As Integer
+            Dim Cantvida As Integer
             Dim CantMana As Integer
             Dim CantStamina As Integer
             Dim CantExp As Integer
             Dim CantExp2 As Integer
+
             'experiencia
             CantExp = 67 * Round(CDbl(UserExp) / CDbl(UserPasarNivel / 2), 2)
 
@@ -2898,9 +2959,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
             'experiencia
 
             'vida
-            CantVida = (((UserMinHP / 211) / (UserMaxHP / 211)) * 211)
+            Cantvida = (((UserMinHP / 211) / (UserMaxHP / 211)) * 211)
 
-            Call Engine_Render_Rectangle(105, 13, CantVida, 33, 0, 0, CantVida, 33, , , 0, 14945)
+            Call Engine_Render_Rectangle(105, 13, Cantvida, 33, 0, 0, Cantvida, 33, , , 0, 14945)
             Call DrawFont(UserMinHP & " / " & UserMaxHP, 215, 22, D3DColorRGBA(255, 255, 255, 200), True)
             'vida
 
@@ -2983,6 +3044,11 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Call DrawFont("(X:" & UserPos.x & ", Y:" & UserPos.y & ")", 938, 159, D3DColorRGBA(255, 255, 255, 160), True)
 
         End If
+
+
+
+
+
 
     #Else
 
@@ -3180,7 +3246,7 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, _
     Call CargarCascos
     Call CargarFxs
     Call CargarParticulas
-    
+    Call CargarAlas
     'Call General_Particle_Create(1, 150, 800, -1, 20, -15)
     
     Set TestPart = New clsParticulas
@@ -3322,11 +3388,11 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         #If RenderFull = 0 Then
 
             If Conectar Then
-                frmMain.picHechiz.Visible = False
+                'frmMain.picHechiz.Visible = False
                 frmMain.BarraHechiz.Visible = False
                 frmMain.invHechisos.Visible = False
                 frmMain.cmdinfo.Visible = False
-                frmMain.picture1.Visible = False
+                frmMain.Picture1.Visible = False
                 'frmMain.Menu.Visible = False
                 'Helios Barras
                 frmMain.bar_salud(0).Visible = False
@@ -3497,24 +3563,24 @@ Public Sub CharRender(ByRef rChar As Char, _
                       ByVal PixelOffSetX As Integer, _
                       ByVal PixelOffSetY As Integer)
 
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modify Date: 12/03/04
-    'Draw char's to screen without offcentering them
-    '***************************************************
-    Dim moved        As Boolean
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modify Date: 12/03/04
+'Draw char's to screen without offcentering them
+'***************************************************
+    Dim moved As Boolean
 
-    Dim Pos          As Integer
+    Dim Pos As Integer
 
-    Dim line         As String
+    Dim line As String
 
-    Dim color        As Long
+    Dim color As Long
 
-    Dim VelChar      As Single
+    Dim VelChar As Single
 
-    Dim ColorPj      As Long
+    Dim ColorPj As Long
 
-    Dim ShowPJ       As Byte
+    Dim ShowPJ As Byte
 
     Dim ShowPJ_Alpha As Byte
 
@@ -3539,7 +3605,9 @@ Public Sub CharRender(ByRef rChar As Char, _
                 If .Body.Walk(.Heading).Speed > 0 Then .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
-
+                If .alaIndex > 0 Then
+                    .Alas.GrhIndex(.Heading).Started = 1
+                End If
                 'Char moved
                 moved = True
 
@@ -3561,6 +3629,9 @@ Public Sub CharRender(ByRef rChar As Char, _
                 If .Body.Walk(.Heading).Speed > 0 Then .Body.Walk(.Heading).Started = 1
                 .Arma.WeaponWalk(.Heading).Started = 1
                 .Escudo.ShieldWalk(.Heading).Started = 1
+                If .alaIndex > 0 Then
+                    .Alas.GrhIndex(.Heading).Started = 1
+                End If
 
                 'Char moved
                 moved = True
@@ -3580,7 +3651,7 @@ Public Sub CharRender(ByRef rChar As Char, _
             'frmMain.TimerSimbolo.Enabled = True
             'Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 61 + SimboloY + 5, 1, D3DColorRGBA(255, 0, 0, 255))
             Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
-                            
+
         Else
 
             'frmMain.TimerSimbolo.Enabled = False
@@ -3597,6 +3668,10 @@ Public Sub CharRender(ByRef rChar As Char, _
                 If .Heading = 0 Then Exit Sub
                 .Body.Walk(.Heading).Started = 0
                 .Body.Walk(.Heading).FrameCounter = 1
+                If .alaIndex > 0 Then
+                    .Alas.GrhIndex(.Heading).Started = 0
+                    .Alas.GrhIndex(.Heading).FrameCounter = 1
+                End If
 
                 If .Arma.WeaponAttack = 0 Then
                     .Arma.WeaponWalk(.Heading).Started = 0
@@ -3686,10 +3761,10 @@ Public Sub CharRender(ByRef rChar As Char, _
                 End If
 
             End If
-            
+
             'auras
             'Call Effect_Fire_Begin(Engine_PixelPosX(291), Engine_PixelPosY(855), 8, 100, 180)
-            
+
             If ActivarAuras = "1" Then
 
                 Dim loopxx As Long
@@ -3697,29 +3772,31 @@ Public Sub CharRender(ByRef rChar As Char, _
                 For loopxx = 0 To 5
 
                     If .aura(loopxx).AuraGrh Then
-                        
+
                         Dim tmpColor As Long
 
-                        'tmpColor = D3DColorRGBA(.aura(loopxx).R, .aura(loopxx).G, .aura(loopxx).B, -1)
-                        
+                        tmpColor = D3DColorRGBA(.aura(loopxx).R, .aura(loopxx).G, .aura(loopxx).b, -1)
+                        If tmpColor = D3DColorRGBA(0, 0, 0, -1) Then
+                            tmpColor = -1
+                        End If
                         If .aura(loopxx).Giratoria = True And RotarActivado = "1" Then
-                            Rotacion = Rotacion + 0.05
+                            Rotacion = Rotacion + 0.5
                             D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
                             D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
-                            Call Engine_Render_Rectangle(PixelOffSetX - 35, PixelOffSetY - 40, 100, 100, .aura(loopxx).OffSetX, .aura(loopxx).OffSetX, 128, 128, , , Rotacion, .aura(loopxx).AuraGrh)
+                            Call Engine_Render_Rectangle(PixelOffSetX - 35, PixelOffSetY - 40, 100, 100, .aura(loopxx).OffSetX, .aura(loopxx).OffSetX, 128, 128, , , Rotacion, .aura(loopxx).AuraGrh, tmpColor, tmpColor, tmpColor, tmpColor)
                             D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
                             D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
                         Else
                             D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
                             D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
-                            Call Engine_Render_Rectangle(PixelOffSetX - 35, PixelOffSetY - 40, 100, 100, .aura(loopxx).OffSetX, .aura(loopxx).OffSetX, 128, 128, , , 0, .aura(loopxx).AuraGrh)
+                            Call Engine_Render_Rectangle(PixelOffSetX - 35, PixelOffSetY - 40, 100, 100, .aura(loopxx).OffSetX, .aura(loopxx).OffSetX, 128, 128, , , 0, .aura(loopxx).AuraGrh, tmpColor, tmpColor, tmpColor, tmpColor)
                             D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
                             D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
 
                         End If
-                        
+
                     End If
-                               
+
                 Next loopxx
 
             End If
@@ -3778,7 +3855,7 @@ Public Sub CharRender(ByRef rChar As Char, _
                 'Draw Body
                 If .Body.Walk(.Heading).GrhIndex Then
                     'If EsNPC(Val(CharIndex)) Then
-                       
+
                     ' End If
 
                     Call DrawGrhShadow(.Body.Walk(.Heading), TempBodyOffsetX, TempBodyOffsetY, 1, 0.5, IIf(Sombra, 0, 1), ColorPj, 255, .Chiquito)
@@ -3798,8 +3875,19 @@ Public Sub CharRender(ByRef rChar As Char, _
                 If .Escudo.ShieldWalk(.Heading).GrhIndex Then Call DrawGrhShadow(.Escudo.ShieldWalk(.Heading), TempBodyOffsetX, TempBodyOffsetY, 1, 0.5, IIf(Sombra, 0, 1), ColorPj, 255, .Chiquito)
 
                 'Draw Body
+                If .Heading <> north Then
+                    If .alaIndex > 0 Then
+                        Call DrawGrh(.Alas.GrhIndex(.Heading), TempBodyOffsetX, TempBodyOffsetY - 5, 1, 0.5, 0, ColorPj, 0)
+                        Call DrawGrhShadow(.Alas.GrhIndex(.Heading), TempBodyOffsetX - 14, TempBodyOffsetY - 5, 1, 0.5, IIf(Sombra, 0, 1), ColorPj, 255, .Chiquito)
+                    End If
+                End If
                 If .Body.Walk(.Heading).GrhIndex Then Call DrawGrhShadowOff(.Body.Walk(.Heading), TempBodyOffsetX, TempBodyOffsetY, 1, 0.5, ColorPj, .Chiquito)
-
+                If .Heading = north Then
+                    If .alaIndex > 0 Then
+                        Call DrawGrh(.Alas.GrhIndex(.Heading), TempBodyOffsetX, TempBodyOffsetY - 5, 1, 0.5, 0, ColorPj, 0)
+                        Call DrawGrhShadow(.Alas.GrhIndex(.Heading), TempBodyOffsetX - 14, TempBodyOffsetY - 5, 1, 0.5, IIf(Sombra, 0, 1), ColorPj, 255, .Chiquito)
+                    End If
+                End If
                 'Draw Head
                 Call DrawGrhShadowOff(.Head.Head(.Heading), TempBodyOffsetX + TempHeadOffsetX, TempBodyOffsetY + TempHeadOffsetY, 1, 0, ColorPj, .Chiquito)
 
@@ -3875,7 +3963,7 @@ Public Sub CharRender(ByRef rChar As Char, _
         If .particle_count > 0 Then
             For I = 1 To .particle_count
                 If .particle_group(I) > 0 Then
-                   ParticlesORE.Particle_Group_Render .particle_group(I), PixelOffSetX, PixelOffSetY
+                    ParticlesORE.Particle_Group_Render .particle_group(I), PixelOffSetX, PixelOffSetY
                 End If
             Next I
         End If

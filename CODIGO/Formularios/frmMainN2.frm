@@ -1443,14 +1443,14 @@ End Sub
 
 Private Sub BarraConsola_MouseDown(Button As Integer, _
                                    Shift As Integer, _
-                                   x As Single, _
-                                   y As Single)
+                                   X As Single, _
+                                   Y As Single)
 
     Dim TempY  As Integer
 
     Dim TamCon As Integer
 
-    TempY = y - 3
+    TempY = Y - 3
     TamCon = (LineasConsola - 6)
 
     If TamCon > 0 Then
@@ -1480,14 +1480,14 @@ End Sub
 
 Private Sub BarraHechiz_MouseDown(Button As Integer, _
                                   Shift As Integer, _
-                                  x As Single, _
-                                  y As Single)
+                                  X As Single, _
+                                  Y As Single)
 
     Dim TempY  As Integer
 
     Dim TamCon As Integer
 
-    TempY = y - 3
+    TempY = Y - 3
 
     Dim MaxItems As Integer
 
@@ -1520,11 +1520,11 @@ End Sub
 
 Private Sub BarritaConsola_MouseDown(Button As Integer, _
                                      Shift As Integer, _
-                                     x As Single, _
-                                     y As Single)
+                                     X As Single, _
+                                     Y As Single)
 
     If Button = 1 Then
-        OldYConsola = y
+        OldYConsola = Y
 
     End If
 
@@ -1532,14 +1532,14 @@ End Sub
 
 Private Sub BarritaConsola_MouseMove(Button As Integer, _
                                      Shift As Integer, _
-                                     x As Single, _
-                                     y As Single)
+                                     X As Single, _
+                                     Y As Single)
 
     If Button = 1 Then
 
         Dim TempY As Integer
 
-        TempY = BarritaConsola.Top + (y - OldYConsola)
+        TempY = BarritaConsola.Top + (Y - OldYConsola)
 
         If TempY < 16 Then TempY = 16
         If TempY > 68 Then TempY = 68
@@ -1554,11 +1554,11 @@ End Sub
 
 Private Sub BarritaHechiz_MouseDown(Button As Integer, _
                                     Shift As Integer, _
-                                    x As Single, _
-                                    y As Single)
+                                    X As Single, _
+                                    Y As Single)
 
     If Button = 1 Then
-        hlst.OldY = y
+        hlst.OldY = Y
 
     End If
 
@@ -1566,8 +1566,8 @@ End Sub
 
 Private Sub BarritaHechiz_MouseMove(Button As Integer, _
                                     Shift As Integer, _
-                                    x As Single, _
-                                    y As Single)
+                                    X As Single, _
+                                    Y As Single)
 
     If Button = 1 Then
 
@@ -1576,7 +1576,7 @@ Private Sub BarritaHechiz_MouseMove(Button As Integer, _
         Dim MaxItems As Integer
 
         MaxItems = Int(picHechiz.Height / hlst.Pixel_Alto)
-        TempY = BarritaHechiz.Top + (y - hlst.OldY)
+        TempY = BarritaHechiz.Top + (Y - hlst.OldY)
 
         If TempY < 16 Then TempY = 16
         If TempY > 150 Then TempY = 150
@@ -1633,7 +1633,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    picture1.Visible = True
+    Picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -2065,16 +2065,16 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
-    If y < 24 And NoRes Then
+    If Y < 24 And NoRes Then
         MoverVentana (Me.hwnd)
 
     End If
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If UserPasarNivel > 0 Then
         frmMain.exp.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
@@ -2110,8 +2110,8 @@ End Sub
 
 Private Sub lblEXP_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
     frmMain.exp.Caption = UserExp & "/" & UserPasarNivel
     frmMain.exp.Caption = UserExp & "/" & UserPasarNivel
 
@@ -2123,7 +2123,7 @@ Private Sub lblinve_Click()
      
     If invHechisos.Visible = True Then
         invHechisos.Visible = False
-        picHechiz.Visible = False
+       ' picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
         LanzarImg.Visible = False
@@ -2154,10 +2154,10 @@ Private Sub Lblmagia_Click()
 
     If invHechisos.Visible = True Then
         invHechisos.Visible = False
-        picHechiz.Visible = False
+        'picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        picture1.Visible = False
+        Picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2168,8 +2168,8 @@ Private Sub Lblmagia_Click()
         invHechisos.Visible = True
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
-        picHechiz.Visible = True
-        picture1.Visible = True
+        'picHechiz.Visible = True
+        Picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         'LanzarImg.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & "14956.png", , , , , True)
@@ -2180,6 +2180,8 @@ Private Sub Lblmagia_Click()
     End If
 
 End Sub
+
+
 
 Private Sub PicSpells_DblClick()
 s_Index = invSpells.SelectedItem
@@ -2192,9 +2194,15 @@ hlst.ListIndex = s_Index - 1
 Call cmdLanzar_Click
 End Sub
 
-Private Sub PicSpells_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-InvX = x
-    InvY = y
+Private Sub PicSpells_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
+        Call Audio.PlayWave(SND_CLICK)
+        End If
+End Sub
+
+Private Sub PicSpells_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+InvX = X
+    InvY = Y
  
     
     If Button = 2 And Not Comerciando Then
@@ -2209,7 +2217,7 @@ InvX = x
     End If
 End Sub
 
-Private Sub PicSpells_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub PicSpells_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim Stemp As String
    s_Index = invSpells.SelectedItem
 If DragAndDrop Then
@@ -2220,11 +2228,11 @@ If DragAndDrop Then
     End If
 
     If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
-        If x >= invSpells.OffSetX And y >= invSpells.OffSetY And x <= PicSpells.Width And y <= PicSpells.Height Then
+        If X >= invSpells.OffSetX And Y >= invSpells.OffSetY And X <= PicSpells.Width And Y <= PicSpells.Height Then
 
             Dim NewPosInv As Integer
               
-            NewPosInv = invSpells.ClickItem(x, y)
+            NewPosInv = invSpells.ClickItem(X, Y)
 
             If NewPosInv > 0 Then
               
@@ -2602,8 +2610,8 @@ End Sub
 
 Private Sub QuestBoton_MouseUp(Button As Integer, _
                                Shift As Integer, _
-                               x As Single, _
-                               y As Single)
+                               X As Single, _
+                               Y As Single)
     
     On Error GoTo QuestBoton_MouseUp_Err
     
@@ -2730,26 +2738,26 @@ End Sub
 
 Private Sub picHechiz_MouseDown(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
     
     Call Audio.PlayWave(SND_CLICK)
 
-    If y < 0 Then y = 0
-    If y > 228 Then y = 228
-    hlst.ListIndex = Int(y / hlst.Pixel_Alto) + hlst.Scroll
+    If Y < 0 Then Y = 0
+    If Y > 228 Then Y = 228
+    hlst.ListIndex = Int(Y / hlst.Pixel_Alto) + hlst.Scroll
 
 End Sub
 
 Private Sub picHechiz_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
 
     If Button = 1 Then
-        If y < 0 Then y = 0
-        If y > 228 Then y = 228
-        hlst.ListIndex = Int(y / hlst.Pixel_Alto) + hlst.Scroll
+        If Y < 0 Then Y = 0
+        If Y > 228 Then Y = 228
+        hlst.ListIndex = Int(Y / hlst.Pixel_Alto) + hlst.Scroll
 
     End If
 
@@ -2757,8 +2765,8 @@ End Sub
 
 Private Sub picInv_MouseDown(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
 
     If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
         Call Audio.PlayWave(SND_CLICK)
@@ -2769,10 +2777,10 @@ End Sub
 
 Private Sub PicInv_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
-    InvX = x
-    InvY = y
+                             X As Single, _
+                             Y As Single)
+    InvX = X
+    InvY = Y
 
     If Button = 2 And Not Comerciando Then
         If Inventario.GrhIndex(Inventario.SelectedItem) > 0 Then
@@ -2822,6 +2830,30 @@ Private Sub pRender_Click()
 
     If Conectar Then Exit Sub
     If Cartel Then Cartel = False
+
+
+
+    If MouseX > 113 And MouseX < 310 And MouseY > 19 And MouseY < 36 Then
+        Call Audio.PlayWave(SND_CLICKNEW)
+        If Vidarender = True Then
+            Vidarender = False
+            Exit Sub
+        Else
+            Vidarender = True
+            Exit Sub
+        End If
+    End If
+
+    If MouseX > 113 And MouseX < 310 And MouseY > 49 And MouseY < 67 Then
+        Call Audio.PlayWave(SND_CLICKNEW)
+        If Manarender = True Then
+            Manarender = False
+            Exit Sub
+        Else
+            Manarender = True
+            Exit Sub
+        End If
+    End If
 
     'Helios 03/06/2021 "coordenadas del raton"
     If MouseX > 661 And MouseX < 681 And MouseY > 5 And MouseY < 25 Then
@@ -2965,13 +2997,13 @@ Private Sub pRender_Click()
             picInv.Visible = True
             PicSpells.Visible = True
             MostrarMenuInventario = True
-            
+
             barritaa.Visible = True
 
         Else
-        PicSpells.Visible = False
+            PicSpells.Visible = False
             invHechisos.Visible = False
-            picHechiz.Visible = False
+            'picHechiz.Visible = False
             'CmdLanzar.Visible = False
             BarraHechiz.Visible = False
             LanzarImg.Visible = False
@@ -2982,279 +3014,281 @@ Private Sub pRender_Click()
             ContarClip = 0
 
         End If
-   
-    Exit Sub
 
-End If
-
-'helios 06/06/2021
-If MouseX > 902 And MouseX < 925 And MouseY > 182 And MouseY < 1237 Then
-    If frmMain.invHechisos.Visible = True Then
-        Call Audio.PlayWave(SND_CLICKNEW)
-
-        Call LanzarImg_Click    ' Lanzar Magia
+        Exit Sub
 
     End If
 
-    Exit Sub
+    'helios 06/06/2021
+    If MouseX > 902 And MouseX < 925 And MouseY > 182 And MouseY < 1237 Then
+        If frmMain.invHechisos.Visible = True Then
+            Call Audio.PlayWave(SND_CLICKNEW)
 
-End If
-
-'helios 06/06/2021
-
-If ContarClip = 1 Then
-  
-    If MouseX > 977 And MouseX < 989 And MouseY > 230 And MouseY < 242 Then
-
-
-        If picInv.Left = 978 Then
-
-            picInv.Left = 946
-            Exit Sub
+            Call LanzarImg_Click    ' Lanzar Magia
 
         End If
 
-        If picInv.Left = 946 Then
-            picInv.Left = 914
-            Exit Sub
-        End If
-
-        If picInv.Left = 914 Then
-            picInv.Left = 882
-            Exit Sub
-        End If
+        Exit Sub
 
     End If
 
-    If MouseX > 993 And MouseX < 1007 And MouseY > 228 And MouseY < 243 Then
+    'helios 06/06/2021
+
+    If ContarClip = 1 Then
+
+        If MouseX > 977 And MouseX < 989 And MouseY > 230 And MouseY < 242 Then
 
 
+            If picInv.Left = 978 Then
 
-        If picInv.Left = 882 Then
+                picInv.Left = 946
+                Exit Sub
 
-            picInv.Left = 914
+            End If
 
-            Exit Sub
-        End If
+            If picInv.Left = 946 Then
+                picInv.Left = 914
+                Exit Sub
+            End If
 
-        If picInv.Left = 914 Then
-            picInv.Left = 946
-            Exit Sub
-        End If
-
-        If picInv.Left = 946 Then
-            picInv.Left = 978
-            Exit Sub
-        End If
-
-    End If
-
-End If
-
-If ContarClip = 1 Then
-  
-    If MouseX > 977 And MouseX < 989 And MouseY > 568 And MouseY < 581 Then
-
-
-        If PicSpells.Left = 978 Then
-
-            PicSpells.Left = 946
-            Exit Sub
+            If picInv.Left = 914 Then
+                picInv.Left = 882
+                Exit Sub
+            End If
 
         End If
 
-        If PicSpells.Left = 946 Then
-           PicSpells.Left = 914
-            Exit Sub
-        End If
-
-        If PicSpells.Left = 914 Then
-            PicSpells.Left = 882
-            Exit Sub
-        End If
-
-    End If
-
-    If MouseX > 993 And MouseX < 1007 And MouseY > 567 And MouseY < 579 Then
+        If MouseX > 993 And MouseX < 1007 And MouseY > 228 And MouseY < 243 Then
 
 
 
-        If PicSpells.Left = 882 Then
+            If picInv.Left = 882 Then
 
-            PicSpells.Left = 914
+                picInv.Left = 914
 
-            Exit Sub
-        End If
+                Exit Sub
+            End If
 
-        If PicSpells.Left = 914 Then
-            PicSpells.Left = 946
-            Exit Sub
-        End If
+            If picInv.Left = 914 Then
+                picInv.Left = 946
+                Exit Sub
+            End If
 
-        If PicSpells.Left = 946 Then
-           PicSpells.Left = 978
-            Exit Sub
-        End If
-
-    End If
-
-End If
-
-'helios 06/06/2021
-
-'Fin Helios 03/06/2021 "coordenadas del raton"
-
-If UserEmbarcado Then
-    If Not Barco(0) Is Nothing Then
-        If Barco(0).TickPuerto = 0 And Barco(0).Embarcado = True Then
-            Exit Sub
+            If picInv.Left = 946 Then
+                picInv.Left = 978
+                Exit Sub
+            End If
 
         End If
 
     End If
 
-    If Not Barco(1) Is Nothing Then
-        If Barco(1).TickPuerto = 0 And Barco(1).Embarcado = True Then
-            Exit Sub
+    If ContarClip = 1 Then
+
+        If MouseX > 977 And MouseX < 989 And MouseY > 568 And MouseY < 581 Then
+
+
+            If PicSpells.Left = 978 Then
+
+                PicSpells.Left = 946
+                Exit Sub
+
+            End If
+
+            If PicSpells.Left = 946 Then
+                PicSpells.Left = 914
+                Exit Sub
+            End If
+
+            If PicSpells.Left = 914 Then
+                PicSpells.Left = 882
+                Exit Sub
+            End If
+
+        End If
+
+        If MouseX > 993 And MouseX < 1007 And MouseY > 567 And MouseY < 579 Then
+
+
+
+            If PicSpells.Left = 882 Then
+
+                PicSpells.Left = 914
+
+                Exit Sub
+            End If
+
+            If PicSpells.Left = 914 Then
+                PicSpells.Left = 946
+                Exit Sub
+            End If
+
+            If PicSpells.Left = 946 Then
+                PicSpells.Left = 978
+                Exit Sub
+            End If
 
         End If
 
     End If
 
-End If
+    'helios 06/06/2021
 
-#If SeguridadAlkon Then
+    'Fin Helios 03/06/2021 "coordenadas del raton"
 
-    If LOGGING Then Call CheatingDeath.StoreKey(MouseBoton, True)
-#End If
+    If UserEmbarcado Then
+        If Not Barco(0) Is Nothing Then
+            If Barco(0).TickPuerto = 0 And Barco(0).Embarcado = True Then
+                Exit Sub
 
-If Not Comerciando Then
+            End If
 
-    If SendTxt.Visible = True Then
-        SendTxt.SetFocus
-    ElseIf SendCMSTXT.Visible = True Then
-        SendCMSTXT.SetFocus
+        End If
+
+        If Not Barco(1) Is Nothing Then
+            If Barco(1).TickPuerto = 0 And Barco(1).Embarcado = True Then
+                Exit Sub
+
+            End If
+
+        End If
 
     End If
 
-    Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
-    Debug.Print "Coordenada X: " & MouseX & " Coordenada Y: " & MouseY & " --- " & tX & " - " & tY
+    #If SeguridadAlkon Then
 
-    If Not InGameArea() Then Exit Sub
-    If Not InMapBounds(tX, tY) Then Exit Sub
+        If LOGGING Then Call CheatingDeath.StoreKey(MouseBoton, True)
+    #End If
 
-    If MouseShift = 0 And (MapData(tX, tY).Graphic(4).GrhIndex = 0 Or bTecho) Then
+    If Not Comerciando Then
 
-        'If MouseBoton <> vbRightButton Then
-        If MouseBoton Then
-            If UsingSkill = 0 Then
-                Call WriteLeftClick(tX, tY)
-            Else
+        If SendTxt.Visible = True Then
+            SendTxt.SetFocus
+        ElseIf SendCMSTXT.Visible = True Then
+            SendCMSTXT.SetFocus
 
-                If macrotrabajo.Enabled Then DesactivarMacroTrabajo
+        End If
 
-                '                    If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
-                '                        'frmMain.MousePointer = vbDefault
-                '                        Call SetCursor(General)
-                '                        UsingSkill = 0
-                '                        With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                '                            Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
-                '                        End With
-                '                        Exit Sub
-                '                    End If
+        Call ConvertCPtoTP(MouseX, MouseY, tX, tY)
+        Debug.Print "Coordenada X: " & MouseX & " Coordenada Y: " & MouseY & " --- " & tX & " - " & tY
 
-                'Splitted because VB isn't lazy!
-                If UsingSkill = Proyectiles Then
-                    If Not MainTimer.Check(TimersIndex.PuedeFlechas) Then
-                        frmMain.MousePointer = vbDefault
-                        Call SetCursor(General)
-                        UsingSkill = 0
+        If Not InGameArea() Then Exit Sub
+        If Not InMapBounds(tX, tY) Then Exit Sub
 
-                        With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                            Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
+        If MouseShift = 0 And (MapData(tX, tY).Graphic(4).GrhIndex = 0 Or bTecho) Then
 
-                        End With
-
-                        Exit Sub
-
-                    End If
-
-                End If
-
-                'Splitted because VB isn't lazy!
-                If UsingSkill = Magia Then
-                    If Not MainTimer.Check(TimersIndex.PuedeLanzarHechizo) Then  'Corto intervalo de Golpe-Magia
-                        frmMain.MousePointer = vbDefault
-                        Call SetCursor(General)
-                        UsingSkill = 0
-
-                        With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                            Call AddtoRichPicture("No puedes lanzar hechizos tan rápido.", .red, .green, .blue, .bold, .italic)
-
-                        End With
-
-                        Exit Sub
-
-                    End If
-
-                End If
-
-                'Splitted because VB isn't lazy!
-                If (UsingSkill = Pesca Or UsingSkill = Robar Or UsingSkill = Talar Or UsingSkill = Mineria Or UsingSkill = FundirMetal) Then
-                    If Not MainTimer.Check(TimersIndex.Work) Then
-                        frmMain.MousePointer = vbDefault
-                        Call SetCursor(General)
-                        UsingSkill = 0
-                        Exit Sub
-
-                    End If
-
-                End If
-
-                'If frmMain.MousePointer <> 99 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
-
-                frmMain.MousePointer = vbDefault
-
-                If UsingSecondSkill = 1 Then
-                    If UserNavegando = True Then
-                        Call WriteCreateEfectoClient(tX, tY, eEffects.Bala)
-                        UsingSecondSkill = 0
-                    Else
-
-                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call AddtoRichPicture("Debes estar navegando para usar el cañon.", .red, .green, .blue, .bold, .italic)
-
-                        End With
-
-                    End If
-
+            'If MouseBoton <> vbRightButton Then
+            If MouseBoton Then
+                If UsingSkill = 0 Then
+                    Call WriteLeftClick(tX, tY)
                 Else
-                    Call WriteWorkLeftClick(tX, tY, UsingSkill)
+
+                    If macrotrabajo.Enabled Then DesactivarMacroTrabajo
+
+                    '                    If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
+                    '                        'frmMain.MousePointer = vbDefault
+                    '                        Call SetCursor(General)
+                    '                        UsingSkill = 0
+                    '                        With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                    '                            Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
+                    '                        End With
+                    '                        Exit Sub
+                    '                    End If
+
+                    'Splitted because VB isn't lazy!
+                    If UsingSkill = Proyectiles Then
+                        If Not MainTimer.Check(TimersIndex.PuedeFlechas) Then
+                            frmMain.MousePointer = vbDefault
+                            Call SetCursor(General)
+                            UsingSkill = 0
+
+                            With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                                Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
+
+                            End With
+
+                            Exit Sub
+
+                        End If
+
+                    End If
+
+                    'Splitted because VB isn't lazy!
+                    If UsingSkill = Magia Then
+                        If Not MainTimer.Check(TimersIndex.PuedeLanzarHechizo) Then  'Corto intervalo de Golpe-Magia
+                            frmMain.MousePointer = vbDefault
+                            Call SetCursor(General)
+                            UsingSkill = 0
+
+                            With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                                Call AddtoRichPicture("No puedes lanzar hechizos tan rápido.", .red, .green, .blue, .bold, .italic)
+
+                            End With
+
+                            Exit Sub
+
+                        End If
+
+                    End If
+
+                    'Splitted because VB isn't lazy!
+                    If (UsingSkill = Pesca Or UsingSkill = Robar Or UsingSkill = Talar Or UsingSkill = Mineria Or UsingSkill = FundirMetal) Then
+                        If Not MainTimer.Check(TimersIndex.Work) Then
+                            frmMain.MousePointer = vbDefault
+                            Call SetCursor(General)
+                            UsingSkill = 0
+                            Exit Sub
+
+                        End If
+
+                    End If
+
+                    'If frmMain.MousePointer <> 99 Then Exit Sub 'Parcheo porque a veces tira el hechizo sin tener el cursor (NicoNZ)
+
+                    frmMain.MousePointer = vbDefault
+
+                    If UsingSecondSkill = 1 Then
+                        If UserNavegando = True Then
+                            Call WriteCreateEfectoClient(tX, tY, eEffects.Bala)
+                            UsingSecondSkill = 0
+                        Else
+
+                            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                                Call AddtoRichPicture("Debes estar navegando para usar el cañon.", .red, .green, .blue, .bold, .italic)
+
+                            End With
+
+                        End If
+
+                    Else
+                        Call WriteWorkLeftClick(tX, tY, UsingSkill)
+
+                    End If
+
+                    frmMain.MousePointer = vbDefault
+                    Call SetCursor(General)
+
+                    UsingSkill = 0
+                    UsingSecondSkill = 0
 
                 End If
 
-                frmMain.MousePointer = vbDefault
-                Call SetCursor(General)
-
-                UsingSkill = 0
-                UsingSecondSkill = 0
+            Else
+                Call AbrirMenuViewPort
 
             End If
 
-        Else
-            Call AbrirMenuViewPort
+        ElseIf (MouseShift And 1) = 1 Then
 
-        End If
+            If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
+                If MainTimer.Check(TimersIndex.Telep) And Not UserEmbarcado And Not UserNadando And UserMoving = 0 Then
+                    If MouseBoton = vbLeftButton And charlist(UserCharIndex).priv > 0 And charlist(UserCharIndex).priv < 5 Then
+                        If VerMapa Then
+                            Call WriteWarpMeToTarget(Int((frmMain.MouseX - PosMapX + 32) / RelacionMiniMapa), Int((frmMain.MouseY - PosMapY + 32) / RelacionMiniMapa))
+                        Else
+                            Call WriteWarpMeToTarget(tX, tY)
 
-    ElseIf (MouseShift And 1) = 1 Then
-
-        If Not CustomKeys.KeyAssigned(KeyCodeConstants.vbKeyShift) Then
-            If MainTimer.Check(TimersIndex.Telep) And Not UserEmbarcado And Not UserNadando And UserMoving = 0 Then
-                If MouseBoton = vbLeftButton And charlist(UserCharIndex).priv > 0 And charlist(UserCharIndex).priv < 5 Then
-                    If VerMapa Then
-                        Call WriteWarpMeToTarget(Int((frmMain.MouseX - PosMapX + 32) / RelacionMiniMapa), Int((frmMain.MouseY - PosMapY + 32) / RelacionMiniMapa))
-                    Else
-                        Call WriteWarpMeToTarget(tX, tY)
+                        End If
 
                     End If
 
@@ -3265,8 +3299,6 @@ If Not Comerciando Then
         End If
 
     End If
-
-End If
 
 End Sub
 
@@ -3279,8 +3311,8 @@ End Sub
 
 Private Sub pRender_MouseDown(Button As Integer, _
                               Shift As Integer, _
-                              x As Single, _
-                              y As Single)
+                              X As Single, _
+                              Y As Single)
     MouseBoton = Button
     MouseShift = Shift
 
@@ -3288,10 +3320,10 @@ End Sub
 
 Private Sub pRender_MouseMove(Button As Integer, _
                               Shift As Integer, _
-                              x As Single, _
-                              y As Single)
-    MouseX = x
-    MouseY = y
+                              X As Single, _
+                              Y As Single)
+    MouseX = X
+    MouseY = Y
     
     'Trim to fit screen
     If MouseX < 0 Then
@@ -3309,15 +3341,15 @@ Private Sub pRender_MouseMove(Button As Integer, _
 
     End If
     
-    If Conectar Then Call MouseAction(x, y, 0)
+    If Conectar Then Call MouseAction(X, Y, 0)
 
 End Sub
 
-Private Sub pRender_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
-    clicX = x
-    clicY = y
+Private Sub pRender_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    clicX = X
+    clicY = Y
 
-    If Conectar Then Call MouseAction(x, y, 1)
+    If Conectar Then Call MouseAction(X, Y, 1)
 
 End Sub
 
@@ -3427,8 +3459,8 @@ End Sub
 
 Private Sub LanzarImg_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
     UsaMacro = False
     CnTd = 0
 
@@ -3453,7 +3485,7 @@ Public Sub ReDrawConsola()
         If I >= 0 And I <= LineasConsola Then
             pConsola.CurrentX = 0
             pConsola.CurrentY = (I - OffSetConsola - 1) * 14
-            pConsola.ForeColor = Consola(I).Color
+            pConsola.ForeColor = Consola(I).color
             pConsola.FontBold = CBool(Consola(I).bold)
             pConsola.FontItalic = CBool(Consola(I).italic)
             pConsola.Print Consola(I).Texto
@@ -3629,63 +3661,66 @@ Private Sub picInv_DblClick()
 
     If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
         If frmCarp.Visible Or frmHerrero.Visible Then Exit Sub
-    
+
         If Not MainTimer.Check(TimersIndex.PuedeUsarDobleClick) Then Exit Sub
-    
+
         If macrotrabajo.Enabled Then DesactivarMacroTrabajo
-    
+
         Select Case Inventario.ObjType(Inventario.SelectedItem)
+
+        Case eObjType.otcasco
+            Call EquiparItem
+
+        Case eObjType.otArmadura
+            Call EquiparItem
+
+        Case eObjType.otescudo
+            Call EquiparItem
         
-            Case eObjType.otcasco
-                Call EquiparItem
-    
-            Case eObjType.otArmadura
-                Call EquiparItem
+        Case eObjType.otAlas
+            Call EquiparItem
 
-            Case eObjType.otescudo
-                Call EquiparItem
-        
-            Case eObjType.otWeapon
-           
-                If InStr(Inventario.ItemName(Inventario.SelectedItem), "Arco") > 0 Then
-                    If Inventario.Equipped(Inventario.SelectedItem) Then
-                        Call UsarItem
-                    Else
-                        Call EquiparItem
+        Case eObjType.otWeapon
 
-                    End If
-
-                ElseIf InStr(Inventario.ItemName(Inventario.SelectedItem), "Bala") > 0 Then
-
-                    If Inventario.Equipped(Inventario.SelectedItem) Then
-                        Call UsarItem
-                        UsingSecondSkill = 1
-                    Else
-                        Call EquiparItem
-
-                    End If
-
+            If InStr(Inventario.ItemName(Inventario.SelectedItem), "Arco") > 0 Then
+                If Inventario.Equipped(Inventario.SelectedItem) Then
+                    Call UsarItem
                 Else
                     Call EquiparItem
 
                 End If
 
-            Case eObjType.otAnillo
+            ElseIf InStr(Inventario.ItemName(Inventario.SelectedItem), "Bala") > 0 Then
+
+                If Inventario.Equipped(Inventario.SelectedItem) Then
+                    Call UsarItem
+                    UsingSecondSkill = 1
+                Else
+                    Call EquiparItem
+
+                End If
+
+            Else
                 Call EquiparItem
-            
-            Case eObjType.otFlechas
-                Call EquiparItem
-        
-            Case Else
-                Call UsarItem
-            
+
+            End If
+
+        Case eObjType.otAnillo
+            Call EquiparItem
+
+        Case eObjType.otFlechas
+            Call EquiparItem
+
+        Case Else
+            Call UsarItem
+
         End Select
-    
+
     End If
 
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If DragAndDrop Then
         frmMain.MouseIcon = Nothing
@@ -3695,11 +3730,11 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
     End If
 
     If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
-        If x >= Inventario.OffSetX And y >= Inventario.OffSetY And x <= picInv.Width And y <= picInv.Height Then
+        If X >= Inventario.OffSetX And Y >= Inventario.OffSetY And X <= picInv.Width And Y <= picInv.Height Then
 
             Dim NewPosInv As Integer
 
-            NewPosInv = Inventario.ClickItem(x, y)
+            NewPosInv = Inventario.ClickItem(X, Y)
 
             If NewPosInv > 0 Then
                 Call WriteIntercambiarInv(Inventario.SelectedItem, NewPosInv, False)
@@ -3713,25 +3748,25 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
 
             Dim DropY As Integer, tmpY As Integer
 
-            tmpX = x + picInv.Left - pRender.Left
-            tmpY = y + picInv.Top - pRender.Top
+            tmpX = X + picInv.Left - pRender.Left
+            tmpY = Y + picInv.Top - pRender.Top
         
             If tmpX > 0 And tmpX < pRender.Width And tmpY > 0 And tmpY < pRender.Height Then
                 Call ConvertCPtoTP(tmpX, tmpY, DropX, DropY)
         
                 'Solo tira a un tilde de distancia...
-                If DropX < UserPos.x - 1 Then
-                    DropX = UserPos.x - 1
-                    DropY = UserPos.y
-                ElseIf DropX > UserPos.x + 1 Then
-                    DropX = UserPos.x + 1
-                    DropY = UserPos.y
-                ElseIf DropY < UserPos.y - 1 Then
-                    DropY = UserPos.y - 1
-                    DropX = UserPos.x
-                ElseIf DropY > UserPos.y + 1 Then
-                    DropY = UserPos.y + 1
-                    DropX = UserPos.x
+                If DropX < UserPos.X - 1 Then
+                    DropX = UserPos.X - 1
+                    DropY = UserPos.Y
+                ElseIf DropX > UserPos.X + 1 Then
+                    DropX = UserPos.X + 1
+                    DropY = UserPos.Y
+                ElseIf DropY < UserPos.Y - 1 Then
+                    DropY = UserPos.Y - 1
+                    DropX = UserPos.X
+                ElseIf DropY > UserPos.Y + 1 Then
+                    DropY = UserPos.Y + 1
+                    DropX = UserPos.X
 
                 End If
             
@@ -4118,28 +4153,28 @@ Private Sub WSock_Error(ByVal Number As Integer, _
 End Sub
 
 Public Sub RefreshMiniMap()
-    frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
+    frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
 
-    Me.shpMiniMapaUser.Left = UserPos.x
-    Me.shpMiniMapaUser.Top = UserPos.y
-    Me.shpMiniMapaVision.Left = UserPos.x - 135
-    Me.shpMiniMapaVision.Top = UserPos.y - 135
+    Me.shpMiniMapaUser.Left = UserPos.X
+    Me.shpMiniMapaUser.Top = UserPos.Y
+    Me.shpMiniMapaVision.Left = UserPos.X - 135
+    Me.shpMiniMapaVision.Top = UserPos.Y - 135
     Me.imgMiniMapa.Refresh
 
 End Sub
 
 Private Sub imgMiniMapa_MouseDown(Button As Integer, _
                                   Shift As Integer, _
-                                  x As Single, _
-                                  y As Single)
+                                  X As Single, _
+                                  Y As Single)
 
-    If x > 1077 Then x = 1077
-    If x < 23 Then x = 23
-    If y > 1477 Then y = 1477
-    If y < 23 Then y = 23
+    If X > 1077 Then X = 1077
+    If X < 23 Then X = 23
+    If Y > 1477 Then Y = 1477
+    If Y < 23 Then Y = 23
 
     If Button = vbRightButton Then
-        Call WriteWarpChar("YO", UserMap, CInt(x - 1), CInt(y - 1))
+        Call WriteWarpChar("YO", UserMap, CInt(X - 1), CInt(Y - 1))
         Call RefreshMiniMap
 
     End If

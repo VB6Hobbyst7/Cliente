@@ -77,7 +77,7 @@ Public PathInit            As String
 Private Type TConsola
 
     Texto As String
-    Color As Long
+    color As Long
     bold As Byte
     italic As Byte
 
@@ -815,7 +815,7 @@ Sub SwitchMap(ByVal Map As Integer)
     
     CargarMap (Map)
   'Call Effect_RedFountain_Begin(Engine_PixelPosX(302), Engine_PixelPosY(859), 1, 1000)
-    Call General_Particle_Create(5, 305, 855)
+    Call General_Particle_Create(106, 809.5, 791)
     Call Effect_Snow_Begin(13, 100)
 
 End Sub
@@ -896,7 +896,7 @@ a:
             frmMain.pConsola.FontBold = bold
             frmMain.pConsola.FontItalic = italic
             Consola(nId).Texto = Text
-            Consola(nId).Color = RGB(red, green, blue)
+            Consola(nId).color = RGB(red, green, blue)
             Consola(nId).bold = bold
             Consola(nId).italic = italic
                 
@@ -2339,3 +2339,44 @@ End Function
 
 'Particulas
 'Particulas *********************
+
+Sub CargarAlas()
+ 
+' \ Author : maTih.-
+' \ Note   : Llena el array de alas y los grhIndex
+ 
+alaPath = App.path & "\INIT\Alas.ini"
+ 
+Dim cantidadAlas As Byte
+Dim loopX        As Long
+ 
+cantidadAlas = Val(GetVar(alaPath, "INIT", "Cantidad"))
+ 
+If cantidadAlas = 0 Then Exit Sub
+ 
+ReDim alaArray(1 To cantidadAlas) As Alas
+ 
+For loopX = 1 To cantidadAlas
+    
+    CargarAlaIndex loopX
+    
+Next loopX
+ 
+End Sub
+
+Sub CargarAlaIndex(ByVal alaIndex As Byte)
+
+
+
+    Dim loopX As Long
+
+    With alaArray(alaIndex)
+
+        For loopX = E_Heading.north To E_Heading.west
+            InitGrh .GrhIndex(loopX), Val(GetVar(alaPath, "ALA" & alaIndex, "Direccion" & loopX)), 0
+        Next loopX
+
+    End With
+
+End Sub
+

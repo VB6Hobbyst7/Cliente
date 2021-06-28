@@ -15,7 +15,7 @@ Public ShadowColor              As Long
 
 Private Const FVF = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE 'D3DFVF_XYZ Or D3DFVF_NORMAL Or D3DFVF_TEX1 ' D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE Or D3DFVF_SPECULAR
 
-Private Const PI             As Single = 3.14159275180032   'can be worked out using (4*atn(1))
+Public Const PI             As Single = 3.14159275180032   'can be worked out using (4*atn(1))
 
 Public Const ANSI_FIXED_FONT As Long = 11
 

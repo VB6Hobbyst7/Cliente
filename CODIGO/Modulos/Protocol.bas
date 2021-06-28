@@ -3063,6 +3063,12 @@ Private Sub HandleCharacterCreate()
             .priv = 0
 
         End If
+            'Recibimos alas..
+        .alaIndex = buffer.ReadByte()
+        
+        If .alaIndex <> 0 Then
+        .Alas = alaArray(.alaIndex)
+        End If
 
     End With
     
@@ -3208,31 +3214,31 @@ End Sub
 
 Private Sub HandleCharacterChange()
 
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 05/17/06
-    '
-    '***************************************************
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'
+'***************************************************
     If incomingData.Length < 18 Then
         NotEnoughData = True
         Exit Sub
 
     End If
-    
+
     'Remove packet ID
     Call incomingData.ReadByte
-    
+
     Dim CharIndex As Integer
 
-    Dim tempint   As Integer
+    Dim tempint As Integer
 
     Dim headIndex As Integer
-    
+
     CharIndex = incomingData.ReadInteger()
-    
+
     With charlist(CharIndex)
         tempint = incomingData.ReadInteger()
-        
+
         If tempint < LBound(BodyData()) Or tempint > UBound(BodyData()) Then
             .Body = BodyData(0)
             .iBody = 0
@@ -3241,9 +3247,9 @@ Private Sub HandleCharacterChange()
             .iBody = tempint
 
         End If
-        
+
         headIndex = incomingData.ReadInteger()
-        
+
         If headIndex < LBound(HeadData()) Or headIndex > UBound(HeadData()) Then
             .Head = HeadData(0)
             .iHead = 0
@@ -3252,35 +3258,38 @@ Private Sub HandleCharacterChange()
             .iHead = headIndex
 
         End If
-        
+
         .muerto = headIndex = CASPER_HEAD Or headIndex = CASPER_HEAD_CRIMI Or .iBody = FRAGATA_FANTASMAL
 
         If .muerto Then .Alpha = 80 Else .Alpha = 255
         .Heading = incomingData.ReadByte()
-        
+
         tempint = incomingData.ReadInteger()
 
         If tempint <> 0 Then .Arma = WeaponAnimData(tempint)
-        
+
         tempint = incomingData.ReadInteger()
 
         If tempint <> 0 Then .Escudo = ShieldAnimData(tempint)
-        
+
         tempint = incomingData.ReadInteger()
 
         If tempint <> 0 Then .Casco = CascoAnimData(tempint)
-        
+
         tempint = incomingData.ReadInteger()
 
-        If tempint <> 0 Then 'Si no mando nada le dejo el que tenia por si solo giro el usuario
+        If tempint <> 0 Then    'Si no mando nada le dejo el que tenia por si solo giro el usuario
             Call SetCharacterFx(CharIndex, tempint, incomingData.ReadInteger())
         Else
             incomingData.ReadInteger
 
         End If
-
+        .alaIndex = incomingData.ReadInteger()
+        If .alaIndex <> 0 Then
+            .Alas = alaArray(.alaIndex)
+        End If
     End With
-    
+
     'Call RefreshAllChars
 End Sub
 
@@ -12659,9 +12668,9 @@ Private Sub HandleQuestDetails()
     FrmQuestInfo.ListView1.ListItems.Clear
     
     FrmQuests.Image.BackColor = RGB(11, 11, 11)
-    FrmQuests.Picture1.BackColor = RGB(19, 14, 11)
+    FrmQuests.picture1.BackColor = RGB(19, 14, 11)
     FrmQuests.Image.Refresh
-    FrmQuests.Picture1.Refresh
+    FrmQuests.picture1.Refresh
     FrmQuests.npclbl.Caption = ""
     FrmQuests.objetolbl.Caption = ""
     
