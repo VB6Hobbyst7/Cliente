@@ -2263,22 +2263,24 @@ Sub RenderScreen(ByVal TileX As Integer, _
     If Manarender = True Then
         Dim CantManx As Integer
         Dim CantManx2 As Integer
-        CantManx = 70 * Round(CDbl(UserMinMAN) / CDbl(UserMaxMAN / 2), 2)
+        If UserMaxMAN > 0 Then
+            CantManx = 70 * Round(CDbl(UserMinMAN) / CDbl(UserMaxMAN / 2), 2)
 
-        'Call Engine_Render_Rectangle(309, 275, 91, 89, 0, 0, 91, 89, , , 0, 14801)
-        If CantManx >= 70 Then
-            CantManx2 = CantManx - 70
-            CantManx = 70
+            'Call Engine_Render_Rectangle(309, 275, 91, 89, 0, 0, 91, 89, , , 0, 14801)
+            If CantManx >= 70 Then
+                CantManx2 = CantManx - 70
+                CantManx = 70
 
 
 
+            End If
+
+            'Call Engine_Render_Rectangle(478, 372, 68, 50, 0, 0, 68, 50, , , 0, 14801)
+
+            Call Engine_Render_Rectangle(558, 437, -46, -CantManx2, 0, 0, -46, -CantManx2, , , 0, 14805)
+            Call Engine_Render_Rectangle(466, 367, 46, CantManx, 0, 0, 46, CantManx, , , 0, 14805)
+            'Call Engine_Render_Rectangle(466, 367, 92, 70, 0, 0, 92, 70, , , 0, 14805)
         End If
-
-        'Call Engine_Render_Rectangle(478, 372, 68, 50, 0, 0, 68, 50, , , 0, 14801)
-
-        Call Engine_Render_Rectangle(558, 437, -46, -CantManx2, 0, 0, -46, -CantManx2, , , 0, 14805)
-        Call Engine_Render_Rectangle(466, 367, 46, CantManx, 0, 0, 46, CantManx, , , 0, 14805)
-        'Call Engine_Render_Rectangle(466, 367, 92, 70, 0, 0, 92, 70, , , 0, 14805)
     End If
 
 
