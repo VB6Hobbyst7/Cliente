@@ -2128,20 +2128,20 @@ Private Sub lblinve_Click()
         BarraHechiz.Visible = False
         LanzarImg.Visible = False
         'picfondoinve.Visible = True
-        picInv.Visible = True
+        PicInv.Visible = True
         
         Exit Sub
     Else
 
-        If picInv.Visible = True Then
+        If PicInv.Visible = True Then
             'picfondoinve.Visible = False
-            picInv.Visible = False
+            PicInv.Visible = False
             Exit Sub
 
         End If
 
         'picfondoinve.Visible = True
-        picInv.Visible = True
+        PicInv.Visible = True
         Exit Sub
 
     End If
@@ -2173,7 +2173,7 @@ Private Sub Lblmagia_Click()
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         'LanzarImg.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & "14956.png", , , , , True)
-        picInv.Visible = False
+        PicInv.Visible = False
        
         Exit Sub
 
@@ -2994,7 +2994,7 @@ Private Sub pRender_Click()
             'BarraHechiz.Visible = True
             'LanzarImg.Visible = True
             'picfondoinve.Visible = True
-            picInv.Visible = True
+            PicInv.Visible = True
             PicSpells.Visible = True
             MostrarMenuInventario = True
 
@@ -3008,7 +3008,7 @@ Private Sub pRender_Click()
             BarraHechiz.Visible = False
             LanzarImg.Visible = False
             'picfondoinve.Visible = True
-            picInv.Visible = False
+            PicInv.Visible = False
             MostrarMenuInventario = False
             barritaa.Visible = False
             ContarClip = 0
@@ -3039,20 +3039,20 @@ Private Sub pRender_Click()
         If MouseX > 977 And MouseX < 989 And MouseY > 230 And MouseY < 242 Then
 
 
-            If picInv.Left = 978 Then
+            If PicInv.Left = 978 Then
 
-                picInv.Left = 946
+                PicInv.Left = 946
                 Exit Sub
 
             End If
 
-            If picInv.Left = 946 Then
-                picInv.Left = 914
+            If PicInv.Left = 946 Then
+                PicInv.Left = 914
                 Exit Sub
             End If
 
-            If picInv.Left = 914 Then
-                picInv.Left = 882
+            If PicInv.Left = 914 Then
+                PicInv.Left = 882
                 Exit Sub
             End If
 
@@ -3062,20 +3062,20 @@ Private Sub pRender_Click()
 
 
 
-            If picInv.Left = 882 Then
+            If PicInv.Left = 882 Then
 
-                picInv.Left = 914
+                PicInv.Left = 914
 
                 Exit Sub
             End If
 
-            If picInv.Left = 914 Then
-                picInv.Left = 946
+            If PicInv.Left = 914 Then
+                PicInv.Left = 946
                 Exit Sub
             End If
 
-            If picInv.Left = 946 Then
-                picInv.Left = 978
+            If PicInv.Left = 946 Then
+                PicInv.Left = 978
                 Exit Sub
             End If
 
@@ -3320,10 +3320,89 @@ End Sub
 
 Private Sub pRender_MouseMove(Button As Integer, _
                               Shift As Integer, _
-                              x As Single, _
-                              y As Single)
+                            x As Single, _
+                            y As Single)
     MouseX = x
     MouseY = y
+
+    If MouseX > 828 And MouseX < 850 And MouseY > 5 And MouseY < 25 Then    'inventario
+        RecuadroX = 827
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+    End If
+    If MouseX > 882 And MouseX < 903 And MouseY > 5 And MouseY < 25 Then    ' barras de vida
+        RecuadroX = 881
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+    End If
+
+    If MouseX > 661 And MouseX < 681 And MouseY > 5 And MouseY < 25 Then    'clanes
+        RecuadroX = 659
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+
+    End If
+
+
+    If MouseX > 719 And MouseX < 739 And MouseY > 5 And MouseY < 25 Then    ' mini mapa
+        RecuadroX = 716
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+
+    End If
+
+    If MouseX > 803 And MouseX < 824 And MouseY > 5 And MouseY < 25 Then    'opciones
+
+        RecuadroX = 799
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+    End If
+
+    If MouseX > 688 And MouseX < 712 And MouseY > 5 And MouseY < 25 Then    'estadisticas
+        RecuadroX = 688
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+    End If
+
+    If MouseX > 774 And MouseX < 794 And MouseY > 5 And MouseY < 25 Then    'partis
+
+        RecuadroX = 772
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+    End If
+
+
+    If MouseX > 749 And MouseX < 764 And MouseY > 5 And MouseY < 25 Then    ' quees
+        RecuadroX = 744
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+
+    End If
+
+    If MouseX > 854 And MouseX < 878 And MouseY > 5 And MouseY < 25 Then    'consola
+        RecuadroX = 854
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+    End If
+
+    If MouseX > 1003 And MouseX < 1018 And MouseY > 6 And MouseY < 19 Then
+        RecuadroX = 998
+        RecuadroY = 2
+        RecuadroSON = True
+        Exit Sub
+
+    End If
+    RecuadroON = False
+    RecuadroSON = False
     
     'Trim to fit screen
     If MouseX < 0 Then
@@ -3332,7 +3411,7 @@ Private Sub pRender_MouseMove(Button As Integer, _
         MouseX = pRender.Width
 
     End If
-    
+
     'Trim to fit screen
     If MouseY < 0 Then
         MouseY = 0
@@ -3340,7 +3419,7 @@ Private Sub pRender_MouseMove(Button As Integer, _
         MouseY = pRender.Height
 
     End If
-    
+
     If Conectar Then Call MouseAction(x, y, 0)
 
 End Sub
@@ -3730,7 +3809,7 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
     End If
 
     If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
-        If x >= Inventario.OffSetX And y >= Inventario.OffSetY And x <= picInv.Width And y <= picInv.Height Then
+        If x >= Inventario.OffSetX And y >= Inventario.OffSetY And x <= PicInv.Width And y <= PicInv.Height Then
 
             Dim NewPosInv As Integer
 
@@ -3748,8 +3827,8 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
 
             Dim DropY As Integer, tmpY As Integer
 
-            tmpX = x + picInv.Left - pRender.Left
-            tmpY = y + picInv.Top - pRender.Top
+            tmpX = x + PicInv.Left - pRender.Left
+            tmpY = y + PicInv.Top - pRender.Top
         
             If tmpX > 0 And tmpX < pRender.Width And tmpY > 0 And tmpY < pRender.Height Then
                 Call ConvertCPtoTP(tmpX, tmpY, DropX, DropY)

@@ -2987,12 +2987,12 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
             'agilidad
             'fuerza
-              CantFuerza = -(((UserAtributos(1) / 42) / (42 / 42)) * 42)
+            CantFuerza = -(((UserAtributos(1) / 42) / (42 / 42)) * 42)
 
             Call Engine_Render_Rectangle(268, 136, 45, CantFuerza, 0, 0, 45, CantFuerza, , , 0, 14807)
             Call DrawFont(Round(UserAtributos(1)), 289, 108, D3DColorRGBA(255, 255, 255, 160), True)
             'fuerza
-            
+
             'stamina
             CantStamina = (((UserMinSTA / 210) / (UserMaxSTA / 210)) * 210)
 
@@ -3042,6 +3042,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If MostrarMenuInventario = True Then
             'Call Engine_Render_Rectangle(927, 209, 75, 36, 0, 0, 75, 36, , , 0, 14957) ' Helios menu elegir inventario hechizos
             Call Engine_Render_Rectangle(963, 209, 52, 408, 0, 0, 52, 408, , , 0, 14959)
+
         End If
 
         'Call Engine_Render_Rectangle(262, 690, 50, 39, 0, 0, 50, 39, , , 0, 14942) ' engranaje
@@ -3064,10 +3065,12 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Call DrawFont("(X:" & UserPos.x & ", Y:" & UserPos.y & ")", 938, 159, D3DColorRGBA(255, 255, 255, 160), True)
 
         End If
-
-
-
-
+        If RecuadroON = True Then
+            Call Engine_Render_Rectangle(RecuadroX, RecuadroY, 26, 23, 0, 0, 26, 23, , , 0, 14806)
+        End If
+        If RecuadroSON = True Then
+            Call Engine_Render_Rectangle(RecuadroX, RecuadroY, 23, 21, 0, 0, 23, 21, , , 0, 14808)
+        End If
 
 
     #Else
@@ -3426,7 +3429,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 'frmMain.picfondoinve.Visible = False Helios elije Menuinventario
                 frmMain.Bar_Agua.Visible = False 'Helios Barras
                 'Helios Barra exp
-                frmMain.picInv.Visible = False
+                frmMain.PicInv.Visible = False
                 frmMain.PicSpells.Visible = False
                 frmMain.barritaa.Visible = False
                 frmMain.imgMiniMapa.Visible = False
