@@ -2942,7 +2942,8 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Dim CantStamina As Integer
             Dim CantExp As Integer
             Dim CantExp2 As Integer
-
+            Dim CantAgilidad As Integer
+            Dim CantFuerza As Integer
             'experiencia
             CantExp = 67 * Round(CDbl(UserExp) / CDbl(UserPasarNivel / 2), 2)
 
@@ -2978,6 +2979,20 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Call DrawFont(UserMinMAN & " / " & UserMaxMAN, 215, 52, D3DColorRGBA(255, 255, 255, 200), True)
             'mana
 
+            'agilidad
+            CantAgilidad = -(((UserAtributos(2) / 42) / (42 / 42)) * 42)
+
+            Call Engine_Render_Rectangle(227, 136, 45, CantAgilidad, 0, 0, 45, CantAgilidad, , , 0, 14942)
+            Call DrawFont(Round(UserAtributos(2)), 248, 108, D3DColorRGBA(255, 255, 255, 160), True)
+
+            'agilidad
+            'fuerza
+              CantFuerza = -(((UserAtributos(1) / 42) / (42 / 42)) * 42)
+
+            Call Engine_Render_Rectangle(268, 136, 45, CantFuerza, 0, 0, 45, CantFuerza, , , 0, 14807)
+            Call DrawFont(Round(UserAtributos(1)), 289, 108, D3DColorRGBA(255, 255, 255, 160), True)
+            'fuerza
+            
             'stamina
             CantStamina = (((UserMinSTA / 210) / (UserMaxSTA / 210)) * 210)
 
