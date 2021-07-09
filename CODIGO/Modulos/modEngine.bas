@@ -961,7 +961,7 @@ Public Sub RenderSaliendo()
     
     color = D3DColorRGBA(0, 0, 0, AlphaSalir)
 
-    Call Engine_Render_D3DXSprite(255, 255, 1024, 768, 0, 0, color, 14706, 0)
+    Call Engine_Render_D3DXSprite(0, 0, 1024, 768, 0, 0, color, 14706, 0)
     
 End Sub
 

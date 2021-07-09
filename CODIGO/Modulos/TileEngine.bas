@@ -3023,10 +3023,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Call DrawFont(UserName, 65, 102, D3DColorRGBA(255, 255, 0, 160), True)
         End If
 
-        Call Engine_Render_Rectangle(574, 0, 76, 35, 0, 0, 76, 35, , , 0, 14954)    'user onlie Helios
+        Call Engine_Render_Rectangle(550, 0, 76, 35, 0, 0, 76, 35, , , 0, 14954)    'user onlie Helios
 
         Call Engine_Render_Rectangle(652, 0, 343, 36, 0, 0, 343, 36, , , 0, 14955)    'Menu Helios
-
+Call Engine_Render_Rectangle(627, 0, 369, 35, 0, 0, 369, 35, , , 0, 14809)    'Menu Helios
         Call Engine_Render_Rectangle(992, -5, 34, 35, 0, 0, 34, 35, , , 0, 14953)
 
         If frmMain.imgMiniMapa.Visible = True Then
@@ -3047,7 +3047,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
         'Call Engine_Render_Rectangle(262, 690, 50, 39, 0, 0, 50, 39, , , 0, 14942) ' engranaje
 
-        Call DrawFont("      " & CStr(UsersOn), 579, 12, D3DColorRGBA(240, 34, 37, 200))    'Useron Helios
+        Call DrawFont("      " & CStr(UsersOn), 560, 14, D3DColorRGBA(240, 34, 37, 200))    'Useron Helios
 
         ' Call Engine_Render_Rectangle(1150, 450, 32, 32, 0, 0, 32, 32, , , 0, 510) ' ORO Helios
 
@@ -3429,7 +3429,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 'frmMain.picfondoinve.Visible = False Helios elije Menuinventario
                 frmMain.Bar_Agua.Visible = False 'Helios Barras
                 'Helios Barra exp
-                frmMain.PicInv.Visible = False
+                frmMain.picInv.Visible = False
                 frmMain.PicSpells.Visible = False
                 frmMain.barritaa.Visible = False
                 frmMain.imgMiniMapa.Visible = False

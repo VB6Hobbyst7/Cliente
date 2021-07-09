@@ -171,6 +171,7 @@ Public Enum ServerPacketID
     UserCommerceEnd         ' FINCOMUSUOK
     UserOfferConfirm
     CancelOfferItem
+    RecibirRanking
     SendAura                ' Auras
     ShowBlacksmithForm      ' SFH
     ShowCarpenterForm       ' SFC
@@ -434,7 +435,7 @@ Public Enum ClientPacketID
     CreateEfectoClientAction     'Luego hacemos la accion (daño, etc)
     AnclarEmbarcacion            'Ancla la embarcacion
     EventPacket
-
+    SolicitaRranking
 End Enum
 
 'eventos

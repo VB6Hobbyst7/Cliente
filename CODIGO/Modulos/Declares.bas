@@ -31,13 +31,31 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
+Public Type tRanking
+    Value(0 To 9) As Long
+    nombre(0 To 9) As String
+End Type
+
+
+Public Ranking As tRanking
+
+Public Enum eRanking
+    TopFrags = 1
+    TopTorneos = 2
+    TopLevel = 3
+    TopOro = 4
+    TopRetos = 5
+    TopClanes = 6
+    TopMuertesP = 7
+End Enum
+Public RankingOro As String
 Public RecuadroX As Single
 Public RecuadroY As Single
 Public RecuadroON As Boolean
 Public RecuadroSON As Boolean
 Public Vidarender As Boolean
 Public Manarender As Boolean
-Public alaPath      As String
+Public alaPath As String
 Public ParticlesORE As New clsOreParticles
 Public Colorsangre As Byte
 Public invSpells As New clsGrapchicalInventory

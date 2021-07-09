@@ -236,458 +236,459 @@ End Sub
 
 Public Sub HandleIncomingData()
 
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 05/17/06
-    '
-    '***************************************************
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'
+'***************************************************
     On Error Resume Next
 
     Debug.Print incomingData.PeekByte() & " - " & PaqueteName(incomingData.PeekByte()) & " >> " & incomingData.Length
 
     Select Case incomingData.PeekByte()
 
-        Case ServerPacketID.OpenAccount             ' LOGGED
-            Call HandleOpenAccount
+    Case ServerPacketID.OpenAccount             ' LOGGED
+        Call HandleOpenAccount
 
-        Case ServerPacketID.logged                  ' LOGGED
-            Call HandleLogged
+    Case ServerPacketID.logged                  ' LOGGED
+        Call HandleLogged
 
-        Case ServerPacketID.ChangeHour
-            Call HandleChangeHour
+    Case ServerPacketID.ChangeHour
+        Call HandleChangeHour
 
-        Case ServerPacketID.RemoveDialogs           ' QTDL
-            Call HandleRemoveDialogs
+    Case ServerPacketID.RemoveDialogs           ' QTDL
+        Call HandleRemoveDialogs
 
-        Case ServerPacketID.RemoveCharDialog        ' QDL
-            Call HandleRemoveCharDialog
+    Case ServerPacketID.RemoveCharDialog        ' QDL
+        Call HandleRemoveCharDialog
 
-        Case ServerPacketID.NavigateToggle          ' NAVEG
-            Call HandleNavigateToggle
+    Case ServerPacketID.NavigateToggle          ' NAVEG
+        Call HandleNavigateToggle
 
-        Case ServerPacketID.Disconnect              ' FINOK
-            Call HandleDisconnect
+    Case ServerPacketID.Disconnect              ' FINOK
+        Call HandleDisconnect
 
-        Case ServerPacketID.CommerceEnd             ' FINCOMOK
-            Call HandleCommerceEnd
+    Case ServerPacketID.CommerceEnd             ' FINCOMOK
+        Call HandleCommerceEnd
 
-        Case ServerPacketID.CommerceChat
-            Call HandleCommerceChat
+    Case ServerPacketID.CommerceChat
+        Call HandleCommerceChat
 
-        Case ServerPacketID.BankEnd                 ' FINBANOK
-            Call HandleBankEnd
+    Case ServerPacketID.BankEnd                 ' FINBANOK
+        Call HandleBankEnd
 
-        Case ServerPacketID.CommerceInit            ' INITCOM
-            Call HandleCommerceInit
+    Case ServerPacketID.CommerceInit            ' INITCOM
+        Call HandleCommerceInit
 
-        Case ServerPacketID.BankInit                ' INITBANCO
-            Call HandleBankInit
+    Case ServerPacketID.BankInit                ' INITBANCO
+        Call HandleBankInit
 
-        Case ServerPacketID.UserCommerceInit        ' INITCOMUSU
-            Call HandleUserCommerceInit
+    Case ServerPacketID.UserCommerceInit        ' INITCOMUSU
+        Call HandleUserCommerceInit
 
-        Case ServerPacketID.UserCommerceEnd         ' FINCOMUSUOK
-            Call HandleUserCommerceEnd
+    Case ServerPacketID.UserCommerceEnd         ' FINCOMUSUOK
+        Call HandleUserCommerceEnd
 
-        Case ServerPacketID.UserOfferConfirm
-            Call HandleUserOfferConfirm
+    Case ServerPacketID.UserOfferConfirm
+        Call HandleUserOfferConfirm
 
-        Case ServerPacketID.CancelOfferItem
-            Call HandleCancelOfferItem
+    Case ServerPacketID.CancelOfferItem
+        Call HandleCancelOfferItem
+    Case ServerPacketID.RecibirRanking
+        Call HandleRecibirRanking
+        'aura
+    Case ServerPacketID.SendAura
+        Call HandleSendAura
+        'aura
 
-            'aura
-        Case ServerPacketID.SendAura
-            Call HandleSendAura
-            'aura
+    Case ServerPacketID.ShowBlacksmithForm      ' SFH
+        Call HandleShowBlacksmithForm
 
-        Case ServerPacketID.ShowBlacksmithForm      ' SFH
-            Call HandleShowBlacksmithForm
+    Case ServerPacketID.ShowCarpenterForm       ' SFC
+        Call HandleShowCarpenterForm
 
-        Case ServerPacketID.ShowCarpenterForm       ' SFC
-            Call HandleShowCarpenterForm
+    Case ServerPacketID.NPCSwing                ' N1
+        Call HandleNPCSwing
 
-        Case ServerPacketID.NPCSwing                ' N1
-            Call HandleNPCSwing
+    Case ServerPacketID.NPCKillUser             ' 6
+        Call HandleNPCKillUser
 
-        Case ServerPacketID.NPCKillUser             ' 6
-            Call HandleNPCKillUser
+    Case ServerPacketID.BlockedWithShieldUser   ' 7
+        Call HandleBlockedWithShieldUser
 
-        Case ServerPacketID.BlockedWithShieldUser   ' 7
-            Call HandleBlockedWithShieldUser
+    Case ServerPacketID.BlockedWithShieldOther  ' 8
+        Call HandleBlockedWithShieldOther
 
-        Case ServerPacketID.BlockedWithShieldOther  ' 8
-            Call HandleBlockedWithShieldOther
+    Case ServerPacketID.UserSwing               ' U1
+        Call HandleUserSwing
 
-        Case ServerPacketID.UserSwing               ' U1
-            Call HandleUserSwing
+    Case ServerPacketID.SafeModeOn              ' SEGON
+        Call HandleSafeModeOn
 
-        Case ServerPacketID.SafeModeOn              ' SEGON
-            Call HandleSafeModeOn
+    Case ServerPacketID.SafeModeOff             ' SEGOFF
+        Call HandleSafeModeOff
 
-        Case ServerPacketID.SafeModeOff             ' SEGOFF
-            Call HandleSafeModeOff
+    Case ServerPacketID.ResuscitationSafeOff
+        Call HandleResuscitationSafeOff
 
-        Case ServerPacketID.ResuscitationSafeOff
-            Call HandleResuscitationSafeOff
+    Case ServerPacketID.ResuscitationSafeOn
+        Call HandleResuscitationSafeOn
 
-        Case ServerPacketID.ResuscitationSafeOn
-            Call HandleResuscitationSafeOn
+    Case ServerPacketID.NobilityLost            ' PN
+        Call HandleNobilityLost
 
-        Case ServerPacketID.NobilityLost            ' PN
-            Call HandleNobilityLost
+    Case ServerPacketID.CantUseWhileMeditating  ' M!
+        Call HandleCantUseWhileMeditating
 
-        Case ServerPacketID.CantUseWhileMeditating  ' M!
-            Call HandleCantUseWhileMeditating
+    Case ServerPacketID.UpdateSta               ' ASS
+        Call HandleUpdateSta
 
-        Case ServerPacketID.UpdateSta               ' ASS
-            Call HandleUpdateSta
+    Case ServerPacketID.UpdateMana              ' ASM
+        Call HandleUpdateMana
 
-        Case ServerPacketID.UpdateMana              ' ASM
-            Call HandleUpdateMana
+    Case ServerPacketID.UpdateHP                ' ASH
+        Call HandleUpdateHP
 
-        Case ServerPacketID.UpdateHP                ' ASH
-            Call HandleUpdateHP
+    Case ServerPacketID.UpdateGold              ' ASG
+        Call HandleUpdateGold
 
-        Case ServerPacketID.UpdateGold              ' ASG
-            Call HandleUpdateGold
+    Case ServerPacketID.UpdateBankGold              ' ASG
+        Call HandleUpdateBankGold
 
-        Case ServerPacketID.UpdateBankGold              ' ASG
-            Call HandleUpdateBankGold
+    Case ServerPacketID.UpdateExp               ' ASE
+        Call HandleUpdateExp
 
-        Case ServerPacketID.UpdateExp               ' ASE
-            Call HandleUpdateExp
+    Case ServerPacketID.ChangeMap               ' CM
+        Call HandleChangeMap
 
-        Case ServerPacketID.ChangeMap               ' CM
-            Call HandleChangeMap
+    Case ServerPacketID.PosUpdate               ' PU
+        Call HandlePosUpdate
 
-        Case ServerPacketID.PosUpdate               ' PU
-            Call HandlePosUpdate
+    Case ServerPacketID.NPCHitUser              ' N2
+        Call HandleNPCHitUser
 
-        Case ServerPacketID.NPCHitUser              ' N2
-            Call HandleNPCHitUser
+    Case ServerPacketID.UserHitNPC              ' U2
+        Call HandleUserHitNPC
 
-        Case ServerPacketID.UserHitNPC              ' U2
-            Call HandleUserHitNPC
+    Case ServerPacketID.UserAttackedSwing       ' U3
+        Call HandleUserAttackedSwing
 
-        Case ServerPacketID.UserAttackedSwing       ' U3
-            Call HandleUserAttackedSwing
+    Case ServerPacketID.UserHittedByUser        ' N4
+        Call HandleUserHittedByUser
 
-        Case ServerPacketID.UserHittedByUser        ' N4
-            Call HandleUserHittedByUser
+    Case ServerPacketID.UserHittedUser          ' N5
+        Call HandleUserHittedUser
 
-        Case ServerPacketID.UserHittedUser          ' N5
-            Call HandleUserHittedUser
+    Case ServerPacketID.ChatOverHead            ' ||
+        Call HandleChatOverHead
 
-        Case ServerPacketID.ChatOverHead            ' ||
-            Call HandleChatOverHead
+    Case ServerPacketID.ConsoleMsg              ' || - Beware!! its the same as above, but it was properly splitted
+        Call HandleConsoleMessage
 
-        Case ServerPacketID.ConsoleMsg              ' || - Beware!! its the same as above, but it was properly splitted
-            Call HandleConsoleMessage
+    Case ServerPacketID.GuildChat               ' |+
+        Call HandleGuildChat
 
-        Case ServerPacketID.GuildChat               ' |+
-            Call HandleGuildChat
+    Case ServerPacketID.ShowMessageBox          ' !!
+        Call HandleShowMessageBox
 
-        Case ServerPacketID.ShowMessageBox          ' !!
-            Call HandleShowMessageBox
+    Case ServerPacketID.ShowMessageScroll
+        Call HandleShowMessageScroll
 
-        Case ServerPacketID.ShowMessageScroll
-            Call HandleShowMessageScroll
+    Case ServerPacketID.UserIndexInServer       ' IU
+        Call HandleUserIndexInServer
 
-        Case ServerPacketID.UserIndexInServer       ' IU
-            Call HandleUserIndexInServer
+    Case ServerPacketID.UserCharIndexInServer   ' IP
+        Call HandleUserCharIndexInServer
 
-        Case ServerPacketID.UserCharIndexInServer   ' IP
-            Call HandleUserCharIndexInServer
+    Case ServerPacketID.CharacterCreate         ' CC
+        Call HandleCharacterCreate
 
-        Case ServerPacketID.CharacterCreate         ' CC
-            Call HandleCharacterCreate
+    Case ServerPacketID.CharacterRemove         ' BP
+        Call HandleCharacterRemove
 
-        Case ServerPacketID.CharacterRemove         ' BP
-            Call HandleCharacterRemove
+    Case ServerPacketID.CharacterMove           ' MP, +, * and _ '
+        Call HandleCharacterMove
 
-        Case ServerPacketID.CharacterMove           ' MP, +, * and _ '
-            Call HandleCharacterMove
+    Case ServerPacketID.ForceCharMove
+        Call HandleForceCharMove
 
-        Case ServerPacketID.ForceCharMove
-            Call HandleForceCharMove
+    Case ServerPacketID.CharacterChange         ' CP
+        Call HandleCharacterChange
 
-        Case ServerPacketID.CharacterChange         ' CP
-            Call HandleCharacterChange
+    Case ServerPacketID.ObjectCreate            ' HO
+        Call HandleObjectCreate
 
-        Case ServerPacketID.ObjectCreate            ' HO
-            Call HandleObjectCreate
+    Case ServerPacketID.ObjectDelete            ' BO
+        Call HandleObjectDelete
 
-        Case ServerPacketID.ObjectDelete            ' BO
-            Call HandleObjectDelete
+    Case ServerPacketID.BlockPosition           ' BQ
+        Call HandleBlockPosition
 
-        Case ServerPacketID.BlockPosition           ' BQ
-            Call HandleBlockPosition
+    Case ServerPacketID.PlayWave                ' TW
+        Call HandlePlayWave
 
-        Case ServerPacketID.PlayWave                ' TW
-            Call HandlePlayWave
+    Case ServerPacketID.guildList               ' GL
+        Call HandleGuildList
 
-        Case ServerPacketID.guildList               ' GL
-            Call HandleGuildList
+    Case ServerPacketID.AreaChanged             ' CA
+        Call HandleAreaChanged
 
-        Case ServerPacketID.AreaChanged             ' CA
-            Call HandleAreaChanged
+    Case ServerPacketID.PauseToggle             ' BKW
+        Call HandlePauseToggle
 
-        Case ServerPacketID.PauseToggle             ' BKW
-            Call HandlePauseToggle
+    Case ServerPacketID.RainToggle              ' LLU
+        Call HandleRainToggle
 
-        Case ServerPacketID.RainToggle              ' LLU
-            Call HandleRainToggle
+    Case ServerPacketID.CreateFX                ' CFX
+        Call HandleCreateFX
 
-        Case ServerPacketID.CreateFX                ' CFX
-            Call HandleCreateFX
+    Case ServerPacketID.CreateEfecto                ' CFX
+        Call HandleCreateEfecto
 
-        Case ServerPacketID.CreateEfecto                ' CFX
-            Call HandleCreateEfecto
+    Case ServerPacketID.UpdateUserStats         ' EST
+        Call HandleUpdateUserStats
 
-        Case ServerPacketID.UpdateUserStats         ' EST
-            Call HandleUpdateUserStats
+    Case ServerPacketID.WorkRequestTarget       ' T01
+        Call HandleWorkRequestTarget
 
-        Case ServerPacketID.WorkRequestTarget       ' T01
-            Call HandleWorkRequestTarget
+    Case ServerPacketID.ChangeInventorySlot     ' CSI
+        Call HandleChangeInventorySlot
 
-        Case ServerPacketID.ChangeInventorySlot     ' CSI
-            Call HandleChangeInventorySlot
+    Case ServerPacketID.ChangeBankSlot          ' SBO
+        Call HandleChangeBankSlot
 
-        Case ServerPacketID.ChangeBankSlot          ' SBO
-            Call HandleChangeBankSlot
+    Case ServerPacketID.ChangeSpellSlot         ' SHS
+        Call HandleChangeSpellSlot
 
-        Case ServerPacketID.ChangeSpellSlot         ' SHS
-            Call HandleChangeSpellSlot
+    Case ServerPacketID.atributes               ' ATR
+        Call HandleAtributes
 
-        Case ServerPacketID.atributes               ' ATR
-            Call HandleAtributes
+    Case ServerPacketID.BlacksmithWeapons       ' LAH
+        Call HandleBlacksmithWeapons
 
-        Case ServerPacketID.BlacksmithWeapons       ' LAH
-            Call HandleBlacksmithWeapons
+    Case ServerPacketID.BlacksmithArmors        ' LAR
+        Call HandleBlacksmithArmors
 
-        Case ServerPacketID.BlacksmithArmors        ' LAR
-            Call HandleBlacksmithArmors
+    Case ServerPacketID.CarpenterObjects        ' OBR
+        Call HandleCarpenterObjects
 
-        Case ServerPacketID.CarpenterObjects        ' OBR
-            Call HandleCarpenterObjects
+    Case ServerPacketID.RestOK                  ' DOK
+        Call HandleRestOK
 
-        Case ServerPacketID.RestOK                  ' DOK
-            Call HandleRestOK
+    Case ServerPacketID.ErrorMsg                ' ERR
+        Call HandleErrorMessage
 
-        Case ServerPacketID.ErrorMsg                ' ERR
-            Call HandleErrorMessage
+    Case ServerPacketID.Blind                   ' CEGU
+        Call HandleBlind
 
-        Case ServerPacketID.Blind                   ' CEGU
-            Call HandleBlind
+    Case ServerPacketID.Dumb                    ' DUMB
+        Call HandleDumb
 
-        Case ServerPacketID.Dumb                    ' DUMB
-            Call HandleDumb
+    Case ServerPacketID.ShowSignal              ' MCAR
+        Call HandleShowSignal
 
-        Case ServerPacketID.ShowSignal              ' MCAR
-            Call HandleShowSignal
+    Case ServerPacketID.ChangeNPCInventorySlot  ' NPCI
+        Call HandleChangeNPCInventorySlot
 
-        Case ServerPacketID.ChangeNPCInventorySlot  ' NPCI
-            Call HandleChangeNPCInventorySlot
+    Case ServerPacketID.UpdateHungerAndThirst   ' EHYS
+        Call HandleUpdateHungerAndThirst
 
-        Case ServerPacketID.UpdateHungerAndThirst   ' EHYS
-            Call HandleUpdateHungerAndThirst
+    Case ServerPacketID.Fame                    ' FAMA
+        Call HandleFame
 
-        Case ServerPacketID.Fame                    ' FAMA
-            Call HandleFame
+    Case ServerPacketID.MiniStats               ' MEST
+        Call HandleMiniStats
 
-        Case ServerPacketID.MiniStats               ' MEST
-            Call HandleMiniStats
+    Case ServerPacketID.LevelUp                 ' SUNI
+        Call HandleLevelUp
 
-        Case ServerPacketID.LevelUp                 ' SUNI
-            Call HandleLevelUp
+    Case ServerPacketID.SetInvisible            ' NOVER
+        Call HandleSetInvisible
 
-        Case ServerPacketID.SetInvisible            ' NOVER
-            Call HandleSetInvisible
+    Case ServerPacketID.SetOculto               ' NOVER OCULTAR
+        Call HandleSetOculto
 
-        Case ServerPacketID.SetOculto               ' NOVER OCULTAR
-            Call HandleSetOculto
+    Case ServerPacketID.MeditateToggle          ' MEDOK
+        Call HandleMeditateToggle
 
-        Case ServerPacketID.MeditateToggle          ' MEDOK
-            Call HandleMeditateToggle
+    Case ServerPacketID.BlindNoMore             ' NSEGUE
+        Call HandleBlindNoMore
 
-        Case ServerPacketID.BlindNoMore             ' NSEGUE
-            Call HandleBlindNoMore
+    Case ServerPacketID.Ataca
+        Call HandleAtaca
 
-        Case ServerPacketID.Ataca
-            Call HandleAtaca
+    Case ServerPacketID.DumbNoMore              ' NESTUP
+        Call HandleDumbNoMore
 
-        Case ServerPacketID.DumbNoMore              ' NESTUP
-            Call HandleDumbNoMore
+    Case ServerPacketID.SendSkills              ' SKILLS
+        Call HandleSendSkills
 
-        Case ServerPacketID.SendSkills              ' SKILLS
-            Call HandleSendSkills
+    Case ServerPacketID.TrainerCreatureList     ' LSTCRI
+        Call HandleTrainerCreatureList
 
-        Case ServerPacketID.TrainerCreatureList     ' LSTCRI
-            Call HandleTrainerCreatureList
+    Case ServerPacketID.GuildMemberInfo
+        Call HandleGuildMemberInfo
 
-        Case ServerPacketID.GuildMemberInfo
-            Call HandleGuildMemberInfo
+    Case ServerPacketID.GuildNews               ' GUILDNE
+        Call HandleGuildNews
 
-        Case ServerPacketID.GuildNews               ' GUILDNE
-            Call HandleGuildNews
+    Case ServerPacketID.OfferDetails            ' PEACEDE and ALLIEDE
+        Call HandleOfferDetails
 
-        Case ServerPacketID.OfferDetails            ' PEACEDE and ALLIEDE
-            Call HandleOfferDetails
+    Case ServerPacketID.AlianceProposalsList    ' ALLIEPR
+        Call HandleAlianceProposalsList
 
-        Case ServerPacketID.AlianceProposalsList    ' ALLIEPR
-            Call HandleAlianceProposalsList
+    Case ServerPacketID.PeaceProposalsList      ' PEACEPR
+        Call HandlePeaceProposalsList
 
-        Case ServerPacketID.PeaceProposalsList      ' PEACEPR
-            Call HandlePeaceProposalsList
+    Case ServerPacketID.CharacterInfo           ' CHRINFO
+        Call HandleCharacterInfo
 
-        Case ServerPacketID.CharacterInfo           ' CHRINFO
-            Call HandleCharacterInfo
+    Case ServerPacketID.GuildLeaderInfo         ' LEADERI
+        Call HandleGuildLeaderInfo
 
-        Case ServerPacketID.GuildLeaderInfo         ' LEADERI
-            Call HandleGuildLeaderInfo
+    Case ServerPacketID.GuildDetails            ' CLANDET
+        Call HandleGuildDetails
 
-        Case ServerPacketID.GuildDetails            ' CLANDET
-            Call HandleGuildDetails
+    Case ServerPacketID.ShowGuildFundationForm  ' SHOWFUN
+        Call HandleShowGuildFundationForm
 
-        Case ServerPacketID.ShowGuildFundationForm  ' SHOWFUN
-            Call HandleShowGuildFundationForm
+    Case ServerPacketID.ParalizeOK              ' PARADOK
+        Call HandleParalizeOK
 
-        Case ServerPacketID.ParalizeOK              ' PARADOK
-            Call HandleParalizeOK
+    Case ServerPacketID.ShowUserRequest         ' PETICIO
+        Call HandleShowUserRequest
 
-        Case ServerPacketID.ShowUserRequest         ' PETICIO
-            Call HandleShowUserRequest
+    Case ServerPacketID.TradeOK                 ' TRANSOK
+        Call HandleTradeOK
 
-        Case ServerPacketID.TradeOK                 ' TRANSOK
-            Call HandleTradeOK
+    Case ServerPacketID.BankOK                  ' BANCOOK
+        Call HandleBankOK
 
-        Case ServerPacketID.BankOK                  ' BANCOOK
-            Call HandleBankOK
+    Case ServerPacketID.ChangeUserTradeSlot     ' COMUSUINV
+        Call HandleChangeUserTradeSlot
 
-        Case ServerPacketID.ChangeUserTradeSlot     ' COMUSUINV
-            Call HandleChangeUserTradeSlot
+    Case ServerPacketID.Pong
+        Call HandlePong
 
-        Case ServerPacketID.Pong
-            Call HandlePong
+    Case ServerPacketID.UpdateTagAndStatus
+        Call HandleUpdateTagAndStatus
 
-        Case ServerPacketID.UpdateTagAndStatus
-            Call HandleUpdateTagAndStatus
+    Case ServerPacketID.UsersOnline
+        Call HandleUsersOnline
 
-        Case ServerPacketID.UsersOnline
-            Call HandleUsersOnline
+    Case ServerPacketID.ShowPartyForm
+        Call HandleShowPartyForm
 
-        Case ServerPacketID.ShowPartyForm
-            Call HandleShowPartyForm
+    Case ServerPacketID.StopWorking
+        Call HandleStopWorking
 
-        Case ServerPacketID.StopWorking
-            Call HandleStopWorking
+    Case ServerPacketID.RetosAbre
+        Call HandleRetosAbre
 
-        Case ServerPacketID.RetosAbre
-            Call HandleRetosAbre
+    Case ServerPacketID.RetosRespuesta
+        Call HandleRetosRespuesta
 
-        Case ServerPacketID.RetosRespuesta
-            Call HandleRetosRespuesta
+    Case ServerPacketID.SetEquitando            ' Equitando
+        Call HandleSetEquitando
 
-        Case ServerPacketID.SetEquitando            ' Equitando
-            Call HandleSetEquitando
+    Case ServerPacketID.SetCongelado            ' Congelado
+        Call HandleSetCongelado
 
-        Case ServerPacketID.SetCongelado            ' Congelado
-            Call HandleSetCongelado
+    Case ServerPacketID.SetChiquito             ' Chiquito
+        Call HandleSetChiquito
 
-        Case ServerPacketID.SetChiquito             ' Chiquito
-            Call HandleSetChiquito
+    Case ServerPacketID.CreateAreaFX            ' Area CFX
+        Call HandleCreateAreaFX
 
-        Case ServerPacketID.CreateAreaFX            ' Area CFX
-            Call HandleCreateAreaFX
+    Case ServerPacketID.PalabrasMagicas
+        Call HandlePalabrasMagicas
 
-        Case ServerPacketID.PalabrasMagicas
-            Call HandlePalabrasMagicas
+    Case ServerPacketID.UserSpellNPC            ' U2
+        Call HandleUserSpellNPC
 
-        Case ServerPacketID.UserSpellNPC            ' U2
-            Call HandleUserSpellNPC
+    Case ServerPacketID.SetNadando             ' Chiquito
+        Call HandleSetNadando
 
-        Case ServerPacketID.SetNadando             ' Chiquito
-            Call HandleSetNadando
+    Case ServerPacketID.MultiMessage            'Messages in client
+        Call HandleMultiMessage
 
-        Case ServerPacketID.MultiMessage            'Messages in client
-            Call HandleMultiMessage
+    Case ServerPacketID.FirstInfo               'Primera Informacion
+        Call HandleFirstInfo
 
-        Case ServerPacketID.FirstInfo               'Primera Informacion
-            Call HandleFirstInfo
+    Case ServerPacketID.CuentaRegresiva         'Cuenta
+        Call HandleCuentaRegresiva
 
-        Case ServerPacketID.CuentaRegresiva         'Cuenta
-            Call HandleCuentaRegresiva
+    Case ServerPacketID.PicInRender             'PicInRender
+        Call HandlePicInRender
 
-        Case ServerPacketID.PicInRender             'PicInRender
-            Call HandlePicInRender
+    Case ServerPacketID.Quit                    'Quit
+        Call HandleQuit
 
-        Case ServerPacketID.Quit                    'Quit
-            Call HandleQuit
+        '*******************
+        'GM messages
+        '*******************
+    Case ServerPacketID.SpawnList               ' SPL
+        Call HandleSpawnList
 
-            '*******************
-            'GM messages
-            '*******************
-        Case ServerPacketID.SpawnList               ' SPL
-            Call HandleSpawnList
+    Case ServerPacketID.ShowSOSForm             ' RSOS and MSOS
+        Call HandleShowSOSForm
 
-        Case ServerPacketID.ShowSOSForm             ' RSOS and MSOS
-            Call HandleShowSOSForm
+    Case ServerPacketID.ShowMOTDEditionForm     ' ZMOTD
+        Call HandleShowMOTDEditionForm
 
-        Case ServerPacketID.ShowMOTDEditionForm     ' ZMOTD
-            Call HandleShowMOTDEditionForm
+    Case ServerPacketID.ShowGMPanelForm         ' ABPANEL
+        Call HandleShowGMPanelForm
 
-        Case ServerPacketID.ShowGMPanelForm         ' ABPANEL
-            Call HandleShowGMPanelForm
+    Case ServerPacketID.UserNameList            ' LISTUSU
+        Call HandleUserNameList
 
-        Case ServerPacketID.UserNameList            ' LISTUSU
-            Call HandleUserNameList
+    Case ServerPacketID.ShowBarco
+        Call HandleShowBarco
 
-        Case ServerPacketID.ShowBarco
-            Call HandleShowBarco
+    Case ServerPacketID.AgregarPasajero
+        Call HandleAgregarPasajero
 
-        Case ServerPacketID.AgregarPasajero
-            Call HandleAgregarPasajero
+    Case ServerPacketID.QuitarPasajero
+        Call HandleQuitarPasajero
 
-        Case ServerPacketID.QuitarPasajero
-            Call HandleQuitarPasajero
+    Case ServerPacketID.QuitarBarco
+        Call HandleQuitarBarco
 
-        Case ServerPacketID.QuitarBarco
-            Call HandleQuitarBarco
+    Case ServerPacketID.GoHome
+        Call HandleGoHome
 
-        Case ServerPacketID.GoHome
-            Call HandleGoHome
+    Case ServerPacketID.GotHome
+        Call HandleGotHome
 
-        Case ServerPacketID.GotHome
-            Call HandleGotHome
+    Case ServerPacketID.Tooltip
+        Call HandleTooltip
 
-        Case ServerPacketID.Tooltip
-            Call HandleTooltip
+        'quest
+    Case ServerPacketID.QuestDetails
+        Call HandleQuestDetails
 
-            'quest
-        Case ServerPacketID.QuestDetails
-            Call HandleQuestDetails
+    Case ServerPacketID.QuestListSend
+        Call HandleQuestListSend
 
-        Case ServerPacketID.QuestListSend
-            Call HandleQuestListSend
+    Case ServerPacketID.NpcQuestListSend
+        Call HandleNpcQuestListSend
 
-        Case ServerPacketID.NpcQuestListSend
-            Call HandleNpcQuestListSend
+    Case ServerPacketID.UpdateNPCSimbolo
+        Call HandleUpdateNPCSimbolo
+        'quest
 
-        Case ServerPacketID.UpdateNPCSimbolo
-            Call HandleUpdateNPCSimbolo
-            'quest
+        #If SeguridadAlkon Then
 
-            #If SeguridadAlkon Then
+        Case Else
+            Call HandleIncomingDataEx
+        #Else
 
-            Case Else
-                Call HandleIncomingDataEx
-            #Else
-
-            Case Else
-                'ERROR : Abort!
-                incomingData.ReadByte
-                Exit Sub
-            #End If
+        Case Else
+            'ERROR : Abort!
+            incomingData.ReadByte
+            Exit Sub
+        #End If
 
     End Select
 
@@ -12668,9 +12669,9 @@ Private Sub HandleQuestDetails()
     FrmQuestInfo.ListView1.ListItems.Clear
     
     FrmQuests.Image.BackColor = RGB(11, 11, 11)
-    FrmQuests.picture1.BackColor = RGB(19, 14, 11)
+    FrmQuests.Picture1.BackColor = RGB(19, 14, 11)
     FrmQuests.Image.Refresh
-    FrmQuests.picture1.Refresh
+    FrmQuests.Picture1.Refresh
     FrmQuests.npclbl.Caption = ""
     FrmQuests.objetolbl.Caption = ""
     
@@ -13640,3 +13641,89 @@ Private Function FormatChat(ByRef chat As String) As String()
     FormatChat = chatLines
 
 End Function
+
+
+Public Sub WriteSolicitarRanking(ByVal TIPO As eRanking)
+    With outgoingData
+        Call .WriteByte(ClientPacketID.SolicitaRranking)
+        Call .WriteByte(TIPO)
+    End With
+End Sub
+
+Public Sub HandleRecibirRanking()
+
+'Recibimos el ranking
+'
+'
+    If incomingData.Length < 3 Then
+        err.Raise incomingData.NotEnoughDataErrCode
+        Exit Sub
+    End If
+
+    On Error GoTo ErrHandler
+    Dim buffer As New clsByteQueue
+    Call buffer.CopyBuffer(incomingData)
+
+    Dim Arrai() As String
+    Dim Arrai2() As String
+    Dim Mensaje As String
+    Dim I As Integer
+
+    Dim Cadena As String
+    Dim Cadena1 As String
+
+    'Leemos el id del paquete
+    Call buffer.ReadByte
+
+    'Leemos el string
+    Cadena = buffer.ReadASCIIString
+    Cadena1 = buffer.ReadASCIIString
+
+    Arrai = Split(Cadena, "-")
+
+
+    'redimensiono el array de listaprocesos
+    ReDim Arrai2(LBound(Arrai()) To UBound(Arrai()))
+
+    For I = 0 To 9
+        Arrai2(I) = Arrai(I)
+        Ranking.nombre(I) = Arrai2(I)
+    Next I
+
+    Arrai = Split(Cadena1, "-")
+
+    For I = 0 To 9
+        Arrai2(I) = Arrai(I)
+        Ranking.Value(I) = Arrai(I)
+    Next I
+
+    For I = 0 To 9
+        If Ranking.nombre(I) = vbNullString Then
+            FrmRanking2.Label1(I).Caption = "<Vacante>"
+        Else
+            If RankingOro = "$" Then
+                FrmRanking2.Label1(I).Caption = Ranking.nombre(I) & " : $" & Ranking.Value(I)
+            Else
+                FrmRanking2.Label1(I).Caption = Ranking.nombre(I) & " : " & Ranking.Value(I)
+            End If
+        End If
+        'Call ShowConsoleMsg(Ranking.Nombre(i) & "-" & Ranking.value(i))
+    Next I
+
+    Call FrmRanking2.Show(vbModeless, frmMain)
+
+    'Copiamos de vuelta el buffer
+    Call incomingData.CopyBuffer(buffer)
+
+ErrHandler:
+    Dim Error As Long
+    Error = err.Number
+    On Error GoTo 0
+
+    'Destroy auxiliar buffer
+    Set buffer = Nothing
+
+    If Error <> 0 Then _
+       err.Raise Error
+End Sub
+

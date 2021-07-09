@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
 Object = "{BF3128D8-55B8-11D4-8ED4-00E07D815373}#1.0#0"; "MBPrgBar.ocx"
 Begin VB.Form frmMain2 
    Appearance      =   0  'Flat
@@ -1633,7 +1633,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    picture1.Visible = True
+    Picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -1717,6 +1717,8 @@ Private Sub Command2_Click()
     AlphaRelampago = 150
 
 End Sub
+
+
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 
@@ -2128,20 +2130,20 @@ Private Sub lblinve_Click()
         BarraHechiz.Visible = False
         LanzarImg.Visible = False
         'picfondoinve.Visible = True
-        PicInv.Visible = True
+        picInv.Visible = True
         
         Exit Sub
     Else
 
-        If PicInv.Visible = True Then
+        If picInv.Visible = True Then
             'picfondoinve.Visible = False
-            PicInv.Visible = False
+            picInv.Visible = False
             Exit Sub
 
         End If
 
         'picfondoinve.Visible = True
-        PicInv.Visible = True
+        picInv.Visible = True
         Exit Sub
 
     End If
@@ -2157,7 +2159,7 @@ Private Sub Lblmagia_Click()
         'picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        picture1.Visible = False
+        Picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2169,11 +2171,11 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         'picHechiz.Visible = True
-        picture1.Visible = True
+        Picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         'LanzarImg.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & "14956.png", , , , , True)
-        PicInv.Visible = False
+        picInv.Visible = False
        
         Exit Sub
 
@@ -2844,6 +2846,12 @@ Private Sub pRender_Click()
         End If
     End If
 
+    If MouseX > 633 And MouseX < 658 And MouseY > 6 And MouseY < 27 Then    'Ranking
+        Call ImgLanzar_Click(4)
+        Call Audio.PlayWave(SND_CLICKNEW)
+        Exit Sub
+    End If
+
     If MouseX > 113 And MouseX < 310 And MouseY > 49 And MouseY < 67 Then
         Call Audio.PlayWave(SND_CLICKNEW)
         If Manarender = True Then
@@ -2861,6 +2869,18 @@ Private Sub pRender_Click()
         Call Audio.PlayWave(SND_CLICKNEW)
         Exit Sub
 
+    End If
+
+
+    If MouseX > 13 And MouseX < 40 And MouseY > 120 And MouseY < 144 Then    'oro
+
+        Call Audio.PlayWave(SND_CLICKNEW)
+        Inventario.SelectGold
+
+        If UserGLD > 0 Then
+            frmCantidad.Show , frmMain
+
+        End If
     End If
 
     If MouseX > 688 And MouseX < 712 And MouseY > 5 And MouseY < 25 Then
@@ -2994,7 +3014,7 @@ Private Sub pRender_Click()
             'BarraHechiz.Visible = True
             'LanzarImg.Visible = True
             'picfondoinve.Visible = True
-            PicInv.Visible = True
+            picInv.Visible = True
             PicSpells.Visible = True
             MostrarMenuInventario = True
 
@@ -3008,7 +3028,7 @@ Private Sub pRender_Click()
             BarraHechiz.Visible = False
             LanzarImg.Visible = False
             'picfondoinve.Visible = True
-            PicInv.Visible = False
+            picInv.Visible = False
             MostrarMenuInventario = False
             barritaa.Visible = False
             ContarClip = 0
@@ -3039,20 +3059,20 @@ Private Sub pRender_Click()
         If MouseX > 977 And MouseX < 989 And MouseY > 230 And MouseY < 242 Then
 
 
-            If PicInv.Left = 978 Then
+            If picInv.Left = 978 Then
 
-                PicInv.Left = 946
+                picInv.Left = 946
                 Exit Sub
 
             End If
 
-            If PicInv.Left = 946 Then
-                PicInv.Left = 914
+            If picInv.Left = 946 Then
+                picInv.Left = 914
                 Exit Sub
             End If
 
-            If PicInv.Left = 914 Then
-                PicInv.Left = 882
+            If picInv.Left = 914 Then
+                picInv.Left = 882
                 Exit Sub
             End If
 
@@ -3062,20 +3082,20 @@ Private Sub pRender_Click()
 
 
 
-            If PicInv.Left = 882 Then
+            If picInv.Left = 882 Then
 
-                PicInv.Left = 914
+                picInv.Left = 914
 
                 Exit Sub
             End If
 
-            If PicInv.Left = 914 Then
-                PicInv.Left = 946
+            If picInv.Left = 914 Then
+                picInv.Left = 946
                 Exit Sub
             End If
 
-            If PicInv.Left = 946 Then
-                PicInv.Left = 978
+            If picInv.Left = 946 Then
+                picInv.Left = 978
                 Exit Sub
             End If
 
@@ -3185,15 +3205,15 @@ Private Sub pRender_Click()
 
                     If macrotrabajo.Enabled Then DesactivarMacroTrabajo
 
-                               '         If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
-                                '            'frmMain.MousePointer = vbDefault
-                                 '           Call SetCursor(General)
-                                  '          UsingSkill = 0
-                                   '         With FontTypes(FontTypeNames.FONTTYPE_TALK)
-                                    '            Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
-                                     '       End With
-                                      '      Exit Sub
-                                      '  End If
+                    '         If Not MainTimer.Check(TimersIndex.Arrows, False) Then 'Check if arrows interval has finished.
+                    '            'frmMain.MousePointer = vbDefault
+                    '           Call SetCursor(General)
+                    '          UsingSkill = 0
+                    '         With FontTypes(FontTypeNames.FONTTYPE_TALK)
+                    '            Call AddtoRichPicture("No podés lanzar proyectiles tan rapido.", .red, .green, .blue, .bold, .italic)
+                    '       End With
+                    '      Exit Sub
+                    '  End If
 
                     'Splitted because VB isn't lazy!
                     If UsingSkill = Proyectiles Then
@@ -3339,7 +3359,7 @@ Private Sub pRender_MouseMove(Button As Integer, _
     End If
 
     If MouseX > 661 And MouseX < 681 And MouseY > 5 And MouseY < 25 Then    'clanes
-        RecuadroX = 659
+        RecuadroX = 662
         RecuadroY = 6
         RecuadroON = True
         Exit Sub
@@ -3348,7 +3368,7 @@ Private Sub pRender_MouseMove(Button As Integer, _
 
 
     If MouseX > 719 And MouseX < 739 And MouseY > 5 And MouseY < 25 Then    ' mini mapa
-        RecuadroX = 716
+        RecuadroX = 717
         RecuadroY = 6
         RecuadroON = True
         Exit Sub
@@ -3357,14 +3377,14 @@ Private Sub pRender_MouseMove(Button As Integer, _
 
     If MouseX > 803 And MouseX < 824 And MouseY > 5 And MouseY < 25 Then    'opciones
 
-        RecuadroX = 799
+        RecuadroX = 800
         RecuadroY = 6
         RecuadroON = True
         Exit Sub
     End If
 
     If MouseX > 688 And MouseX < 712 And MouseY > 5 And MouseY < 25 Then    'estadisticas
-        RecuadroX = 688
+        RecuadroX = 689
         RecuadroY = 6
         RecuadroON = True
         Exit Sub
@@ -3389,6 +3409,13 @@ Private Sub pRender_MouseMove(Button As Integer, _
 
     If MouseX > 854 And MouseX < 878 And MouseY > 5 And MouseY < 25 Then    'consola
         RecuadroX = 854
+        RecuadroY = 6
+        RecuadroON = True
+        Exit Sub
+    End If
+     
+     If MouseX > 633 And MouseX < 658 And MouseY > 6 And MouseY < 27 Then   'Ranking
+        RecuadroX = 634
         RecuadroY = 6
         RecuadroON = True
         Exit Sub
@@ -3664,57 +3691,61 @@ Private Sub hlst_KeyUp(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub ImgLanzar_Click(Index As Integer)
-    'Call Audio.PlayWave(SND_CLICK)
+'Call Audio.PlayWave(SND_CLICK)
 
     Select Case Index
 
-        Case 0
+    Case 0
 
-            'helios 06/06/2021
-            If frmOpciones.Visible = True Then Unload frmOpciones: Exit Sub
-            Call frmOpciones.Show(vbModeless, frmMain)
-            
-        Case 1
+        'helios 06/06/2021
+        If frmOpciones.Visible = True Then Unload frmOpciones: Exit Sub
+        Call frmOpciones.Show(vbModeless, frmMain)
 
-            'helios 06/06/2021
-            If frmEstadisticas.Visible = False Then
-            
-                LlegaronAtrib = False
-                LlegaronSkills = False
-                LlegoFama = False
-                Call WriteRequestAtributes
-                Call WriteRequestSkills
-                Call WriteRequestMiniStats
-                Call WriteRequestFame
-                Call FlushBuffer
-            
-                Do While Not LlegaronSkills Or Not LlegaronAtrib Or Not LlegoFama
-                    DoEvents 'esperamos a que lleguen y mantenemos la interfaz viva
-                Loop
-                frmEstadisticas.Iniciar_Labels
-                frmEstadisticas.Show , frmMain
-                LlegaronAtrib = False
-                LlegaronSkills = False
-                LlegoFama = False
-            Else
-                Unload frmEstadisticas
+    Case 1
 
-            End If
+        'helios 06/06/2021
+        If frmEstadisticas.Visible = False Then
 
-        Case 2
+            LlegaronAtrib = False
+            LlegaronSkills = False
+            LlegoFama = False
+            Call WriteRequestAtributes
+            Call WriteRequestSkills
+            Call WriteRequestMiniStats
+            Call WriteRequestFame
+            Call FlushBuffer
 
-            'helios 06/06/2021
-            If frmGuildAdm.Visible = False Then
-                If frmGuildLeader.Visible Then Unload frmGuildLeader
-            
-                Call WriteRequestGuildLeaderInfo
-            Else
-                Unload frmGuildAdm
+            Do While Not LlegaronSkills Or Not LlegaronAtrib Or Not LlegoFama
+                DoEvents    'esperamos a que lleguen y mantenemos la interfaz viva
+            Loop
+            frmEstadisticas.Iniciar_Labels
+            frmEstadisticas.Show , frmMain
+            LlegaronAtrib = False
+            LlegaronSkills = False
+            LlegoFama = False
+        Else
+            Unload frmEstadisticas
 
-            End If
+        End If
 
-        Case 3
-            Call WriteRequestPartyForm
+    Case 2
+
+        'helios 06/06/2021
+        If frmGuildAdm.Visible = False Then
+            If frmGuildLeader.Visible Then Unload frmGuildLeader
+
+            Call WriteRequestGuildLeaderInfo
+        Else
+            Unload frmGuildAdm
+
+        End If
+
+    Case 3
+        Call WriteRequestPartyForm
+
+    Case 4
+        If FrmRanking.Visible = True Then Unload FrmRanking: Exit Sub
+        Call FrmRanking.Show(vbModeless, frmMain)
 
     End Select
 
@@ -3809,7 +3840,7 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
     End If
 
     If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
-        If x >= Inventario.OffSetX And y >= Inventario.OffSetY And x <= PicInv.Width And y <= PicInv.Height Then
+        If x >= Inventario.OffSetX And y >= Inventario.OffSetY And x <= picInv.Width And y <= picInv.Height Then
 
             Dim NewPosInv As Integer
 
@@ -3827,8 +3858,8 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
 
             Dim DropY As Integer, tmpY As Integer
 
-            tmpX = x + PicInv.Left - pRender.Left
-            tmpY = y + PicInv.Top - pRender.Top
+            tmpX = x + picInv.Left - pRender.Left
+            tmpY = y + picInv.Top - pRender.Top
         
             If tmpX > 0 And tmpX < pRender.Width And tmpY > 0 And tmpY < pRender.Height Then
                 Call ConvertCPtoTP(tmpX, tmpY, DropX, DropY)
