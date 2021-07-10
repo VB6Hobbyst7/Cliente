@@ -23,6 +23,7 @@ Begin VB.Form frmOpciones
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+   Picture         =   "frmOpciones.frx":0152
    ScaleHeight     =   9345
    ScaleWidth      =   4815
    ShowInTaskbar   =   0   'False
@@ -68,6 +69,16 @@ Begin VB.Form frmOpciones
       TabIndex        =   27
       Top             =   6480
       Width           =   3615
+      Begin VB.CheckBox ChkMostrarAyuda 
+         BackColor       =   &H00000000&
+         Caption         =   "Mostrar Ayudas"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   1921
+         TabIndex        =   35
+         Top             =   40
+         Width           =   1693
+      End
       Begin VB.CheckBox chkCursorFaccionario 
          BackColor       =   &H00000000&
          Caption         =   "Cursor Faccionario"
@@ -83,7 +94,7 @@ Begin VB.Form frmOpciones
       Caption         =   "Restaurar configuración por defecto"
       Height          =   345
       Left            =   250
-      MouseIcon       =   "frmOpciones.frx":0152
+      MouseIcon       =   "frmOpciones.frx":18F33
       MousePointer    =   99  'Custom
       TabIndex        =   24
       Top             =   8280
@@ -333,7 +344,7 @@ Begin VB.Form frmOpciones
       Caption         =   "Guardar y Cerrar"
       Height          =   345
       Left            =   250
-      MouseIcon       =   "frmOpciones.frx":02A4
+      MouseIcon       =   "frmOpciones.frx":19085
       MousePointer    =   99  'Custom
       TabIndex        =   0
       Top             =   8760
@@ -485,44 +496,45 @@ Private Sub Command2_Click()
     mOpciones.VolMusic = slMusica.Value
     mOpciones.VolSound = slSound.Value
     mOpciones.DialogConsole = Not optConsola.Value
-    
+
     If IsNumeric(txtCantMensajes.Text) Then
         mOpciones.DialogCantMessages = CInt(txtCantMensajes.Text)
         DialogosClanes.CantidadDialogos = mOpciones.DialogCantMessages
 
     End If
-    
+
     mOpciones.GuildNews = chkNoticiasClanMostrar.Value
     mOpciones.ScreenShooterNivelSuperior = chkScreenShooterNivelSuperior.Value
-    
+
     If IsNumeric(txtScreenShooterNivel.Text) Then
         mOpciones.ScreenShooterNivelSuperiorIndex = CInt(txtScreenShooterNivel.Text)
 
     End If
-    
+
     mOpciones.ScreenShooterAlMorir = chkScreenShooterAlMorir.Value
     mOpciones.SoundEffects = Check1(2).Value
-    
+
     Audio.SoundActivated = mOpciones.sound
     Audio.MusicActivated = mOpciones.Music
-    
+
     Audio.MusicVolume = mOpciones.VolMusic
     Audio.SoundVolume = mOpciones.VolSound
     Audio.SoundEffectsActivated = mOpciones.SoundEffects
-    
+
     'VIDEO
     mOpciones.TransparencyTree = chkVideoTransparencyTree.Value
     mOpciones.Shadows = chkVideoShadows.Value
     mOpciones.BlurEffects = chkVideoBlurEffects.Value
     mOpciones.Niebla = chkNiebla.Value
-    
+    mOpciones.MostrarAyuda = ChkMostrarAyuda.Value
+
     'OTROS
     mOpciones.CursorFaccionario = chkCursorFaccionario.Value
-        
+
     Call SetCursor(General)
-    
+
     Call SaveConfig
-   
+
     Unload Me
     frmMain.SetFocus
 
@@ -667,6 +679,13 @@ Public Sub LoadOptionsValues()
         chkVideoShadows.Value = vbChecked
     Else
         chkVideoShadows.Value = vbUnchecked
+
+    End If
+    
+     If mOpciones.MostrarAyuda = True Then
+        ChkMostrarAyuda.Value = vbChecked
+    Else
+        ChkMostrarAyuda.Value = vbUnchecked
 
     End If
     

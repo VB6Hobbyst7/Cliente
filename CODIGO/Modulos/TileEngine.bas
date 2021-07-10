@@ -2236,50 +2236,25 @@ Sub RenderScreen(ByVal TileX As Integer, _
         End If
 
     Next I
+    'vida abajo del pj
     If Vidarender = True Then
         Dim CantVidax As Integer
-        Dim CantVidax2 As Integer
+     
+        CantVidax = (((UserMinHP / 33) / (UserMaxHP / 33)) * 33)
 
+        Call Engine_Render_Rectangle(496, 375, 16, CantVidax, 0, 0, 16, CantVidax, , , 0, 14810)
 
-        'vida abajo del pj
-        CantVidax = 60 * Round(CDbl(UserMinHP) / CDbl(UserMaxHP / 2), 2)
-
-        'Call Engine_Render_Rectangle(309, 275, 91, 89, 0, 0, 91, 89, , , 0, 14801)
-        If CantVidax >= 60 Then
-            CantVidax2 = CantVidax - 60
-            CantVidax = 60
-
-
-
-        End If
-
-        'Call Engine_Render_Rectangle(478, 372, 68, 50, 0, 0, 68, 50, , , 0, 14801)
-
-        Call Engine_Render_Rectangle(552, 432, -40, -CantVidax2, 0, 0, -40, -CantVidax2, , , 0, 14804)
-        Call Engine_Render_Rectangle(472, 372, 40, CantVidax, 0, 0, 40, CantVidax, , , 0, 14804)
     End If
     ' vida abajo del pj
     'mana abajo del pj
     If Manarender = True Then
         Dim CantManx As Integer
-        Dim CantManx2 As Integer
+
         If UserMaxMAN > 0 Then
-            CantManx = 70 * Round(CDbl(UserMinMAN) / CDbl(UserMaxMAN / 2), 2)
+            CantManx = (((UserMinMAN / 33) / (UserMaxMAN / 33)) * 33)
 
-            'Call Engine_Render_Rectangle(309, 275, 91, 89, 0, 0, 91, 89, , , 0, 14801)
-            If CantManx >= 70 Then
-                CantManx2 = CantManx - 70
-                CantManx = 70
+            Call Engine_Render_Rectangle(530, 408, -16, -CantManx, 0, 0, -16, -CantManx, , , 0, 14810)
 
-
-
-            End If
-
-            'Call Engine_Render_Rectangle(478, 372, 68, 50, 0, 0, 68, 50, , , 0, 14801)
-
-            Call Engine_Render_Rectangle(558, 437, -46, -CantManx2, 0, 0, -46, -CantManx2, , , 0, 14805)
-            Call Engine_Render_Rectangle(466, 367, 46, CantManx, 0, 0, 46, CantManx, , , 0, 14805)
-            'Call Engine_Render_Rectangle(466, 367, 92, 70, 0, 0, 92, 70, , , 0, 14805)
         End If
     End If
 
@@ -3026,7 +3001,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         Call Engine_Render_Rectangle(550, 0, 76, 35, 0, 0, 76, 35, , , 0, 14954)    'user onlie Helios
 
         Call Engine_Render_Rectangle(652, 0, 343, 36, 0, 0, 343, 36, , , 0, 14955)    'Menu Helios
-Call Engine_Render_Rectangle(627, 0, 369, 35, 0, 0, 369, 35, , , 0, 14809)    'Menu Helios
+        Call Engine_Render_Rectangle(627, 0, 369, 35, 0, 0, 369, 35, , , 0, 14809)    'Menu Helios
         Call Engine_Render_Rectangle(992, -5, 34, 35, 0, 0, 34, 35, , , 0, 14953)
 
         If frmMain.imgMiniMapa.Visible = True Then
@@ -3307,12 +3282,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                   Optional ByVal x As Integer = 0, _
                   Optional ByVal y As Integer = 0)
 
-    '***************************************************
-    'Author: Arron Perkins
-    'Last Modification: 08/14/07
-    'Last modified by: Juan Martín Sotuyo Dodero (Maraxus)
-    'Updates the game's model and renders everything.
-    '***************************************************
+'***************************************************
+'Author: Arron Perkins
+'Last Modification: 08/14/07
+'Last modified by: Juan Martín Sotuyo Dodero (Maraxus)
+'Updates the game's model and renders everything.
+'***************************************************
     Static OffsetCounterX As Single
 
     Static OffsetCounterY As Single
@@ -3411,6 +3386,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         #If RenderFull = 0 Then
 
             If Conectar Then
+                Nombres = True
                 'frmMain.picHechiz.Visible = False
                 frmMain.BarraHechiz.Visible = False
                 frmMain.invHechisos.Visible = False
@@ -3427,7 +3403,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 MostrarMenuInventario = False
                 'Fin Helios Barras
                 'frmMain.picfondoinve.Visible = False Helios elije Menuinventario
-                frmMain.Bar_Agua.Visible = False 'Helios Barras
+                frmMain.Bar_Agua.Visible = False    'Helios Barras
                 'Helios Barra exp
                 frmMain.picInv.Visible = False
                 frmMain.PicSpells.Visible = False
@@ -3441,7 +3417,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 'frmMain.picInv.Visible = True
                 ' frmMain.imgMiniMapa.Visible = True
 
-               
+
                 ' frmMain.Menu.Visible = False
                 '                frmMain.bar_salud(0).Visible = True
                 '                frmMain.Bar_Mana(0).Visible = True
@@ -3471,6 +3447,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         #Else
 
             If Conectar Then
+
                 Call RenderConectar
                 'ElseIf UserCiego Then
                 '    Call CleanViewPort

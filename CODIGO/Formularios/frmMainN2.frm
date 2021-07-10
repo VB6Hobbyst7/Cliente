@@ -1227,6 +1227,10 @@ Attribute VB_Exposed = False
 'Pablo Ignacio Márquez
 
 Option Explicit
+
+Dim TT2 As New CBalloonToolTip
+
+
 Dim s_Index     As Integer  '< Número de slot.
 Dim PicMoveX As Single
 Dim PicMoveY As Single
@@ -1443,14 +1447,14 @@ End Sub
 
 Private Sub BarraConsola_MouseDown(Button As Integer, _
                                    Shift As Integer, _
-                                   x As Single, _
-                                   y As Single)
+                                   X As Single, _
+                                   Y As Single)
 
     Dim TempY  As Integer
 
     Dim TamCon As Integer
 
-    TempY = y - 3
+    TempY = Y - 3
     TamCon = (LineasConsola - 6)
 
     If TamCon > 0 Then
@@ -1473,21 +1477,21 @@ Private Sub BarraConsola_MouseDown(Button As Integer, _
 
     End If
 
-    BarritaConsola.Top = TempY
+    BarritaConsola.top = TempY
     ReDrawConsola
 
 End Sub
 
 Private Sub BarraHechiz_MouseDown(Button As Integer, _
                                   Shift As Integer, _
-                                  x As Single, _
-                                  y As Single)
+                                  X As Single, _
+                                  Y As Single)
 
     Dim TempY  As Integer
 
     Dim TamCon As Integer
 
-    TempY = y - 3
+    TempY = Y - 3
 
     Dim MaxItems As Integer
 
@@ -1514,17 +1518,17 @@ Private Sub BarraHechiz_MouseDown(Button As Integer, _
 
     End If
 
-    BarritaHechiz.Top = TempY
+    BarritaHechiz.top = TempY
 
 End Sub
 
 Private Sub BarritaConsola_MouseDown(Button As Integer, _
                                      Shift As Integer, _
-                                     x As Single, _
-                                     y As Single)
+                                     X As Single, _
+                                     Y As Single)
 
     If Button = 1 Then
-        OldYConsola = y
+        OldYConsola = Y
 
     End If
 
@@ -1532,20 +1536,20 @@ End Sub
 
 Private Sub BarritaConsola_MouseMove(Button As Integer, _
                                      Shift As Integer, _
-                                     x As Single, _
-                                     y As Single)
+                                     X As Single, _
+                                     Y As Single)
 
     If Button = 1 Then
 
         Dim TempY As Integer
 
-        TempY = BarritaConsola.Top + (y - OldYConsola)
+        TempY = BarritaConsola.top + (Y - OldYConsola)
 
         If TempY < 16 Then TempY = 16
         If TempY > 68 Then TempY = 68
         If LineasConsola <= 6 Then TempY = 68
         OffSetConsola = Int((TempY - 16) * (LineasConsola - 6) / 52)
-        BarritaConsola.Top = TempY
+        BarritaConsola.top = TempY
         ReDrawConsola
 
     End If
@@ -1554,11 +1558,11 @@ End Sub
 
 Private Sub BarritaHechiz_MouseDown(Button As Integer, _
                                     Shift As Integer, _
-                                    x As Single, _
-                                    y As Single)
+                                    X As Single, _
+                                    Y As Single)
 
     If Button = 1 Then
-        hlst.OldY = y
+        hlst.OldY = Y
 
     End If
 
@@ -1566,8 +1570,8 @@ End Sub
 
 Private Sub BarritaHechiz_MouseMove(Button As Integer, _
                                     Shift As Integer, _
-                                    x As Single, _
-                                    y As Single)
+                                    X As Single, _
+                                    Y As Single)
 
     If Button = 1 Then
 
@@ -1576,13 +1580,13 @@ Private Sub BarritaHechiz_MouseMove(Button As Integer, _
         Dim MaxItems As Integer
 
         MaxItems = Int(picHechiz.Height / hlst.Pixel_Alto)
-        TempY = BarritaHechiz.Top + (y - hlst.OldY)
+        TempY = BarritaHechiz.top + (Y - hlst.OldY)
 
         If TempY < 16 Then TempY = 16
         If TempY > 150 Then TempY = 150
         If hlst.ListCount <= MaxItems Then TempY = 150
         hlst.Scroll = Int((TempY - 16) * (hlst.ListCount - MaxItems) / 134)
-        BarritaHechiz.Top = TempY
+        BarritaHechiz.top = TempY
 
     End If
 
@@ -1806,114 +1810,116 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 
         If LOGGING Then Call CheatingDeath.StoreKey(KeyCode, False)
     #End If
-    
+
     If (Not SendTxt.Visible) And (Not SendCMSTXT.Visible) Then
-        
+
         'Checks if the key is valid
         If LenB(CustomKeys.ReadableName(KeyCode)) > 0 Then
 
             Select Case KeyCode
 
-                Case CustomKeys.BindedKey(eKeyType.mKeyToggleMusic)
-                    mOpciones.Music = Not mOpciones.Music
-                    Audio.MusicActivated = mOpciones.Music
-                
-                Case CustomKeys.BindedKey(eKeyType.mKeyGetObject)
-                    Call AgarrarItem
+            Case CustomKeys.BindedKey(eKeyType.mKeyToggleMusic)
+                mOpciones.Music = Not mOpciones.Music
+                Audio.MusicActivated = mOpciones.Music
 
-                Case CustomKeys.BindedKey(eKeyType.mKeyEquipObject)
-                    Call EquiparItem
-                
-                Case CustomKeys.BindedKey(eKeyType.mKeyToggleNames)
-                    Nombres = Not Nombres
-                
-                Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
+            Case CustomKeys.BindedKey(eKeyType.mKeyGetObject)
+                Call AgarrarItem
 
-                    If UserEstado = 1 Then
+            Case CustomKeys.BindedKey(eKeyType.mKeyEquipObject)
+                Call EquiparItem
 
-                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+            Case CustomKeys.BindedKey(eKeyType.mKeyToggleNames)
+                Nombres = Not Nombres
 
-                        End With
 
-                    Else
-                        Call WriteWork(eSkill.Domar)
+
+            Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
+
+                If UserEstado = 1 Then
+
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+                    End With
+
+                Else
+                    Call WriteWork(eSkill.Domar)
+
+                End If
+
+            Case CustomKeys.BindedKey(eKeyType.mKeySteal)
+
+                If UserEstado = 1 Then
+
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+                    End With
+
+                Else
+                    Call WriteWork(eSkill.Robar)
+
+                End If
+
+            Case CustomKeys.BindedKey(eKeyType.mKeyHide)
+
+                If UserEstado = 1 Then
+
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                        Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+                    End With
+
+                Else
+
+                    If MainTimer.Check(TimersIndex.Hide) Then
+                        Call WriteWork(eSkill.Ocultarse)
 
                     End If
-                    
-                Case CustomKeys.BindedKey(eKeyType.mKeySteal)
 
-                    If UserEstado = 1 Then
+                End If
 
-                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+            Case CustomKeys.BindedKey(eKeyType.mKeyDropObject)
+                Call TirarItem
 
-                        End With
+            Case CustomKeys.BindedKey(eKeyType.mKeyUseObject)
 
-                    Else
-                        Call WriteWork(eSkill.Robar)
+                If macrotrabajo.Enabled Then DesactivarMacroTrabajo
 
-                    End If
-                    
-                Case CustomKeys.BindedKey(eKeyType.mKeyHide)
+                If MainTimer.Check(TimersIndex.PuedeUsar) Then
+                    Call UsarItem
 
-                    If UserEstado = 1 Then
-
-                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
-
-                        End With
-
-                    Else
-
-                        If MainTimer.Check(TimersIndex.Hide) Then
-                            Call WriteWork(eSkill.Ocultarse)
+                    If InStr(Inventario.ItemName(Inventario.SelectedItem), "Bala") > 0 Then
+                        If Inventario.Equipped(Inventario.SelectedItem) Then
+                            UsingSecondSkill = 1
 
                         End If
 
                     End If
-                                    
-                Case CustomKeys.BindedKey(eKeyType.mKeyDropObject)
-                    Call TirarItem
-                
-                Case CustomKeys.BindedKey(eKeyType.mKeyUseObject)
 
-                    If macrotrabajo.Enabled Then DesactivarMacroTrabajo
-                        
-                    If MainTimer.Check(TimersIndex.PuedeUsar) Then
-                        Call UsarItem
-                        
-                        If InStr(Inventario.ItemName(Inventario.SelectedItem), "Bala") > 0 Then
-                            If Inventario.Equipped(Inventario.SelectedItem) Then
-                                UsingSecondSkill = 1
+                End If
 
-                            End If
+            Case CustomKeys.BindedKey(eKeyType.mKeyRequestRefresh)
 
-                        End If
-                        
-                    End If
-                
-                Case CustomKeys.BindedKey(eKeyType.mKeyRequestRefresh)
+                If UserMoving = 1 Then
 
-                    If UserMoving = 1 Then
+                    With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                        Call ShowConsoleMsg("¡¡Para actualizar la posición debes estar quieto!!", .red, .green, .blue, .bold, .italic)
 
-                        With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                            Call ShowConsoleMsg("¡¡Para actualizar la posición debes estar quieto!!", .red, .green, .blue, .bold, .italic)
+                    End With
 
-                        End With
+                    Exit Sub
 
-                        Exit Sub
+                End If
 
-                    End If
+                If MainTimer.Check(TimersIndex.SendRPU) And Not UserEmbarcado Then
+                    Call WriteRequestPositionUpdate
+                    Beep
 
-                    If MainTimer.Check(TimersIndex.SendRPU) And Not UserEmbarcado Then
-                        Call WriteRequestPositionUpdate
-                        Beep
+                End If
 
-                    End If
-
-                Case CustomKeys.BindedKey(eKeyType.mKeyToggleResuscitationSafe)
-                    Call WriteResuscitationToggle
+            Case CustomKeys.BindedKey(eKeyType.mKeyToggleResuscitationSafe)
+                Call WriteResuscitationToggle
 
             End Select
 
@@ -1921,162 +1927,162 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 
             Select Case KeyCode
 
-                    'Custom messages!
-                Case vbKey0 To vbKey9
+                'Custom messages!
+            Case vbKey0 To vbKey9
 
-                    If LenB(CustomMessages.Message((KeyCode - 39) Mod 10)) <> 0 Then
-                        Call WriteTalk(CustomMessages.Message((KeyCode - 39) Mod 10))
+                If LenB(CustomMessages.Message((KeyCode - 39) Mod 10)) <> 0 Then
+                    Call WriteTalk(CustomMessages.Message((KeyCode - 39) Mod 10))
 
-                    End If
+                End If
 
             End Select
 
         End If
 
     End If
-    
+
     Select Case KeyCode
 
-        Case CustomKeys.BindedKey(eKeyType.mKeyTalkWithGuild)
+    Case CustomKeys.BindedKey(eKeyType.mKeyTalkWithGuild)
 
-            If SendTxt.Visible Then Exit Sub
-            
-            If (Not frmComerciar.Visible) And (Not frmComerciarUsu.Visible) And (Not frmBancoObj.Visible) And (Not frmMSG.Visible) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
-                SendCMSTXT.Visible = True
-                SendCMSTXT.SetFocus
+        If SendTxt.Visible Then Exit Sub
 
-            End If
+        If (Not frmComerciar.Visible) And (Not frmComerciarUsu.Visible) And (Not frmBancoObj.Visible) And (Not frmMSG.Visible) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
+            SendCMSTXT.Visible = True
+            SendCMSTXT.SetFocus
 
-        Case CustomKeys.BindedKey(eKeyType.mKeyVerMapa)
-            VerMapa = False
+        End If
 
-        Case CustomKeys.BindedKey(eKeyType.mKeyTakeScreenShot)
-            Call ScreenCapture
-        
-        Case CustomKeys.BindedKey(eKeyType.mKeyToggleFPS)
-            FPSFLAG = Not FPSFLAG
-            
-        Case CustomKeys.BindedKey(eKeyType.mKeyShowOptions)
-            Call frmOpciones.Show(vbModeless, frmMain)
-        
-        Case CustomKeys.BindedKey(eKeyType.mKeyMeditate)
+    Case CustomKeys.BindedKey(eKeyType.mKeyVerMapa)
+        VerMapa = False
 
-            If UserMinMAN = UserMaxMAN Then Exit Sub
-            
-            If UserEstado = 1 Then
+    Case CustomKeys.BindedKey(eKeyType.mKeyTakeScreenShot)
+        Call ScreenCapture
 
-                With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+    Case CustomKeys.BindedKey(eKeyType.mKeyToggleFPS)
+        FPSFLAG = Not FPSFLAG
 
-                End With
+    Case CustomKeys.BindedKey(eKeyType.mKeyShowOptions)
+        Call frmOpciones.Show(vbModeless, frmMain)
 
-                Exit Sub
+    Case CustomKeys.BindedKey(eKeyType.mKeyMeditate)
 
-            End If
-                
-            If Not PuedeMacrear Then
-                AddtoRichPicture "¡No puedes usar el macro tan rápido!", 255, 255, 255, True, False, False
-            ElseIf charlist(UserCharIndex).Moving = 0 Then
-                Call WriteMeditate
-                PuedeMacrear = False
+        If UserMinMAN = UserMaxMAN Then Exit Sub
 
-            End If
+        If UserEstado = 1 Then
 
-        Case CustomKeys.BindedKey(eKeyType.mKeyWorkMacro)
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
 
-            If UserEstado = 1 Then
+            End With
 
-                With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+            Exit Sub
 
-                End With
+        End If
 
-                Exit Sub
+        If Not PuedeMacrear Then
+            AddtoRichPicture "¡No puedes usar el macro tan rápido!", 255, 255, 255, True, False, False
+        ElseIf charlist(UserCharIndex).Moving = 0 Then
+            Call WriteMeditate
+            PuedeMacrear = False
 
-            End If
-            
-            If macrotrabajo.Enabled Then
-                DesactivarMacroTrabajo
-            Else
-                ActivarMacroTrabajo
+        End If
 
-            End If
-        
-        Case CustomKeys.BindedKey(eKeyType.mKeyExitGame)
+    Case CustomKeys.BindedKey(eKeyType.mKeyWorkMacro)
 
-            If frmMain.macrotrabajo.Enabled Then DesactivarMacroTrabajo
-            Call WriteQuit
-            
-        Case CustomKeys.BindedKey(eKeyType.mKeyAttack)
+        If UserEstado = 1 Then
 
-            If Shift <> 0 Then Exit Sub
-         
-            If Not MainTimer.Check(TimersIndex.PuedeGolpe) Or UserDescansar Or UserMeditar Then Exit Sub
-            
-            If macrotrabajo.Enabled Then DesactivarMacroTrabajo
-            Call WriteAttack
-                    
-        Case CustomKeys.BindedKey(eKeyType.mKeyTalk)
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
 
-            If SendCMSTXT.Visible Then Exit Sub
-            
-            If (Not frmComerciar.Visible) And (Not frmComerciarUsu.Visible) And (Not frmBancoObj.Visible) And (Not frmMSG.Visible) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
-                SendTxt.Visible = True
-                SendTxt.SetFocus
+            End With
 
-            End If
-            
-        Case CustomKeys.BindedKey(eKeyType.mKeyMontar)
+            Exit Sub
 
-            If SendCMSTXT.Visible Then Exit Sub
-            If SendTxt.Visible Then Exit Sub
-        
-            If MainTimer.Check(TimersIndex.Montar) Then
-                Call WriteEquitar
+        End If
 
-            End If
-        
-        Case CustomKeys.BindedKey(eKeyType.mKeyAnclar)
+        If macrotrabajo.Enabled Then
+            DesactivarMacroTrabajo
+        Else
+            ActivarMacroTrabajo
 
-            If SendCMSTXT.Visible Then Exit Sub
-            If SendTxt.Visible Then Exit Sub
-            If UserMoving = 1 Then
+        End If
 
-                With FontTypes(FontTypeNames.FONTTYPE_INFO)
-                    Call ShowConsoleMsg("¡¡Debes detener la embarcación para saltar al agua!!", .red, .green, .blue, .bold, .italic)
+    Case CustomKeys.BindedKey(eKeyType.mKeyExitGame)
 
-                End With
+        If frmMain.macrotrabajo.Enabled Then DesactivarMacroTrabajo
+        Call WriteQuit
 
-                Exit Sub
+    Case CustomKeys.BindedKey(eKeyType.mKeyAttack)
 
-            End If
-            
-            If MainTimer.Check(TimersIndex.Anclar) Then
-                Call WriteAnclarEmbarcacion
+        If Shift <> 0 Then Exit Sub
 
-            End If
-            
-        Case CustomKeys.BindedKey(eKeyType.mKeyPanelGM)
+        If Not MainTimer.Check(TimersIndex.PuedeGolpe) Or UserDescansar Or UserMeditar Then Exit Sub
 
-            If SendCMSTXT.Visible Then Exit Sub
-            If SendTxt.Visible Then Exit Sub
-        
-            frmPanelGm.Show
-            
+        If macrotrabajo.Enabled Then DesactivarMacroTrabajo
+        Call WriteAttack
+
+    Case CustomKeys.BindedKey(eKeyType.mKeyTalk)
+
+        If SendCMSTXT.Visible Then Exit Sub
+
+        If (Not frmComerciar.Visible) And (Not frmComerciarUsu.Visible) And (Not frmBancoObj.Visible) And (Not frmMSG.Visible) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
+            SendTxt.Visible = True
+            SendTxt.SetFocus
+
+        End If
+
+    Case CustomKeys.BindedKey(eKeyType.mKeyMontar)
+
+        If SendCMSTXT.Visible Then Exit Sub
+        If SendTxt.Visible Then Exit Sub
+
+        If MainTimer.Check(TimersIndex.Montar) Then
+            Call WriteEquitar
+
+        End If
+
+    Case CustomKeys.BindedKey(eKeyType.mKeyAnclar)
+
+        If SendCMSTXT.Visible Then Exit Sub
+        If SendTxt.Visible Then Exit Sub
+        If UserMoving = 1 Then
+
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("¡¡Debes detener la embarcación para saltar al agua!!", .red, .green, .blue, .bold, .italic)
+
+            End With
+
+            Exit Sub
+
+        End If
+
+        If MainTimer.Check(TimersIndex.Anclar) Then
+            Call WriteAnclarEmbarcacion
+
+        End If
+
+    Case CustomKeys.BindedKey(eKeyType.mKeyPanelGM)
+
+        If SendCMSTXT.Visible Then Exit Sub
+        If SendTxt.Visible Then Exit Sub
+
+        frmPanelGm.Show
+
     End Select
 
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
-    If y < 24 And NoRes Then
+    If Y < 24 And NoRes Then
         MoverVentana (Me.hwnd)
 
     End If
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If UserPasarNivel > 0 Then
         frmMain.exp.Caption = Round((UserExp / UserPasarNivel) * 100, 2) & "%"
@@ -2096,6 +2102,11 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 
 End Sub
 
+Private Sub Form_Unload(Cancel As Integer)
+  TT1.Destroy
+    TT2.Destroy
+End Sub
+
 Private Sub Image2_Click()
     prgRun = False
 
@@ -2112,8 +2123,8 @@ End Sub
 
 Private Sub lblEXP_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
     frmMain.exp.Caption = UserExp & "/" & UserPasarNivel
     frmMain.exp.Caption = UserExp & "/" & UserPasarNivel
 
@@ -2196,15 +2207,15 @@ hlst.ListIndex = s_Index - 1
 Call cmdLanzar_Click
 End Sub
 
-Private Sub PicSpells_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub PicSpells_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
         Call Audio.PlayWave(SND_CLICK)
         End If
 End Sub
 
-Private Sub PicSpells_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-InvX = x
-    InvY = y
+Private Sub PicSpells_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+InvX = X
+    InvY = Y
  
     
     If Button = 2 And Not Comerciando Then
@@ -2219,7 +2230,7 @@ InvX = x
     End If
 End Sub
 
-Private Sub PicSpells_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub PicSpells_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim Stemp As String
    s_Index = invSpells.SelectedItem
 If DragAndDrop Then
@@ -2230,11 +2241,11 @@ If DragAndDrop Then
     End If
 
     If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
-        If x >= invSpells.OffSetX And y >= invSpells.OffSetY And x <= PicSpells.Width And y <= PicSpells.Height Then
+        If X >= invSpells.OffSetX And Y >= invSpells.OffSetY And X <= PicSpells.Width And Y <= PicSpells.Height Then
 
             Dim NewPosInv As Integer
               
-            NewPosInv = invSpells.ClickItem(x, y)
+            NewPosInv = invSpells.ClickItem(X, Y)
 
             If NewPosInv > 0 Then
               
@@ -2341,8 +2352,7 @@ Private Sub pRender_KeyUp(KeyCode As Integer, Shift As Integer)
                 Case CustomKeys.BindedKey(eKeyType.mKeyEquipObject)
                     Call EquiparItem
                 
-                Case CustomKeys.BindedKey(eKeyType.mKeyToggleNames)
-                    Nombres = Not Nombres
+               
                 
                 Case CustomKeys.BindedKey(eKeyType.mKeyTamAnimal)
 
@@ -2612,8 +2622,8 @@ End Sub
 
 Private Sub QuestBoton_MouseUp(Button As Integer, _
                                Shift As Integer, _
-                               x As Single, _
-                               y As Single)
+                               X As Single, _
+                               Y As Single)
     
     On Error GoTo QuestBoton_MouseUp_Err
     
@@ -2740,26 +2750,26 @@ End Sub
 
 Private Sub picHechiz_MouseDown(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
     
     Call Audio.PlayWave(SND_CLICK)
 
-    If y < 0 Then y = 0
-    If y > 228 Then y = 228
-    hlst.ListIndex = Int(y / hlst.Pixel_Alto) + hlst.Scroll
+    If Y < 0 Then Y = 0
+    If Y > 228 Then Y = 228
+    hlst.ListIndex = Int(Y / hlst.Pixel_Alto) + hlst.Scroll
 
 End Sub
 
 Private Sub picHechiz_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
 
     If Button = 1 Then
-        If y < 0 Then y = 0
-        If y > 228 Then y = 228
-        hlst.ListIndex = Int(y / hlst.Pixel_Alto) + hlst.Scroll
+        If Y < 0 Then Y = 0
+        If Y > 228 Then Y = 228
+        hlst.ListIndex = Int(Y / hlst.Pixel_Alto) + hlst.Scroll
 
     End If
 
@@ -2767,8 +2777,8 @@ End Sub
 
 Private Sub picInv_MouseDown(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
 
     If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
         Call Audio.PlayWave(SND_CLICK)
@@ -2779,10 +2789,10 @@ End Sub
 
 Private Sub PicInv_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
-    InvX = x
-    InvY = y
+                             X As Single, _
+                             Y As Single)
+    InvX = X
+    InvY = Y
 
     If Button = 2 And Not Comerciando Then
         If Inventario.GrhIndex(Inventario.SelectedItem) > 0 Then
@@ -2834,7 +2844,26 @@ Private Sub pRender_Click()
     If Cartel Then Cartel = False
 
 
+    If MouseX > 113 And MouseX < 310 And MouseY > 49 And MouseY < 67 Then
+        Call Audio.PlayWave(SND_CLICKNEW)
 
+        If UserMinMAN = UserMaxMAN Or charlist(UserCharIndex).Moving Then Exit Sub
+
+        If UserEstado = 1 Then    'Muerto
+
+            With FontTypes(FontTypeNames.FONTTYPE_INFO)
+                Call ShowConsoleMsg("¡¡Estás muerto!!", .red, .green, .blue, .bold, .italic)
+
+            End With
+
+            Exit Sub
+
+        End If
+
+        Call WriteMeditate
+        Exit Sub
+
+    End If
     If MouseX > 113 And MouseX < 310 And MouseY > 19 And MouseY < 36 Then
         Call Audio.PlayWave(SND_CLICKNEW)
         If Vidarender = True Then
@@ -2849,19 +2878,13 @@ Private Sub pRender_Click()
     If MouseX > 633 And MouseX < 658 And MouseY > 6 And MouseY < 27 Then    'Ranking
         Call ImgLanzar_Click(4)
         Call Audio.PlayWave(SND_CLICKNEW)
+           
+     
         Exit Sub
+        
     End If
 
-    If MouseX > 113 And MouseX < 310 And MouseY > 49 And MouseY < 67 Then
-        Call Audio.PlayWave(SND_CLICKNEW)
-        If Manarender = True Then
-            Manarender = False
-            Exit Sub
-        Else
-            Manarender = True
-            Exit Sub
-        End If
-    End If
+
 
     'Helios 03/06/2021 "coordenadas del raton"
     If MouseX > 661 And MouseX < 681 And MouseY > 5 And MouseY < 25 Then
@@ -3059,20 +3082,20 @@ Private Sub pRender_Click()
         If MouseX > 977 And MouseX < 989 And MouseY > 230 And MouseY < 242 Then
 
 
-            If picInv.Left = 978 Then
+            If picInv.left = 978 Then
 
-                picInv.Left = 946
+                picInv.left = 946
                 Exit Sub
 
             End If
 
-            If picInv.Left = 946 Then
-                picInv.Left = 914
+            If picInv.left = 946 Then
+                picInv.left = 914
                 Exit Sub
             End If
 
-            If picInv.Left = 914 Then
-                picInv.Left = 882
+            If picInv.left = 914 Then
+                picInv.left = 882
                 Exit Sub
             End If
 
@@ -3082,20 +3105,20 @@ Private Sub pRender_Click()
 
 
 
-            If picInv.Left = 882 Then
+            If picInv.left = 882 Then
 
-                picInv.Left = 914
+                picInv.left = 914
 
                 Exit Sub
             End If
 
-            If picInv.Left = 914 Then
-                picInv.Left = 946
+            If picInv.left = 914 Then
+                picInv.left = 946
                 Exit Sub
             End If
 
-            If picInv.Left = 946 Then
-                picInv.Left = 978
+            If picInv.left = 946 Then
+                picInv.left = 978
                 Exit Sub
             End If
 
@@ -3108,20 +3131,20 @@ Private Sub pRender_Click()
         If MouseX > 977 And MouseX < 989 And MouseY > 568 And MouseY < 581 Then
 
 
-            If PicSpells.Left = 978 Then
+            If PicSpells.left = 978 Then
 
-                PicSpells.Left = 946
+                PicSpells.left = 946
                 Exit Sub
 
             End If
 
-            If PicSpells.Left = 946 Then
-                PicSpells.Left = 914
+            If PicSpells.left = 946 Then
+                PicSpells.left = 914
                 Exit Sub
             End If
 
-            If PicSpells.Left = 914 Then
-                PicSpells.Left = 882
+            If PicSpells.left = 914 Then
+                PicSpells.left = 882
                 Exit Sub
             End If
 
@@ -3131,20 +3154,20 @@ Private Sub pRender_Click()
 
 
 
-            If PicSpells.Left = 882 Then
+            If PicSpells.left = 882 Then
 
-                PicSpells.Left = 914
+                PicSpells.left = 914
 
                 Exit Sub
             End If
 
-            If PicSpells.Left = 914 Then
-                PicSpells.Left = 946
+            If PicSpells.left = 914 Then
+                PicSpells.left = 946
                 Exit Sub
             End If
 
-            If PicSpells.Left = 946 Then
-                PicSpells.Left = 978
+            If PicSpells.left = 946 Then
+                PicSpells.left = 978
                 Exit Sub
             End If
 
@@ -3326,13 +3349,23 @@ Private Sub pRender_DblClick()
 
     If Conectar Then Exit Sub
     Call WriteDoubleClick(tX, tY)
+    If MouseX > 113 And MouseX < 310 And MouseY > 49 And MouseY < 67 Then
+        Call Audio.PlayWave(SND_CLICKNEW)
+        If Manarender = True Then
+            Manarender = False
+            Exit Sub
+        Else
+            Manarender = True
+            Exit Sub
+        End If
+    End If
 
 End Sub
 
 Private Sub pRender_MouseDown(Button As Integer, _
                               Shift As Integer, _
-                              x As Single, _
-                              y As Single)
+                              X As Single, _
+                              Y As Single)
     MouseBoton = Button
     MouseShift = Shift
 
@@ -3340,21 +3373,69 @@ End Sub
 
 Private Sub pRender_MouseMove(Button As Integer, _
                               Shift As Integer, _
-                            x As Single, _
-                            y As Single)
-    MouseX = x
-    MouseY = y
+                            X As Single, _
+                            Y As Single)
+    Dim f As New StdFont
+    MouseX = X
+    MouseY = Y
 
     If MouseX > 828 And MouseX < 850 And MouseY > 5 And MouseY < 25 Then    'inventario
         RecuadroX = 827
         RecuadroY = 6
         RecuadroON = True
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Inventario"
+                    TT2.TipText = "Inventario AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+
+
+                    f.Name = "Augusta"
+                    f.Size = 12
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 827, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
         Exit Sub
     End If
     If MouseX > 882 And MouseX < 903 And MouseY > 5 And MouseY < 25 Then    ' barras de vida
         RecuadroX = 881
         RecuadroY = 6
         RecuadroON = True
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Barras de Vida"
+                    TT2.TipText = "Vida y Mana AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+
+                    f.Size = 12
+                    f.Name = "Augusta"
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 882, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
         Exit Sub
     End If
 
@@ -3362,6 +3443,28 @@ Private Sub pRender_MouseMove(Button As Integer, _
         RecuadroX = 662
         RecuadroY = 6
         RecuadroON = True
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Clanes"
+                    TT2.TipText = "Clanes AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+                    f.Size = 12
+                    f.Name = "Augusta"
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 662, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
         Exit Sub
 
     End If
@@ -3371,6 +3474,30 @@ Private Sub pRender_MouseMove(Button As Integer, _
         RecuadroX = 717
         RecuadroY = 6
         RecuadroON = True
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Mini Mapa"
+                    TT2.TipText = "Inventario AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+
+                    f.Size = 12
+                    f.Name = "Augusta"
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 717, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
+
         Exit Sub
 
     End If
@@ -3380,6 +3507,29 @@ Private Sub pRender_MouseMove(Button As Integer, _
         RecuadroX = 800
         RecuadroY = 6
         RecuadroON = True
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Opciones"
+                    TT2.TipText = "Opciones AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+
+                    f.Size = 12
+                    f.Name = "Augusta"
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 800, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
         Exit Sub
     End If
 
@@ -3387,6 +3537,29 @@ Private Sub pRender_MouseMove(Button As Integer, _
         RecuadroX = 689
         RecuadroY = 6
         RecuadroON = True
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Estadisticas"
+                    TT2.TipText = "Estadisticas AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+
+                    f.Size = 12
+                    f.Name = "Augusta"
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 689, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
         Exit Sub
     End If
 
@@ -3395,6 +3568,29 @@ Private Sub pRender_MouseMove(Button As Integer, _
         RecuadroX = 772
         RecuadroY = 6
         RecuadroON = True
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Partis"
+                    TT2.TipText = "Partis AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+
+                    f.Size = 12
+                    f.Name = "Augusta"
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 772, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
         Exit Sub
     End If
 
@@ -3403,6 +3599,29 @@ Private Sub pRender_MouseMove(Button As Integer, _
         RecuadroX = 744
         RecuadroY = 6
         RecuadroON = True
+
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Misiones"
+                    TT2.TipText = "Misiones AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+                    f.Size = 12
+                    f.Name = "Augusta"
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 744, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
         Exit Sub
 
     End If
@@ -3411,13 +3630,59 @@ Private Sub pRender_MouseMove(Button As Integer, _
         RecuadroX = 854
         RecuadroY = 6
         RecuadroON = True
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Consola"
+                    TT2.TipText = "Consola AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+                    f.Size = 12
+                    f.Name = "Augusta"
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 854, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
         Exit Sub
     End If
-     
-     If MouseX > 633 And MouseX < 658 And MouseY > 6 And MouseY < 27 Then   'Ranking
+
+    If MouseX > 633 And MouseX < 658 And MouseY > 6 And MouseY < 27 Then   'Ranking
         RecuadroX = 634
         RecuadroY = 6
         RecuadroON = True
+
+        If Not Conectar Then
+            If mOpciones.MostrarAyuda Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Ranking"
+                    TT2.TipText = "Ranking AOYind"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+
+                    f.Size = 12
+                    f.Name = "Augusta"
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 634, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
         Exit Sub
     End If
 
@@ -3428,9 +3693,11 @@ Private Sub pRender_MouseMove(Button As Integer, _
         Exit Sub
 
     End If
+    contarr = 0
+    TT2.Destroy
     RecuadroON = False
     RecuadroSON = False
-    
+
     'Trim to fit screen
     If MouseX < 0 Then
         MouseX = 0
@@ -3447,15 +3714,15 @@ Private Sub pRender_MouseMove(Button As Integer, _
 
     End If
 
-    If Conectar Then Call MouseAction(x, y, 0)
+    If Conectar Then Call MouseAction(X, Y, 0)
 
 End Sub
 
-Private Sub pRender_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
-    clicX = x
-    clicY = y
+Private Sub pRender_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    clicX = X
+    clicY = Y
 
-    If Conectar Then Call MouseAction(x, y, 1)
+    If Conectar Then Call MouseAction(X, Y, 1)
 
 End Sub
 
@@ -3565,8 +3832,8 @@ End Sub
 
 Private Sub LanzarImg_MouseMove(Button As Integer, _
                                 Shift As Integer, _
-                                x As Single, _
-                                y As Single)
+                                X As Single, _
+                                Y As Single)
     UsaMacro = False
     CnTd = 0
 
@@ -3642,13 +3909,13 @@ Private Sub Form_Load()
     tEmail.BackColor = RGB(200, 200, 200)
     tRePass.BackColor = RGB(200, 200, 200)
    
-    tUser.Top = 612
-    tPass.Top = 637
-    tPass.Left = 428
-    tUser.Left = 428
+    tUser.top = 612
+    tPass.top = 637
+    tPass.left = 428
+    tUser.left = 428
     
-    Me.Left = 0
-    Me.Top = 0
+    Me.left = 0
+    Me.top = 0
    
     If (Not frmComerciar.Visible) And (Not frmComerciarUsu.Visible) And (Not frmBancoObj.Visible) And (Not frmMSG.Visible) And (Not frmEstadisticas.Visible) And (Not frmCantidad.Visible) Then
         Debug.Print "Precarga"
@@ -3672,6 +3939,9 @@ Private Sub Form_Load()
         frmOpciones.RotaAura.Value = vbUnchecked
 
     End If
+    
+      
+    
 
 End Sub
 
@@ -3830,7 +4100,7 @@ Private Sub picInv_DblClick()
 
 End Sub
 
-Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
     If DragAndDrop Then
         frmMain.MouseIcon = Nothing
@@ -3840,11 +4110,11 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
     End If
 
     If Button = 2 And DragAndDrop And Inventario.SelectedItem > 0 And Not Comerciando Then
-        If x >= Inventario.OffSetX And y >= Inventario.OffSetY And x <= picInv.Width And y <= picInv.Height Then
+        If X >= Inventario.OffSetX And Y >= Inventario.OffSetY And X <= picInv.Width And Y <= picInv.Height Then
 
             Dim NewPosInv As Integer
 
-            NewPosInv = Inventario.ClickItem(x, y)
+            NewPosInv = Inventario.ClickItem(X, Y)
 
             If NewPosInv > 0 Then
                 Call WriteIntercambiarInv(Inventario.SelectedItem, NewPosInv, False)
@@ -3858,25 +4128,25 @@ Private Sub picInv_MouseUp(Button As Integer, Shift As Integer, x As Single, y A
 
             Dim DropY As Integer, tmpY As Integer
 
-            tmpX = x + picInv.Left - pRender.Left
-            tmpY = y + picInv.Top - pRender.Top
+            tmpX = X + picInv.left - pRender.left
+            tmpY = Y + picInv.top - pRender.top
         
             If tmpX > 0 And tmpX < pRender.Width And tmpY > 0 And tmpY < pRender.Height Then
                 Call ConvertCPtoTP(tmpX, tmpY, DropX, DropY)
         
                 'Solo tira a un tilde de distancia...
-                If DropX < UserPos.x - 1 Then
-                    DropX = UserPos.x - 1
-                    DropY = UserPos.y
-                ElseIf DropX > UserPos.x + 1 Then
-                    DropX = UserPos.x + 1
-                    DropY = UserPos.y
-                ElseIf DropY < UserPos.y - 1 Then
-                    DropY = UserPos.y - 1
-                    DropX = UserPos.x
-                ElseIf DropY > UserPos.y + 1 Then
-                    DropY = UserPos.y + 1
-                    DropX = UserPos.x
+                If DropX < UserPos.X - 1 Then
+                    DropX = UserPos.X - 1
+                    DropY = UserPos.Y
+                ElseIf DropX > UserPos.X + 1 Then
+                    DropX = UserPos.X + 1
+                    DropY = UserPos.Y
+                ElseIf DropY < UserPos.Y - 1 Then
+                    DropY = UserPos.Y - 1
+                    DropX = UserPos.X
+                ElseIf DropY > UserPos.Y + 1 Then
+                    DropY = UserPos.Y + 1
+                    DropX = UserPos.X
 
                 End If
             
@@ -4263,28 +4533,28 @@ Private Sub WSock_Error(ByVal Number As Integer, _
 End Sub
 
 Public Sub RefreshMiniMap()
-    frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
+    frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
 
-    Me.shpMiniMapaUser.Left = UserPos.x
-    Me.shpMiniMapaUser.Top = UserPos.y
-    Me.shpMiniMapaVision.Left = UserPos.x - 135
-    Me.shpMiniMapaVision.Top = UserPos.y - 135
+    Me.shpMiniMapaUser.left = UserPos.X
+    Me.shpMiniMapaUser.top = UserPos.Y
+    Me.shpMiniMapaVision.left = UserPos.X - 135
+    Me.shpMiniMapaVision.top = UserPos.Y - 135
     Me.imgMiniMapa.Refresh
 
 End Sub
 
 Private Sub imgMiniMapa_MouseDown(Button As Integer, _
                                   Shift As Integer, _
-                                  x As Single, _
-                                  y As Single)
+                                  X As Single, _
+                                  Y As Single)
 
-    If x > 1077 Then x = 1077
-    If x < 23 Then x = 23
-    If y > 1477 Then y = 1477
-    If y < 23 Then y = 23
+    If X > 1077 Then X = 1077
+    If X < 23 Then X = 23
+    If Y > 1477 Then Y = 1477
+    If Y < 23 Then Y = 23
 
     If Button = vbRightButton Then
-        Call WriteWarpChar("YO", UserMap, CInt(x - 1), CInt(y - 1))
+        Call WriteWarpChar("YO", UserMap, CInt(X - 1), CInt(Y - 1))
         Call RefreshMiniMap
 
     End If
@@ -4311,3 +4581,5 @@ Private Sub cmdLanzar_Click()
     End If
 
 End Sub
+
+
