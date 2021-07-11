@@ -976,6 +976,14 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
         .scrollDirectionX = AddX
         .scrollDirectionY = AddY
 
+
+        For X = .Pos.X - 5 To .Pos.X + 5
+            For Y = .Pos.Y - 5 To .Pos.Y + 5
+                If (.Pos.X <> X Or .Pos.Y <> Y) And MapData(X, Y).CharIndex = CharIndex Then
+                    MapData(X, Y).CharIndex = 0
+                End If
+            Next Y
+        Next X
     End With
     
     If UserEstado = 0 Then Call DoPasosFx(CharIndex)
@@ -2512,7 +2520,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
                 For Y = 0 To 6
                     For X = 0 To 7
                         ' Call Engine_Render_Rectangle(LTLluvia(x), LTLluvia(y) + 40, RLluvia(iFrameIndex).Right + 30 - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
-                        Call Engine_Render_Rectangle(LTLluvia(X) - 256, LTLluvia(Y) + 40 - 256, RLluvia(iFrameIndex).Right + 30 - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
+                        Call Engine_Render_Rectangle(LTLluvia(X) - 256, LTLluvia(Y) + 40 - 256, RLluvia(iFrameIndex).right + 30 - RLluvia(iFrameIndex).left, RLluvia(iFrameIndex).bottom - RLluvia(iFrameIndex).top, RLluvia(iFrameIndex).left, RLluvia(iFrameIndex).top, RLluvia(iFrameIndex).right - RLluvia(iFrameIndex).left, RLluvia(iFrameIndex).bottom - RLluvia(iFrameIndex).top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
                     Next X
                 Next Y
 
@@ -3154,15 +3162,15 @@ Sub LoadGraphics()
     Call SurfaceDB.Initialize(D3DDevice, D3DX, ClientSetup.bUseVideo, DirRecursos & "Graphics.AO", ClientSetup.byMemory)
     
     'Set up te rain rects
-    RLluvia(0).Top = 0:      RLluvia(1).Top = 0:      RLluvia(2).Top = 0:      RLluvia(3).Top = 0
-    RLluvia(0).Left = 0:     RLluvia(1).Left = 128:   RLluvia(2).Left = 256:   RLluvia(3).Left = 384
-    RLluvia(0).Right = 128:  RLluvia(1).Right = 256:  RLluvia(2).Right = 384:  RLluvia(3).Right = 512
-    RLluvia(0).Bottom = 128: RLluvia(1).Bottom = 128: RLluvia(2).Bottom = 128: RLluvia(3).Bottom = 128
+    RLluvia(0).top = 0:      RLluvia(1).top = 0:      RLluvia(2).top = 0:      RLluvia(3).top = 0
+    RLluvia(0).left = 0:     RLluvia(1).left = 128:   RLluvia(2).left = 256:   RLluvia(3).left = 384
+    RLluvia(0).right = 128:  RLluvia(1).right = 256:  RLluvia(2).right = 384:  RLluvia(3).right = 512
+    RLluvia(0).bottom = 128: RLluvia(1).bottom = 128: RLluvia(2).bottom = 128: RLluvia(3).bottom = 128
     
-    RLluvia(4).Top = 128:    RLluvia(5).Top = 128:    RLluvia(6).Top = 128:    RLluvia(7).Top = 128
-    RLluvia(4).Left = 0:     RLluvia(5).Left = 128:   RLluvia(6).Left = 256:   RLluvia(7).Left = 384
-    RLluvia(4).Right = 128:  RLluvia(5).Right = 256:  RLluvia(6).Right = 384:  RLluvia(7).Right = 512
-    RLluvia(4).Bottom = 256: RLluvia(5).Bottom = 256: RLluvia(6).Bottom = 256: RLluvia(7).Bottom = 256
+    RLluvia(4).top = 128:    RLluvia(5).top = 128:    RLluvia(6).top = 128:    RLluvia(7).top = 128
+    RLluvia(4).left = 0:     RLluvia(5).left = 128:   RLluvia(6).left = 256:   RLluvia(7).left = 384
+    RLluvia(4).right = 128:  RLluvia(5).right = 256:  RLluvia(6).right = 384:  RLluvia(7).right = 512
+    RLluvia(4).bottom = 256: RLluvia(5).bottom = 256: RLluvia(6).bottom = 256: RLluvia(7).bottom = 256
 
 End Sub
 
@@ -3230,19 +3238,19 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, _
     
     'Set the view rect
     With MainViewRect
-        .Left = MainViewLeft
-        .Top = MainViewTop
-        .Right = .Left + MainViewWidth
-        .Bottom = .Top + MainViewHeight
+        .left = MainViewLeft
+        .top = MainViewTop
+        .right = .left + MainViewWidth
+        .bottom = .top + MainViewHeight
 
     End With
     
     'Set the dest rect
     With MainDestRect
-        .Left = TilePixelWidth * TileBufferSize - TilePixelWidth
-        .Top = TilePixelHeight * TileBufferSize - TilePixelHeight
-        .Right = .Left + MainViewWidth
-        .Bottom = .Top + MainViewHeight
+        .left = TilePixelWidth * TileBufferSize - TilePixelWidth
+        .top = TilePixelHeight * TileBufferSize - TilePixelHeight
+        .right = .left + MainViewWidth
+        .bottom = .top + MainViewHeight
 
     End With
     
@@ -3304,10 +3312,10 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
     Static OffsetCounterY As Single
 
     '****** Set main view rectangle ******
-    MainViewRect.Left = (DisplayFormLeft / Screen.TwipsPerPixelX) + MainViewLeft
-    MainViewRect.Top = (DisplayFormTop / Screen.TwipsPerPixelY) + MainViewTop
-    MainViewRect.Right = MainViewRect.Left + MainViewWidth
-    MainViewRect.Bottom = MainViewRect.Top + MainViewHeight
+    MainViewRect.left = (DisplayFormLeft / Screen.TwipsPerPixelX) + MainViewLeft
+    MainViewRect.top = (DisplayFormTop / Screen.TwipsPerPixelY) + MainViewTop
+    MainViewRect.right = MainViewRect.left + MainViewWidth
+    MainViewRect.bottom = MainViewRect.top + MainViewHeight
 
     If EngineRun Then
 
@@ -3600,7 +3608,7 @@ Public Sub CharRender(ByRef rChar As Char, _
         If .Moving Then
             If .nombre = "" Then
                 VelChar = 0.75
-            ElseIf Left(.nombre, 1) = "!" Then
+            ElseIf left(.nombre, 1) = "!" Then
                 VelChar = 0.75
             Else
                 VelChar = 1.2
@@ -3935,10 +3943,10 @@ Public Sub CharRender(ByRef rChar As Char, _
                         End If
 
                         'Nick
-                        line = Left$(.nombre, Pos - 2)
+                        line = left$(.nombre, Pos - 2)
 
-                        If Left(line, 1) = "!" Then
-                            line = Right(line, Len(line) - 1)
+                        If left(line, 1) = "!" Then
+                            line = right(line, Len(line) - 1)
                             Pos = Pos - 1
 
                         End If
@@ -4343,11 +4351,11 @@ Public Sub Grh_Render_To_Hdc(ByRef Pic As PictureBox, _
     Static Picture As RECT
 
     With Picture
-        .Left = 0
-        .Top = 0
+        .left = 0
+        .top = 0
 
-        .Bottom = Pic.ScaleHeight
-        .Right = Pic.ScaleWidth
+        .bottom = Pic.ScaleHeight
+        .right = Pic.ScaleWidth
 
     End With
 

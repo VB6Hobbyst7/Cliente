@@ -2103,8 +2103,8 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-  TT1.Destroy
-    TT2.Destroy
+  ''TT1.Destroy
+   ' TT2.Destroy
 End Sub
 
 Private Sub Image2_Click()
