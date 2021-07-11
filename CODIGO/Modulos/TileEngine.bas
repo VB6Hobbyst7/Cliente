@@ -110,8 +110,8 @@ End Type
 'Posicion en un mapa
 Public Type Position
 
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 
 End Type
 
@@ -119,8 +119,8 @@ End Type
 Public Type WorldPos
 
     Map As Integer
-    x As Integer
-    y As Integer
+    X As Integer
+    Y As Integer
 
 End Type
 
@@ -513,8 +513,8 @@ Private Declare Function QueryPerformanceCounter _
 
 Private Declare Function BitBlt _
                           Lib "gdi32" (ByVal hDestDC As Long, _
-                                       ByVal x As Long, _
-                                       ByVal y As Long, _
+                                       ByVal X As Long, _
+                                       ByVal Y As Long, _
                                        ByVal nWidth As Long, _
                                        ByVal nHeight As Long, _
                                        ByVal hSrcDC As Long, _
@@ -649,8 +649,8 @@ Sub CargarCuerpos()
             InitGrh BodyData(I).Walk(3), MisCuerpos(I).Body(3), 0
             InitGrh BodyData(I).Walk(4), MisCuerpos(I).Body(4), 0
             
-            BodyData(I).HeadOffset.x = MisCuerpos(I).HeadOffsetX
-            BodyData(I).HeadOffset.y = MisCuerpos(I).HeadOffsetY
+            BodyData(I).HeadOffset.X = MisCuerpos(I).HeadOffsetX
+            BodyData(I).HeadOffset.Y = MisCuerpos(I).HeadOffsetY
 
         End If
 
@@ -696,8 +696,8 @@ Sub ConvertCPtoTP(ByVal viewPortX As Integer, _
     'Converts where the mouse is in the main window to a tile position. MUST be called eveytime the mouse moves.
     '******************************************
 
-    tX = UserPos.x + (viewPortX + 16) \ TilePixelWidth - WindowTileWidth \ 2
-    tY = UserPos.y + (viewPortY + 16) \ TilePixelHeight - WindowTileHeight \ 2
+    tX = UserPos.X + (viewPortX + 16) \ TilePixelWidth - WindowTileWidth \ 2
+    tY = UserPos.Y + (viewPortY + 16) \ TilePixelHeight - WindowTileHeight \ 2
 
     'frmMain.lblPosTest2.Caption = "X: " & tX & "; Y:" & tY
    
@@ -707,8 +707,8 @@ Sub MakeChar(ByVal CharIndex As Integer, _
              ByVal Body As Integer, _
              ByVal Head As Integer, _
              ByVal Heading As Byte, _
-             ByVal x As Integer, _
-             ByVal y As Integer, _
+             ByVal X As Integer, _
+             ByVal Y As Integer, _
              ByVal Arma As Integer, _
              ByVal Escudo As Integer, _
              ByVal Casco As Integer)
@@ -750,8 +750,8 @@ Sub MakeChar(ByVal CharIndex As Integer, _
         .MoveOffsetY = 0
         
         'Update position
-        .Pos.x = x
-        .Pos.y = y
+        .Pos.X = X
+        .Pos.Y = Y
         
         .muerto = Head = CASPER_HEAD Or Head = CASPER_HEAD_CRIMI Or Body = FRAGATA_FANTASMAL
 
@@ -762,7 +762,7 @@ Sub MakeChar(ByVal CharIndex As Integer, _
     End With
     
     'Plot on map
-    MapData(x, y).CharIndex = CharIndex
+    MapData(X, Y).CharIndex = CharIndex
     
 End Sub
 
@@ -790,10 +790,10 @@ Sub ResetCharInfo(ByVal CharIndex As Integer)
         .ContadorInvi = 0
         .nombre = ""
         .pie = False
-        .Pos.x = 0
-        .Pos.y = 0
-        .LastPos.x = 0
-        .LastPos.y = 0
+        .Pos.X = 0
+        .Pos.Y = 0
+        .LastPos.X = 0
+        .LastPos.Y = 0
         .UsandoArma = False
 
     End With
@@ -822,12 +822,12 @@ Sub EraseChar(ByVal CharIndex As Integer)
 
         End If
 
-        If .Pos.x > 0 And .Pos.y > 0 Then
-            MapData(.Pos.x, .Pos.y).CharIndex = 0
+        If .Pos.X > 0 And .Pos.Y > 0 Then
+            MapData(.Pos.X, .Pos.Y).CharIndex = 0
     
             If .FxIndex <> 0 And .fX.Loops > -1 Then
-                MapData(.Pos.x, .Pos.y).fX = .FxIndex
-                MapData(.Pos.x, .Pos.y).fXGrh = .fX
+                MapData(.Pos.X, .Pos.Y).fX = .FxIndex
+                MapData(.Pos.X, .Pos.Y).fXGrh = .fX
 
             End If
     
@@ -891,9 +891,9 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
 
     Dim AddY   As Integer
 
-    Dim x      As Integer
+    Dim X      As Integer
 
-    Dim y      As Integer
+    Dim Y      As Integer
 
     Dim nX     As Integer
 
@@ -902,13 +902,13 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     Dim tmpInt As Integer
     
     With charlist(CharIndex)
-        x = .Pos.x
-        y = .Pos.y
+        X = .Pos.X
+        Y = .Pos.Y
         
-        If x = 0 Or y = 0 Then Exit Sub
+        If X = 0 Or Y = 0 Then Exit Sub
         
-        .LastPos.x = x
-        .LastPos.y = y
+        .LastPos.X = X
+        .LastPos.Y = Y
         
         'Figure out which way to move
         Select Case nHeading
@@ -927,8 +927,8 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
 
         End Select
         
-        nX = x + AddX
-        nY = y + AddY
+        nX = X + AddX
+        nY = Y + AddY
         
         If MapData(nX, nY).CharIndex > 0 Then
             tmpInt = MapData(nX, nY).CharIndex
@@ -936,8 +936,8 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
             If charlist(tmpInt).muerto = False Then
                 tmpInt = 0
             Else
-                charlist(tmpInt).Pos.x = x
-                charlist(tmpInt).Pos.y = y
+                charlist(tmpInt).Pos.X = X
+                charlist(tmpInt).Pos.Y = Y
                 charlist(tmpInt).Heading = InvertHeading(nHeading)
                 charlist(tmpInt).MoveOffsetX = 1 * (TilePixelWidth * AddX)
                 charlist(tmpInt).MoveOffsetY = 1 * (TilePixelHeight * AddY)
@@ -958,12 +958,12 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
         End If
 
         MapData(nX, nY).CharIndex = CharIndex
-        .Pos.x = nX
-        .Pos.y = nY
-        MapData(x, y).CharIndex = tmpInt
+        .Pos.X = nX
+        .Pos.Y = nY
+        MapData(X, Y).CharIndex = tmpInt
         
         If UserEstado <> 1 Then
-            Call vPasos.CreatePasos(x, y, DamePasos(nHeading))
+            Call vPasos.CreatePasos(X, Y, DamePasos(nHeading))
 
         End If
         
@@ -1024,7 +1024,7 @@ Public Sub DoFogataFx()
     Else
         bFogata = HayFogata(location)
 
-        If bFogata And FogataBufferIndex = 0 Then FogataBufferIndex = Audio.PlayWave(SND_FUEGO, location.x, location.y, LoopStyle.Enabled)
+        If bFogata And FogataBufferIndex = 0 Then FogataBufferIndex = Audio.PlayWave(SND_FUEGO, location.X, location.Y, LoopStyle.Enabled)
 
     End If
 
@@ -1033,7 +1033,7 @@ End Sub
 Public Function EstaPCarea(ByVal CharIndex As Integer) As Boolean
 
     With charlist(CharIndex).Pos
-        EstaPCarea = .x > UserPos.x - 11 And .x < UserPos.x + 111 And .y > UserPos.y - 9 And .y < UserPos.y + 9
+        EstaPCarea = .X > UserPos.X - 11 And .X < UserPos.X + 111 And .Y > UserPos.Y - 9 And .Y < UserPos.Y + 9
 
     End With
 
@@ -1043,9 +1043,9 @@ Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As I
 
     On Error Resume Next
 
-    Dim x           As Integer
+    Dim X           As Integer
 
-    Dim y           As Integer
+    Dim Y           As Integer
 
     Dim AddX        As Integer
 
@@ -1058,13 +1058,13 @@ Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As I
     Dim hayColision As Boolean
     
     With charlist(CharIndex)
-        x = .Pos.x
-        y = .Pos.y
+        X = .Pos.X
+        Y = .Pos.Y
         
-        If x > 0 And y > 0 Then
+        If X > 0 And Y > 0 Then
                 
-            AddX = nX - x
-            AddY = nY - y
+            AddX = nX - X
+            AddY = nY - Y
         
             If Sgn(AddX) = 1 Then
                 nHeading = E_Heading.east
@@ -1093,8 +1093,8 @@ Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As I
 
                     tmpInt = 0
                 Else
-                    charlist(tmpInt).Pos.x = x
-                    charlist(tmpInt).Pos.y = y
+                    charlist(tmpInt).Pos.X = X
+                    charlist(tmpInt).Pos.Y = Y
                     charlist(tmpInt).Heading = InvertHeading(nHeading)
                     charlist(tmpInt).MoveOffsetX = 1 * (TilePixelWidth * AddX)
                     charlist(tmpInt).MoveOffsetY = 1 * (TilePixelHeight * AddY)
@@ -1114,7 +1114,7 @@ Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As I
 
             End If
         
-            MapData(x, y).CharIndex = tmpInt
+            MapData(X, Y).CharIndex = tmpInt
         
             MapData(nX, nY).CharIndex = CharIndex
        
@@ -1127,8 +1127,8 @@ Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As I
             '            'Call CharRender(charlist(UserCharIndex), UserCharIndex, charlist(UserCharIndex).Pos.X, charlist(UserCharIndex).Pos.Y)
             '        End If
         
-            .Pos.x = nX
-            .Pos.y = nY
+            .Pos.X = nX
+            .Pos.Y = nY
         
             .MoveOffsetX = -1 * (TilePixelWidth * AddX)
             .MoveOffsetY = -1 * (TilePixelHeight * AddY)
@@ -1152,13 +1152,23 @@ Sub MoveCharbyPos(ByVal CharIndex As Integer, ByVal nX As Integer, ByVal nY As I
         Else
 
             If .muerto = False Then
-                Call vPasos.CreatePasos(x, y, DamePasos(nHeading))
+                Call vPasos.CreatePasos(X, Y, DamePasos(nHeading))
 
             End If
 
         End If
         
+
+        For X = .Pos.X - 5 To .Pos.X + 5
+            For Y = .Pos.Y - 5 To .Pos.Y + 5
+                If (.Pos.X <> X Or .Pos.Y <> Y) And MapData(X, Y).CharIndex = CharIndex Then
+                    MapData(X, Y).CharIndex = 0
+                End If
+            Next Y
+        Next X
     End With
+    
+
     
     '    If (nY < MinLimiteY) Or (nY > MaxLimiteY) Or (nX < MinLimiteX) Or (nX > MaxLimiteX) Then
     '        Call EraseChar(CharIndex)
@@ -1170,9 +1180,9 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
     '******************************************
     'Starts the screen moving in a direction
     '******************************************
-    Dim x  As Integer
+    Dim X  As Integer
 
-    Dim y  As Integer
+    Dim Y  As Integer
 
     Dim tX As Integer
 
@@ -1182,35 +1192,35 @@ Sub MoveScreen(ByVal nHeading As E_Heading)
     Select Case nHeading
 
         Case E_Heading.north
-            y = -1
+            Y = -1
         
         Case E_Heading.east
-            x = 1
+            X = 1
         
         Case E_Heading.south
-            y = 1
+            Y = 1
         
         Case E_Heading.west
-            x = -1
+            X = -1
 
     End Select
     
     'Fill temp pos
-    tX = UserPos.x + x
-    tY = UserPos.y + y
+    tX = UserPos.X + X
+    tY = UserPos.Y + Y
     
     'Check to see if its out of bounds
     If tX < 1 Or tX > MapInfo.Width Or tY < 1 Or tY > MapInfo.Height Then
         Exit Sub
     Else
         'Start moving... MainLoop does the rest
-        AddtoUserPos.x = x
-        UserPos.x = tX
-        AddtoUserPos.y = y
-        UserPos.y = tY
+        AddtoUserPos.X = X
+        UserPos.X = tX
+        AddtoUserPos.Y = Y
+        UserPos.Y = tY
         UserMoving = 1
         
-        bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or MapData(UserPos.x, UserPos.y).Trigger = 2 Or MapData(UserPos.x, UserPos.y).Trigger = 7 Or MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
+        bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or MapData(UserPos.X, UserPos.Y).Trigger = 2 Or MapData(UserPos.X, UserPos.Y).Trigger = 7 Or MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
 
     End If
 
@@ -1222,14 +1232,14 @@ Private Function HayFogata(ByRef location As Position) As Boolean
 
     Dim k As Long
     
-    For J = UserPos.x - 8 To UserPos.x + 8
-        For k = UserPos.y - 6 To UserPos.y + 6
+    For J = UserPos.X - 8 To UserPos.X + 8
+        For k = UserPos.Y - 6 To UserPos.Y + 6
 
             If InMapBounds(J, k) Then
                 If MapData(J, k).ObjGrh.GrhIndex = GrhFogata Then
                     
-                    location.x = J
-                    location.y = k
+                    location.X = J
+                    location.Y = k
                     
                     HayFogata = True
                     Exit Function
@@ -1386,30 +1396,30 @@ ErrorHandler:
 
 End Function
 
-Function LegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
+Function LegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
 
     '*****************************************************************
     'Checks to see if a tile position is legal
     '*****************************************************************
     'Limites del mapa
-    If x < 1 Or x > MapInfo.Width Or y < 1 Or y > MapInfo.Height Then
+    If X < 1 Or X > MapInfo.Width Or Y < 1 Or Y > MapInfo.Height Then
         Exit Function
 
     End If
     
     'Tile Bloqueado?
-    If MapData(x, y).Blocked = 1 Then
+    If MapData(X, Y).Blocked = 1 Then
         Exit Function
 
     End If
     
     'øHay un personaje?
-    If MapData(x, y).CharIndex > 0 Then
+    If MapData(X, Y).CharIndex > 0 Then
         Exit Function
 
     End If
    
-    If UserNavegando <> HayAgua(x, y) Then
+    If UserNavegando <> HayAgua(X, Y) Then
         Exit Function
 
     End If
@@ -1418,7 +1428,7 @@ Function LegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
 
 End Function
 
-Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
+Function MoveToLegalPos(ByVal X As Integer, ByVal Y As Integer) As Boolean
 
     '*****************************************************************
     'Author: ZaMa
@@ -1429,23 +1439,23 @@ Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
     Dim CharIndex As Integer
     
     'Limites del mapa
-    If x < 1 Or x > MapInfo.Width Or y < 1 Or y > MapInfo.Height Then
+    If X < 1 Or X > MapInfo.Width Or Y < 1 Or Y > MapInfo.Height Then
         Exit Function
 
     End If
     
     'Tile Bloqueado?
-    If MapData(x, y).Blocked = 1 Then
+    If MapData(X, Y).Blocked = 1 Then
         Exit Function
 
     End If
     
-    CharIndex = MapData(x, y).CharIndex
+    CharIndex = MapData(X, Y).CharIndex
 
     'øHay un personaje?
     If CharIndex > 0 Then
     
-        If MapData(UserPos.x, UserPos.y).Blocked = 1 Then
+        If MapData(UserPos.X, UserPos.Y).Blocked = 1 Then
             Exit Function
 
         End If
@@ -1458,12 +1468,12 @@ Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
             Else
 
                 ' No puedo intercambiar con un casper que este en la orilla (Lado tierra)
-                If HayAgua(UserPos.x, UserPos.y) Then
-                    If Not HayAgua(x, y) Then Exit Function
+                If HayAgua(UserPos.X, UserPos.Y) Then
+                    If Not HayAgua(X, Y) Then Exit Function
                 Else
 
                     ' No puedo intercambiar con un casper que este en la orilla (Lado agua)
-                    If HayAgua(x, y) Then Exit Function
+                    If HayAgua(X, Y) Then Exit Function
 
                 End If
 
@@ -1473,7 +1483,7 @@ Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
 
     End If
    
-    If UserNavegando <> HayAgua(x, y) Then
+    If UserNavegando <> HayAgua(X, Y) Then
         Exit Function
 
     End If
@@ -1482,12 +1492,12 @@ Function MoveToLegalPos(ByVal x As Integer, ByVal y As Integer) As Boolean
 
 End Function
 
-Function InMapBounds(ByVal x As Integer, ByVal y As Integer) As Boolean
+Function InMapBounds(ByVal X As Integer, ByVal Y As Integer) As Boolean
 
     '*****************************************************************
     'Checks to see if a tile position is in the maps bounds
     '*****************************************************************
-    If x < 1 Or x > MapInfo.Width Or y < 1 Or y > MapInfo.Height Then
+    If X < 1 Or X > MapInfo.Width Or Y < 1 Or Y > MapInfo.Height Then
         Exit Function
 
     End If
@@ -1497,8 +1507,8 @@ Function InMapBounds(ByVal x As Integer, ByVal y As Integer) As Boolean
 End Function
 
 Sub DrawGrhIndexLuz(ByVal GrhIndex As Integer, _
-                    ByVal x As Integer, _
-                    ByVal y As Integer, _
+                    ByVal X As Integer, _
+                    ByVal Y As Integer, _
                     ByVal Center As Byte, _
                     ByRef color() As Long)
 
@@ -1507,26 +1517,26 @@ Sub DrawGrhIndexLuz(ByVal GrhIndex As Integer, _
         'Center Grh over X,Y pos
         If Center Then
             If .TileWidth <> 1 Then
-                x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+                X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
 
             End If
             
             If .TileHeight <> 1 Then
-                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+                Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
 
             End If
 
         End If
         
-        Call Engine_Render_Rectangle(x, y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , , .FileNum, color(0), color(1), color(2), color(3))
+        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , , .FileNum, color(0), color(1), color(2), color(3))
 
     End With
 
 End Sub
 
 Sub DrawGrhIndex(ByVal GrhIndex As Integer, _
-                 ByVal x As Integer, _
-                 ByVal y As Integer, _
+                 ByVal X As Integer, _
+                 ByVal Y As Integer, _
                  ByVal Center As Byte, _
                  ByVal color As Long)
 
@@ -1535,26 +1545,26 @@ Sub DrawGrhIndex(ByVal GrhIndex As Integer, _
         'Center Grh over X,Y pos
         If Center Then
             If .TileWidth <> 1 Then
-                x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+                X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
 
             End If
             
             If .TileHeight <> 1 Then
-                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+                Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
 
             End If
 
         End If
         
-        Call Engine_Render_Rectangle(x, y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , , .FileNum, color, color, color, color)
+        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , , .FileNum, color, color, color, color)
       
     End With
 
 End Sub
 
 Sub DrawGrhLuz(ByRef Grh As Grh, _
-               ByVal x As Integer, _
-               ByVal y As Integer, _
+               ByVal X As Integer, _
+               ByVal Y As Integer, _
                ByVal Center As Byte, _
                ByVal Animate As Single, _
                ByRef color() As Long)
@@ -1595,12 +1605,12 @@ Sub DrawGrhLuz(ByRef Grh As Grh, _
             'Center Grh over X,Y pos
             If Center Then
                 If .TileWidth <> 1 Then
-                    x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+                    X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
 
                 End If
             
                 If .TileHeight <> 1 Then
-                    y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+                    Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
 
                 End If
 
@@ -1608,7 +1618,7 @@ Sub DrawGrhLuz(ByRef Grh As Grh, _
                 
             'If COLOR = -1 Then COLOR = Iluminacion
 
-            Call Engine_Render_Rectangle(x, y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, color(0), color(1), color(2), color(3))
+            Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, color(0), color(1), color(2), color(3))
 
         End With
 
@@ -1630,8 +1640,8 @@ Error:
 End Sub
 
 Sub DrawGrhShadow(ByRef Grh As Grh, _
-                  ByVal x As Integer, _
-                  ByVal y As Integer, _
+                  ByVal X As Integer, _
+                  ByVal Y As Integer, _
                   ByVal Center As Byte, _
                   ByVal Animate As Single, _
                   Optional Shadow As Byte = 0, _
@@ -1674,12 +1684,12 @@ Sub DrawGrhShadow(ByRef Grh As Grh, _
         'Center Grh over X,Y pos
         If Center Then
             If .TileWidth <> 1 Then
-                x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+                X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
 
             End If
             
             If .TileHeight <> 1 Then
-                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+                Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
 
             End If
 
@@ -1705,10 +1715,10 @@ Sub DrawGrhShadow(ByRef Grh As Grh, _
         If mOpciones.Shadows = True And Chiquitolin = False And Conectar = False Then
             If Shadow = 1 Then
                 ShadowColor = D3DColorRGBA(0, 0, 0, ShadowAlpha * 100 / 255)
-                Call Engine_Render_Rectangle(x, y, PixelWidth, PixelHeight, .sX, .sY, PixelWidth, PixelHeight, , , 0, .FileNum, ShadowColor, ShadowColor, ShadowColor, ShadowColor, 1, False)
+                Call Engine_Render_Rectangle(X, Y, PixelWidth, PixelHeight, .sX, .sY, PixelWidth, PixelHeight, , , 0, .FileNum, ShadowColor, ShadowColor, ShadowColor, ShadowColor, 1, False)
             ElseIf Shadow = 2 Then
                 ShadowColor = D3DColorRGBA(0, 0, 0, ShadowAlpha * 100 / 255)
-                Call Engine_Render_Rectangle(x + 10, y - 16, .PixelWidth, PixelHeight, .sX, .sY, PixelWidth, PixelHeight, , , 0, .FileNum, ShadowColor, ShadowColor, ShadowColor, ShadowColor, 1, False)
+                Call Engine_Render_Rectangle(X + 10, Y - 16, .PixelWidth, PixelHeight, .sX, .sY, PixelWidth, PixelHeight, , , 0, .FileNum, ShadowColor, ShadowColor, ShadowColor, ShadowColor, 1, False)
 
             End If
 
@@ -1734,8 +1744,8 @@ Error:
 End Sub
 
 Sub DrawGrhShadowOff(ByRef Grh As Grh, _
-                     ByVal x As Integer, _
-                     ByVal y As Integer, _
+                     ByVal X As Integer, _
+                     ByVal Y As Integer, _
                      ByVal Center As Byte, _
                      ByVal Animate As Single, _
                      Optional color As Long = -1, _
@@ -1753,12 +1763,12 @@ Sub DrawGrhShadowOff(ByRef Grh As Grh, _
         'Center Grh over X,Y pos
         If Center Then
             If .TileWidth <> 1 Then
-                x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+                X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
 
             End If
             
             If .TileHeight <> 1 Then
-                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+                Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
 
             End If
 
@@ -1780,7 +1790,7 @@ Sub DrawGrhShadowOff(ByRef Grh As Grh, _
 
         End If
 
-        Call Engine_Render_Rectangle(x, y, PixelWidth, PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, color, color, color, color)
+        Call Engine_Render_Rectangle(X, Y, PixelWidth, PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, color, color, color, color)
 
     End With
 
@@ -1800,8 +1810,8 @@ Error:
 End Sub
 
 Sub DrawGrh(ByRef Grh As Grh, _
-            ByVal x As Integer, _
-            ByVal y As Integer, _
+            ByVal X As Integer, _
+            ByVal Y As Integer, _
             ByVal Center As Byte, _
             ByVal Animate As Single, _
             Optional Shadow As Byte = 0, _
@@ -1849,12 +1859,12 @@ Sub DrawGrh(ByRef Grh As Grh, _
         'Center Grh over X,Y pos
         If Center Then
             If .TileWidth <> 1 Then
-                x = x - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
+                X = X - Int(.TileWidth * TilePixelWidth / 2) + TilePixelWidth \ 2
 
             End If
             
             If .TileHeight <> 1 Then
-                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+                Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
 
             End If
 
@@ -1864,16 +1874,16 @@ Sub DrawGrh(ByRef Grh As Grh, _
         'Call BackBufferSurface.BltFast(X, Y, SurfaceDB.Surface(.FileNum), SourceRect, DDBLTFAST_SRCCOLORKEY Or DDBLTFAST_WAIT)
         If Shadow = 1 Then
             ShadowColor = D3DColorRGBA(0, 0, 0, ShadowAlpha * 100 / 255)
-            Call Engine_Render_Rectangle(x, y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, ShadowColor, ShadowColor, ShadowColor, ShadowColor, 1, False)
+            Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, ShadowColor, ShadowColor, ShadowColor, ShadowColor, 1, False)
         ElseIf Shadow = 2 Then
             ShadowColor = D3DColorRGBA(0, 0, 0, ShadowAlpha * 100 / 255)
-            Call Engine_Render_Rectangle(x + 10, y - 16, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, ShadowColor, ShadowColor, ShadowColor, ShadowColor, 1, False)
+            Call Engine_Render_Rectangle(X + 10, Y - 16, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, ShadowColor, ShadowColor, ShadowColor, ShadowColor, 1, False)
 
         End If
 
         If color = -1 Then color = Iluminacion
 
-        Call Engine_Render_Rectangle(x, y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, color, color, color, color)
+        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, color, color, color, color)
 
     End With
 
@@ -1976,7 +1986,7 @@ Sub DrawGrhtoHdc(ByVal hDC As Long, _
 
 End Sub
 
-Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
+Public Sub CargarTile(X As Long, Y As Long, ByRef DataMap() As Byte)
 
     Dim ByFlags As Byte
 
@@ -1988,20 +1998,20 @@ Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
 
     Dim Pos     As Long
 
-    Pos = MapInfo.offset + (x - 1) * 10 + (y - 1) * MapInfo.Width * 10
+    Pos = MapInfo.offset + (X - 1) * 10 + (Y - 1) * MapInfo.Width * 10
 
     ByFlags = DataMap(Pos)
-    ByFlags = ByFlags Xor ((x Mod 200) + 55)
+    ByFlags = ByFlags Xor ((X Mod 200) + 55)
     Pos = Pos + 1
 
     If ByFlags = 50 Then
-        MapData(x, y).Blocked = 1
+        MapData(X, Y).Blocked = 1
     Else
-        MapData(x, y).Blocked = 0
+        MapData(X, Y).Blocked = 0
 
     End If
 
-    MapData(x, y).Trigger = ByFlags
+    MapData(X, Y).Trigger = ByFlags
 
     For I = 1 To 4
         tmpInt = (DataMap(Pos + 1) And &H7F) * &H100 Or DataMap(Pos) Or -(DataMap(Pos + 1) > &H7F) * &H8000
@@ -2010,21 +2020,21 @@ Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
         Select Case I
 
             Case 1
-                MapData(x, y).Graphic(1).GrhIndex = (tmpInt Xor (y + 301) Xor (x + 721)) - x
+                MapData(X, Y).Graphic(1).GrhIndex = (tmpInt Xor (Y + 301) Xor (X + 721)) - X
 
             Case 2
-                MapData(x, y).Graphic(2).GrhIndex = (tmpInt Xor (y + 501) Xor (x + 529)) - x
+                MapData(X, Y).Graphic(2).GrhIndex = (tmpInt Xor (Y + 501) Xor (X + 529)) - X
 
             Case 3
-                MapData(x, y).Graphic(3).GrhIndex = (tmpInt Xor (x + 239) Xor (y + 319)) - x
+                MapData(X, Y).Graphic(3).GrhIndex = (tmpInt Xor (X + 239) Xor (Y + 319)) - X
 
             Case 4
-                MapData(x, y).Graphic(4).GrhIndex = (tmpInt Xor (x + 671) Xor (y + 129)) - x
+                MapData(X, Y).Graphic(4).GrhIndex = (tmpInt Xor (X + 671) Xor (Y + 129)) - X
 
         End Select
     
-        If MapData(x, y).Graphic(I).GrhIndex > 0 Then
-            InitGrh MapData(x, y).Graphic(I), MapData(x, y).Graphic(I).GrhIndex
+        If MapData(X, Y).Graphic(I).GrhIndex > 0 Then
+            InitGrh MapData(X, Y).Graphic(I), MapData(X, Y).Graphic(I).GrhIndex
 
         End If
 
@@ -2034,18 +2044,18 @@ Public Sub CargarTile(x As Long, y As Long, ByRef DataMap() As Byte)
     Rango = DataMap(Pos)
     Pos = Pos + 1
 
-    MapData(x, y).Map = UserMap
+    MapData(X, Y).Map = UserMap
 
-    MapData(x, y).light_value(0) = D3DColorRGBA(255, 255, 255, 255)
-    MapData(x, y).light_value(1) = D3DColorRGBA(255, 255, 255, 255)
-    MapData(x, y).light_value(2) = D3DColorRGBA(255, 255, 255, 255)
-    MapData(x, y).light_value(3) = D3DColorRGBA(255, 255, 255, 255)
-    MapData(x, y).Hora = 99
+    MapData(X, Y).light_value(0) = D3DColorRGBA(255, 255, 255, 255)
+    MapData(X, Y).light_value(1) = D3DColorRGBA(255, 255, 255, 255)
+    MapData(X, Y).light_value(2) = D3DColorRGBA(255, 255, 255, 255)
+    MapData(X, Y).light_value(3) = D3DColorRGBA(255, 255, 255, 255)
+    MapData(X, Y).Hora = 99
 
-    Call Light_Destroy_ToMap(x, y)
+    Call Light_Destroy_ToMap(X, Y)
 
-    If MapData(x, y).Graphic(3).GrhIndex < 0 Then
-        Call Light_Create(x, y, 255, 255, 255, Rango, -MapData(x, y).Graphic(3).GrhIndex - 1)
+    If MapData(X, Y).Graphic(3).GrhIndex < 0 Then
+        Call Light_Create(X, Y, 255, 255, 255, Rango, -MapData(X, Y).Graphic(3).GrhIndex - 1)
 
     End If
 
@@ -2062,9 +2072,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
 'Last modified by: Juan MartÌn Sotuyo Dodero (Maraxus)
 'Renders everything to the viewport
 '**************************************************************
-    Dim y As Long    'Keeps track of where on map we are
+    Dim Y As Long    'Keeps track of where on map we are
 
-    Dim x As Long    'Keeps track of where on map we are
+    Dim X As Long    'Keeps track of where on map we are
 
     Dim screenminY As Integer    'Start Y pos on current screen
 
@@ -2149,15 +2159,15 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
     'Dim CambioHora As Boolean
     'Cargar mapa
-    For y = TileY - BufferY4 To TileY + BufferY4
-        For x = TileX - BufferX4 To TileX + BufferX4
+    For Y = TileY - BufferY4 To TileY + BufferY4
+        For X = TileX - BufferX4 To TileX + BufferX4
 
-            If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
-                If MapData(x, y).Map <> UserMap Then
+            If X > 0 And Y > 0 And X <= MapInfo.Width And Y <= MapInfo.Height Then
+                If MapData(X, Y).Map <> UserMap Then
                     If UserMap = 1 Then
-                        Call CargarTile(x, y, DataMap1)
+                        Call CargarTile(X, Y, DataMap1)
                     Else
-                        Call CargarTile(x, y, DataMap2)
+                        Call CargarTile(X, Y, DataMap2)
 
                     End If
 
@@ -2176,49 +2186,49 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
             End If
 
-        Next x
-    Next y
+        Next X
+    Next Y
 
     Light_Render_Area
 
     'Draw floor layer
-    For y = TileY - BufferY2 To TileY + BufferY2
-        For x = TileX - BufferX2 To TileX + BufferX2
+    For Y = TileY - BufferY2 To TileY + BufferY2
+        For X = TileX - BufferX2 To TileX + BufferX2
 
-            If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
-                ScreenX = x - TileX + BufferX1
-                ScreenY = y - TileY + BufferY1
+            If X > 0 And Y > 0 And X <= MapInfo.Width And Y <= MapInfo.Height Then
+                ScreenX = X - TileX + BufferX1
+                ScreenY = Y - TileY + BufferY1
                 'Layer 1 **********************************
-                Call DrawGrhLuz(MapData(x, y).Graphic(1), ScreenX * TilePixelWidth + PixelOffSetX, ScreenY * TilePixelHeight + PixelOffSetY, 0, 1, MapData(x, y).light_value)
+                Call DrawGrhLuz(MapData(X, Y).Graphic(1), ScreenX * TilePixelWidth + PixelOffSetX, ScreenY * TilePixelHeight + PixelOffSetY, 0, 1, MapData(X, Y).light_value)
 
                 '******************************************
             End If
 
-        Next x
+        Next X
 
-    Next y
-
-
+    Next Y
 
 
-    For y = TileY - BufferY3 - 5 To TileY + BufferY3 + 5
-        For x = TileX - BufferX3 To TileX + BufferX3
 
-            If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
-                ScreenX = x - TileX + BufferX1
-                ScreenY = y - TileY + BufferY1
+
+    For Y = TileY - BufferY3 - 5 To TileY + BufferY3 + 5
+        For X = TileX - BufferX3 To TileX + BufferX3
+
+            If X > 0 And Y > 0 And X <= MapInfo.Width And Y <= MapInfo.Height Then
+                ScreenX = X - TileX + BufferX1
+                ScreenY = Y - TileY + BufferY1
 
                 'Layer 2 **********************************
-                If MapData(x, y).Graphic(2).GrhIndex <> 0 Then
-                    Call DrawGrhLuz(MapData(x, y).Graphic(2), ScreenX * TilePixelWidth + PixelOffSetX, ScreenY * TilePixelHeight + PixelOffSetY, 1, 1, MapData(x, y).light_value)
+                If MapData(X, Y).Graphic(2).GrhIndex <> 0 Then
+                    Call DrawGrhLuz(MapData(X, Y).Graphic(2), ScreenX * TilePixelWidth + PixelOffSetX, ScreenY * TilePixelHeight + PixelOffSetY, 1, 1, MapData(X, Y).light_value)
 
                 End If
 
             End If
 
-        Next x
+        Next X
 
-    Next y
+    Next Y
 
     Dim mNPCMuerto As clsNPCMuerto
 
@@ -2293,24 +2303,24 @@ Sub RenderScreen(ByVal TileX As Integer, _
     'Draw Transparent Layers
     ScreenY = minYOffset
 
-    For y = TileY - BufferY4 To TileY + BufferY4
-        For x = TileX - BufferX4 To TileX + BufferX4
+    For Y = TileY - BufferY4 To TileY + BufferY4
+        For X = TileX - BufferX4 To TileX + BufferX4
 
-            If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
-                ScreenX = x - TileX + BufferX1
-                ScreenY = y - TileY + BufferY1
+            If X > 0 And Y > 0 And X <= MapInfo.Width And Y <= MapInfo.Height Then
+                ScreenX = X - TileX + BufferX1
+                ScreenY = Y - TileY + BufferY1
 
                 PixelOffSetXTemp = ScreenX * TilePixelWidth + PixelOffSetX
                 PixelOffSetYTemp = ScreenY * TilePixelHeight + PixelOffSetY
 
-                With MapData(x, y)
+                With MapData(X, Y)
 
                     'Pasos
                     If .PasosIndex <> 0 Then Call vPasos.RenderPasos(PixelOffSetXTemp, PixelOffSetYTemp, .PasosIndex)
 
                     'Object Layer **********************************
                     If .ObjGrh.GrhIndex <> 0 Then
-                        Call DrawGrhLuz(.ObjGrh, PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, MapData(x, y).light_value)
+                        Call DrawGrhLuz(.ObjGrh, PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, MapData(X, Y).light_value)
 
                     End If
 
@@ -2325,11 +2335,11 @@ Sub RenderScreen(ByVal TileX As Integer, _
                     If .CharIndex <> 0 Then
                         Call CharRender(charlist(.CharIndex), .CharIndex, PixelOffSetXTemp, PixelOffSetYTemp)
 
-                        If .CharIndex <> UserCharIndex And UserPos.x = charlist(.CharIndex).Pos.x And UserPos.y = charlist(.CharIndex).Pos.y Then
+                        If .CharIndex <> UserCharIndex And UserPos.X = charlist(.CharIndex).Pos.X And UserPos.Y = charlist(.CharIndex).Pos.Y Then
                             Debug.Print "ME PISO CHEEE ******************************************************************************"
                             'verr post de los bost
-                            charlist(.CharIndex).Pos.x = charlist(.CharIndex).Pos.x + 1
-                            charlist(.CharIndex).Pos.y = charlist(.CharIndex).Pos.y + 1
+                            charlist(.CharIndex).Pos.X = charlist(.CharIndex).Pos.X + 1
+                            charlist(.CharIndex).Pos.Y = charlist(.CharIndex).Pos.Y + 1
 
                             'ver post de los bots
                         End If
@@ -2337,7 +2347,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
                     End If
 
                     If UserMap = 1 Then
-                        Call RenderBarcos(x, y, TileX, TileY, PixelOffSetX, PixelOffSetY)
+                        Call RenderBarcos(X, Y, TileX, TileY, PixelOffSetX, PixelOffSetY)
 
                     End If
 
@@ -2357,10 +2367,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
                         SupIndex = GrhData(.Graphic(3).GrhIndex).FileNum
 
                         If ((SupIndex >= 7000 And SupIndex <= 7008) Or (SupIndex >= 1261 And SupIndex <= 1287) Or SupIndex = 648 Or SupIndex = 645) Then
-                            If mOpciones.TransparencyTree = True And UserPos.x >= x - 3 And UserPos.x <= x + 3 And UserPos.y >= y - 5 And UserPos.y <= y Then
+                            If mOpciones.TransparencyTree = True And UserPos.X >= X - 3 And UserPos.X <= X + 3 And UserPos.Y >= Y - 5 And UserPos.Y <= Y Then
                                 Call DrawGrh(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, 0, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 180))
                             Else
-                                Call DrawGrhLuz(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, MapData(x, y).light_value)
+                                Call DrawGrhLuz(.Graphic(3), PixelOffSetXTemp, PixelOffSetYTemp, 1, 1, MapData(X, Y).light_value)
 
                             End If
 
@@ -2392,27 +2402,27 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
             End If
 
-        Next x
-    Next y
+        Next X
+    Next Y
 
 
     'particulas ORE
 
-    For y = TileY - BufferY4 To TileY + BufferY4
-        For x = TileX - BufferX4 To TileX + BufferX4
-            If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
-                ScreenY = y - TileY + BufferY1
-                ScreenX = x - TileX + BufferX1
+    For Y = TileY - BufferY4 To TileY + BufferY4
+        For X = TileX - BufferX4 To TileX + BufferX4
+            If X > 0 And Y > 0 And X <= MapInfo.Width And Y <= MapInfo.Height Then
+                ScreenY = Y - TileY + BufferY1
+                ScreenX = X - TileX + BufferX1
 
-                With MapData(x, y)
+                With MapData(X, Y)
                     If .particle_group > 0 Then
                         ParticlesORE.Particle_Group_Render .particle_group, ScreenX * 32 + PixelOffSetX, ScreenY * 32 + PixelOffSetY
                     End If
                 End With
             End If
-        Next x
+        Next X
 
-    Next y
+    Next Y
     'Particulas ORE
 
     Dim mArroja As clsArroja
@@ -2487,24 +2497,24 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
     End If
 
-    For y = TileY - BufferY4 To TileY + BufferY4
-        For x = TileX - BufferX4 To TileX + BufferX4
+    For Y = TileY - BufferY4 To TileY + BufferY4
+        For X = TileX - BufferX4 To TileX + BufferX4
 
-            If x > 0 And y > 0 And x <= MapInfo.Width And y <= MapInfo.Height Then
-                ScreenX = x - TileX + BufferX1
-                ScreenY = y - TileY + BufferY1
+            If X > 0 And Y > 0 And X <= MapInfo.Width And Y <= MapInfo.Height Then
+                ScreenX = X - TileX + BufferX1
+                ScreenY = Y - TileY + BufferY1
 
                 'Layer 4 **********************************
-                If MapData(x, y).Graphic(4).GrhIndex And bAlpha > 0 Then
+                If MapData(X, Y).Graphic(4).GrhIndex And bAlpha > 0 Then
                     'Draw
-                    Call DrawGrhIndex(MapData(x, y).Graphic(4).GrhIndex, ScreenX * TilePixelWidth + PixelOffSetX, ScreenY * TilePixelHeight + PixelOffSetY, 1, ColorTecho)
+                    Call DrawGrhIndex(MapData(X, Y).Graphic(4).GrhIndex, ScreenX * TilePixelWidth + PixelOffSetX, ScreenY * TilePixelHeight + PixelOffSetY, 1, ColorTecho)
 
                 End If
 
             End If
 
-        Next x
-    Next y
+        Next X
+    Next Y
 
     'TODO : Check this!!
     Dim ColorLluvia As Long
@@ -2524,12 +2534,12 @@ Sub RenderScreen(ByVal TileX As Integer, _
                 ColorLluvia = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 140)
 
                 'fix Lluvia idea SenSui, Helios 06/06/2021
-                For y = 0 To 6
-                    For x = 0 To 7
+                For Y = 0 To 6
+                    For X = 0 To 7
                         ' Call Engine_Render_Rectangle(LTLluvia(x), LTLluvia(y) + 40, RLluvia(iFrameIndex).Right + 30 - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
-                        Call Engine_Render_Rectangle(LTLluvia(x) - 256, LTLluvia(y) + 40 - 256, RLluvia(iFrameIndex).Right + 30 - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
-                    Next x
-                Next y
+                        Call Engine_Render_Rectangle(LTLluvia(X) - 256, LTLluvia(Y) + 40 - 256, RLluvia(iFrameIndex).Right + 30 - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Top, RLluvia(iFrameIndex).Right - RLluvia(iFrameIndex).Left, RLluvia(iFrameIndex).Bottom - RLluvia(iFrameIndex).Top, , , , 5556, ColorLluvia, ColorLluvia, ColorLluvia, ColorLluvia)
+                    Next X
+                Next Y
 
             End If
 
@@ -2596,9 +2606,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
         'Mensaje al cambiar de zona
         #If RenderFull = 0 Then
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 140, 1024, 220), DT_CENTER)
-            Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 145, 1024, 220), DT_CENTER)
-
+            If ZonaActual <> 23 Then
+                Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 140, 1024, 220), DT_CENTER)
+                Call D3DX.DrawText(MainFont, D3DColorRGBA(220, 215, 215, tmpInt), Zonas(ZonaActual).nombre, DDRect(0, 145, 1024, 220), DT_CENTER)
+            End If
             If CambioSegura Then
                 Call DrawFont(IIf(Zonas(ZonaActual).Segura = 1, "Entraste a una zona segura", "Saliste de una zona segura"), 420, 214, D3DColorRGBA(255, 0, 0, tmpInt))
 
@@ -2687,8 +2698,8 @@ Sub RenderScreen(ByVal TileX As Integer, _
         '0.46545454545454545454545454545455
 
         If UserMap = 1 Then
-            PosMapX = -Int(UserPos.x * RelacionMiniMapa) + 32 + 398
-            PosMapY = -Int(UserPos.y * RelacionMiniMapa) + 32 + 292
+            PosMapX = -Int(UserPos.X * RelacionMiniMapa) + 32 + 398
+            PosMapY = -Int(UserPos.Y * RelacionMiniMapa) + 32 + 292
 
             If PosMapX > 0 Then PosMapX = 0
             If PosMapX < -1247 Then PosMapX = -1247
@@ -2745,14 +2756,14 @@ Sub RenderScreen(ByVal TileX As Integer, _
             'Call Engine_Render_Rectangle(256 + 0, 256 + 512 + MapaY, 512, 186, 0, 0, 512, 186, , , , 14405, color, color, color, color)
             color = D3DColorRGBA(255, 255, 255, 255)
             'Call Engine_Render_Rectangle(256 + UserPos.x * RelacionMiniMapa - 35 + PosMapX, 256 + UserPos.Y * RelacionMiniMapa - 35 + PosMapY, 5, 5, 0, 0, 5, 5, , , , 1, color, color, color, color)
-            Call Engine_Render_Rectangle(UserPos.x * RelacionMiniMapa - 35 + PosMapX, UserPos.y * RelacionMiniMapa - 35 + PosMapY, 5, 5, 0, 0, 5, 5, , , , 1, color, color, color, color)
+            Call Engine_Render_Rectangle(UserPos.X * RelacionMiniMapa - 35 + PosMapX, UserPos.Y * RelacionMiniMapa - 35 + PosMapY, 5, 5, 0, 0, 5, 5, , , , 1, color, color, color, color)
 
-            x = Int((frmMain.MouseX - PosMapX + 32) / RelacionMiniMapa)
-            y = Int((frmMain.MouseY - PosMapY + 32) / RelacionMiniMapa)
+            X = Int((frmMain.MouseX - PosMapX + 32) / RelacionMiniMapa)
+            Y = Int((frmMain.MouseY - PosMapY + 32) / RelacionMiniMapa)
 
-            If x > 1 And x < 1100 And y > 1 And y < 1500 Then
-                Call DrawFont("(" & x & "," & y & ")", frmMain.MouseX + 12, frmMain.MouseY + 12, D3DColorRGBA(255, 255, 255, 200))
-                I = BuscarZona(x, y)
+            If X > 1 And X < 1100 And Y > 1 And Y < 1500 Then
+                Call DrawFont("(" & X & "," & Y & ")", frmMain.MouseX + 12, frmMain.MouseY + 12, D3DColorRGBA(255, 255, 255, 200))
+                I = BuscarZona(X, Y)
 
                 If I > 0 Then
                     Call DrawFont(Zonas(I).nombre, frmMain.MouseX - 10, frmMain.MouseY + 26, D3DColorRGBA(255, 255, 255, 200))
@@ -2766,7 +2777,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Call Engine_Render_Rectangle(60, 3, 512, 512, 0, 0, 512, 512, , , , 14406, color, color, color, color)
 
             color = D3DColorRGBA(255, 255, 255, 255)
-            Call Engine_Render_Rectangle(60 + (UserPos.x - 571) * 2.21105527638191, 5 + (UserPos.y - 311) * 2.21105527638191, 5, 5, 0, 0, 5, 5, , , , 1, color, color, color, color)
+            Call Engine_Render_Rectangle(60 + (UserPos.X - 571) * 2.21105527638191, 5 + (UserPos.Y - 311) * 2.21105527638191, 5, 5, 0, 0, 5, 5, , , , 1, color, color, color, color)
         Else
             'Mensaje al cambiar de zona
             Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, 200), Zonas(ZonaActual).nombre, DDRect(0, 10, 736, 200), DT_CENTER)
@@ -3062,7 +3073,7 @@ Call Engine_Render_Rectangle(627, 0, 369, 35, 0, 0, 369, 35, , , 0, 14809)    'M
             End If
 
             ' Call DrawFont("Mapa: " & Zonas(ZonaActual).Mapa & "(X:" & UserPos.X & ", Y:" & UserPos.Y & ")", 1124, 425, D3DColorRGBA(255, 255, 255, 160))
-            Call DrawFont("(X:" & UserPos.x & ", Y:" & UserPos.y & ")", 938, 159, D3DColorRGBA(255, 255, 255, 160), True)
+            Call DrawFont("(X:" & UserPos.X & ", Y:" & UserPos.Y & ")", 938, 159, D3DColorRGBA(255, 255, 255, 160), True)
 
         End If
         If RecuadroON = True Then
@@ -3147,12 +3158,12 @@ Public Function RenderSounds()
 
 End Function
 
-Function HayUserAbajo(ByVal x As Integer, _
-                      ByVal y As Integer, _
+Function HayUserAbajo(ByVal X As Integer, _
+                      ByVal Y As Integer, _
                       ByVal GrhIndex As Integer) As Boolean
 
     If GrhIndex > 0 Then
-        HayUserAbajo = charlist(UserCharIndex).Pos.x >= x - (GrhData(GrhIndex).TileWidth \ 2) And charlist(UserCharIndex).Pos.x <= x + (GrhData(GrhIndex).TileWidth \ 2) And charlist(UserCharIndex).Pos.y >= y - (GrhData(GrhIndex).TileHeight - 1) And charlist(UserCharIndex).Pos.y <= y
+        HayUserAbajo = charlist(UserCharIndex).Pos.X >= X - (GrhData(GrhIndex).TileWidth \ 2) And charlist(UserCharIndex).Pos.X <= X + (GrhData(GrhIndex).TileWidth \ 2) And charlist(UserCharIndex).Pos.Y >= Y - (GrhData(GrhIndex).TileHeight - 1) And charlist(UserCharIndex).Pos.Y <= Y
 
     End If
 
@@ -3235,8 +3246,8 @@ Public Function InitTileEngine(ByVal setDisplayFormhWnd As Long, _
     'ReDim MapData(1 To XMaxMapSize, 1 To YMaxMapSize, 1 To 2) As MapBlock
     
     'Set intial user position
-    UserPos.x = 1
-    UserPos.y = 1
+    UserPos.X = 1
+    UserPos.Y = 1
     
     'Set scroll pixels per frame
     ScrollPixelsPerFrameX = pixelsToScrollPerFrameX
@@ -3304,8 +3315,8 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                   ByVal MouseViewX As Integer, _
                   ByVal MouseViewY As Integer, _
                   Optional ByVal Update As Boolean = False, _
-                  Optional ByVal x As Integer = 0, _
-                  Optional ByVal y As Integer = 0)
+                  Optional ByVal X As Integer = 0, _
+                  Optional ByVal Y As Integer = 0)
 
     '***************************************************
     'Author: Arron Perkins
@@ -3340,12 +3351,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         ElseIf UserMoving Then
 
             '****** Move screen Left and Right if needed ******
-            If AddtoUserPos.x <> 0 Then
-                OffsetCounterX = OffsetCounterX - ScrollPixelsPerFrameX * AddtoUserPos.x * timerTicksPerFrame * 1.2
+            If AddtoUserPos.X <> 0 Then
+                OffsetCounterX = OffsetCounterX - ScrollPixelsPerFrameX * AddtoUserPos.X * timerTicksPerFrame * 1.2
 
-                If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.x) Then
+                If Abs(OffsetCounterX) >= Abs(TilePixelWidth * AddtoUserPos.X) Then
                     OffsetCounterX = 0
-                    AddtoUserPos.x = 0
+                    AddtoUserPos.X = 0
                     UserMoving = False
 
                 End If
@@ -3353,12 +3364,12 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
             End If
 
             '****** Move screen Up and Down if needed ******
-            If AddtoUserPos.y <> 0 Then
-                OffsetCounterY = OffsetCounterY - ScrollPixelsPerFrameY * AddtoUserPos.y * timerTicksPerFrame * 1.2
+            If AddtoUserPos.Y <> 0 Then
+                OffsetCounterY = OffsetCounterY - ScrollPixelsPerFrameY * AddtoUserPos.Y * timerTicksPerFrame * 1.2
 
-                If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.y) Then
+                If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
                     OffsetCounterY = 0
-                    AddtoUserPos.y = 0
+                    AddtoUserPos.Y = 0
                     UserMoving = False
 
                 End If
@@ -3451,7 +3462,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 '                'frmMain.picfondoinve.Visible = True
                 '                frmMain.Bar_Agua.Visible = True
 
-                Call RenderScreen(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX - 16, OffsetCounterY - 16)
+                Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX - 16, OffsetCounterY - 16)
                 RenderConsola
 
                 ' Form1.BarraCir.ChangeDefaults UserPasarNivel, RGB(200, 15, 19), 0.25, 0.8, &H777777, "Times New Roman", RGB(255, 255, 255)
@@ -3475,7 +3486,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 'ElseIf UserCiego Then
                 '    Call CleanViewPort
             Else
-                Call RenderScreen(UserPos.x - AddtoUserPos.x, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
+                Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
 
             End If
 
@@ -3673,7 +3684,7 @@ Public Sub CharRender(ByRef rChar As Char, _
         If .simbolo <> 0 Then
             'frmMain.TimerSimbolo.Enabled = True
             'Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 61 + SimboloY + 5, 1, D3DColorRGBA(255, 0, 0, 255))
-            Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+            Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.Y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
 
         Else
 
@@ -3854,8 +3865,8 @@ Public Sub CharRender(ByRef rChar As Char, _
 
                 Dim TempHeadOffsetX As Integer
 
-                TempHeadOffsetY = .Body.HeadOffset.y
-                TempHeadOffsetX = .Body.HeadOffset.x
+                TempHeadOffsetY = .Body.HeadOffset.Y
+                TempHeadOffsetX = .Body.HeadOffset.X
                 TempBodyOffsetY = PixelOffSetY
                 TempBodyOffsetX = PixelOffSetX
 
@@ -3980,7 +3991,7 @@ Public Sub CharRender(ByRef rChar As Char, _
         End If
 
         'Update dialogs
-        Call Dialogos.UpdateDialogPos(PixelOffSetX + .Body.HeadOffset.x + 16, PixelOffSetY + .Body.HeadOffset.y, CharIndex)
+        Call Dialogos.UpdateDialogPos(PixelOffSetX + .Body.HeadOffset.X + 16, PixelOffSetY + .Body.HeadOffset.Y, CharIndex)
         'particulas ore
         Dim I As Integer
         If .particle_count > 0 Then
@@ -4048,8 +4059,8 @@ End With
 
 End Sub
 
-Public Sub SetAreaFx(ByVal x As Integer, _
-                     ByVal y As Integer, _
+Public Sub SetAreaFx(ByVal X As Integer, _
+                     ByVal Y As Integer, _
                      ByVal fX As Integer, _
                      ByVal Loops As Integer)
     '***************************************************
@@ -4059,9 +4070,9 @@ Public Sub SetAreaFx(ByVal x As Integer, _
     '***************************************************
     
     If fX > 0 Then
-        Call InitGrh(MapData(x, y).fXGrh, FxData(fX).Animacion)
-        MapData(x, y).fX = fX
-        MapData(x, y).fXGrh.Loops = Loops
+        Call InitGrh(MapData(X, Y).fXGrh, FxData(fX).Animacion)
+        MapData(X, Y).fX = fX
+        MapData(X, Y).fXGrh.Loops = Loops
 
     End If
  
@@ -4073,16 +4084,16 @@ Private Sub CleanViewPort()
 End Sub
 
 Public Function Char_Pos_Get(ByVal CharIndex As Integer, _
-                             ByRef x As Integer, _
-                             ByRef y As Integer)
+                             ByRef X As Integer, _
+                             ByRef Y As Integer)
     
     If CharIndex < 1 Then Exit Function
 
     With charlist(CharIndex)
-        x = .Pos.x
-        y = .Pos.y
+        X = .Pos.X
+        Y = .Pos.Y
         
-        If x > 0 And y > 0 Then
+        If X > 0 And Y > 0 Then
             Char_Pos_Get = True
         Else
             Char_Pos_Get = False
@@ -4150,7 +4161,7 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, _
     
         Movement_Speed = 0.5
         
-        If HayAgua(.Pos.x, .Pos.y + 1) Then
+        If HayAgua(.Pos.X, .Pos.Y + 1) Then
                     
             Dim GetInverseHeading  As Byte
 
@@ -4228,8 +4239,8 @@ Private Sub RenderReflejos(ByVal CharIndex As Integer, _
                             
                     'Reflejo completo si no est√° ni montado ni navegando
                     Call Draw_Grh(.Body.Walk(GetInverseHeading), PixelOffSetX, PixelOffSetY + 44, 1, ColorFinal(), 1, False, 360)
-                    Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffSetX + .Body.HeadOffset.x, PixelOffSetY - .Body.HeadOffset.y + 15, 1, ColorFinal(), 1, False, 360)
-                    Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffSetX + .Body.HeadOffset.x, PixelOffSetY + 57, 1, ColorFinal(), 1, False, 360)
+                    Call Draw_Grh(.Head.Head(GetInverseHeading), PixelOffSetX + .Body.HeadOffset.X, PixelOffSetY - .Body.HeadOffset.Y + 15, 1, ColorFinal(), 1, False, 360)
+                    Call Draw_Grh(.Casco.Head(GetInverseHeading), PixelOffSetX + .Body.HeadOffset.X, PixelOffSetY + 57, 1, ColorFinal(), 1, False, 360)
                     Call Draw_Grh(.Arma.WeaponWalk(GetInverseHeading), PixelOffSetX, PixelOffSetY + 44, 1, ColorFinal(), 1, False, 360)
                     Call Draw_Grh(.Escudo.ShieldWalk(.Heading), PixelOffSetX, PixelOffSetY + 44, 1, ColorFinal(), 0, False, 360)
                 
@@ -4246,8 +4257,8 @@ err:
 End Sub
 
 Sub Draw_Grh(ByRef Grh As Grh, _
-             ByVal x As Integer, _
-             ByVal y As Integer, _
+             ByVal X As Integer, _
+             ByVal Y As Integer, _
              ByVal Center As Byte, _
              ByRef Color_List() As Long, _
              ByVal Animate As Byte, _
@@ -4308,12 +4319,12 @@ Sub Draw_Grh(ByRef Grh As Grh, _
         'Center Grh over X,Y pos
         If Center Then
             If .TileWidth <> 1 Then
-                x = x - (.PixelWidth * ScaleX - TilePixelWidth) \ 2
+                X = X - (.PixelWidth * ScaleX - TilePixelWidth) \ 2
 
             End If
             
             If .TileHeight <> 1 Then
-                y = y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
+                Y = Y - Int(.TileHeight * TilePixelHeight) + TilePixelHeight
 
             End If
 
@@ -4321,7 +4332,7 @@ Sub Draw_Grh(ByRef Grh As Grh, _
 
         ' Call Device_Textured_Render(X, Y, .pixelWidth, .pixelHeight, .sX, .sY, .FileNum, Color_List(), Alpha, angle ScaleX, ScaleY)
             
-        Call Engine_Render_Rectangle(x, y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 180, .FileNum, D3DColorRGBA(137, 200, 200, CalcAlpha(GTCPres, 4000, 150, 15)), D3DColorRGBA(137, 200, 200, CalcAlpha(GTCPres, 4000, 150, 15)), D3DColorRGBA(137, 200, 200, CalcAlpha(GTCPres, 4000, 150, 15)), D3DColorRGBA(137, 200, 200, CalcAlpha(GTCPres, 4000, 150, 15)))
+        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 180, .FileNum, D3DColorRGBA(137, 200, 200, CalcAlpha(GTCPres, 4000, 150, 15)), D3DColorRGBA(137, 200, 200, CalcAlpha(GTCPres, 4000, 150, 15)), D3DColorRGBA(137, 200, 200, CalcAlpha(GTCPres, 4000, 150, 15)), D3DColorRGBA(137, 200, 200, CalcAlpha(GTCPres, 4000, 150, 15)))
     
     End With
     
