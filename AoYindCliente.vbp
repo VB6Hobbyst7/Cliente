@@ -113,6 +113,7 @@ Module=modOREParticles; CODIGO\Modulos\modOREParticles.bas
 Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0; MSCOMCTL.OCX
 Form=CODIGO\Formularios\FrmRanking.frm
 Form=CODIGO\Formularios\FrmRanking2.frm
+Class=CBalloonToolTip; CODIGO\CBalloonToolTip.cls
 IconForm="frmMain2"
 Startup="Sub Main"
 HelpFile=""

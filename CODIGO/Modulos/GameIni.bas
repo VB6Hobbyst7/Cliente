@@ -153,7 +153,7 @@ Public Sub SaveConfig()
         Call Lector.ChangeValue("VIDEO", "Shadows", IIf(mOpciones.Shadows, "True", "False"))
         Call Lector.ChangeValue("VIDEO", "BlurEffects", IIf(mOpciones.BlurEffects, "True", "False"))
         Call Lector.ChangeValue("VIDEO", "Niebla", IIf(mOpciones.Niebla, "True", "False"))
-        
+        Call Lector.ChangeValue("VIDEO", "MostrarAyuda", IIf(mOpciones.MostrarAyuda, "True", "False"))
         ' OTROS
         Call Lector.ChangeValue("OTROS", "CursorFaccionario", IIf(mOpciones.CursorFaccionario, "True", "False"))
         
@@ -170,46 +170,46 @@ fileErr:
 End Sub
 
 Public Sub ReadConfig()
-    'On Local Error GoTo fileErr:
-    
-    ' Set Lector = New clsIniManager
+'On Local Error GoTo fileErr:
+
+' Set Lector = New clsIniManager
     Call Lector.Initialize(App.path & "/INIT/Config.ini")
 
     'With mOpciones
-        
+
     ' AUDIO
     mOpciones.Music = Lector.GetValue("AUDIO", "Music")
     mOpciones.sound = Lector.GetValue("AUDIO", "Sound")
     mOpciones.SoundEffects = Lector.GetValue("AUDIO", "SoundEffects")
     mOpciones.VolMusic = Lector.GetValue("AUDIO", "VolMusic")
     mOpciones.VolSound = Lector.GetValue("AUDIO", "VolSound")
-        
+
     ' GUILD
     mOpciones.GuildNews = Lector.GetValue("GUILD", "GuildNews")
     mOpciones.DialogConsole = Lector.GetValue("GUILD", "DialogConsole")
     mOpciones.DialogCantMessages = Lector.GetValue("GUILD", "DialogCantMessages")
-        
+
     ' SCREENSHOOTER
     mOpciones.ScreenShooterNivelSuperior = Lector.GetValue("SCREENSHOOTER", "ScreenShooterNivelSuperior")
     mOpciones.ScreenShooterNivelSuperiorIndex = Lector.GetValue("SCREENSHOOTER", "ScreenShooterNivelSuperiorIndex")
     mOpciones.ScreenShooterAlMorir = Lector.GetValue("SCREENSHOOTER", "ScreenShooterAlMorir")
-        
+
     ' RECORDAR
     mOpciones.Recordar = Lector.GetValue("CUENTA", "Recordar")
     mOpciones.RecordarUsuario = Lector.GetValue("CUENTA", "RecordarUsuario")
     mOpciones.RecordarPassword = Lector.GetValue("CUENTA", "RecordarPassword")
-        
+
     ' VIDEO
     mOpciones.TransparencyTree = Lector.GetValue("VIDEO", "TransparencyTree")
     mOpciones.Shadows = Lector.GetValue("VIDEO", "Shadows")
     mOpciones.BlurEffects = Lector.GetValue("VIDEO", "BlurEffects")
     mOpciones.Niebla = Lector.GetValue("VIDEO", "Niebla")
-       
+    mOpciones.MostrarAyuda = Lector.GetValue("VIDEO", "MostrarAyuda")
     ' OTROS
     mOpciones.CursorFaccionario = Lector.GetValue("OTROS", "CursorFaccionario")
-        
+
     #If Debugging Then
-          
+
         PathGraficos = Lector.GetValue("PATH", "PathGraficos")
         PathRecursosCliente = Lector.GetValue("PATH", "PathRecursosCliente")
         PathWav = Lector.GetValue("PATH", "PathWav")
@@ -221,9 +221,9 @@ Public Sub ReadConfig()
         IpServidor = "127.0.0.1"
         PuertoServidor = 7222
     #End If
-        
+
     ' End With
-    
+
     Call Lector.DumpFile(App.path & "/INIT/Config.ini")
 fileErr:
 
@@ -232,5 +232,5 @@ fileErr:
         MsgBox ("ERROR - Config.ini cargado por defecto." & err.Description)
 
     End If
-    
+
 End Sub

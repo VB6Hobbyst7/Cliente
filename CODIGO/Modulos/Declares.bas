@@ -31,6 +31,8 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
+
+Public contarr As Integer
 Public Type tRanking
     Value(0 To 9) As Long
     nombre(0 To 9) As String
@@ -1301,7 +1303,7 @@ Public Type tOpciones
     Shadows As Boolean
     BlurEffects As Boolean
     Niebla As Boolean
-
+    MostrarAyuda As Boolean
     'Otros
     CursorFaccionario As Boolean
 
