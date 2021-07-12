@@ -31,7 +31,7 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
-
+Public TT2 As New CBalloonToolTip
 Public contarr As Integer
 Public Type tRanking
     Value(0 To 9) As Long

@@ -1228,7 +1228,7 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Dim TT2 As New CBalloonToolTip
+
 
 
 Dim s_Index     As Integer  '< Número de slot.
@@ -1637,7 +1637,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    Picture1.Visible = True
+    picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -2102,11 +2102,6 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 
 End Sub
 
-Private Sub Form_Unload(Cancel As Integer)
-  ''TT1.Destroy
-   ' TT2.Destroy
-End Sub
-
 Private Sub Image2_Click()
     prgRun = False
 
@@ -2170,7 +2165,7 @@ Private Sub Lblmagia_Click()
         'picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        Picture1.Visible = False
+        picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2182,10 +2177,9 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         'picHechiz.Visible = True
-        Picture1.Visible = True
+        picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
-        'LanzarImg.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & "14956.png", , , , , True)
         picInv.Visible = False
        
         Exit Sub
@@ -3680,6 +3674,36 @@ Private Sub pRender_MouseMove(Button As Integer, _
 
                     TT2.CreateToolTip pRender.hwnd
                     TT2.Show 634, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
+        Exit Sub
+    End If
+    
+    
+    If MouseX > 52 And MouseX < 83 And MouseY > 60 And MouseY < 75 Then    'exp pasar lvl
+        
+        If Not Conectar Then
+            If MmenuBarras Then
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Exp para pasar Nivel "
+                    TT2.TipText = UserExp & "/" & UserPasarNivel
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+
+
+                    f.Name = "Augusta"
+                    f.Size = 12
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 827, 0, Me.pRender.hwnd
                 End If
             End If
         End If

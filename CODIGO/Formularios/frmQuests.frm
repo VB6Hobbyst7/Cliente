@@ -17,6 +17,21 @@ Begin VB.Form FrmQuests
    ScaleWidth      =   12255
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.PictureBox PlayerView 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      ClipControls    =   0   'False
+      ForeColor       =   &H80000008&
+      Height          =   825
+      Left            =   7560
+      ScaleHeight     =   55
+      ScaleMode       =   0  'User
+      ScaleWidth      =   109
+      TabIndex        =   9
+      Top             =   4320
+      Width           =   1635
+   End
    Begin VB.PictureBox picture1 
       Appearance      =   0  'Flat
       BackColor       =   &H00000000&
@@ -30,12 +45,6 @@ Begin VB.Form FrmQuests
       TabIndex        =   8
       Top             =   1800
       Width           =   480
-   End
-   Begin VB.Timer aniTimer 
-      Enabled         =   0   'False
-      Interval        =   23
-      Left            =   0
-      Top             =   0
    End
    Begin VB.TextBox detalle 
       Alignment       =   2  'Center
@@ -196,12 +205,6 @@ Begin VB.Form FrmQuests
       EndProperty
       Picture         =   "frmQuests.frx":1E4A3
    End
-   Begin VB.Image Imagen 
-      Height          =   735
-      Left            =   7920
-      Top             =   4320
-      Width           =   1095
-   End
    Begin VB.Label objetolbl 
       Alignment       =   2  'Center
       AutoSize        =   -1  'True
@@ -289,53 +292,9 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
-Private Type GIFAnimator
 
-    Frames As Long
-    Frame As Long
-    LoopCount As Long
-    Intervals() As Long
 
-End Type
 
-Private myAnimator As GIFAnimator
-
-Private Sub aniTimer_Timer()
-
-    On Error GoTo err
-
-    aniTimer.Enabled = False
-
-    With myAnimator
-
-        If .Frame = .Frames Then        ' loop occurred
-            ' intervals(0) is number of loops before stopping animation. values < 1 indicate infinite looping
-            .Frame = 0
-
-            If .Intervals(0) > 0 Then
-                .LoopCount = .LoopCount + 1
-
-                If .LoopCount = .Intervals(0) Then
-                    .LoopCount = 0 ' if loops terminated, stop on last frame or first frame. your choice
-                    Exit Sub
-
-                End If
-
-            End If
-
-        End If
-
-        .Frame = .Frame + 1&
-
-    End With
-
-    Set Imagen.Picture = StdPictureEx.SubImage(Imagen.Picture, myAnimator.Frame)
-    Imagen.Refresh  ' note: form/picturebox picture property does not require a refresh; updated automatically
-    aniTimer.Interval = myAnimator.Intervals(myAnimator.Frame) * 10
-    aniTimer.Enabled = True
-err:
-
-End Sub
 
 Private Sub Form_Load()
     
@@ -356,7 +315,7 @@ Form_Load_Err:
     
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     
     On Error GoTo Form_MouseMove_Err
     
@@ -394,8 +353,8 @@ End Sub
 
 Private Sub Image1_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
     
     On Error GoTo Image1_MouseMove_Err
 
@@ -414,7 +373,7 @@ Image1_MouseMove_Err:
     
 End Sub
 
-Private Sub Image2_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Image2_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     
     On Error GoTo Image2_MouseUp_Err
     
@@ -431,8 +390,8 @@ End Sub
 
 Private Sub Image2_MouseMove(Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
     
     On Error GoTo Image2_MouseMove_Err
 
@@ -451,7 +410,7 @@ Image2_MouseMove_Err:
     
 End Sub
 
-Private Sub Image1_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Image1_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     
     On Error GoTo Image1_MouseUp_Err
 
@@ -516,25 +475,28 @@ Public Sub ListView1_Click()
 
     aniTimer.Enabled = False
 
-    If ListView1.SelectedItem Is Nothing Then Exit Sub
-
-    If ListView1.SelectedItem.SubItems(2) <> "" Then
+      If ListView1.SelectedItem.SubItems(2) <> "" Then
         If ListView1.SelectedItem.SubItems(3) = 0 Then
-           
-            myAnimator.Frames = 0
-            Animacion Imagen
-                   
+            Call DibujarBody(ListView1.SelectedItem.SubItems(2), 3)
+      
             npclbl.Caption = NpcData(ListView1.SelectedItem.SubItems(2)).Name & " (" & ListView1.SelectedItem.SubItems(1) & ")"
-    
         Else
 
-            Imagen.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & GrhData(ObjData(ListView1.SelectedItem.SubItems(2)).GrhIndex).FileNum & ".png", , , , , True)
-           
+            Dim X As Long
+
+            Dim Y As Long
+        
+           ' X = (PlayerView.ScaleWidth - GrhData(ListView1.SelectedItem.SubItems(2)).PixelWidth) / 2
+           'Y = (PlayerView.ScaleHeight - GrhData(ListView1.SelectedItem.SubItems(2)).PixelHeight) / 2
+            
+            Call Grh_Render_To_Hdc(PlayerView, ObjData(ListView1.SelectedItem.SubItems(2)).GrhIndex, 40, 10, False, RGB(11, 11, 11))
+        
             npclbl.Caption = ObjData(ListView1.SelectedItem.SubItems(2)).Name & " (" & ListView1.SelectedItem.SubItems(1) & ")"
-      
+    
         End If
 
     End If
+
     
     Exit Sub
 
@@ -548,12 +510,15 @@ Public Sub ListView2_Click()
     
     On Error GoTo ListView2_Click_Err
 
-    If ListView2.SelectedItem.SubItems(2) <> "" Then
-        picture1.Picture = StdPictureEx.LoadPicture(PathGraficos & "\" & GrhData(ObjData(ListView2.SelectedItem.SubItems(2)).GrhIndex).FileNum & ".png", , , , , True)
+   If ListView2.SelectedItem.SubItems(2) <> "" Then
+ 
+        Call Grh_Render_To_Hdc(picture1, ObjData(ListView2.SelectedItem.SubItems(2)).GrhIndex, 0, 0, False, RGB(11, 11, 11))
+        picture1.Visible = True
+        
+        objetolbl.Caption = ObjData(ListView2.SelectedItem.SubItems(2)).Name & vbCrLf & " (" & ListView2.SelectedItem.SubItems(1) & ")"
     
     End If
-    
-    objetolbl.Caption = ObjData(ListView2.SelectedItem.SubItems(2)).Name & vbCrLf & " (" & ListView2.SelectedItem.SubItems(1) & ")"
+
     
     Exit Sub
 
@@ -580,30 +545,41 @@ lstQuests_Click_Err:
     
 End Sub
 
-Sub Animacion(imagen2 As Image)
 
-    If aniTimer.Enabled Then
-        aniTimer.Enabled = False
-    ElseIf myAnimator.Frames = 0& Then
 
-        Set imagen2.Picture = StdPictureEx.LoadPicture(App.path & "\recursos\ques\" & NpcData(ListView1.SelectedItem.SubItems(2)).Name & ".gif", , , , , True)  ' True=can change frames
-        myAnimator.Frames = StdPictureEx.SubImageCount(imagen2.Picture)
+Sub DibujarBody(ByVal MyBody As Integer, Optional ByVal Heading As Byte = 3)
+    
+    On Error GoTo DibujarBody_Err
+    
+    Dim Grh As Grh
 
-        If myAnimator.Frames < 2 Or StdPictureEx.PictureType(imagen2.Picture) <> ptcGIF Then
-            myAnimator.Frames = -1    ' flag indicating this image is not GIF or can't be animated
-            aniTimer.Interval = 0
-        Else
-            myAnimator.Frame = 1
-            Call StdPictureEx.GetGIFAnimationInfo(imagen2.Picture, myAnimator.Intervals)
-            aniTimer.Interval = myAnimator.Intervals(1) * 10
-            aniTimer.Enabled = True
+    Grh = BodyData(NpcData(MyBody).Body).Walk(3)
 
-        End If
+    Dim X    As Long
 
-    Else
-        aniTimer.Enabled = True
+    Dim Y    As Long
+
+    Dim grhH As Grh
+
+    grhH = HeadData(NpcData(MyBody).Head).Head(3)
+
+    X = (PlayerView.ScaleWidth - GrhData(Grh.GrhIndex).PixelWidth) / 2
+    Y = (PlayerView.ScaleHeight - GrhData(Grh.GrhIndex).PixelHeight) / 2
+    Call Grh_Render_To_Hdc(PlayerView, GrhData(Grh.GrhIndex).Frames(1), X, Y + 10, False, RGB(11, 11, 11))
+
+    If NpcData(MyBody).Head <> 0 Then
+        X = (PlayerView.ScaleWidth - GrhData(grhH.GrhIndex).PixelWidth) / 2
+        Y = (PlayerView.ScaleHeight - GrhData(grhH.GrhIndex).PixelHeight) / 2 + 8 + BodyData(NpcData(MyBody).Body).HeadOffset.Y
+       Call Grh_Render_To_HdcSinBorrar(PlayerView, GrhData(grhH.GrhIndex).Frames(1), X, Y, False)
 
     End If
 
+    
+    Exit Sub
+
+DibujarBody_Err:
+   
+    Resume Next
+    
 End Sub
 

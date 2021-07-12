@@ -3405,6 +3405,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
         #If RenderFull = 0 Then
 
             If Conectar Then
+                TT2.Destroy
                 Nombres = True
                 'frmMain.picHechiz.Visible = False
                 frmMain.BarraHechiz.Visible = False
@@ -4361,6 +4362,45 @@ Public Sub Grh_Render_To_Hdc(ByRef Pic As PictureBox, _
 
     Call D3DDevice.BeginScene
     Call D3DDevice.Clear(0, ByVal 0, D3DCLEAR_TARGET, ClearColor, 1#, 0)
+    
+    DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)
+    
+    Call D3DDevice.EndScene
+    Call D3DDevice.Present(Picture, ByVal 0, Pic.hwnd, ByVal 0)
+    
+    Exit Sub
+
+Grh_Render_To_Hdc_Err:
+
+    ' Call RegistrarError(Err.Number, Err.Description, "TileEngine.Grh_Render_To_Hdc", Erl)
+    Resume Next
+    
+End Sub
+
+Public Sub Grh_Render_To_HdcSinBorrar(ByRef Pic As PictureBox, _
+                             ByVal GrhIndex As Long, _
+                             ByVal screen_x As Integer, _
+                             ByVal screen_y As Integer, _
+                             Optional ByVal Alpha As Integer = False, _
+                             Optional ByVal ClearColor As Long = &O0)
+    
+    On Error GoTo Grh_Render_To_Hdc_Err
+
+    If GrhIndex = 0 Then Exit Sub
+
+    Static Picture As RECT
+
+    With Picture
+        .left = 0
+        .top = 0
+
+        .bottom = Pic.ScaleHeight
+        .right = Pic.ScaleWidth
+
+    End With
+
+    Call D3DDevice.BeginScene
+
     
     DrawGrhIndex GrhIndex, screen_x, screen_y, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)
     

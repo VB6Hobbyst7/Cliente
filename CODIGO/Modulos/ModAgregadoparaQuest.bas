@@ -126,7 +126,7 @@ Public Sub CargarNpc()
         NpcData(npc).MaxHit = Val(Leer.GetValue("npc" & npc, "MaxHit"))
         NpcData(npc).MinHit = Val(Leer.GetValue("npc" & npc, "MinHit"))
         NpcData(npc).Oro = Val(Leer.GetValue("npc" & npc, "oro"))
-        
+        NpcData(npc).Body = Val(Leer.GetValue("npc" & npc, "Body"))
         NpcData(npc).ExpClan = Val(Leer.GetValue("npc" & npc, "GiveEXPClan"))
        
         aux = Val(Leer.GetValue("npc" & npc, "NumQuiza"))

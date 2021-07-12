@@ -14,12 +14,6 @@ Begin VB.Form FrmRanking
    ScaleWidth      =   2985
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin VB.Timer aniTimer 
-      Enabled         =   0   'False
-      Interval        =   23
-      Left            =   0
-      Top             =   0
-   End
    Begin VB.Label Label1 
       BackStyle       =   0  'Transparent
       Caption         =   "X"
@@ -93,16 +87,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Private Type GIFAnimator
 
-    Frames As Long
-    Frame As Long
-    LoopCount As Long
-    Intervals() As Long
-
-End Type
-
-Private myAnimator As GIFAnimator
 
 
 
@@ -117,40 +102,7 @@ End Sub
 
 
 
-Private Sub aniTimer_Timer()
-On Error GoTo err
 
-    aniTimer.Enabled = False
-
-    With myAnimator
-
-        If .Frame = .Frames Then        ' loop occurred
-            ' intervals(0) is number of loops before stopping animation. values < 1 indicate infinite looping
-            .Frame = 0
-
-            If .Intervals(0) > 0 Then
-                .LoopCount = .LoopCount + 1
-
-                If .LoopCount = .Intervals(0) Then
-                    .LoopCount = 0 ' if loops terminated, stop on last frame or first frame. your choice
-                    Exit Sub
-
-                End If
-
-            End If
-
-        End If
-
-        .Frame = .Frame + 1&
-
-    End With
-
-    Set FrmRanking.Picture = StdPictureEx.SubImage(FrmRanking.Picture, myAnimator.Frame)
-    FrmRanking.Refresh  ' note: form/picturebox picture property does not require a refresh; updated automatically
-    aniTimer.Interval = myAnimator.Intervals(myAnimator.Frame) * 20
-    aniTimer.Enabled = True
-err:
-End Sub
 
 Private Sub ImgClan_Click()
 Call Audio.PlayWave(SND_CLICK)
@@ -204,29 +156,4 @@ frmMain.SetFocus
 End Sub
 
 
-Sub Animacion(imagen2 As Form)
 
-    If aniTimer.Enabled Then
-        aniTimer.Enabled = False
-    ElseIf myAnimator.Frames = 0& Then
-
-        Set imagen2.Picture = StdPictureEx.LoadPicture("C:\Users\waalter\Desktop\3434.gif", , , , , True)  ' True=can change frames
-        myAnimator.Frames = StdPictureEx.SubImageCount(imagen2.Picture)
-
-        If myAnimator.Frames < 2 Or StdPictureEx.PictureType(imagen2.Picture) <> ptcGIF Then
-            myAnimator.Frames = -1    ' flag indicating this image is not GIF or can't be animated
-            aniTimer.Interval = 0
-        Else
-            myAnimator.Frame = 1
-            Call StdPictureEx.GetGIFAnimationInfo(imagen2.Picture, myAnimator.Intervals)
-            aniTimer.Interval = myAnimator.Intervals(1) * 20
-            aniTimer.Enabled = True
-
-        End If
-
-    Else
-        aniTimer.Enabled = True
-
-    End If
-
-End Sub
