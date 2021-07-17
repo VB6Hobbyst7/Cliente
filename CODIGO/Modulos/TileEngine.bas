@@ -2005,7 +2005,7 @@ Public Sub CargarTile(X As Long, Y As Long, ByRef DataMap() As Byte)
     Dim tmpInt  As Integer
 
     Dim Pos     As Long
-
+On Error GoTo err
     Pos = MapInfo.offset + (X - 1) * 10 + (Y - 1) * MapInfo.Width * 10
 
     ByFlags = DataMap(Pos)
@@ -2066,7 +2066,7 @@ Public Sub CargarTile(X As Long, Y As Long, ByRef DataMap() As Byte)
         Call Light_Create(X, Y, 255, 255, 255, Rango, -MapData(X, Y).Graphic(3).GrhIndex - 1)
 
     End If
-
+err:
 End Sub
 
 Sub RenderScreen(ByVal TileX As Integer, _

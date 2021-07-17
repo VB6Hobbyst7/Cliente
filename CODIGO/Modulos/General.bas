@@ -338,7 +338,7 @@ Public Sub RefreshAllChars()
     For LoopC = 1 To LastChar
 
         If charlist(LoopC).ACTIVE = 1 Then
-            MapData(charlist(LoopC).Pos.x, charlist(LoopC).Pos.y).CharIndex = LoopC
+            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
 
         End If
 
@@ -535,16 +535,16 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     Select Case Direccion
 
         Case E_Heading.north
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y - 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
 
         Case E_Heading.east
-            LegalOk = MoveToLegalPos(UserPos.x + 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
 
         Case E_Heading.south
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y + 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
 
         Case E_Heading.west
-            LegalOk = MoveToLegalPos(UserPos.x - 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
 
     End Select
     
@@ -573,7 +573,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     Call frmMain.RefreshMiniMap
     
     ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.x, UserPos.y)
+    Call Audio.MoveListener(UserPos.X, UserPos.Y)
     
     CheckZona
 
@@ -649,7 +649,7 @@ Private Sub CheckKeys()
             End If
                         
             ' We haven't moved - Update 3D sounds!
-            Call Audio.MoveListener(UserPos.x, UserPos.y)
+            Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
 
             Dim kp As Boolean
@@ -660,11 +660,11 @@ Private Sub CheckKeys()
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
-                Call Audio.MoveListener(UserPos.x, UserPos.y)
+                Call Audio.MoveListener(UserPos.X, UserPos.Y)
 
             End If
             
-            frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
+            frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
             CheckZona
 
         End If
@@ -681,9 +681,9 @@ Sub CargarMap(ByVal Map As Integer)
     'Formato de mapas optimizado para reducir el espacio que ocupan.
     'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
     '**************************************************************
-    Dim y       As Long
+    Dim Y       As Long
 
-    Dim x       As Long
+    Dim X       As Long
 
     Dim tempint As Integer
 
@@ -790,18 +790,18 @@ Sub CargarMap(ByVal Map As Integer)
 
     End If
     
-    For y = 1 To YMaxMapSize
-        For x = 1 To XMaxMapSize
+    For Y = 1 To YMaxMapSize
+        For X = 1 To XMaxMapSize
 
-            If MapData(x, y).CharIndex > 0 Then
-                Call EraseChar(MapData(x, y).CharIndex)
+            If MapData(X, Y).CharIndex > 0 Then
+                Call EraseChar(MapData(X, Y).CharIndex)
 
             End If
 
             'Erase OBJs
-            MapData(x, y).ObjGrh.GrhIndex = 0
-        Next x
-    Next y
+            MapData(X, Y).ObjGrh.GrhIndex = 0
+        Next X
+    Next Y
     
 End Sub
 
@@ -816,7 +816,7 @@ Sub SwitchMap(ByVal Map As Integer)
     CargarMap (Map)
   'Call Effect_RedFountain_Begin(Engine_PixelPosX(302), Engine_PixelPosY(859), 1, 1000)
     Call General_Particle_Create(106, 809.5, 791)
-    Call Effect_Snow_Begin(13, 100)
+    Call Effect_Snow_Begin(13, 50)
 
 End Sub
 
@@ -840,7 +840,7 @@ Sub AddtoRichPicture(ByVal Text As String, _
 
     #If RenderFull = 0 Then
 
-        If Left(Text, 1) = " " Then Exit Sub
+        If left(Text, 1) = " " Then Exit Sub
 a:
 
         Dim I As Byte
@@ -902,7 +902,7 @@ a:
                 
             If LineasConsola > 6 Then
                 OffSetConsola = LineasConsola - 6
-                frmMain.BarritaConsola.Top = 68
+                frmMain.BarritaConsola.top = 68
 
             End If
 
@@ -912,12 +912,12 @@ a:
                 For I = 1 To Len(Text)
 
                     If mid(Text, I, 1) = " " Then LastEsp = I
-                    If frmMain.pConsola.TextWidth(Left$(Text, I)) > frmMain.pConsola.Width Then Exit For
+                    If frmMain.pConsola.TextWidth(left$(Text, I)) > frmMain.pConsola.Width Then Exit For
                 Next I
 
                 If LastEsp = 0 Then LastEsp = I
-                AText = Right$(Text, Len(Text) - LastEsp)
-                Text = Left$(Text, LastEsp)
+                AText = right$(Text, Len(Text) - LastEsp)
+                Text = left$(Text, LastEsp)
                 Consola(nId).Texto = Text
                 Call AddtoRichPicture(AText, red, green, blue, bold, italic)
             Else
@@ -1158,7 +1158,7 @@ Sub Main()
     DoEvents
     #If RenderFull = 0 Then
 
-        If Not InitTileEngine(frmMain.hwnd, frmMain.Top, frmMain.pRender.Left, 32, 32, 24, 32, 14, 9, 9, 0.018) Then
+        If Not InitTileEngine(frmMain.hwnd, frmMain.top, frmMain.pRender.left, 32, 32, 24, 32, 14, 9, 9, 0.018) Then
 
             Call CloseClient
 
@@ -1320,7 +1320,7 @@ Sub Main()
 
         If frmMain.WindowState <> 1 And frmMain.Visible Then
             Call CalcularBarcos
-            Call ShowNextFrame(frmMain.Top, frmMain.Left, frmMain.MouseX, frmMain.MouseY)
+            Call ShowNextFrame(frmMain.top, frmMain.left, frmMain.MouseX, frmMain.MouseY)
 
             'Play ambient sounds
             Call RenderSounds
@@ -1374,7 +1374,7 @@ Function GetVar(ByVal File As String, ByVal Main As String, ByVal Var As String)
     getprivateprofilestring Main, Var, vbNullString, sSpaces, Len(sSpaces), File
     
     GetVar = RTrim$(sSpaces)
-    GetVar = Left$(GetVar, Len(GetVar) - 1)
+    GetVar = left$(GetVar, Len(GetVar) - 1)
 
 End Function
 
@@ -1429,8 +1429,8 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer acá....
-Function HayAgua(ByVal x As Integer, ByVal y As Integer) As Boolean
-    HayAgua = ((MapData(x, y).Graphic(1).GrhIndex >= 1505 And MapData(x, y).Graphic(1).GrhIndex <= 1520) Or (MapData(x, y).Graphic(1).GrhIndex >= 5665 And MapData(x, y).Graphic(1).GrhIndex <= 5680) Or (MapData(x, y).Graphic(1).GrhIndex >= 13547 And MapData(x, y).Graphic(1).GrhIndex <= 13562)) And MapData(x, y).Graphic(2).GrhIndex = 0
+Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And MapData(X, Y).Graphic(2).GrhIndex = 0
                 
 End Function
 
@@ -1770,7 +1770,7 @@ Public Sub CloseClient()
 
 End Sub
 
-Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
+Public Function BuscarZona(ByVal X As Integer, ByVal Y As Integer) As Integer
 
     Dim I        As Integer
 
@@ -1782,7 +1782,7 @@ Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And x >= Zonas(I).x1 And x <= Zonas(I).x2 And y >= Zonas(I).y1 And y <= Zonas(I).y2 Then
+        If UserMap = Zonas(I).Mapa And X >= Zonas(I).x1 And X <= Zonas(I).x2 And Y >= Zonas(I).y1 And Y <= Zonas(I).y2 Then
             BuscarZona = I
             Encontro = True
 
@@ -1793,7 +1793,7 @@ Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
     Next I
 
     If Not Encontro And UserMap > 0 Then
-        I = IIf(HayAgua(x, y), 24, 23)
+        I = IIf(HayAgua(X, Y), 24, 23)
         BuscarZona = I
 
     End If
@@ -1812,7 +1812,7 @@ Public Sub CheckZona()
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And UserPos.x >= Zonas(I).x1 And UserPos.x <= Zonas(I).x2 And UserPos.y >= Zonas(I).y1 And UserPos.y <= Zonas(I).y2 Then
+        If UserMap = Zonas(I).Mapa And UserPos.X >= Zonas(I).x1 And UserPos.X <= Zonas(I).x2 And UserPos.Y >= Zonas(I).y1 And UserPos.Y <= Zonas(I).y2 Then
             If ZonaActual <> I Then
                 If ZonaActual > 0 Then
                     If Zonas(ZonaActual).Segura <> Zonas(I).Segura Then
@@ -1840,7 +1840,7 @@ Public Sub CheckZona()
     Next I
 
     If Not Encontro And UserMap > 0 Then
-        I = IIf(HayAgua(UserPos.x, UserPos.y), 24, 23)
+        I = IIf(HayAgua(UserPos.X, UserPos.Y), 24, 23)
 
         If ZonaActual <> I Then
             ZonaActual = I
@@ -1893,23 +1893,23 @@ Sub ClosePj()
     Call Audio.StopWave
     frmMain.IsPlaying = PlayLoop.plNone
     
-    Dim x As Integer
+    Dim X As Integer
 
-    Dim y As Integer
+    Dim Y As Integer
 
-    For x = 1 To XMaxMapSize
-        For y = 1 To YMaxMapSize
-            MapData(x, y).CharIndex = 0
+    For X = 1 To XMaxMapSize
+        For Y = 1 To YMaxMapSize
+            MapData(X, Y).CharIndex = 0
 
-            If MapData(x, y).ObjGrh.GrhIndex = GrhFogata Then
-                MapData(x, y).Graphic(3).GrhIndex = 0
-                Call Light_Destroy_ToMap(x, y)
+            If MapData(X, Y).ObjGrh.GrhIndex = GrhFogata Then
+                MapData(X, Y).Graphic(3).GrhIndex = 0
+                Call Light_Destroy_ToMap(X, Y)
 
             End If
 
-            MapData(x, y).ObjGrh.GrhIndex = 0
-        Next y
-    Next x
+            MapData(X, Y).ObjGrh.GrhIndex = 0
+        Next Y
+    Next X
 
     On Local Error Resume Next
     frmMain.SendTxt.Visible = False
@@ -2046,7 +2046,7 @@ Public Sub checkText(ByVal Text As String)
     '    ScreenShooterCapturePending = True
     '    Exit Sub
     'End If
-    If Left(Text, Len(MENSAJE_FRAGSHOOTER_HAS_MATADO)) = MENSAJE_FRAGSHOOTER_HAS_MATADO Then
+    If left(Text, Len(MENSAJE_FRAGSHOOTER_HAS_MATADO)) = MENSAJE_FRAGSHOOTER_HAS_MATADO Then
         ScreenShooterCapturePending = True
         FragShooterEsperandoLevel = True
         Exit Sub
@@ -2054,7 +2054,7 @@ Public Sub checkText(ByVal Text As String)
     End If
 
     If FragShooterEsperandoLevel Then
-        If Right(Text, Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA)) = MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA Then
+        If right(Text, Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA)) = MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA Then
             If CInt(mid(Text, Len(MENSAJE_FRAGSHOOTER_HAS_GANADO), (Len(Text) - (Len(MENSAJE_FRAGSHOOTER_PUNTOS_DE_EXPERIENCIA) + Len(MENSAJE_FRAGSHOOTER_HAS_GANADO))))) / 2 > mOpciones.ScreenShooterNivelSuperiorIndex Then
                 ScreenShooterCapturePending = True
 
@@ -2295,27 +2295,27 @@ Public Sub Engine_Init_ParticleEngine()
  
 End Sub
  
-Function Engine_PixelPosX(ByVal x As Long) As Long
+Function Engine_PixelPosX(ByVal X As Long) As Long
     '*****************************************************************
     'Converts a tile position to a screen position
     'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX]http://www.vbgore.com/GameClient.TileEn ... _PixelPosX[/url]
     '*****************************************************************
  
-    Engine_PixelPosX = (x - 1) * TilePixelWidth
+    Engine_PixelPosX = (X - 1) * TilePixelWidth
  
 End Function
  
-Function Engine_PixelPosY(ByVal y As Long) As Long
+Function Engine_PixelPosY(ByVal Y As Long) As Long
     '*****************************************************************
     'Converts a tile position to a screen position
     'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY]http://www.vbgore.com/GameClient.TileEn ... _PixelPosY[/url]
     '*****************************************************************
  
-    Engine_PixelPosY = (y - 1) * TilePixelHeight
+    Engine_PixelPosY = (Y - 1) * TilePixelHeight
  
 End Function
  
-Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
+Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
  
     '************************************************************
     'Tile Position to Screen Position
@@ -2326,7 +2326,7 @@ Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
  
 End Function
  
-Public Function Engine_TPtoSPY(ByVal y As Byte) As Long
+Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
  
     '************************************************************
     'Tile Position to Screen Position

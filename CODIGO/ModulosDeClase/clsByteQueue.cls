@@ -243,6 +243,7 @@ Private Function ReadData(ByRef buf() As Byte, ByVal dataLength As Long) As Long
     'If enough memory is available, it copies the requested number of bytes to the buffer
     '***************************************************
     'Check if we can read the number of bytes requested
+    On Error GoTo err
     If dataLength > queueLength Then
         Call err.Raise(NOT_ENOUGH_DATA)
         Exit Function
@@ -252,7 +253,7 @@ Private Function ReadData(ByRef buf() As Byte, ByVal dataLength As Long) As Long
     'Copy data to buffer
     Call CopyMemory(buf(0), Data(0), dataLength)
     ReadData = dataLength
-
+err:
 End Function
 
 ''

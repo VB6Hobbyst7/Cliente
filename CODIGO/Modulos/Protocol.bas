@@ -910,7 +910,7 @@ Private Sub HandleCommerceChat()
 
         End If
             
-        Call frmComerciarUsu.PrintCommerceMsg(Left$(chat, InStr(1, chat, "~") - 1), 1)
+        Call frmComerciarUsu.PrintCommerceMsg(left$(chat, InStr(1, chat, "~") - 1), 1)
         'Call AddtoRichTextBox(frmComerciarUsu.CommerceConsole, Left$(chat, InStr(1, chat, "~") - 1), r, g, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
 
@@ -1388,7 +1388,7 @@ Private Sub HandleUserSwing()
     
     Dim c As New clsToolTip
 
-    Call c.Init(UserPos.x, UserPos.y, "Fallas!", 200, 10, 10)
+    Call c.Init(UserPos.X, UserPos.Y, "Fallas!", 200, 10, 10)
     Tooltips.Add c
     
     Call AddtoRichPicture(MENSAJE_FALLADO_GOLPE, 255, 0, 0, True, False, False)
@@ -1595,7 +1595,7 @@ Private Sub HandleShowBarco()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim x                 As Integer, y As Integer
+    Dim X                 As Integer, Y As Integer
 
     Dim Paso              As Byte
 
@@ -1612,8 +1612,8 @@ Private Sub HandleShowBarco()
     Sentido = incomingData.ReadByte()
 
     Paso = incomingData.ReadByte()
-    x = incomingData.ReadInteger()
-    y = incomingData.ReadInteger()
+    X = incomingData.ReadInteger()
+    Y = incomingData.ReadInteger()
     TiempoPuerto = incomingData.ReadLong()
     
     Debug.Print "Paquete Barco"
@@ -1642,7 +1642,7 @@ Private Sub HandleShowBarco()
     Call Dialogos.RemoveDialog(10000)
     
     Set Barco(Sentido) = New clsBarco
-    Call Barco(Sentido).Init(RutaBarco(Sentido), Paso, x, y, TiempoPuerto, Sentido, Pasajeros)
+    Call Barco(Sentido).Init(RutaBarco(Sentido), Paso, X, Y, TiempoPuerto, Sentido, Pasajeros)
 
 End Sub
 
@@ -1828,9 +1828,9 @@ Private Sub HandleTooltip()
 
     End If
     
-    Dim x       As Integer
+    Dim X       As Integer
 
-    Dim y       As Integer
+    Dim Y       As Integer
 
     Dim Mensaje As String
 
@@ -1841,8 +1841,8 @@ Private Sub HandleTooltip()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    x = incomingData.ReadInteger
-    y = incomingData.ReadInteger
+    X = incomingData.ReadInteger
+    Y = incomingData.ReadInteger
     
     TIPO = incomingData.ReadByte
     
@@ -1897,7 +1897,7 @@ Private Sub HandleTooltip()
     
     Dim c As New clsToolTip
 
-    Call c.Init(x, y, Mensaje, R, G, b)
+    Call c.Init(X, Y, Mensaje, R, G, b)
     Tooltips.Add c
     
 End Sub
@@ -2104,25 +2104,25 @@ Private Sub HandlePosUpdate()
     Call incomingData.ReadByte
     
     'Remove char from old position
-    If MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex Then
-        MapData(UserPos.x, UserPos.y).CharIndex = 0
+    If MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex Then
+        MapData(UserPos.X, UserPos.Y).CharIndex = 0
 
     End If
     
-    UserPos.x = incomingData.ReadInteger
-    UserPos.y = incomingData.ReadInteger
+    UserPos.X = incomingData.ReadInteger
+    UserPos.Y = incomingData.ReadInteger
     
     'Set char
-    MapData(UserPos.x, UserPos.y).CharIndex = UserCharIndex
+    MapData(UserPos.X, UserPos.Y).CharIndex = UserCharIndex
     charlist(UserCharIndex).Pos = UserPos
     
     WAIT_ACTION = eWAIT_FOR_ACTION.None
     
     'Are we under a roof?
-    bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or MapData(UserPos.x, UserPos.y).Trigger = 2 Or MapData(UserPos.x, UserPos.y).Trigger = 50 Or MapData(UserPos.x, UserPos.y).Trigger = 7 Or MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
+    bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or MapData(UserPos.X, UserPos.Y).Trigger = 2 Or MapData(UserPos.X, UserPos.Y).Trigger = 50 Or MapData(UserPos.X, UserPos.Y).Trigger = 7 Or MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
                 
     'Update pos label
-    frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
+    frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
 
     'CheckZona
 End Sub
@@ -2194,7 +2194,7 @@ Private Sub HandleNPCHitUser()
     
     Dim c As New clsToolTip
 
-    Call c.Init(UserPos.x, UserPos.y, Golpe, 200, 10, 10)
+    Call c.Init(UserPos.X, UserPos.Y, Golpe, 200, 10, 10)
     Tooltips.Add c
 
 End Sub
@@ -2249,7 +2249,7 @@ Private Sub HandleUserHitNPC()
 
     End Select
 
-    If charlist(CharIndex).Pos.x > 0 Then
+    If charlist(CharIndex).Pos.X > 0 Then
         'sangre
         Dim CorSanX As Integer
         Dim CorSanY As Integer
@@ -2269,14 +2269,14 @@ Private Sub HandleUserHitNPC()
 
         End Select
 
-        Effect_BloodSpray_Begin ParticulaX(charlist(CharIndex).Pos.x, charlist(UserCharIndex).Pos.x) + CorSanX, ParticulaY(charlist(CharIndex).Pos.y, charlist(UserCharIndex).Pos.y) + CorSanY, 7 + Rnd * 10, 200, 1
+        Effect_BloodSpray_Begin ParticulaX(charlist(CharIndex).Pos.X, charlist(UserCharIndex).Pos.X) + CorSanX, ParticulaY(charlist(CharIndex).Pos.Y, charlist(UserCharIndex).Pos.Y) + CorSanY, 7 + Rnd * 10, 200, 1
 
 
         'sangre
 
         Dim c As New clsToolTip
 
-        Call c.Init(charlist(CharIndex).Pos.x, charlist(CharIndex).Pos.y, Golpe, 200, 10, 10)
+        Call c.Init(charlist(CharIndex).Pos.X, charlist(CharIndex).Pos.Y, Golpe, 200, 10, 10)
         Tooltips.Add c
 
     End If
@@ -2331,13 +2331,13 @@ Private Sub HandleUserSpellNPC()
 
     End Select
 
-    If charlist(CharIndex).Pos.x > 0 Then
+    If charlist(CharIndex).Pos.X > 0 Then
         'sangre
-        Effect_BloodSpray_Begin (ParticulaX(charlist(CharIndex).Pos.x, charlist(UserCharIndex).Pos.x)), (ParticulaY(charlist(CharIndex).Pos.y, charlist(UserCharIndex).Pos.y)), 7 + Rnd * 10, 200, 1
+        Effect_BloodSpray_Begin (ParticulaX(charlist(CharIndex).Pos.X, charlist(UserCharIndex).Pos.X)), (ParticulaY(charlist(CharIndex).Pos.Y, charlist(UserCharIndex).Pos.Y)), 7 + Rnd * 10, 200, 1
         'sangre
         Dim c As New clsToolTip
 
-        Call c.Init(charlist(CharIndex).Pos.x, charlist(CharIndex).Pos.y, Golpe, 200, 10, 10)
+        Call c.Init(charlist(CharIndex).Pos.X, charlist(CharIndex).Pos.Y, Golpe, 200, 10, 10)
         Tooltips.Add c
 
     End If
@@ -2428,7 +2428,7 @@ Private Sub HandleUserHittedByUser()
     
     Dim c As New clsToolTip
 
-    Call c.Init(UserPos.x, UserPos.y - 2, Golpe, 200, 10, 10)
+    Call c.Init(UserPos.X, UserPos.Y - 2, Golpe, 200, 10, 10)
     Tooltips.Add c
 
 End Sub
@@ -2498,7 +2498,7 @@ Private Sub HandleUserHittedUser()
     
     Dim c As New clsToolTip
 
-    Call c.Init(charlist(CharIndex).Pos.x, charlist(CharIndex).Pos.y - 2, Golpe, 200, 10, 10)
+    Call c.Init(charlist(CharIndex).Pos.X, charlist(CharIndex).Pos.Y - 2, Golpe, 200, 10, 10)
     Tooltips.Add c
 
 End Sub
@@ -2508,59 +2508,67 @@ End Sub
 
 Private Sub HandleChatOverHead()
 
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 05/17/06
-    '
-    '***************************************************
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'
+'***************************************************
     If incomingData.Length < 8 Then
         NotEnoughData = True
         Exit Sub
 
     End If
-    
+
     On Error GoTo ErrHandler
 
     'This packet contains strings, make a copy of the data to prevent losses if it's not complete yet...
     Dim buffer As New clsByteQueue
 
     Call buffer.CopyBuffer(incomingData)
-    
+
     'Remove packet ID
     Call buffer.ReadByte
-    
-    Dim chat      As String
+
+    Dim chat As String
 
     Dim CharIndex As Integer
 
-    Dim R         As Byte
+    Dim R As Byte
 
-    Dim G         As Byte
+    Dim G As Byte
 
-    Dim b         As Byte
-    
+    Dim b As Byte
+    Dim FoundIt As Integer
     chat = buffer.ReadASCIIString()
     CharIndex = buffer.ReadInteger()
-    
+
     R = buffer.ReadByte()
     G = buffer.ReadByte()
     b = buffer.ReadByte()
-    
+
     'Only add the chat if the character exists (a CharacterRemove may have been sent to the PC / NPC area before the buffer was flushed)
     If charlist(CharIndex).ACTIVE Or charlist(CharIndex).priv = 10 Then Call Dialogos.CreateDialog(chat, CharIndex, R, G, b)
-        
+
     Dim Name As String
 
-    Dim Pos  As Integer
+    Dim Pos As Integer
 
     Pos = InStr(charlist(CharIndex).nombre, "<")
 
     If Pos = 0 Then Pos = Len(charlist(CharIndex).nombre) + 2
-        
-    Name = Left$(charlist(CharIndex).nombre, Pos - 2)
-        
+
+    Name = left$(charlist(CharIndex).nombre, Pos - 2)
+
+
+    FoundIt = InStr(1, Name, "!")
+
+    If FoundIt <> 0 Then
+        Name = Replace(Name, "!", "")
+    Else
+        Name = Name
+    End If
     If charlist(CharIndex).nombre <> "" And charlist(CharIndex).invisible = False Then Call AddtoRichPicture(Name & "> " & chat, 190, 190, 190, False, True)
-    
+
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(buffer)
 
@@ -2571,10 +2579,10 @@ ErrHandler:
     Error = err.Number
 
     On Error GoTo 0
-    
+
     'Destroy auxiliar buffer
     Set buffer = Nothing
-    
+
     If Error <> 0 Then err.Raise Error
 
 End Sub
@@ -2648,7 +2656,7 @@ Private Sub HandleConsoleMessage()
 
         End If
 
-        Call AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), R, G, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+        Call AddtoRichPicture(left$(chat, InStr(1, chat, "~") - 1), R, G, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
     Else
         #If RenderFull = 0 Then
 
@@ -2785,7 +2793,7 @@ Private Sub HandleGuildChat()
 
             End If
             
-            Call AddtoRichPicture(Left$(chat, InStr(1, chat, "~") - 1), R, G, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
+            Call AddtoRichPicture(left$(chat, InStr(1, chat, "~") - 1), R, G, b, Val(ReadField(5, chat, 126)) <> 0, Val(ReadField(6, chat, 126)) <> 0)
         Else
 
             With FontTypes(FontTypeNames.FONTTYPE_GUILDMSG)
@@ -2961,7 +2969,7 @@ Private Sub HandleUserCharIndexInServer()
 
     'Call CargarTile(UserPos.X, UserPos.Y)
     'Are we under a roof?
-    bTecho = IIf(MapData(UserPos.x, UserPos.y).Trigger = 1 Or MapData(UserPos.x, UserPos.y).Trigger = 2 Or MapData(UserPos.x, UserPos.y).Trigger = 50 Or MapData(UserPos.x, UserPos.y).Trigger = 7 Or MapData(UserPos.x, UserPos.y).Trigger = 4, True, False)
+    bTecho = IIf(MapData(UserPos.X, UserPos.Y).Trigger = 1 Or MapData(UserPos.X, UserPos.Y).Trigger = 2 Or MapData(UserPos.X, UserPos.Y).Trigger = 50 Or MapData(UserPos.X, UserPos.Y).Trigger = 7 Or MapData(UserPos.X, UserPos.Y).Trigger = 4, True, False)
 
     If bTecho Then
         bAlpha = 70
@@ -2969,7 +2977,7 @@ Private Sub HandleUserCharIndexInServer()
 
     End If
     
-    frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
+    frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
     Call frmMain.RefreshMiniMap
 
 End Sub
@@ -3008,9 +3016,9 @@ Private Sub HandleCharacterCreate()
 
     Dim Heading   As E_Heading
 
-    Dim x         As Integer
+    Dim X         As Integer
 
-    Dim y         As Integer
+    Dim Y         As Integer
 
     Dim weapon    As Integer
 
@@ -3024,8 +3032,8 @@ Private Sub HandleCharacterCreate()
     Body = buffer.ReadInteger()
     Head = buffer.ReadInteger()
     Heading = buffer.ReadByte()
-    x = buffer.ReadInteger()
-    y = buffer.ReadInteger()
+    X = buffer.ReadInteger()
+    Y = buffer.ReadInteger()
     weapon = buffer.ReadInteger()
     shield = buffer.ReadInteger()
     helmet = buffer.ReadInteger()
@@ -3073,7 +3081,7 @@ Private Sub HandleCharacterCreate()
 
     End With
     
-    Call MakeChar(CharIndex, Body, Head, Heading, x, y, weapon, shield, helmet)
+    Call MakeChar(CharIndex, Body, Head, Heading, X, Y, weapon, shield, helmet)
     
     'Call RefreshAllChars
     
@@ -3118,13 +3126,13 @@ Private Sub HandleCharacterRemove()
     
     CharIndex = incomingData.ReadInteger()
     
-    If charlist(CharIndex).nombre = "" And charlist(CharIndex).Pos.x > 0 And charlist(CharIndex).Pos.y > 0 Then
+    If charlist(CharIndex).nombre = "" And charlist(CharIndex).Pos.X > 0 And charlist(CharIndex).Pos.Y > 0 Then
 
         Dim tN As New clsNPCMuerto
 
         With charlist(CharIndex)
             Call tN.Init(.iBody, .iHead, 2, 2, 2, .Heading, .Pos, .Alpha)
-            Set MapData(.Pos.x, .Pos.y).Elemento = tN
+            Set MapData(.Pos.X, .Pos.Y).Elemento = tN
 
         End With
         
@@ -3158,13 +3166,13 @@ Private Sub HandleCharacterMove()
     
     Dim CharIndex As Integer
 
-    Dim x         As Integer
+    Dim X         As Integer
 
-    Dim y         As Integer
+    Dim Y         As Integer
     
     CharIndex = incomingData.ReadInteger()
-    x = incomingData.ReadInteger()
-    y = incomingData.ReadInteger()
+    X = incomingData.ReadInteger()
+    Y = incomingData.ReadInteger()
     
     With charlist(CharIndex)
 
@@ -3181,7 +3189,7 @@ Private Sub HandleCharacterMove()
 
     End With
         
-    Call MoveCharbyPos(CharIndex, x, y)
+    Call MoveCharbyPos(CharIndex, X, Y)
     
     'Call RefreshAllChars
 End Sub
@@ -3313,20 +3321,20 @@ Private Sub HandleObjectCreate()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim x As Integer
+    Dim X As Integer
 
-    Dim y As Integer
+    Dim Y As Integer
     
-    x = incomingData.ReadInteger()
-    y = incomingData.ReadInteger()
+    X = incomingData.ReadInteger()
+    Y = incomingData.ReadInteger()
     
-    MapData(x, y).ObjGrh.GrhIndex = incomingData.ReadInteger()
+    MapData(X, Y).ObjGrh.GrhIndex = incomingData.ReadInteger()
     
-    Call InitGrh(MapData(x, y).ObjGrh, MapData(x, y).ObjGrh.GrhIndex)
+    Call InitGrh(MapData(X, Y).ObjGrh, MapData(X, Y).ObjGrh.GrhIndex)
     
-    If MapData(x, y).ObjGrh.GrhIndex = GrhFogata Then
-        MapData(x, y).Graphic(3).GrhIndex = -1
-        Call Light_Create(x, y, 255, 220, 220, 6, 0)
+    If MapData(X, Y).ObjGrh.GrhIndex = GrhFogata Then
+        MapData(X, Y).Graphic(3).GrhIndex = -1
+        Call Light_Create(X, Y, 255, 220, 220, 6, 0)
 
     End If
 
@@ -3351,20 +3359,20 @@ Private Sub HandleObjectDelete()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim x As Integer
+    Dim X As Integer
 
-    Dim y As Integer
+    Dim Y As Integer
     
-    x = incomingData.ReadInteger()
-    y = incomingData.ReadInteger()
+    X = incomingData.ReadInteger()
+    Y = incomingData.ReadInteger()
     
-    If MapData(x, y).ObjGrh.GrhIndex = GrhFogata Then
-        MapData(x, y).Graphic(3).GrhIndex = 0
-        Call Light_Destroy_ToMap(x, y)
+    If MapData(X, Y).ObjGrh.GrhIndex = GrhFogata Then
+        MapData(X, Y).Graphic(3).GrhIndex = 0
+        Call Light_Destroy_ToMap(X, Y)
 
     End If
     
-    MapData(x, y).ObjGrh.GrhIndex = 0
+    MapData(X, Y).ObjGrh.GrhIndex = 0
 
 End Sub
 
@@ -3387,27 +3395,27 @@ Private Sub HandleBlockPosition()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim x As Integer
+    Dim X As Integer
 
-    Dim y As Integer
+    Dim Y As Integer
     
-    x = incomingData.ReadInteger()
-    y = incomingData.ReadInteger()
+    X = incomingData.ReadInteger()
+    Y = incomingData.ReadInteger()
     
-    If MapData(x, y).Map <> UserMap Then
+    If MapData(X, Y).Map <> UserMap Then
         If UserMap = 1 Then
-            Call CargarTile(CLng(x), CLng(y), DataMap1)
+            Call CargarTile(CLng(X), CLng(Y), DataMap1)
         Else
-            Call CargarTile(CLng(x), CLng(y), DataMap2)
+            Call CargarTile(CLng(X), CLng(Y), DataMap2)
 
         End If
 
     End If
     
     If incomingData.ReadBoolean() Then
-        MapData(x, y).Blocked = 1
+        MapData(X, Y).Blocked = 1
     Else
-        MapData(x, y).Blocked = 0
+        MapData(X, Y).Blocked = 0
 
     End If
 
@@ -3526,17 +3534,17 @@ Private Sub HandleAreaChanged()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim x    As Integer
+    Dim X    As Integer
 
-    Dim y    As Integer
+    Dim Y    As Integer
 
     Dim Head As Byte
     
-    x = incomingData.ReadInteger()
-    y = incomingData.ReadInteger()
+    X = incomingData.ReadInteger()
+    Y = incomingData.ReadInteger()
     Head = incomingData.ReadByte()
         
-    Call CambioDeArea(x, y, Head)
+    Call CambioDeArea(X, Y, Head)
 
 End Sub
 
@@ -3572,9 +3580,9 @@ Private Sub HandleRainToggle()
 
     Tormenta = incomingData.ReadByte
     
-    If Not InMapBounds(UserPos.x, UserPos.y) Then Exit Sub
+    If Not InMapBounds(UserPos.X, UserPos.Y) Then Exit Sub
     
-    bTecho = (MapData(UserPos.x, UserPos.y).Trigger = 1 Or MapData(UserPos.x, UserPos.y).Trigger = 2 Or MapData(UserPos.x, UserPos.y).Trigger = 7 Or MapData(UserPos.x, UserPos.y).Trigger = 4)
+    bTecho = (MapData(UserPos.X, UserPos.Y).Trigger = 1 Or MapData(UserPos.X, UserPos.Y).Trigger = 2 Or MapData(UserPos.X, UserPos.Y).Trigger = 7 Or MapData(UserPos.X, UserPos.Y).Trigger = 4)
 
     If bRain Then
         If Zonas(ZonaActual).Terreno <> eTerreno.Dungeon Then
@@ -3670,9 +3678,9 @@ Private Sub HandleCreateEfecto()
 
     Dim Loops          As Integer
 
-    Dim x              As Integer
+    Dim X              As Integer
 
-    Dim y              As Integer
+    Dim Y              As Integer
 
     Dim Xd             As Integer
 
@@ -3684,14 +3692,14 @@ Private Sub HandleCreateEfecto()
     Loops = incomingData.ReadInteger()
     Wav = incomingData.ReadByte()
     Efecto = incomingData.ReadByte()
-    x = incomingData.ReadInteger()
-    y = incomingData.ReadInteger()
+    X = incomingData.ReadInteger()
+    Y = incomingData.ReadInteger()
     Xd = incomingData.ReadInteger()
     Yd = incomingData.ReadInteger()
     
     Dim mArroja As New clsArroja
 
-    Call mArroja.Init(tUserCharIndex, CharIndex, fX, Loops, Wav, Efecto, x, y, Xd, Yd)
+    Call mArroja.Init(tUserCharIndex, CharIndex, fX, Loops, Wav, Efecto, X, Y, Xd, Yd)
     Arrojas.Add mArroja
 
 End Sub
@@ -5093,25 +5101,25 @@ Private Sub HandleAtaca()
     'Remove packet ID
     Call incomingData.ReadByte
      
-    Dim x    As Integer
+    Dim X    As Integer
 
     Dim TIPO As Byte
 
-    x = incomingData.ReadInteger()
+    X = incomingData.ReadInteger()
     TIPO = incomingData.ReadByte()
     
     If TIPO = 1 Then
-        If charlist(x).Arma.WeaponWalk(charlist(x).Heading).GrhIndex > 0 Then
-            charlist(x).Arma.WeaponWalk(charlist(x).Heading).Started = 1
-            charlist(x).Arma.WeaponAttack = 1
+        If charlist(X).Arma.WeaponWalk(charlist(X).Heading).GrhIndex > 0 Then
+            charlist(X).Arma.WeaponWalk(charlist(X).Heading).Started = 1
+            charlist(X).Arma.WeaponAttack = 1
 
         End If
 
     End If
 
-    If charlist(x).Escudo.ShieldWalk(charlist(x).Heading).GrhIndex > 0 Then
-        charlist(x).Escudo.ShieldWalk(charlist(x).Heading).Started = 1
-        charlist(x).Escudo.ShieldAttack = 1
+    If charlist(X).Escudo.ShieldWalk(charlist(X).Heading).GrhIndex > 0 Then
+        charlist(X).Escudo.ShieldWalk(charlist(X).Heading).Started = 1
+        charlist(X).Escudo.ShieldAttack = 1
 
     End If
    
@@ -6725,20 +6733,20 @@ Private Sub HandleCreateAreaFX()
     'Remove packet ID
     Call incomingData.ReadByte
     
-    Dim x     As Integer
+    Dim X     As Integer
 
-    Dim y     As Integer
+    Dim Y     As Integer
 
     Dim fX    As Integer
 
     Dim Loops As Integer
     
-    x = incomingData.ReadInteger()
-    y = incomingData.ReadInteger()
+    X = incomingData.ReadInteger()
+    Y = incomingData.ReadInteger()
     fX = incomingData.ReadInteger()
     Loops = incomingData.ReadInteger()
     
-    Call SetAreaFx(x, y, fX, Loops)
+    Call SetAreaFx(X, Y, fX, Loops)
 
 End Sub
 
@@ -7841,7 +7849,7 @@ End Sub
 ' @param    y Tile coord in the y-axis in which the user clicked.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteLeftClick(ByVal x As Integer, ByVal y As Integer)
+Public Sub WriteLeftClick(ByVal X As Integer, ByVal Y As Integer)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7851,8 +7859,8 @@ Public Sub WriteLeftClick(ByVal x As Integer, ByVal y As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.LeftClick)
         
-        Call .WriteInteger(x)
-        Call .WriteInteger(y)
+        Call .WriteInteger(X)
+        Call .WriteInteger(Y)
 
     End With
 
@@ -7865,7 +7873,7 @@ End Sub
 ' @param    y Tile coord in the y-axis in which the user clicked.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteDoubleClick(ByVal x As Integer, ByVal y As Integer)
+Public Sub WriteDoubleClick(ByVal X As Integer, ByVal Y As Integer)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -7875,8 +7883,8 @@ Public Sub WriteDoubleClick(ByVal x As Integer, ByVal y As Integer)
     With outgoingData
         Call .WriteByte(ClientPacketID.DoubleClick)
         
-        Call .WriteInteger(x)
-        Call .WriteInteger(y)
+        Call .WriteInteger(X)
+        Call .WriteInteger(Y)
 
     End With
 
@@ -7993,8 +8001,8 @@ End Sub
 ' @param    skill The skill which the user attempts to use.
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWorkLeftClick(ByVal x As Integer, _
-                              ByVal y As Integer, _
+Public Sub WriteWorkLeftClick(ByVal X As Integer, _
+                              ByVal Y As Integer, _
                               ByVal Skill As eSkill)
 
     '***************************************************
@@ -8005,8 +8013,8 @@ Public Sub WriteWorkLeftClick(ByVal x As Integer, _
     With outgoingData
         Call .WriteByte(ClientPacketID.WorkLeftClick)
         
-        Call .WriteInteger(x)
-        Call .WriteInteger(y)
+        Call .WriteInteger(X)
+        Call .WriteInteger(Y)
         
         Call .WriteByte(Skill)
 
@@ -8014,8 +8022,8 @@ Public Sub WriteWorkLeftClick(ByVal x As Integer, _
 
 End Sub
 
-Public Sub WriteCreateEfectoClient(ByVal x As Integer, _
-                                   ByVal y As Integer, _
+Public Sub WriteCreateEfectoClient(ByVal X As Integer, _
+                                   ByVal Y As Integer, _
                                    ByVal Effect As Byte)
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -8026,8 +8034,8 @@ Public Sub WriteCreateEfectoClient(ByVal x As Integer, _
     With outgoingData
         Call .WriteByte(ClientPacketID.CreateEfectoClient)
         
-        Call .WriteInteger(x)
-        Call .WriteInteger(y)
+        Call .WriteInteger(X)
+        Call .WriteInteger(Y)
         Call .WriteByte(Effect)
 
     End With
@@ -8038,8 +8046,8 @@ Public Sub WriteCreateEfectoClient(ByVal x As Integer, _
 End Sub
 
 Public Sub WriteCreateEfectoClientAction(ByVal Effect As Byte, _
-                                         x As Integer, _
-                                         ByVal y As Integer)
+                                         X As Integer, _
+                                         ByVal Y As Integer)
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
     'Last Modification: 05/17/06
@@ -8049,8 +8057,8 @@ Public Sub WriteCreateEfectoClientAction(ByVal Effect As Byte, _
     With outgoingData
         Call .WriteByte(ClientPacketID.CreateEfectoClientAction)
         
-        Call .WriteInteger(x)
-        Call .WriteInteger(y)
+        Call .WriteInteger(X)
+        Call .WriteInteger(Y)
         Call .WriteByte(Effect)
 
     End With
@@ -8091,7 +8099,7 @@ Public Sub WriteCreateNewGuild(ByVal Desc As String, _
             temp = temp & Codex(I) & SEPARATOR
         Next I
         
-        If Len(temp) Then temp = Left$(temp, Len(temp) - 1)
+        If Len(temp) Then temp = left$(temp, Len(temp) - 1)
         
         Call .WriteASCIIString(temp)
 
@@ -8386,7 +8394,7 @@ Public Sub WriteClanCodexUpdate(ByVal Desc As String, ByRef Codex() As String)
             temp = temp & Codex(I) & SEPARATOR
         Next I
         
-        If Len(temp) Then temp = Left$(temp, Len(temp) - 1)
+        If Len(temp) Then temp = left$(temp, Len(temp) - 1)
         
         Call .WriteASCIIString(temp)
 
@@ -9974,7 +9982,7 @@ End Sub
 '
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
-Public Sub WriteWarpMeToTarget(x As Integer, y As Integer)
+Public Sub WriteWarpMeToTarget(X As Integer, Y As Integer)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -9983,8 +9991,8 @@ Public Sub WriteWarpMeToTarget(x As Integer, y As Integer)
     '***************************************************
     With outgoingData
         .WriteByte (ClientPacketID.WarpMeToTarget)
-        .WriteInteger (x)
-        .WriteInteger (y)
+        .WriteInteger (X)
+        .WriteInteger (Y)
 
     End With
     
@@ -10024,8 +10032,8 @@ End Sub
 
 Public Sub WriteWarpChar(ByVal UserName As String, _
                          ByVal Map As Integer, _
-                         ByVal x As Integer, _
-                         ByVal y As Integer)
+                         ByVal X As Integer, _
+                         ByVal Y As Integer)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10040,8 +10048,8 @@ Public Sub WriteWarpChar(ByVal UserName As String, _
         
         Call .WriteInteger(Map)
         
-        Call .WriteInteger(x)
-        Call .WriteInteger(y)
+        Call .WriteInteger(X)
+        Call .WriteInteger(Y)
 
     End With
 
@@ -10850,8 +10858,8 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteTeleportCreate(ByVal Map As Integer, _
-                               ByVal x As Integer, _
-                               ByVal y As Integer)
+                               ByVal X As Integer, _
+                               ByVal Y As Integer)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10864,8 +10872,8 @@ Public Sub WriteTeleportCreate(ByVal Map As Integer, _
         
         Call .WriteInteger(Map)
         
-        Call .WriteInteger(x)
-        Call .WriteInteger(y)
+        Call .WriteInteger(X)
+        Call .WriteInteger(Y)
 
     End With
 
@@ -10963,8 +10971,8 @@ End Sub
 
 Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, _
                                ByVal Map As Integer, _
-                               ByVal x As Integer, _
-                               ByVal y As Integer)
+                               ByVal X As Integer, _
+                               ByVal Y As Integer)
 
     '***************************************************
     'Author: Juan Martín Sotuyo Dodero (Maraxus)
@@ -10979,8 +10987,8 @@ Public Sub WriteForceWAVEToMap(ByVal waveID As Byte, _
         
         Call .WriteInteger(Map)
         
-        Call .WriteInteger(x)
-        Call .WriteInteger(y)
+        Call .WriteInteger(X)
+        Call .WriteInteger(Y)
 
     End With
 
