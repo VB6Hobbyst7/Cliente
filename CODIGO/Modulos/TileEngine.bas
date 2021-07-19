@@ -3670,9 +3670,12 @@ Public Sub CharRender(ByRef rChar As Char, _
         If .simbolo <> 0 Then
             'frmMain.TimerSimbolo.Enabled = True
             'Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.y - 61 + SimboloY + 5, 1, D3DColorRGBA(255, 0, 0, 255))
-            Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, PixelOffSetY + .Body.HeadOffset.Y - 55 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
-
-        Else
+           If .Body.HeadOffset.Y <> 0 Then
+            Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX + 2, PixelOffSetY + .Body.HeadOffset.Y - 10 - 10 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+  Else
+             Call DrawGrhIndex(3072 & .simbolo, PixelOffSetX, (PixelOffSetY - 60) + 20 * Sin((FrameTime Mod 31415) * 0.002) ^ 2, 1, D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255))
+ 
+     End If
 
             'frmMain.TimerSimbolo.Enabled = False
         End If

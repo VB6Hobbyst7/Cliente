@@ -732,14 +732,14 @@ Sub DibujarBody(ByVal MyBody As Integer, Optional ByVal Heading As Byte = 3)
 
    X = (PlayerView.ScaleWidth - GrhData(Grh.GrhIndex).PixelWidth) / 2
     Y = (PlayerView.ScaleHeight - GrhData(Grh.GrhIndex).PixelHeight) / 2
-     Call Grh_Render_To_Hdc(PlayerView, GrhData(Grh.GrhIndex).Frames(1), X, Y + 10, False, RGB(11, 11, 11))
+     Call Grh_Render_To_Hdc(PlayerView, GrhData(Grh.GrhIndex).Frames(1), X, Y + 15, False, RGB(11, 11, 11))
     
 
     If NpcData(MyBody).Head <> 0 Then
         X = (PlayerView.ScaleWidth - GrhData(grhH.GrhIndex).PixelWidth) / 2
         Y = (PlayerView.ScaleHeight - GrhData(grhH.GrhIndex).PixelHeight) / 2 + 8 + BodyData(NpcData(MyBody).Body).HeadOffset.Y
         PlayerView.BackColor = RGB(11, 11, 11)
-        Call Grh_Render_To_HdcSinBorrar(PlayerView, GrhData(grhH.GrhIndex).Frames(1), 50, Y, False)
+        Call Grh_Render_To_HdcSinBorrar(PlayerView, GrhData(grhH.GrhIndex).Frames(1), 42, Y - 8, False)
 
 
     End If
