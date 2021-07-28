@@ -21,13 +21,13 @@ Begin VB.Form FrmQuestInfo
       BorderStyle     =   0  'None
       ClipControls    =   0   'False
       ForeColor       =   &H80000008&
-      Height          =   825
+      Height          =   1305
       Left            =   7680
-      ScaleHeight     =   55
+      ScaleHeight     =   87
       ScaleMode       =   0  'User
       ScaleWidth      =   109
       TabIndex        =   9
-      Top             =   4320
+      Top             =   4080
       Width           =   1635
    End
    Begin VB.TextBox Text1 

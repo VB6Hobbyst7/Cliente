@@ -137,7 +137,7 @@ End Sub
 
 Private Sub ImgReto_Click()
 Call Audio.PlayWave(SND_CLICKNEW)
-
+FrmRanking2.Picture = LoadPictureEX("RankingRetos_1.jpg")
 Call WriteSolicitarRanking(TopRetos)
 RankingOro = ""
 End Sub
