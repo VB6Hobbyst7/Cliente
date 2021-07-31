@@ -2667,6 +2667,8 @@ End Sub
 Public Sub ControlSeguroResu(ByVal Mostrar As Boolean)
 
     If Mostrar Then
+        
+        SeguroResu = 14812
         'If Not PicResu.Visible Then
         '    PicResu.Visible = True
         'End If
@@ -2675,6 +2677,7 @@ Public Sub ControlSeguroResu(ByVal Mostrar As Boolean)
         'If PicResu.Visible Then
         '    PicResu.Visible = False
         'End If
+        SeguroResu = 14811
     End If
 
 End Sub
@@ -2837,6 +2840,22 @@ Private Sub pRender_Click()
     If Conectar Then Exit Sub
     If Cartel Then Cartel = False
 
+    If MouseX > 952 And MouseX < 976 And MouseY > 737 And MouseY < 765 Then    'Seguro Resu
+
+        Call Audio.PlayWave(SND_CLICK)
+        Call WriteResuscitationToggle
+        Exit Sub
+    End If
+
+    If MouseX > 981 And MouseX < 1005 And MouseY > 737 And MouseY < 765 Then    'Seguro Combate
+
+        Call Audio.PlayWave(SND_CLICK)
+        Call WriteSafeToggle
+
+        Exit Sub
+    End If
+
+
 
     If MouseX > 113 And MouseX < 310 And MouseY > 49 And MouseY < 67 Then
         Call Audio.PlayWave(SND_CLICKNEW)
@@ -2858,6 +2877,8 @@ Private Sub pRender_Click()
         Exit Sub
 
     End If
+
+
     If MouseX > 113 And MouseX < 310 And MouseY > 19 And MouseY < 36 Then
         Call Audio.PlayWave(SND_CLICKNEW)
         If Vidarender = True Then
@@ -2872,10 +2893,10 @@ Private Sub pRender_Click()
     If MouseX > 633 And MouseX < 658 And MouseY > 6 And MouseY < 27 Then    'Ranking
         Call ImgLanzar_Click(4)
         Call Audio.PlayWave(SND_CLICKNEW)
-           
-     
+
+
         Exit Sub
-        
+
     End If
 
 

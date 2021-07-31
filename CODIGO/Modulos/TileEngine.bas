@@ -2257,7 +2257,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
     'vida abajo del pj
     If Vidarender = True Then
         Dim CantVidax As Integer
-     
+
         CantVidax = (((UserMinHP / 33) / (UserMaxHP / 33)) * 33)
 
         Call Engine_Render_Rectangle(496, 375, 16, CantVidax, 0, 0, 16, CantVidax, , , 0, 14810)
@@ -3066,6 +3066,14 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Call Engine_Render_Rectangle(RecuadroX, RecuadroY, 23, 21, 0, 0, 23, 21, , , 0, 14808)
         End If
 
+       ' D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+       ' D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+
+
+        Call Engine_Render_Rectangle(950, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroResu)
+        Call Engine_Render_Rectangle(980, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroConIma)
+       ' D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        'D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
 
     #Else
 

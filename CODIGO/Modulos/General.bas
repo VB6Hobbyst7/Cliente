@@ -815,7 +815,7 @@ Sub SwitchMap(ByVal Map As Integer)
     
     CargarMap (Map)
   'Call Effect_RedFountain_Begin(Engine_PixelPosX(302), Engine_PixelPosY(859), 1, 1000)
-    Call General_Particle_Create(106, 809.5, 791)
+    Call General_Particle_Create(106, 741, 802)
     Call Effect_Snow_Begin(13, 50)
 
 End Sub

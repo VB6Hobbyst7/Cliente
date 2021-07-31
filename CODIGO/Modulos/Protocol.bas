@@ -1408,6 +1408,7 @@ Private Sub HandleSafeModeOn()
     Call incomingData.ReadByte
    
     UserSeguro = True
+  SeguroConIma = 14814
     
     frmMain.PicSeg.Picture = LoadPictureEX("barraSeguroOn.jpg")
     
@@ -1428,9 +1429,9 @@ Private Sub HandleSafeModeOff()
     Call incomingData.ReadByte
    
     UserSeguro = False
-    
+   SeguroConIma = 14813
     frmMain.PicSeg.Picture = LoadPictureEX("barraSeguro.jpg")
-    
+   
     Call AddtoRichPicture(MENSAJE_SEGURO_DESACTIVADO, 255, 0, 0, True, False, False)
 
 End Sub
@@ -7607,12 +7608,13 @@ End Sub
 ' @remarks  The data is not actually sent until the buffer is properly flushed.
 
 Public Sub WriteSafeToggle()
-    '***************************************************
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modification: 05/17/06
-    'Writes the "SafeToggle" message to the outgoing data buffer
-    '***************************************************
+'***************************************************
+'Author: Juan Martín Sotuyo Dodero (Maraxus)
+'Last Modification: 05/17/06
+'Writes the "SafeToggle" message to the outgoing data buffer
+'***************************************************
     Call outgoingData.WriteByte(ClientPacketID.SafeToggle)
+  
 
 End Sub
 
@@ -12677,9 +12679,9 @@ Private Sub HandleQuestDetails()
     FrmQuestInfo.ListView1.ListItems.Clear
     
     FrmQuests.Image.BackColor = RGB(11, 11, 11)
-    FrmQuests.Picture1.BackColor = RGB(19, 14, 11)
+    FrmQuests.picture1.BackColor = RGB(19, 14, 11)
     FrmQuests.Image.Refresh
-    FrmQuests.Picture1.Refresh
+    FrmQuests.picture1.Refresh
     FrmQuests.npclbl.Caption = ""
     FrmQuests.objetolbl.Caption = ""
     
