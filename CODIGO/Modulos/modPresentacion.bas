@@ -66,9 +66,9 @@ Public ZoomLevel          As Single
 
 Public Const MaxZoomLevel As Single = 0.183
  
-Public Const ScreenWidth  As Long = 800 'anchonho
+Public Const ScreenWidth  As Long = 1024 'anchonho
 
-Public Const ScreenHeight As Long = 608 'altongo d su render
+Public Const ScreenHeight As Long = 768 'altongo d su render
 
 Public Sub CerrarCrearCuenta()
 
@@ -98,16 +98,16 @@ Public Sub CerrarCrearCuenta()
 
 End Sub
 
-Public Sub MouseAction(x As Single, y As Single, Button As Integer)
+Public Sub MouseAction(X As Single, Y As Single, Button As Integer)
 
     If GTCPres > 7000 Then 'Me aseguro que este todo cargado
 
         'Debug.Print X & "-" & Y
         If MostrarCrearCuenta = True Then
-            If x >= 334 And x <= 703 + 112 And y >= 514 And y <= 730 Then   ' CUADRO CREAR CUENTA
+            If X >= 334 And X <= 703 + 112 And Y >= 514 And Y <= 730 Then   ' CUADRO CREAR CUENTA
 
                 'BOTON SALIR
-                If x >= 426 And x <= 498 And y >= 704 And y <= 734 Then
+                If X >= 426 And X <= 498 And Y >= 704 And Y <= 734 Then
                     If Button = 1 Then
                         Call Audio.PlayWave(SND_CLICKNEW)
                         Call CerrarCrearCuenta
@@ -122,7 +122,7 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
                     End If
            
                     'BOTON CREAR CUENTA
-                ElseIf x >= 530 And x <= 605 And y >= 704 And y <= 734 Then
+                ElseIf X >= 530 And X <= 605 And Y >= 704 And Y <= 734 Then
 
                     If Button = 1 Then
                         If ClickCrearCuenta Then Call CerrarCrearCuenta
@@ -155,8 +155,8 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
 
         ElseIf MostrarEntrar > 0 Then 'Si esta abierto el cuadro entrar
 
-            If x >= 145 + 112 And x <= 660 + 112 And y >= 345 + 168 And y <= 555 + 168 Then ' Cuadro entrar
-                If x >= 500 + 112 And x <= 545 + 112 And y >= 432 + 168 And y <= 484 + 168 Then
+            If X >= 145 + 112 And X <= 660 + 112 And Y >= 345 + 168 And Y <= 555 + 168 Then ' Cuadro entrar
+                If X >= 500 + 112 And X <= 545 + 112 And Y >= 432 + 168 And Y <= 484 + 168 Then
                     If Button = 1 Then
                         ClickAbrirCuenta
                         Call Audio.PlayWave(SND_CLICKNEW)
@@ -171,7 +171,7 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
                     End If
 
                     'RECORDAR BUTTON
-                ElseIf x >= 616 And x <= 646 And y >= 676 And y <= 706 Then
+                ElseIf X >= 616 And X <= 646 And Y >= 676 And Y <= 706 Then
 
                     If Button = 1 Then
                         mOpciones.Recordar = Not mOpciones.Recordar
@@ -208,7 +208,7 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
                 CloseSock
                 AperturaPj = -AperturaPj
                 AperturaTick = (GetTickCount() And &H7FFFFFFF)
-            ElseIf x >= 355 + 112 And x <= 450 + 112 And y >= 130 And y <= 160 Then 'Boton Entrar
+            ElseIf X >= 355 + 112 And X <= 450 + 112 And Y >= 130 And Y <= 160 Then 'Boton Entrar
 
                 If Button = 1 Then
                     MostrarEntrar = GTCPres
@@ -224,7 +224,7 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
 
                 End If
 
-            ElseIf x >= 15 + 112 And x <= 105 + 112 And y >= 50 And y <= 75 Then 'Boton crear
+            ElseIf X >= 15 + 112 And X <= 105 + 112 And Y >= 50 And Y <= 75 Then 'Boton crear
 
                 If Button = 1 Then
                     MostrarEntrar = GTCPres
@@ -241,7 +241,7 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
 
                 End If
 
-            ElseIf x >= 121 + 112 And x <= 229 + 112 And y >= 50 And y <= 75 Then 'Boton recuperar
+            ElseIf X >= 121 + 112 And X <= 229 + 112 And Y >= 50 And Y <= 75 Then 'Boton recuperar
 
                 If Button = 1 Then
                     frmNavegador.TIPO = Recuperar
@@ -257,7 +257,7 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
 
                 End If
 
-            ElseIf x >= 576 + 112 And x <= 668 + 112 And y >= 50 And y <= 75 Then 'Boton borrar
+            ElseIf X >= 576 + 112 And X <= 668 + 112 And Y >= 50 And Y <= 75 Then 'Boton borrar
 
                 If Button = 1 Then
                     frmBorrar.Show vbModeless
@@ -272,7 +272,7 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
 
                 End If
 
-            ElseIf x >= 693 + 112 And x <= 783 + 112 And y >= 50 And y <= 75 Then 'Boton salir
+            ElseIf X >= 693 + 112 And X <= 783 + 112 And Y >= 50 And Y <= 75 Then 'Boton salir
 
                 If Button = 1 Then
                     prgRun = False
@@ -287,7 +287,7 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
 
                 End If
 
-            ElseIf x >= 105 + 112 And x <= 200 + 112 And y >= 130 And y <= 160 Then
+            ElseIf X >= 105 + 112 And X <= 200 + 112 And Y >= 130 And Y <= 160 Then
 
                 If Button = 1 Then
 
@@ -312,7 +312,7 @@ Public Sub MouseAction(x As Single, y As Single, Button As Integer)
                 For I = 1 To CantPjs
                     Angulo = (-40 * CantPjs + I * 80 - 48) / 180 - 1.57
 
-                    If Abs(x - (512 + Cos(Angulo) * 320 + 16)) < 32 And Abs(y - (450 + Sin(Angulo) * 160)) < 54 Then
+                    If Abs(X - (512 + Cos(Angulo) * 320 + 16)) < 32 And Abs(Y - (450 + Sin(Angulo) * 160)) < 54 Then
                         MousePj = I
 
                     End If
@@ -420,7 +420,7 @@ Public Function ClickCrearCuenta() As Boolean
     UserPassword = MD5(frmMain.tPass.Text)
     UserEmail = frmMain.tEmail.Text
     
-    If Right$(frmMain.tUser.Text, 1) = " " Then
+    If right$(frmMain.tUser.Text, 1) = " " Then
         UserAccount = RTrim$(UserAccount)
         MessageBox "Nombre invalido, se han removido los espacios al final del nombre"
 
@@ -499,14 +499,14 @@ Sub RenderConectar()
 
     Static Ang As Single
 
-    Dim Color  As Long
+    Dim color  As Long
 
     GTCPres = Abs((GetTickCount() And &H7FFFFFFF) - GTCInicial)
 
     If GTCPres < 4000 Then
-        Color = D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 0, 220, 15))
-        Call Engine_Render_Rectangle(412, 284, 200, 200, 0, 0, 400, 400, , , 0, 14705, Color, Color, Color, Color)
-        Call Engine_Render_Rectangle(390, 340, 262, 402, 0, 0, 262, 402, , , 0, 14785, Color, Color, Color, Color)
+        color = D3DColorRGBA(255, 255, 255, CalcAlpha(GTCPres, 0, 220, 15))
+        Call Engine_Render_Rectangle(412, 284, 200, 200, 0, 0, 400, 400, , , 0, 14705, color, color, color, color)
+        Call Engine_Render_Rectangle(390, 340, 262, 402, 0, 0, 262, 402, , , 0, 14785, color, color, color, color)
 
     End If
 
@@ -526,9 +526,9 @@ Sub RenderConectar()
 
     Dim Separacion As Single
 
-    Dim x          As Single
+    Dim X          As Single
 
-    Dim y          As Single
+    Dim Y          As Single
 
     Static AngSel  As Single
 
@@ -604,11 +604,11 @@ Sub RenderConectar()
                 End If
         
                 If I = AperturaPj Or I = -AperturaPj Then
-                    x = 497 + Cos(Angulo) * (497 - AperturaX / 2)
-                    y = 412 + Sin(Angulo) * (147 - AperturaY / 3) - (AperturaY - 110) / 6
+                    X = 497 + Cos(Angulo) * (497 - AperturaX / 2)
+                    Y = 412 + Sin(Angulo) * (147 - AperturaY / 3) - (AperturaY - 110) / 6
                 Else
-                    x = 512 + Cos(Angulo) * AperturaX * 1.5
-                    y = 450 + Sin(Angulo) * AperturaY * 1.5
+                    X = 512 + Cos(Angulo) * AperturaX * 1.5
+                    Y = 450 + Sin(Angulo) * AperturaY * 1.5
 
                 End If
         
@@ -617,12 +617,12 @@ Sub RenderConectar()
 
                 End If
         
-                Call CharRender(IntroChars(I), -1, x, y)
+                Call CharRender(IntroChars(I), -1, X, Y)
                 a = a + 1
         
                 If (AperturaPj <= 0 And MousePj = I) Or AperturaPj = I Then
-                    rPosX = x
-                    rPosY = y
+                    rPosX = X
+                    rPosY = Y
 
                 End If
         
@@ -673,12 +673,12 @@ Sub RenderConectar()
                 End If
               
                 If Conectar Then
-                    Color = D3DColorRGBA(122, 122, 122, 122)
+                    color = D3DColorRGBA(122, 122, 122, 122)
 
                     If IntroChars(MousePj).Clase > 0 Then
-                        Call RenderTextCentered(rPosX + 20, rPosY + 65, ListaClases(IntroChars(MousePj).Clase) & " (" & IntroChars(MousePj).Elv & ")", Color)
+                        Call RenderTextCentered(rPosX + 20, rPosY + 65, ListaClases(IntroChars(MousePj).Clase) & " (" & IntroChars(MousePj).Elv & ")", color)
                             
-                        Color = D3DColorRGBA(70, 70, 0, 100) 'Color para el GLD
+                        color = D3DColorRGBA(70, 70, 0, 100) 'Color para el GLD
                             
                         Dim strOro As String
 
@@ -689,11 +689,11 @@ Sub RenderConectar()
 
                         End If
                             
-                        Call RenderTextCentered(rPosX + 20, rPosY + 80, "$" & strOro, Color)
+                        Call RenderTextCentered(rPosX + 20, rPosY + 80, "$" & strOro, color)
                             
                         If IntroChars(MousePj).logged Then
-                            Color = D3DColorRGBA(10, 200, 10, 200)
-                            Call RenderTextCentered(rPosX + 20, rPosY + 105, "(Online)", Color)
+                            color = D3DColorRGBA(10, 200, 10, 200)
+                            Call RenderTextCentered(rPosX + 20, rPosY + 105, "(Online)", color)
 
                         End If
 
@@ -733,15 +733,15 @@ Sub RenderConectar()
                         frmMain.tRePass.Visible = True
                         frmMain.tUser.SetFocus
                     
-                        frmMain.tUser.Top = 603 - 13 - 8
-                        frmMain.tEmail.Top = 626 - 10 - 8
-                        frmMain.tPass.Top = 648 - 5 - 8
-                        frmMain.tRePass.Top = 665 + 2 - 8
+                        frmMain.tUser.top = 603 - 13 - 8
+                        frmMain.tEmail.top = 626 - 10 - 8
+                        frmMain.tPass.top = 648 - 5 - 8
+                        frmMain.tRePass.top = 665 + 2 - 8
                     
-                        frmMain.tPass.Left = 446
-                        frmMain.tRePass.Left = 446
-                        frmMain.tUser.Left = 446
-                        frmMain.tEmail.Left = 446
+                        frmMain.tPass.left = 446
+                        frmMain.tRePass.left = 446
+                        frmMain.tUser.left = 446
+                        frmMain.tEmail.left = 446
                     
                         frmMain.tUser.Width = 153
                         frmMain.tEmail.Width = 153
@@ -773,10 +773,10 @@ Sub RenderConectar()
                 
                     If frmMain.tUser.Visible = False Then
                     
-                        frmMain.tUser.Top = 612 + 5
-                        frmMain.tPass.Top = 637 + 5
-                        frmMain.tPass.Left = 428
-                        frmMain.tUser.Left = 428
+                        frmMain.tUser.top = 612 + 5
+                        frmMain.tPass.top = 637 + 5
+                        frmMain.tPass.left = 428
+                        frmMain.tUser.left = 428
                     
                         frmMain.tUser.Width = 180
                         frmMain.tPass.Width = 180

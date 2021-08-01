@@ -2649,10 +2649,10 @@ Sub RenderScreen(ByVal TileX As Integer, _
                 ' ... / 1024 is to factor in the buffer size
                 BlurTA(0).tu = ZoomLevel + RadioMareoMuerto / 2048 * Sin(AngMareoMuerto) + RadioMareoMuerto / 2048
                 BlurTA(0).tv = ZoomLevel + RadioMareoMuerto / 2048 * Cos(AngMareoMuerto) + RadioMareoMuerto / 2048
-                BlurTA(1).tu = ((ScreenWidth + 1 + Cos(AngMareoMuerto) * RadioMareoMuerto / 2 - RadioMareoMuerto / 2) / 800) - ZoomLevel
+                BlurTA(1).tu = ((ScreenWidth + 1 + Cos(AngMareoMuerto) * RadioMareoMuerto / 2 - RadioMareoMuerto / 2) / 1024) - ZoomLevel
                 BlurTA(1).tv = ZoomLevel + RadioMareoMuerto / 2048 * Sin(AngMareoMuerto) + RadioMareoMuerto / 2048
                 BlurTA(2).tu = ZoomLevel + RadioMareoMuerto / 2048 * Cos(AngMareoMuerto) + RadioMareoMuerto / 2048
-                BlurTA(2).tv = ((ScreenHeight + 1 + Sin(AngMareoMuerto) * RadioMareoMuerto / 2 - RadioMareoMuerto / 2) / 608) - ZoomLevel
+                BlurTA(2).tv = ((ScreenHeight + 1 + Sin(AngMareoMuerto) * RadioMareoMuerto / 2 - RadioMareoMuerto / 2) / 768) - ZoomLevel
                 BlurTA(3).tu = BlurTA(1).tu
                 BlurTA(3).tv = BlurTA(2).tv
 

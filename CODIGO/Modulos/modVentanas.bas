@@ -14,7 +14,7 @@ Private Declare Function SetWindowLong _
 
 Private Declare Function SetLayeredWindowAttributes _
                 Lib "user32" (ByVal hwnd As Long, _
-                              ByVal Color As Long, _
+                              ByVal color As Long, _
                               ByVal bAlpha As Byte, _
                               ByVal Alpha As Long) As Boolean
 
@@ -97,7 +97,7 @@ Public Sub MessageBox(ByVal Message As String, _
                       Optional ByVal Buttons As VbMsgBoxStyle = vbOKOnly, _
                       Optional ByVal Title As String = "")
     frmMensaje.msg.Caption = Message
-    frmMensaje.Show
+    frmMensaje.Show 1
 
 End Sub
 

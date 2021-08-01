@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{BF3128D8-55B8-11D4-8ED4-00E07D815373}#1.0#0"; "MBPrgBar.ocx"
 Begin VB.Form frmMain2 
    Appearance      =   0  'Flat
@@ -682,12 +682,12 @@ Begin VB.Form frmMain2
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   1348
-         Left            =   2070
+         Left            =   2040
          ScaleHeight     =   90
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   788
          TabIndex        =   31
-         Top             =   1650
+         Top             =   3120
          Visible         =   0   'False
          Width           =   11820
          Begin VB.Timer tMouse 
@@ -1643,14 +1643,15 @@ Private Sub btnInventario_Click()
 End Sub
 
 Private Sub cmdEfecto_Click()
-    Hora = Hora + 1
-    SetDayLight
+    'Hora = Hora + 1
+    'SetDayLight
     'AlphaSalir = 0
-    'AlphaBlood = 255
-    'TextKillsType = RandomNumber(2, 9)
+   AlphaBloodUserDie = 255
+    AlphaBlood = 255
+   ' TextKillsType = RandomNumber(2, 9)
     'AlphaTextKills = 255
     'Call Audio.PlayWave(258 + TextKillsType)
-
+'AlphaBlood
     'AlphaCeguera = 255
 End Sub
 
@@ -2978,7 +2979,7 @@ Private Sub pRender_Click()
 
     If MouseX > 854 And MouseX < 878 And MouseY > 5 And MouseY < 25 Then
         CTextos = CTextos + 1
-
+        Call Audio.PlayWave(SND_CLICK)
         If CTextos = 1 Then
             sintextos = False
 
@@ -3095,7 +3096,7 @@ Private Sub pRender_Click()
     If ContarClip = 1 Then
 
         If MouseX > 977 And MouseX < 989 And MouseY > 230 And MouseY < 242 Then
-
+            Call Audio.PlayWave(SND_CLICK)
 
             If picInv.left = 978 Then
 
@@ -3118,7 +3119,7 @@ Private Sub pRender_Click()
 
         If MouseX > 993 And MouseX < 1007 And MouseY > 228 And MouseY < 243 Then
 
-
+            Call Audio.PlayWave(SND_CLICK)
 
             If picInv.left = 882 Then
 
@@ -3144,7 +3145,7 @@ Private Sub pRender_Click()
     If ContarClip = 1 Then
 
         If MouseX > 977 And MouseX < 989 And MouseY > 568 And MouseY < 581 Then
-
+            Call Audio.PlayWave(SND_CLICK)
 
             If PicSpells.left = 978 Then
 
@@ -3167,7 +3168,7 @@ Private Sub pRender_Click()
 
         If MouseX > 993 And MouseX < 1007 And MouseY > 567 And MouseY < 579 Then
 
-
+            Call Audio.PlayWave(SND_CLICK)
 
             If PicSpells.left = 882 Then
 
