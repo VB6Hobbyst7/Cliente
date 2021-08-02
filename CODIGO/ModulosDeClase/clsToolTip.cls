@@ -12,9 +12,9 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 
-Private x       As Integer
+Private X       As Integer
 
-Private y       As Integer
+Private Y       As Integer
 
 Private OffX    As Single
 
@@ -31,6 +31,7 @@ Public Sub Render(TileX As Integer, _
                   ScreenOffX As Single, _
                   ScreenOffY As Single)
 
+ On Error GoTo err:
     OffY = OffY - timerElapsedTime * 0.05
     Alpha = Alpha - timerElapsedTime * 0.2 '0.3
 
@@ -39,11 +40,11 @@ Public Sub Render(TileX As Integer, _
 
     End If
 
-    If x > 0 And y > 0 Then
-        Call RenderTextCentered((x - TileX + 12) * 32 + ScreenOffX + OffX - 16, (y - TileY + 8) * 32 + ScreenOffY + OffY + 16, Mensaje, D3DColorRGBA(R, G, b, Alpha))
+    If X > 0 And Y > 0 Then
+        Call RenderTextCentered((X - TileX + 12) * 32 + ScreenOffX + OffX - 16, (Y - TileY + 8) * 32 + ScreenOffY + OffY + 16, Mensaje, D3DColorRGBA(R, G, b, Alpha))
 
     End If
-
+err:
 End Sub
 
 Public Sub Init(ByVal mX As Integer, _
@@ -52,8 +53,8 @@ Public Sub Init(ByVal mX As Integer, _
                 ByVal mR As Byte, _
                 ByVal mG As Byte, _
                 ByVal mB As Byte)
-    x = mX
-    y = mY
+    X = mX
+    Y = mY
     Mensaje = mMensaje
     R = mR
     G = mG

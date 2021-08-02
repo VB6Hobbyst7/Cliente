@@ -3039,7 +3039,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If MostrarMenuInventario = True Then
             'Call Engine_Render_Rectangle(927, 209, 75, 36, 0, 0, 75, 36, , , 0, 14957) ' Helios menu elegir inventario hechizos
             Call Engine_Render_Rectangle(963, 209, 52, 408, 0, 0, 52, 408, , , 0, 14959)
-
+            If RecuadroInv = True Then
+                Call Engine_Render_Rectangle(RecuadroX, RecuadroY, 16, 14, 0, 0, 16, 14, , , 0, 14815)
+            End If
         End If
 
         'Call Engine_Render_Rectangle(262, 690, 50, 39, 0, 0, 50, 39, , , 0, 14942) ' engranaje
@@ -3072,7 +3074,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If Resolucion = True Then
             Call Engine_Render_Rectangle(950, 725, 27, 28, 0, 0, 27, 28, , , 0, SeguroResu)
             Call Engine_Render_Rectangle(980, 725, 27, 28, 0, 0, 27, 28, , , 0, SeguroConIma)
-            
+
         Else
             Call Engine_Render_Rectangle(950, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroResu)
             Call Engine_Render_Rectangle(980, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroConIma)
@@ -3421,7 +3423,7 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 frmMain.BarraHechiz.Visible = False
                 frmMain.invHechisos.Visible = False
                 frmMain.cmdinfo.Visible = False
-                frmMain.picture1.Visible = False
+                frmMain.Picture1.Visible = False
                 'frmMain.Menu.Visible = False
                 'Helios Barras
                 frmMain.bar_salud(0).Visible = False

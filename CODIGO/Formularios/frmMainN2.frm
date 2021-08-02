@@ -3420,6 +3420,47 @@ Private Sub pRender_MouseMove(Button As Integer, _
     MouseX = X
     MouseY = Y
 
+    'Recuerdo Flechas inventario
+    If MouseX > 977 And MouseX < 989 And MouseY > 230 And MouseY < 242 Then
+        If MostrarMenuInventario = True Then
+            RecuadroInv = True
+            RecuadroX = 975
+            RecuadroY = 230
+            Exit Sub
+        End If
+    End If
+
+    If MouseX > 993 And MouseX < 1007 And MouseY > 228 And MouseY < 243 Then
+        If MostrarMenuInventario = True Then
+            RecuadroInv = True
+            RecuadroX = 993
+            RecuadroY = 230
+
+            Exit Sub
+        End If
+    End If
+
+
+
+    If MouseX > 977 And MouseX < 989 And MouseY > 568 And MouseY < 581 Then
+        If MostrarMenuInventario = True Then
+            RecuadroInv = True
+            RecuadroX = 975
+            RecuadroY = 567
+            Exit Sub
+        End If
+    End If
+
+    If MouseX > 993 And MouseX < 1007 And MouseY > 567 And MouseY < 579 Then
+        If MostrarMenuInventario = True Then
+            RecuadroInv = True
+            RecuadroX = 993
+            RecuadroY = 567
+            Exit Sub
+        End If
+    End If
+
+    'Recuadro flechas inventario
 
 
 
@@ -3807,7 +3848,7 @@ Private Sub pRender_MouseMove(Button As Integer, _
     TT2.Destroy
     RecuadroON = False
     RecuadroSON = False
-
+    RecuadroInv = False
     'Trim to fit screen
     If MouseX < 0 Then
         MouseX = 0

@@ -58,6 +58,7 @@ Public RecuadroX As Single
 Public RecuadroY As Single
 Public RecuadroON As Boolean
 Public RecuadroSON As Boolean
+Public RecuadroInv As Boolean
 Public Vidarender As Boolean
 Public Manarender As Boolean
 Public alaPath As String
