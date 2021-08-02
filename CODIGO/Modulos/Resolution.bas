@@ -129,6 +129,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
 
         ' Si no es igual, pregunto si quiere cambiarla.
         If MsgBox("¿Desea jugar en pantalla completa?", vbYesNo, "AoYind 3") = vbYes Then
+        Resolucion = True
             
             ' Maximizo la vantana
             frmMain.WindowState = vbMaximized
@@ -151,7 +152,7 @@ Public Sub SetResolution(ByRef newWidth As Integer, ByRef newHeight As Integer)
             ResolucionCambiada = True
 
         Else
-            
+            Resolucion = False
             ' Maximizo la vantana
             frmMain.WindowState = vbNormal
                         

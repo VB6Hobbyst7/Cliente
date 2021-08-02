@@ -1229,48 +1229,51 @@ Attribute VB_Exposed = False
 Option Explicit
 
 
+Const WM_NCLBUTTONDOWN = &HA1
+Const HTCAPTION = 2
+Private Declare Function ReleaseCapture Lib "user32" () As Long
+Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 
-
-Dim s_Index     As Integer  '< Número de slot.
+Dim s_Index As Integer    '< Número de slot.
 Dim PicMoveX As Single
 Dim PicMoveY As Single
 
-Public tX                As Integer
+Public tX As Integer
 
-Public tY                As Integer
+Public tY As Integer
 
-Public MouseX            As Integer
+Public MouseX As Integer
 
-Public MouseY            As Integer
+Public MouseY As Integer
 
-Public MouseBoton        As Long
+Public MouseBoton As Long
 
-Public MouseShift        As Long
+Public MouseShift As Long
 
-Private clicX            As Long
+Private clicX As Long
 
-Private clicY            As Long
+Private clicY As Long
 
-Public SinOrtografia     As Boolean
+Public SinOrtografia As Boolean
 
 'Dim gDSB As DirectSoundBuffer
 'Dim gD As DSBUFFERDESC
 'Dim gW As WAVEFORMATEX
-Dim gFileName            As String
+Dim gFileName As String
 
 'Dim dsE As DirectSoundEnum
 'Dim Pos(0) As DSBPOSITIONNOTIFY
-Public IsPlaying         As PlayLoop
+Public IsPlaying As PlayLoop
 
-Dim PuedeMacrear         As Boolean
+Dim PuedeMacrear As Boolean
 
-Dim OldYConsola          As Integer
+Dim OldYConsola As Integer
 
-Public hlst              As clsGraphicalList
+Public hlst As clsGraphicalList
 
-Dim InvX                 As Integer
+Dim InvX As Integer
 
-Dim InvY                 As Integer
+Dim InvY As Integer
 
 Public WithEvents Client As CSocketMaster
 Attribute Client.VB_VarHelpID = -1
@@ -1637,7 +1640,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    picture1.Visible = True
+    Picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -2166,7 +2169,7 @@ Private Sub Lblmagia_Click()
         'picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        picture1.Visible = False
+        Picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2178,7 +2181,7 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         'picHechiz.Visible = True
-        picture1.Visible = True
+        Picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         picInv.Visible = False
@@ -2841,6 +2844,15 @@ Private Sub pRender_Click()
     If Conectar Then Exit Sub
     If Cartel Then Cartel = False
 
+
+
+    If MouseX > 551 And MouseX < 622 And MouseY > 3 And MouseY < 33 Then    'Online
+
+        Call Audio.PlayWave(SND_CLICK)
+        Call WriteOnline
+        Exit Sub
+    End If
+
     If MouseX > 952 And MouseX < 976 And MouseY > 737 And MouseY < 765 Then    'Seguro Resu
 
         Call Audio.PlayWave(SND_CLICK)
@@ -3380,10 +3392,23 @@ End Sub
 
 Private Sub pRender_MouseDown(Button As Integer, _
                               Shift As Integer, _
-                              X As Single, _
-                              Y As Single)
+                            X As Single, _
+                            Y As Single)
+
+    If MouseX > 292 And MouseX < 543 And MouseY > 0 And MouseY < 12 Then    'mover pantalla
+        If Resolucion = False Then
+            If Not Conectar Then
+                Call ReleaseCapture
+                Call SendMessage(Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&)
+            End If
+        End If
+    End If
+
+
     MouseBoton = Button
     MouseShift = Shift
+
+
 
 End Sub
 
@@ -3394,6 +3419,45 @@ Private Sub pRender_MouseMove(Button As Integer, _
     Dim f As New StdFont
     MouseX = X
     MouseY = Y
+
+
+
+
+    If MouseX > 292 And MouseX < 543 And MouseY > 0 And MouseY < 12 Then    'mover pantalla
+        If Resolucion = False Then
+            If Not Conectar Then
+
+                contarr = contarr + 1
+                If contarr = 1 Then
+                    TT2.Style = TTBalloon
+                    TT2.Icon = TTIconInfo
+                    TT2.Title = "Mover Pantalla"
+                    TT2.TipText = "Si estas en modo Ventana y mantienes apretado el Click isquierdo del Mouse se movera la pantalla"
+                    TT2.PopupOnDemand = False
+                    TT2.ForeColor = vbWhite
+                    TT2.BackColor = RGB(13, 13, 13)
+
+
+                    f.Name = "Augusta"
+                    f.Size = 12
+                    f.Underline = False
+                    TT2.TipFont = f
+
+
+                    TT2.CreateToolTip pRender.hwnd
+                    TT2.Show 827, 0, Me.pRender.hwnd
+                End If
+            End If
+        End If
+        Exit Sub
+    End If
+
+
+
+
+
+
+
 
     If MouseX > 828 And MouseX < 850 And MouseY > 5 And MouseY < 25 Then    'inventario
         RecuadroX = 827
@@ -3701,10 +3765,10 @@ Private Sub pRender_MouseMove(Button As Integer, _
         End If
         Exit Sub
     End If
-    
-    
+
+
     If MouseX > 52 And MouseX < 83 And MouseY > 60 And MouseY < 75 Then    'exp pasar lvl
-        
+
         If Not Conectar Then
             If MmenuBarras Then
                 contarr = contarr + 1

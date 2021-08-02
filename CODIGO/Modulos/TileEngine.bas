@@ -2914,8 +2914,11 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
         If FPSFLAG Then Call DrawFont("FPS: ", 484, 34, D3DColorRGBA(240, 34, 37, 200))
         If FPSFLAG Then Call DrawFont("        " & FPS, 484, 34, D3DColorRGBA(101, 209, 238, 160))
-
-        Call Engine_Render_Rectangle(1, 1, 1024, 782, 0, 0, 1024, 782, , , 0, 14941)
+        If Resolucion = True Then
+            Call Engine_Render_Rectangle(0, 0, 1024, 768, 0, 0, 1024, 782, , , 0, 14941)
+        Else
+            Call Engine_Render_Rectangle(1, 1, 1024, 782, 0, 0, 1024, 782, , , 0, 14941)
+        End If
 
         If MmenuBarras = True Then
             'Call Engine_Render_Rectangle(13, 0, 250, 250, 0, 0, 250, 250, , , 0, 14936) ' vida Helios
@@ -3066,15 +3069,14 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Call Engine_Render_Rectangle(RecuadroX, RecuadroY, 23, 21, 0, 0, 23, 21, , , 0, 14808)
         End If
 
-       ' D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
-       ' D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
-
-
-        Call Engine_Render_Rectangle(950, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroResu)
-        Call Engine_Render_Rectangle(980, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroConIma)
-       ' D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-        'D3DDevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-
+        If Resolucion = True Then
+            Call Engine_Render_Rectangle(950, 725, 27, 28, 0, 0, 27, 28, , , 0, SeguroResu)
+            Call Engine_Render_Rectangle(980, 725, 27, 28, 0, 0, 27, 28, , , 0, SeguroConIma)
+            
+        Else
+            Call Engine_Render_Rectangle(950, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroResu)
+            Call Engine_Render_Rectangle(980, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroConIma)
+        End If
     #Else
 
         If FPSFLAG Then Call DrawFont("     " & FPS, 484, 34, D3DColorRGBA(101, 209, 238, 160))
