@@ -98,9 +98,9 @@ Public Sub DoPasosFx(ByVal CharIndex As Integer)
 
     Dim TerrenoDePaso As TipoPaso
 
-    If UserNavegando Or HayAgua(charlist(CharIndex).Pos.x, charlist(CharIndex).Pos.y) Then
+    If UserNavegando Or HayAgua(charlist(CharIndex).Pos.X, charlist(CharIndex).Pos.Y) Then
         If RandomNumber(1, 5) = 1 Then
-            Call Audio.PlayWave(SND_NAVEGANDO, charlist(CharIndex).Pos.x, charlist(CharIndex).Pos.y)
+            Call Audio.PlayWave(SND_NAVEGANDO, charlist(CharIndex).Pos.X, charlist(CharIndex).Pos.Y)
 
         End If
 
@@ -112,10 +112,10 @@ Public Sub DoPasosFx(ByVal CharIndex As Integer)
 
             If Not .muerto And EstaPCarea(CharIndex) And (.priv = 0 Or .priv > 5 Or CharIndex = UserCharIndex) Then
             
-                FileNum = MapData(.Pos.x, .Pos.y).Graphic(1).GrhIndex
+                FileNum = MapData(.Pos.X, .Pos.Y).Graphic(1).GrhIndex
 
                 If FileNum > 0 Then FileNum = GrhData(FileNum).FileNum
-                FileNum2 = MapData(.Pos.x, .Pos.y).Graphic(2).GrhIndex
+                FileNum2 = MapData(.Pos.X, .Pos.Y).Graphic(2).GrhIndex
 
                 If FileNum2 > 0 Then FileNum2 = GrhData(FileNum2).FileNum
                     
@@ -124,9 +124,9 @@ Public Sub DoPasosFx(ByVal CharIndex As Integer)
                 .pie = Not .pie
                 
                 If .pie Then
-                    Call Audio.PlayWave(Pasos(TerrenoDePaso).Wav(1), .Pos.x, .Pos.y)
+                    Call Audio.PlayWave(Pasos(TerrenoDePaso).Wav(1), .Pos.X, .Pos.Y)
                 Else
-                    Call Audio.PlayWave(Pasos(TerrenoDePaso).Wav(2), .Pos.x, .Pos.y)
+                    Call Audio.PlayWave(Pasos(TerrenoDePaso).Wav(2), .Pos.X, .Pos.Y)
 
                 End If
 
@@ -260,11 +260,19 @@ Public Sub SetDayLight(Optional ByVal WithSound As Boolean = False)
 
     End If
 
-    Exit Sub
+    'Exit Sub
+If GoingHome = 1 Then
+IluRGB.R = 75
+    IluRGB.G = 75
+    IluRGB.b = 75
+Else
+If Hora >= 25 Then
+Hora = 1
+End If
     IluRGB.R = luz_dia(Hora).R
     IluRGB.G = luz_dia(Hora).G
     IluRGB.b = luz_dia(Hora).b
-
+End If
     Iluminacion = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)
     ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
 
@@ -276,8 +284,8 @@ Public Sub DoRelampago()
 
     If Zonas(ZonaActual).Terreno = eTerreno.Dungeon Then Exit Sub
 
-    randomRelampagoX = RandomNumber(charlist(UserCharIndex).Pos.x - 10, charlist(UserCharIndex).Pos.x + 10)
-    randomRelampagoY = RandomNumber(charlist(UserCharIndex).Pos.y - 10, charlist(UserCharIndex).Pos.y + 10)
+    randomRelampagoX = RandomNumber(charlist(UserCharIndex).Pos.X - 10, charlist(UserCharIndex).Pos.X + 10)
+    randomRelampagoY = RandomNumber(charlist(UserCharIndex).Pos.Y - 10, charlist(UserCharIndex).Pos.Y + 10)
     
     Call Audio.PlayWave(105, randomRelampagoX, randomRelampagoY)
 

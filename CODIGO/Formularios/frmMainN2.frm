@@ -1640,17 +1640,17 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    Picture1.Visible = True
+    picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
 
 Private Sub cmdEfecto_Click()
-    'Hora = Hora + 1
-    'SetDayLight
+    Hora = Hora + 1
+    SetDayLight
     'AlphaSalir = 0
-   AlphaBloodUserDie = 255
-    AlphaBlood = 255
+  ' AlphaBloodUserDie = 255
+    'AlphaBlood = 255
    ' TextKillsType = RandomNumber(2, 9)
     'AlphaTextKills = 255
     'Call Audio.PlayWave(258 + TextKillsType)
@@ -2169,7 +2169,7 @@ Private Sub Lblmagia_Click()
         'picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        Picture1.Visible = False
+        picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2181,7 +2181,7 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         'picHechiz.Visible = True
-        Picture1.Visible = True
+        picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         picInv.Visible = False
@@ -4009,7 +4009,7 @@ Public Sub ReDrawConsola()
         If I >= 0 And I <= LineasConsola Then
             pConsola.CurrentX = 0
             pConsola.CurrentY = (I - OffSetConsola - 1) * 14
-            pConsola.ForeColor = Consola(I).color
+            pConsola.ForeColor = Consola(I).Color
             pConsola.FontBold = CBool(Consola(I).bold)
             pConsola.FontItalic = CBool(Consola(I).italic)
             pConsola.Print Consola(I).Texto

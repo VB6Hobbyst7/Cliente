@@ -13,8 +13,8 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Private Type Particle
     friction As Single
-    x As Single
-    y As Single
+    X As Single
+    Y As Single
     vector_x As Single
     vector_y As Single
     angle As Single
@@ -256,8 +256,8 @@ Private Function Particle_Render(ByRef temp_particle As Particle, ByVal screen_x
     If no_move = False Then
                 If temp_particle.alive_counter = 0 Then
                     InitGrh temp_particle.Grh, grh_index, alpha_blend
-                    temp_particle.x = RandomNumber(x1, x2)
-                    temp_particle.y = RandomNumber(y1, y2)
+                    temp_particle.X = RandomNumber(x1, x2)
+                    temp_particle.Y = RandomNumber(y1, y2)
                     temp_particle.vector_x = RandomNumber(vecx1, vecx2)
                     temp_particle.vector_y = RandomNumber(vecy1, vecy2)
                     temp_particle.angle = angle
@@ -267,7 +267,7 @@ Private Function Particle_Render(ByRef temp_particle As Particle, ByVal screen_x
  
                     If gravity = True Then
                         temp_particle.vector_y = temp_particle.vector_y + grav_strength
-                        If temp_particle.y > 0 Then
+                        If temp_particle.Y > 0 Then
                             temp_particle.vector_y = bounce_strength
                         End If
                     End If
@@ -281,8 +281,8 @@ Private Function Particle_Render(ByRef temp_particle As Particle, ByVal screen_x
                     If YMove = True Then temp_particle.vector_y = RandomNumber(move_y1, move_y2)
                 End If
  
-        temp_particle.x = temp_particle.x + (temp_particle.vector_x \ temp_particle.friction)
-        temp_particle.y = temp_particle.y + (temp_particle.vector_y \ temp_particle.friction)
+        temp_particle.X = temp_particle.X + (temp_particle.vector_x \ temp_particle.friction)
+        temp_particle.Y = temp_particle.Y + (temp_particle.vector_y \ temp_particle.friction)
  
          temp_particle.alive_counter = temp_particle.alive_counter - 1
     End If
@@ -290,15 +290,15 @@ Private Function Particle_Render(ByRef temp_particle As Particle, ByVal screen_x
     If grh_resize = True Then
  
         If temp_particle.Grh.GrhIndex Then
-             Grh_Render_Advance temp_particle.Grh, temp_particle.x + screen_x, temp_particle.y + screen_y, grh_resizex, grh_resizey, rgb_list(), True, True, alpha_blend
+             Grh_Render_Advance temp_particle.Grh, temp_particle.X + screen_x, temp_particle.Y + screen_y, grh_resizex, grh_resizey, rgb_list(), True, True, alpha_blend
             Exit Function
         End If
     End If
  
     If temp_particle.Grh.GrhIndex Then
         Grh_Render temp_particle.Grh, _
-                temp_particle.x + screen_x, _
-                temp_particle.y + screen_y, _
+                temp_particle.X + screen_x, _
+                temp_particle.Y + screen_y, _
                 rgb_list(), 1, False, True _
                 , True
     End If
@@ -310,7 +310,7 @@ Public Function Particle_Group_Render(ByVal particle_group_index As Long, ByVal 
     Dim temp_rgb(0 To 3) As Long
     Dim no_move As Boolean
  
-    If UserMinHP = 0 Then
+    If UserMinHP = 0 And GoingHome <> 1 Then
         temp_rgb(0) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
         temp_rgb(1) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
         temp_rgb(2) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
@@ -321,6 +321,10 @@ Public Function Particle_Group_Render(ByVal particle_group_index As Long, ByVal 
         temp_rgb(2) = particle_group_list(particle_group_index).rgb_list(2)
         temp_rgb(3) = particle_group_list(particle_group_index).rgb_list(3)
     End If
+    
+    
+   
+    
        
     If particle_group_list(particle_group_index).alive_counter Then
  
@@ -661,10 +665,10 @@ Private Sub Device_Box_Textured_Render_Advance(ByVal GrhIndex As Long, ByVal des
     light_value(3) = rgb_list(3)
  
     With src_rect
-        .Bottom = src_y + src_height
-        .Left = src_x
-        .Right = src_x + src_width
-        .Top = src_y
+        .bottom = src_y + src_height
+        .left = src_x
+        .right = src_x + src_width
+        .top = src_y
     End With
  
     Dim texwidth As Long, texheight As Long
@@ -673,10 +677,10 @@ Private Sub Device_Box_Textured_Render_Advance(ByVal GrhIndex As Long, ByVal des
     texheight = srdesc.Height
  
     With dest_rect
-        .Bottom = dest_y + dest_height
-        .Left = dest_x
-        .Right = dest_x + dest_width
-        .Top = dest_y
+        .bottom = dest_y + dest_height
+        .left = dest_x
+        .right = dest_x + dest_width
+        .top = dest_y
     End With
     
     Geometry_Create_Box temp_verts(), dest_rect, src_rect, light_value(), texwidth, texheight, angle
@@ -725,22 +729,22 @@ End Sub
     
     If angle > 0 Then
         'Center coordinates on screen of the square
-        x_center = dest.Left + (dest.Right - dest.Left) / 2
-        y_center = dest.Top + (dest.Bottom - dest.Top) / 2
+        x_center = dest.left + (dest.right - dest.left) / 2
+        y_center = dest.top + (dest.bottom - dest.top) / 2
         
         'Calculate radius
-        radius = Sqr((dest.Right - x_center) ^ 2 + (dest.Bottom - y_center) ^ 2)
+        radius = Sqr((dest.right - x_center) ^ 2 + (dest.bottom - y_center) ^ 2)
         
         'Calculate left and right points
-        temp = (dest.Right - x_center) / radius
+        temp = (dest.right - x_center) / radius
         right_point = Atn(temp / Sqr(-temp * temp + 1))
         left_point = PI - right_point
     End If
     
     'Calculate screen coordinates of sprite, and only rotate if necessary
     If angle = 0 Then
-        x_Cor = dest.Left
-        y_Cor = dest.Bottom
+        x_Cor = dest.left
+        y_Cor = dest.bottom
     Else
         x_Cor = x_center + Cos(-left_point - angle) * radius
         y_Cor = y_center - Sin(-left_point - angle) * radius
@@ -749,14 +753,14 @@ End Sub
     
     '0 - Bottom left vertex
     If Textures_Width And Textures_Height Then
-        verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), 0, src.Left / Textures_Width, (src.Bottom + 1) / Textures_Height)
+        verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), 0, src.left / Textures_Width, (src.bottom + 1) / Textures_Height)
     Else
         verts(0) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(0), 0, 0, 0)
     End If
     'Calculate screen coordinates of sprite, and only rotate if necessary
     If angle = 0 Then
-        x_Cor = dest.Left
-        y_Cor = dest.Top
+        x_Cor = dest.left
+        y_Cor = dest.top
     Else
         x_Cor = x_center + Cos(left_point - angle) * radius
         y_Cor = y_center - Sin(left_point - angle) * radius
@@ -765,14 +769,14 @@ End Sub
     
     '1 - Top left vertex
     If Textures_Width And Textures_Height Then
-        verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(1), 0, src.Left / Textures_Width, src.Top / Textures_Height)
+        verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(1), 0, src.left / Textures_Width, src.top / Textures_Height)
     Else
         verts(1) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(1), 0, 0, 1)
     End If
     'Calculate screen coordinates of sprite, and only rotate if necessary
     If angle = 0 Then
-        x_Cor = dest.Right
-        y_Cor = dest.Bottom
+        x_Cor = dest.right
+        y_Cor = dest.bottom
     Else
         x_Cor = x_center + Cos(-right_point - angle) * radius
         y_Cor = y_center - Sin(-right_point - angle) * radius
@@ -781,14 +785,14 @@ End Sub
     
     '2 - Bottom right vertex
     If Textures_Width And Textures_Height Then
-        verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), 0, (src.Right + 1) / Textures_Width, (src.Bottom + 1) / Textures_Height)
+        verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), 0, (src.right + 1) / Textures_Width, (src.bottom + 1) / Textures_Height)
     Else
         verts(2) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(2), 0, 1, 0)
     End If
     'Calculate screen coordinates of sprite, and only rotate if necessary
     If angle = 0 Then
-        x_Cor = dest.Right
-        y_Cor = dest.Top
+        x_Cor = dest.right
+        y_Cor = dest.top
     Else
         x_Cor = x_center + Cos(right_point - angle) * radius
         y_Cor = y_center - Sin(right_point - angle) * radius
@@ -797,7 +801,7 @@ End Sub
     
     '3 - Top right vertex
     If Textures_Width And Textures_Height Then
-        verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(3), 0, (src.Right + 1) / Textures_Width, src.Top / Textures_Height)
+        verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(3), 0, (src.right + 1) / Textures_Width, src.top / Textures_Height)
     Else
         verts(3) = Geometry_Create_TLVertex(x_Cor, y_Cor, 0, 1, rgb_list(3), 0, 1, 1)
     End If
@@ -823,10 +827,10 @@ Private Sub Device_Box_Textured_Render(ByVal GrhIndex As Long, ByVal dest_x As I
     light_value(3) = rgb_list(3)
  
     With src_rect
-        .Bottom = src_y + src_height
-        .Left = src_x
-        .Right = src_x + src_width
-        .Top = src_y
+        .bottom = src_y + src_height
+        .left = src_x
+        .right = src_x + src_width
+        .top = src_y
     End With
  
     Dim texwidth As Long, texheight As Long
@@ -835,10 +839,10 @@ Private Sub Device_Box_Textured_Render(ByVal GrhIndex As Long, ByVal dest_x As I
     texheight = srdesc.Height
  
     With dest_rect
-        .Bottom = dest_y + src_height
-        .Left = dest_x
-        .Right = dest_x + src_width
-        .Top = dest_y
+        .bottom = dest_y + src_height
+        .left = dest_x
+        .right = dest_x + src_width
+        .top = dest_y
     End With
     
     Geometry_Create_Box temp_verts(), dest_rect, src_rect, light_value(), texwidth, texheight, angle
@@ -862,18 +866,18 @@ Private Sub Device_Box_Textured_Render(ByVal GrhIndex As Long, ByVal dest_x As I
 End Sub
 
 
-Private Function Geometry_Create_TLVertex(ByVal x As Single, ByVal y As Single, ByVal z As Single, _
-                                            ByVal rhw As Single, ByVal color As Long, ByVal Specular As Long, tu As Single, _
+Private Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, ByVal z As Single, _
+                                            ByVal rhw As Single, ByVal Color As Long, ByVal Specular As Long, tu As Single, _
                                             ByVal tv As Single) As TLVERTEXDos
 '**************************************************************
 'Author: Aaron Perkins
 'Last Modify Date: 10/07/2002
 '**************************************************************
-    Geometry_Create_TLVertex.x = x
-    Geometry_Create_TLVertex.y = y
+    Geometry_Create_TLVertex.X = X
+    Geometry_Create_TLVertex.Y = Y
     Geometry_Create_TLVertex.z = z
     Geometry_Create_TLVertex.rhw = rhw
-    Geometry_Create_TLVertex.color = color
+    Geometry_Create_TLVertex.Color = Color
     Geometry_Create_TLVertex.Specular = Specular
     Geometry_Create_TLVertex.tu = tu
     Geometry_Create_TLVertex.tv = tv

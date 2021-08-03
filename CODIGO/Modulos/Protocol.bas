@@ -1780,6 +1780,14 @@ Private Sub HandleGoHome()
     
     TiempoHome = incomingData.ReadInteger()
     GoingHome = 1
+     
+
+    
+    Call General_Char_Particle_Create(110, UserCharIndex)
+ SetDayLight
+   
+
+
     AngMareoMuerto = 0
     RadioMareoMuerto = 0
 
@@ -1810,8 +1818,11 @@ Private Sub HandleGotHome()
         AddtoRichPicture "¡Tu trance se ha interrumpido!", 30, 205, 35, True, True, False
 
     End If
-
-    GoingHome = 2
+ charlist(UserCharIndex).particle_count = 0
+ Hora = 10
+ GoingHome = 2
+ SetDayLight True
+    
     
 End Sub
 
@@ -13387,7 +13398,7 @@ Private Sub HandleSendAura()
 
         End If
 
-        .aura(parte).color = D3DColorXRGB(.aura(parte).R, .aura(parte).G, .aura(parte).b)
+        .aura(parte).Color = D3DColorXRGB(.aura(parte).R, .aura(parte).G, .aura(parte).b)
 
     End With
  
