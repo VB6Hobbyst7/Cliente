@@ -31,9 +31,11 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
+
 Public Resolucion As Boolean
 Public SeguroResu As Long
 Public SeguroConIma As Long
+Public Consolacom As Long
 Public TT2 As New CBalloonToolTip
 Public contarr As Integer
 Public Type tRanking

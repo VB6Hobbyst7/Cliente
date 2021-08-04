@@ -1518,7 +1518,7 @@ Sub DrawGrhIndexLuz(ByVal GrhIndex As Integer, _
                     ByVal X As Integer, _
                     ByVal Y As Integer, _
                     ByVal Center As Byte, _
-                    ByRef color() As Long)
+                    ByRef Color() As Long)
 
     With GrhData(GrhIndex)
 
@@ -1536,7 +1536,7 @@ Sub DrawGrhIndexLuz(ByVal GrhIndex As Integer, _
 
         End If
         
-        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , , .FileNum, color(0), color(1), color(2), color(3))
+        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , , .FileNum, Color(0), Color(1), Color(2), Color(3))
 
     End With
 
@@ -1546,7 +1546,7 @@ Sub DrawGrhIndex(ByVal GrhIndex As Integer, _
                  ByVal X As Integer, _
                  ByVal Y As Integer, _
                  ByVal Center As Byte, _
-                 ByVal color As Long)
+                 ByVal Color As Long)
 
     With GrhData(GrhIndex)
 
@@ -1564,7 +1564,7 @@ Sub DrawGrhIndex(ByVal GrhIndex As Integer, _
 
         End If
         
-        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , , .FileNum, color, color, color, color)
+        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , , .FileNum, Color, Color, Color, Color)
       
     End With
 
@@ -1575,7 +1575,7 @@ Sub DrawGrhLuz(ByRef Grh As Grh, _
                ByVal Y As Integer, _
                ByVal Center As Byte, _
                ByVal Animate As Single, _
-               ByRef color() As Long)
+               ByRef Color() As Long)
 
     Dim CurrentGrhIndex As Integer
     
@@ -1626,7 +1626,7 @@ Sub DrawGrhLuz(ByRef Grh As Grh, _
                 
             'If COLOR = -1 Then COLOR = Iluminacion
 
-            Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, color(0), color(1), color(2), color(3))
+            Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, Color(0), Color(1), Color(2), Color(3))
 
         End With
 
@@ -1653,7 +1653,7 @@ Sub DrawGrhShadow(ByRef Grh As Grh, _
                   ByVal Center As Byte, _
                   ByVal Animate As Single, _
                   Optional Shadow As Byte = 0, _
-                  Optional color As Long = -1, _
+                  Optional Color As Long = -1, _
                   Optional ShadowAlpha As Single = 255, _
                   Optional Chiquitolin As Boolean = False)
 
@@ -1732,7 +1732,7 @@ Sub DrawGrhShadow(ByRef Grh As Grh, _
 
         End If
       
-        If color = -1 Then color = Iluminacion
+        If Color = -1 Then Color = Iluminacion
 
     End With
 
@@ -1756,7 +1756,7 @@ Sub DrawGrhShadowOff(ByRef Grh As Grh, _
                      ByVal Y As Integer, _
                      ByVal Center As Byte, _
                      ByVal Animate As Single, _
-                     Optional color As Long = -1, _
+                     Optional Color As Long = -1, _
                      Optional Chiquitolin As Boolean = False)
 
     Dim CurrentGrhIndex As Integer
@@ -1782,7 +1782,7 @@ Sub DrawGrhShadowOff(ByRef Grh As Grh, _
 
         End If
                 
-        If color = -1 Then color = Iluminacion
+        If Color = -1 Then Color = Iluminacion
 
         Dim PixelWidth  As Integer
 
@@ -1798,7 +1798,7 @@ Sub DrawGrhShadowOff(ByRef Grh As Grh, _
 
         End If
 
-        Call Engine_Render_Rectangle(X, Y, PixelWidth, PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, color, color, color, color)
+        Call Engine_Render_Rectangle(X, Y, PixelWidth, PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, Color, Color, Color, Color)
 
     End With
 
@@ -1823,7 +1823,7 @@ Sub DrawGrh(ByRef Grh As Grh, _
             ByVal Center As Byte, _
             ByVal Animate As Single, _
             Optional Shadow As Byte = 0, _
-            Optional color As Long = -1, _
+            Optional Color As Long = -1, _
             Optional ShadowAlpha As Single = 255)
 
     Dim CurrentGrhIndex As Integer
@@ -1889,9 +1889,9 @@ Sub DrawGrh(ByRef Grh As Grh, _
 
         End If
 
-        If color = -1 Then color = Iluminacion
+        If Color = -1 Then Color = Iluminacion
 
-        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, color, color, color, color)
+        Call Engine_Render_Rectangle(X, Y, .PixelWidth, .PixelHeight, .sX, .sY, .PixelWidth, .PixelHeight, , , 0, .FileNum, Color, Color, Color, Color)
 
     End With
 
@@ -1940,22 +1940,22 @@ Public Sub RenderNiebla()
 
     Dim T     As Single
 
-    Dim color As Long
+    Dim Color As Long
    
     GTCPres = Abs((GetTickCount() And &H7FFFFFFF) - GTCInicial)
     T = (GTCPres - 4000) / 1000
     Mueve = (T * 20) Mod 512
 
-    color = D3DColorRGBA(Zonas(ZonaActual).NieblaR, Zonas(ZonaActual).NieblaG, Zonas(ZonaActual).NieblaB, nAlpha)
+    Color = D3DColorRGBA(Zonas(ZonaActual).NieblaR, Zonas(ZonaActual).NieblaG, Zonas(ZonaActual).NieblaB, nAlpha)
 
-    Call Engine_Render_D3DXSprite(0, 0, 512 - Mueve, 512, Mueve, 0, color, 14706, 0)
-    Call Engine_Render_D3DXSprite(0, 512, 512 - Mueve, 256, Mueve, 0, color, 14706, 0)
+    Call Engine_Render_D3DXSprite(0, 0, 512 - Mueve, 512, Mueve, 0, Color, 14706, 0)
+    Call Engine_Render_D3DXSprite(0, 512, 512 - Mueve, 256, Mueve, 0, Color, 14706, 0)
 
-    Call Engine_Render_D3DXSprite(512 - Mueve, 0, 512, 512, 0, 0, color, 14706, 0)
-    Call Engine_Render_D3DXSprite(512 - Mueve, 512, 512, 256, 0, 0, color, 14706, 0)
+    Call Engine_Render_D3DXSprite(512 - Mueve, 0, 512, 512, 0, 0, Color, 14706, 0)
+    Call Engine_Render_D3DXSprite(512 - Mueve, 512, 512, 256, 0, 0, Color, 14706, 0)
 
-    Call Engine_Render_D3DXSprite(1024 - Mueve, 0, Mueve, 512, 0, 0, color, 14706, 0)
-    Call Engine_Render_D3DXSprite(1024 - Mueve, 512, Mueve, 256, 0, 0, color, 14706, 0)
+    Call Engine_Render_D3DXSprite(1024 - Mueve, 0, Mueve, 512, 0, 0, Color, 14706, 0)
+    Call Engine_Render_D3DXSprite(1024 - Mueve, 512, Mueve, 256, 0, 0, Color, 14706, 0)
 
 End Sub
 
@@ -2122,7 +2122,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
     Dim I As Integer
 
-    Dim color As Long
+    Dim Color As Long
 
     Dim Eliminados As Integer
 
@@ -2691,21 +2691,21 @@ Sub RenderScreen(ByVal TileX As Integer, _
             If PosMapY > 0 Then PosMapY = 0
             If PosMapY < -2210 Then PosMapY = -2210
 
-            color = D3DColorRGBA(255, 255, 255, 225)
+            Color = D3DColorRGBA(255, 255, 255, 225)
 
             If PosMapX > -1024 Then    'Dibujo primera columna
                 If PosMapY <= 0 And PosMapY > -1024 Then
-                    Call Engine_Render_Rectangle(0, 0, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), -PosMapX, -PosMapY, 600 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), , , , 14763, color, color, color, color)
+                    Call Engine_Render_Rectangle(0, 0, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), -PosMapX, -PosMapY, 600 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), , , , 14763, Color, Color, Color, Color)
 
                 End If
 
                 If PosMapY <= -480 And PosMapY > -2048 Then
-                    Call Engine_Render_Rectangle(0, PosMapY + 1024, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY + 1024 > 0, PosMapY + 1024, 0) + 480, -PosMapX, 0, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY + 1024 > 0, PosMapY + 1024, 0) + 480, , , , 14765, color, color, color, color)
+                    Call Engine_Render_Rectangle(0, PosMapY + 1024, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY + 1024 > 0, PosMapY + 1024, 0) + 480, -PosMapX, 0, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY + 1024 > 0, PosMapY + 1024, 0) + 480, , , , 14765, Color, Color, Color, Color)
 
                 End If
 
                 If PosMapY <= -1504 Then
-                    Call Engine_Render_Rectangle(0, PosMapY + 2048, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY + 2048 > -480, PosMapY + 2048 + 480, 0), -PosMapX, 0, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY + 2048 > -480, PosMapY + 2048 + 480, 0), , , , 14767, color, color, color, color)
+                    Call Engine_Render_Rectangle(0, PosMapY + 2048, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY + 2048 > -480, PosMapY + 2048 + 480, 0), -PosMapX, 0, 800 + IIf(PosMapX < -288, PosMapX + 288, 0), 608 + IIf(PosMapY + 2048 > -480, PosMapY + 2048 + 480, 0), , , , 14767, Color, Color, Color, Color)
 
                 End If
 
@@ -2713,17 +2713,17 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
             If PosMapX < -288 Then    'Dibujo segunda columna
                 If PosMapY <= 0 And PosMapY > -1024 Then
-                    Call Engine_Render_Rectangle(IIf(PosMapX > -1024, 736 + 288 + PosMapX, 0), 0, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), IIf(PosMapX < -1024, -PosMapX - 1024, 0), -PosMapY, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), , , , 14764, color, color, color, color)
+                    Call Engine_Render_Rectangle(IIf(PosMapX > -1024, 736 + 288 + PosMapX, 0), 0, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), IIf(PosMapX < -1024, -PosMapX - 1024, 0), -PosMapY, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY < -480, PosMapY + 480, 0), , , , 14764, Color, Color, Color, Color)
 
                 End If
 
                 If PosMapY <= -480 And PosMapY > -2048 Then
-                    Call Engine_Render_Rectangle(IIf(PosMapX > -1024, 736 + 288 + PosMapX, 0), PosMapY + 1024, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY + 1024 > 0, PosMapY + 1024, 0) + 480, IIf(PosMapX < -1024, -PosMapX - 1024, 0), 0, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY + 1024 > 0, PosMapY + 1024, 0) + 480, , , , 14766, color, color, color, color)
+                    Call Engine_Render_Rectangle(IIf(PosMapX > -1024, 736 + 288 + PosMapX, 0), PosMapY + 1024, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY + 1024 > 0, PosMapY + 1024, 0) + 480, IIf(PosMapX < -1024, -PosMapX - 1024, 0), 0, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY + 1024 > 0, PosMapY + 1024, 0) + 480, , , , 14766, Color, Color, Color, Color)
 
                 End If
 
                 If PosMapY <= -1504 Then
-                    Call Engine_Render_Rectangle(IIf(PosMapX > -1024, 736 + 288 + PosMapX, 0), PosMapY + 2048, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY + 2048 > -480, PosMapY + 2048 + 480, 0), IIf(PosMapX < -1024, -PosMapX - 1024, 0), 0, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY + 2048 > -480, PosMapY + 2048 + 480, 0), , , , 14768, color, color, color, color)
+                    Call Engine_Render_Rectangle(IIf(PosMapX > -1024, 736 + 288 + PosMapX, 0), PosMapY + 2048, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY + 2048 > -480, PosMapY + 2048 + 480, 0), IIf(PosMapX < -1024, -PosMapX - 1024, 0), 0, 800 + IIf(PosMapX < -1024, 0, -1024 - PosMapX), 608 + IIf(PosMapY + 2048 > -480, PosMapY + 2048 + 480, 0), , , , 14768, Color, Color, Color, Color)
 
                 End If
 
@@ -2739,9 +2739,9 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
             'Call Engine_Render_Rectangle(256 + 0, 256 + MapaY, 512, 512, 0, 0, 512, 512, , , , 14404, color, color, color, color)
             'Call Engine_Render_Rectangle(256 + 0, 256 + 512 + MapaY, 512, 186, 0, 0, 512, 186, , , , 14405, color, color, color, color)
-            color = D3DColorRGBA(255, 255, 255, 255)
+            Color = D3DColorRGBA(255, 255, 255, 255)
             'Call Engine_Render_Rectangle(256 + UserPos.x * RelacionMiniMapa - 35 + PosMapX, 256 + UserPos.Y * RelacionMiniMapa - 35 + PosMapY, 5, 5, 0, 0, 5, 5, , , , 1, color, color, color, color)
-            Call Engine_Render_Rectangle(UserPos.X * RelacionMiniMapa - 35 + PosMapX, UserPos.Y * RelacionMiniMapa - 35 + PosMapY, 5, 5, 0, 0, 5, 5, , , , 1, color, color, color, color)
+            Call Engine_Render_Rectangle(UserPos.X * RelacionMiniMapa - 35 + PosMapX, UserPos.Y * RelacionMiniMapa - 35 + PosMapY, 5, 5, 0, 0, 5, 5, , , , 1, Color, Color, Color, Color)
 
             X = Int((frmMain.MouseX - PosMapX + 32) / RelacionMiniMapa)
             Y = Int((frmMain.MouseY - PosMapY + 32) / RelacionMiniMapa)
@@ -2758,11 +2758,11 @@ Sub RenderScreen(ByVal TileX As Integer, _
             End If
 
         ElseIf ZonaActual = 33 Or ZonaActual = 34 Or ZonaActual = 35 Then    'Dungeon Newbie
-            color = D3DColorRGBA(255, 255, 255, 190)
-            Call Engine_Render_Rectangle(60, 3, 512, 512, 0, 0, 512, 512, , , , 14406, color, color, color, color)
+            Color = D3DColorRGBA(255, 255, 255, 190)
+            Call Engine_Render_Rectangle(60, 3, 512, 512, 0, 0, 512, 512, , , , 14406, Color, Color, Color, Color)
 
-            color = D3DColorRGBA(255, 255, 255, 255)
-            Call Engine_Render_Rectangle(60 + (UserPos.X - 571) * 2.21105527638191, 5 + (UserPos.Y - 311) * 2.21105527638191, 5, 5, 0, 0, 5, 5, , , , 1, color, color, color, color)
+            Color = D3DColorRGBA(255, 255, 255, 255)
+            Call Engine_Render_Rectangle(60 + (UserPos.X - 571) * 2.21105527638191, 5 + (UserPos.Y - 311) * 2.21105527638191, 5, 5, 0, 0, 5, 5, , , , 1, Color, Color, Color, Color)
         Else
             'Mensaje al cambiar de zona
             Call D3DX.DrawText(MainFont, D3DColorRGBA(0, 0, 0, 200), Zonas(ZonaActual).nombre, DDRect(0, 10, 736, 200), DT_CENTER)
@@ -2816,8 +2816,8 @@ Sub RenderScreen(ByVal TileX As Integer, _
     End If
 
     If Entrada > 0 Then
-        color = D3DColorRGBA(255, 255, 255, Entrada)
-        Call Engine_Render_Rectangle(0, 0, 544, 416, 0, 0, 512, 416, , , , 14325, color, color, color, color)
+        Color = D3DColorRGBA(255, 255, 255, Entrada)
+        Call Engine_Render_Rectangle(0, 0, 544, 416, 0, 0, 512, 416, , , , 14325, Color, Color, Color, Color)
 
         If zTick2 < (GetTickCount() And &H7FFFFFFF) - 75 Then
             Entrada = Entrada - 15
@@ -2853,19 +2853,19 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
         End If
 
-        color = D3DColorRGBA(255, 255, 255, AperturaPergamino * 175 / 240)
+        Color = D3DColorRGBA(255, 255, 255, AperturaPergamino * 175 / 240)
 
-        Call Engine_Render_Rectangle(10 - 5 + 240 - AperturaPergamino, 309 + 2, 28, 107, 0, 0, 28, 107, , , , 14687, color, color, color, color)
-        Call Engine_Render_Rectangle(38 - 5 + 240 - AperturaPergamino, 336 + 2, AperturaPergamino, 74, 240 - AperturaPergamino, 108, AperturaPergamino, 74, , , , 14687, color, color, color, color)
-        Call Engine_Render_Rectangle(517 - 5 - 240 + AperturaPergamino, 309 + 2, 26, 107, 29, 0, 26, 107, , , , 14687, color, color, color, color)
-        Call Engine_Render_Rectangle(278 - 5, 335 + 2, AperturaPergamino, 74, 0, 182, AperturaPergamino, 74, , , , 14687, color, color, color, color)
+        Call Engine_Render_Rectangle(10 - 5 + 240 - AperturaPergamino, 309 + 2, 28, 107, 0, 0, 28, 107, , , , 14687, Color, Color, Color, Color)
+        Call Engine_Render_Rectangle(38 - 5 + 240 - AperturaPergamino, 336 + 2, AperturaPergamino, 74, 240 - AperturaPergamino, 108, AperturaPergamino, 74, , , , 14687, Color, Color, Color, Color)
+        Call Engine_Render_Rectangle(517 - 5 - 240 + AperturaPergamino, 309 + 2, 26, 107, 29, 0, 26, 107, , , , 14687, Color, Color, Color, Color)
+        Call Engine_Render_Rectangle(278 - 5, 335 + 2, AperturaPergamino, 74, 0, 182, AperturaPergamino, 74, , , , 14687, Color, Color, Color, Color)
 
         'If AperturaPergamino >= 232 Then
         '    Call Engine_Render_Rectangle(256 + 40, 256 + 335 + 11, 56, 56, 56, 0, 56, 56, , , , 14687, color, color, color, color)
         'ElseIf AperturaPergamino < 232 And AperturaPergamino >= 176 Then
         '    Call Engine_Render_Rectangle(256 + 40 + 232 - AperturaPergamino, 256 + 335 + 11, AperturaPergamino - 176, 56, 56 + 232 - AperturaPergamino, 0, AperturaPergamino - 176, 56, , , , 14687, color, color, color, color)
         'End If
-        Call Engine_Render_D3DXTexture(38 - 5 + 240 - Int(AperturaPergamino), 342, Int(AperturaPergamino) * 2, 80, 240 - Int(AperturaPergamino), 0, color, pRenderTexture, 0)
+        Call Engine_Render_D3DXTexture(38 - 5 + 240 - Int(AperturaPergamino), 342, Int(AperturaPergamino) * 2, 80, 240 - Int(AperturaPergamino), 0, Color, pRenderTexture, 0)
 
     End If
 
@@ -3076,10 +3076,19 @@ Sub RenderScreen(ByVal TileX As Integer, _
         If Resolucion = True Then
             Call Engine_Render_Rectangle(950, 725, 27, 28, 0, 0, 27, 28, , , 0, SeguroResu)
             Call Engine_Render_Rectangle(980, 725, 27, 28, 0, 0, 27, 28, , , 0, SeguroConIma)
+            If Consolacom = 0 Then
+            Consolacom = 14816
+            End If
+            Call Engine_Render_Rectangle(20, 725, 27, 28, 0, 0, 27, 28, , , 0, Consolacom)
+        
 
         Else
             Call Engine_Render_Rectangle(950, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroResu)
             Call Engine_Render_Rectangle(980, 738, 27, 28, 0, 0, 27, 28, , , 0, SeguroConIma)
+            If Consolacom = 0 Then
+            Consolacom = 14816
+            End If
+            Call Engine_Render_Rectangle(20, 738, 27, 28, 0, 0, 27, 28, , , 0, Consolacom)
         End If
     #Else
 
@@ -3608,7 +3617,7 @@ Public Sub CharRender(ByRef rChar As Char, _
 
     Dim line As String
 
-    Dim color As Long
+    Dim Color As Long
 
     Dim VelChar As Single
 
@@ -3945,18 +3954,18 @@ Public Sub CharRender(ByRef rChar As Char, _
                         If Pos = 0 Then Pos = Len(.nombre) + 2
 
                         If .invisible = True Then
-                            color = D3DColorRGBA(200, 200, 200, ShowPJ_Alpha)
+                            Color = D3DColorRGBA(200, 200, 200, ShowPJ_Alpha)
                         ElseIf .priv = 0 Then
 
                             If .Criminal Then
-                                color = D3DColorRGBA(ColoresPJ(50).R, ColoresPJ(50).G, ColoresPJ(50).b, 200)
+                                Color = D3DColorRGBA(ColoresPJ(50).R, ColoresPJ(50).G, ColoresPJ(50).b, 200)
                             Else
-                                color = D3DColorRGBA(ColoresPJ(49).R, ColoresPJ(49).G, ColoresPJ(49).b, 200)
+                                Color = D3DColorRGBA(ColoresPJ(49).R, ColoresPJ(49).G, ColoresPJ(49).b, 200)
 
                             End If
 
                         Else
-                            color = D3DColorRGBA(ColoresPJ(.priv).R, ColoresPJ(.priv).G, ColoresPJ(.priv).b, 200)
+                            Color = D3DColorRGBA(ColoresPJ(.priv).R, ColoresPJ(.priv).G, ColoresPJ(.priv).b, 200)
 
                         End If
 
@@ -3969,11 +3978,11 @@ Public Sub CharRender(ByRef rChar As Char, _
 
                         End If
 
-                        Call RenderTextCentered(PixelOffSetX + TilePixelWidth \ 2, PixelOffSetY + 30, line, color)
+                        Call RenderTextCentered(PixelOffSetX + TilePixelWidth \ 2, PixelOffSetY + 30, line, Color)
 
                         'Clan
                         line = mid$(.nombre, Pos)
-                        Call RenderTextCentered(PixelOffSetX + TilePixelWidth \ 2, PixelOffSetY + 45, line, color)
+                        Call RenderTextCentered(PixelOffSetX + TilePixelWidth \ 2, PixelOffSetY + 45, line, Color)
 
                         '                            If .logged Then
                         '                                color = D3DColorRGBA(10, 200, 10, 200)

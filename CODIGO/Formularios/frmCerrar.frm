@@ -234,31 +234,43 @@ Form_MouseMove_Err:
 End Sub
 
 Private Sub Opcion_Click(Index As Integer)
-    
+
     On Error GoTo Opcion_Click_Err
 
     'Ladder 30/10/2020
     Select Case Index
 
-        Case 0 ' Menu principal
-            Call WriteQuit
-            Unload Me
+    Case 0    ' Menu principal
+        If Dir(App.path & "\INIT\" & UserName & ".txt", vbArchive) <> "" Then
 
-        Case 1  'Cerrar juego
-            Call CloseClient
+            Kill (App.path & "\INIT\" & UserName & ".txt")
 
-        Case 2 'Cancelar
-            Unload Me
+        End If
+        Call WriteQuit
+
+        Unload Me
+
+    Case 1  'Cerrar juego
+        If Dir(App.path & "\INIT\" & UserName & ".txt", vbArchive) <> "" Then
+
+            Kill (App.path & "\INIT\" & UserName & ".txt")
+
+        End If
+        Call CloseClient
+
+
+    Case 2    'Cancelar
+        Unload Me
 
     End Select
-    
+
     Exit Sub
 
 Opcion_Click_Err:
     Call LogError(err.Number, err.Description, "frmCerrar.Opcion_Click", Erl)
 
     Resume Next
-    
+
 End Sub
 
 Private Sub Opcion_MouseDown(Index As Integer, _

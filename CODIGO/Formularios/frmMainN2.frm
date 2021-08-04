@@ -242,7 +242,7 @@ Begin VB.Form frmMain2
       EndProperty
       ForeColor       =   &H00E0E0E0&
       Height          =   240
-      Left            =   480
+      Left            =   630
       MaxLength       =   160
       MultiLine       =   -1  'True
       TabIndex        =   3
@@ -582,7 +582,7 @@ Begin VB.Form frmMain2
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   73
          TabIndex        =   33
-         Top             =   3705
+         Top             =   3720
          Visible         =   0   'False
          Width           =   1095
       End
@@ -1643,19 +1643,6 @@ Private Sub btnInventario_Click()
     picture1.Visible = True
     lblItemInfo.Visible = True
     
-End Sub
-
-Private Sub cmdEfecto_Click()
-    Hora = Hora + 1
-    SetDayLight
-    'AlphaSalir = 0
-  ' AlphaBloodUserDie = 255
-    'AlphaBlood = 255
-   ' TextKillsType = RandomNumber(2, 9)
-    'AlphaTextKills = 255
-    'Call Audio.PlayWave(258 + TextKillsType)
-'AlphaBlood
-    'AlphaCeguera = 255
 End Sub
 
 Private Sub cmdMoverHechi_Click(Index As Integer)
@@ -2844,6 +2831,21 @@ Private Sub pRender_Click()
     If Conectar Then Exit Sub
     If Cartel Then Cartel = False
 
+
+
+    If MouseX > 21 And MouseX < 46 And MouseY > 737 And MouseY < 765 Then    'Seguro Resu
+
+        Call Audio.PlayWave(SND_CLICK)
+        If FrmMensajes.Visible = True Then
+            Unload FrmMensajes
+            Consolacom = 14816
+            Exit Sub
+        Else
+            Call FrmMensajes.Show(vbModeless, frmMain)
+            Consolacom = 14817
+            Exit Sub
+        End If
+    End If
 
 
     If MouseX > 551 And MouseX < 622 And MouseY > 3 And MouseY < 33 Then    'Online
