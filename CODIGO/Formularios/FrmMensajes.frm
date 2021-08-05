@@ -24,6 +24,7 @@ Begin VB.Form FrmMensajes
       _Version        =   393217
       BackColor       =   -2147483641
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"FrmMensajes.frx":0000
    End
@@ -40,6 +41,8 @@ Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVa
 Private Declare Function ReleaseCapture Lib "user32.dll" () As Long
 Private Declare Function SendMessage Lib "user32.dll" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Private Declare Function SetLayeredWindowAttributes Lib "user32.dll" (ByVal hwnd As Long, ByVal crKey As Long, ByVal bAlpha As Byte, ByVal dwFlags As Long) As Long
+Private Const EM_LINEFROMCHAR = &HC9
+Private Const EM_GETLINECOUNT = &HBA
 Const WM_NCLBUTTONDOWN = &HA1
 Const HTCAPTION = 2
 
@@ -48,7 +51,7 @@ Const G_E = (-20)
 Const W_E = &H80000
 Private Sub Form_Load()
     On Error GoTo err
-    Me.Picture = LoadPictureEX("mensages" & RandomNumber(1, 3) & ".jpg")
+    'Me.Picture = LoadPictureEX("mensages" & RandomNumber(1, 3) & ".jpg")
 
     Skin Me, vbMagenta
     Call SetWindowLong(mensajes.hwnd, GWL_EXSTYLE, WS_EX_TRANSPARENT)
@@ -69,6 +72,18 @@ End Sub
 
 Private Sub mensajes_GotFocus()
 mensajes.SelStart = Len(mensajes.Text)
+End Sub
+
+Private Sub mensajes_KeyDown(KeyCode As Integer, Shift As Integer)
+    If KeyCode = vbKeyUp Then
+        If GetCurrentLine(mensajes) = 1 Then KeyCode = 0
+    ElseIf KeyCode = vbKeyDown Then
+        If GetCurrentLine(mensajes) = GetLineCount(mensajes) Then KeyCode = 0
+    ElseIf KeyCode = 39 Then
+        If GetCurrentLine(mensajes) = GetLineCount(mensajes) Then KeyCode = 0
+    ElseIf KeyCode = 37 Then
+        If GetCurrentLine(mensajes) = GetLineCount(mensajes) Then KeyCode = 0
+    End If
 End Sub
 
 Private Sub mensajes_KeyUp(KeyCode As Integer, Shift As Integer)
@@ -95,3 +110,10 @@ Private Sub Timer1_Timer()
 'mensajes.SelStart = Len(mensajes.Text)
 'mensajes.Refresh
 End Sub
+Private Function GetCurrentLine(Txt As RichTextBox) As Long
+    GetCurrentLine = SendMessage(Txt.hwnd, EM_LINEFROMCHAR, Txt.SelStart, 0&) + 1
+End Function
+
+Private Function GetLineCount(Txt As RichTextBox) As Long
+    GetLineCount = SendMessage(Txt.hwnd, EM_GETLINECOUNT, 0&, 0&)
+End Function
