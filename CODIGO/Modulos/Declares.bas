@@ -31,7 +31,8 @@ Attribute VB_Name = "Mod_Declaraciones"
 'Pablo Ignacio Márquez
 
 Option Explicit
-
+Public CodVerificacion As String
+Public CorreoVal As String
 Public Resolucion As Boolean
 Public SeguroResu As Long
 Public SeguroConIma As Long
@@ -39,7 +40,7 @@ Public Consolacom As Long
 Public TT2 As New CBalloonToolTip
 Public contarr As Integer
 Public Type tRanking
-    Value(0 To 9) As Long
+    value(0 To 9) As Long
     nombre(0 To 9) As String
 End Type
 
@@ -380,7 +381,7 @@ Public RawServersList As String
 
 Public Type tColor
 
-    R As Byte
+    r As Byte
     G As Byte
     b As Byte
 
@@ -391,7 +392,7 @@ Public ColoresPJ(0 To 50) As tColor
 Public Type tServerInfo
 
     Ip As String
-    Puerto As Integer
+    puerto As Integer
     Desc As String
     PassRecPort As Integer
 
@@ -1212,6 +1213,14 @@ Public prgRun As Boolean    'When true the program ends
 '
 
 Public Declare Function GetTickCount Lib "kernel32" () As Long
+''RichTextBox Transparente''
+Public Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" ( _
+ByVal hwnd As Long, _
+ByVal nIndex As Long, _
+ByVal dwNewLong As Long) As Long
+Public Const GWL_EXSTYLE = (-20)
+Public Const WS_EX_TRANSPARENT = &H20&
+''[END]''
 
 'para escribir y leer variables
 Public Declare Function writeprivateprofilestring _

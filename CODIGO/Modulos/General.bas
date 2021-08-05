@@ -338,7 +338,7 @@ Public Sub RefreshAllChars()
     For LoopC = 1 To LastChar
 
         If charlist(LoopC).ACTIVE = 1 Then
-            MapData(charlist(LoopC).Pos.x, charlist(LoopC).Pos.y).CharIndex = LoopC
+            MapData(charlist(LoopC).Pos.X, charlist(LoopC).Pos.Y).CharIndex = LoopC
 
         End If
 
@@ -535,16 +535,16 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     Select Case Direccion
 
         Case E_Heading.north
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y - 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y - 1)
 
         Case E_Heading.east
-            LegalOk = MoveToLegalPos(UserPos.x + 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.X + 1, UserPos.Y)
 
         Case E_Heading.south
-            LegalOk = MoveToLegalPos(UserPos.x, UserPos.y + 1)
+            LegalOk = MoveToLegalPos(UserPos.X, UserPos.Y + 1)
 
         Case E_Heading.west
-            LegalOk = MoveToLegalPos(UserPos.x - 1, UserPos.y)
+            LegalOk = MoveToLegalPos(UserPos.X - 1, UserPos.Y)
 
     End Select
     
@@ -573,7 +573,7 @@ Sub MoveTo(ByVal Direccion As E_Heading)
     Call frmMain.RefreshMiniMap
     
     ' Update 3D sounds!
-    Call Audio.MoveListener(UserPos.x, UserPos.y)
+    Call Audio.MoveListener(UserPos.X, UserPos.Y)
     
     CheckZona
 
@@ -649,7 +649,7 @@ Private Sub CheckKeys()
             End If
                         
             ' We haven't moved - Update 3D sounds!
-            Call Audio.MoveListener(UserPos.x, UserPos.y)
+            Call Audio.MoveListener(UserPos.X, UserPos.Y)
         Else
 
             Dim kp As Boolean
@@ -660,11 +660,11 @@ Private Sub CheckKeys()
                 Call RandomMove
             Else
                 ' We haven't moved - Update 3D sounds!
-                Call Audio.MoveListener(UserPos.x, UserPos.y)
+                Call Audio.MoveListener(UserPos.X, UserPos.Y)
 
             End If
             
-            frmMain.Coord.Caption = "(" & UserPos.x & "," & UserPos.y & ")"
+            frmMain.Coord.Caption = "(" & UserPos.X & "," & UserPos.Y & ")"
             CheckZona
 
         End If
@@ -681,9 +681,9 @@ Sub CargarMap(ByVal Map As Integer)
     'Formato de mapas optimizado para reducir el espacio que ocupan.
     'Diseñado y creado por Juan Martín Sotuyo Dodero (Maraxus) (juansotuyo@hotmail.com)
     '**************************************************************
-    Dim y       As Long
+    Dim Y       As Long
 
-    Dim x       As Long
+    Dim X       As Long
 
     Dim tempint As Integer
 
@@ -790,18 +790,18 @@ Sub CargarMap(ByVal Map As Integer)
 
     End If
     
-    For y = 1 To YMaxMapSize
-        For x = 1 To XMaxMapSize
+    For Y = 1 To YMaxMapSize
+        For X = 1 To XMaxMapSize
 
-            If MapData(x, y).CharIndex > 0 Then
-                Call EraseChar(MapData(x, y).CharIndex)
+            If MapData(X, Y).CharIndex > 0 Then
+                Call EraseChar(MapData(X, Y).CharIndex)
 
             End If
 
             'Erase OBJs
-            MapData(x, y).ObjGrh.GrhIndex = 0
-        Next x
-    Next y
+            MapData(X, Y).ObjGrh.GrhIndex = 0
+        Next X
+    Next Y
     
 End Sub
 
@@ -830,16 +830,22 @@ Sub AddtoRichPicture(ByVal Text As String, _
 
 'lo pongo aca, para q no tengan q andar cambiando todo
 'osea, si tienen consola de arriba, el richtextbox, no agan esto
-    Dim textosconsola As String
-    textosconsola = Date & " " & CStr(Time) & ": " & Text
+    Dim TextosConsola As String
+    TextosConsola = Date & " " & CStr(Time) & ": " & Text
 
 
-    Open App.path & "/INIT/" & UserName & ".txt" For Append As #1
-   Print #1, textosconsola
-
-    Close #1
-
+    'Open App.path & "/INIT/" & UserName & ".txt" For Append As #1
+   'Print #1, textosconsola
+   ' Close #1
+   If red = 190 Then
+   red = 255
+   green = 255
+   blue = 255
+   End If
    
+    
+    AddtoRichTextBox FrmMensajes.mensajes, TextosConsola, red, green, blue, True, False, bCrLf
+   FrmMensajes.mensajes.SaveFile (App.path & "/INIT/" & UserName & ".rtf")
 
 
     If sintextos = False Then
@@ -1441,8 +1447,8 @@ Private Function CMSValidateChar_(ByVal iAsc As Integer) As Boolean
 End Function
 
 'TODO : como todo lo relativo a mapas, no tiene nada que hacer acá....
-Function HayAgua(ByVal x As Integer, ByVal y As Integer) As Boolean
-    HayAgua = ((MapData(x, y).Graphic(1).GrhIndex >= 1505 And MapData(x, y).Graphic(1).GrhIndex <= 1520) Or (MapData(x, y).Graphic(1).GrhIndex >= 5665 And MapData(x, y).Graphic(1).GrhIndex <= 5680) Or (MapData(x, y).Graphic(1).GrhIndex >= 13547 And MapData(x, y).Graphic(1).GrhIndex <= 13562)) And MapData(x, y).Graphic(2).GrhIndex = 0
+Function HayAgua(ByVal X As Integer, ByVal Y As Integer) As Boolean
+    HayAgua = ((MapData(X, Y).Graphic(1).GrhIndex >= 1505 And MapData(X, Y).Graphic(1).GrhIndex <= 1520) Or (MapData(X, Y).Graphic(1).GrhIndex >= 5665 And MapData(X, Y).Graphic(1).GrhIndex <= 5680) Or (MapData(X, Y).Graphic(1).GrhIndex >= 13547 And MapData(X, Y).Graphic(1).GrhIndex <= 13562)) And MapData(X, Y).Graphic(2).GrhIndex = 0
                 
 End Function
 
@@ -1782,7 +1788,7 @@ Public Sub CloseClient()
 
 End Sub
 
-Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
+Public Function BuscarZona(ByVal X As Integer, ByVal Y As Integer) As Integer
 
     Dim I        As Integer
 
@@ -1794,7 +1800,7 @@ Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And x >= Zonas(I).x1 And x <= Zonas(I).x2 And y >= Zonas(I).y1 And y <= Zonas(I).y2 Then
+        If UserMap = Zonas(I).Mapa And X >= Zonas(I).x1 And X <= Zonas(I).x2 And Y >= Zonas(I).y1 And Y <= Zonas(I).y2 Then
             BuscarZona = I
             Encontro = True
 
@@ -1805,7 +1811,7 @@ Public Function BuscarZona(ByVal x As Integer, ByVal y As Integer) As Integer
     Next I
 
     If Not Encontro And UserMap > 0 Then
-        I = IIf(HayAgua(x, y), 24, 23)
+        I = IIf(HayAgua(X, Y), 24, 23)
         BuscarZona = I
 
     End If
@@ -1824,7 +1830,7 @@ Public Sub CheckZona()
 
     For I = 1 To NumZonas
 
-        If UserMap = Zonas(I).Mapa And UserPos.x >= Zonas(I).x1 And UserPos.x <= Zonas(I).x2 And UserPos.y >= Zonas(I).y1 And UserPos.y <= Zonas(I).y2 Then
+        If UserMap = Zonas(I).Mapa And UserPos.X >= Zonas(I).x1 And UserPos.X <= Zonas(I).x2 And UserPos.Y >= Zonas(I).y1 And UserPos.Y <= Zonas(I).y2 Then
             If ZonaActual <> I Then
                 If ZonaActual > 0 Then
                     If Zonas(ZonaActual).Segura <> Zonas(I).Segura Then
@@ -1852,7 +1858,7 @@ Public Sub CheckZona()
     Next I
 
     If Not Encontro And UserMap > 0 Then
-        I = IIf(HayAgua(UserPos.x, UserPos.y), 24, 23)
+        I = IIf(HayAgua(UserPos.X, UserPos.Y), 24, 23)
 
         If ZonaActual <> I Then
             ZonaActual = I
@@ -1905,23 +1911,23 @@ Sub ClosePj()
     Call Audio.StopWave
     frmMain.IsPlaying = PlayLoop.plNone
 
-    Dim x As Integer
+    Dim X As Integer
 
-    Dim y As Integer
+    Dim Y As Integer
 
-    For x = 1 To XMaxMapSize
-        For y = 1 To YMaxMapSize
-            MapData(x, y).CharIndex = 0
+    For X = 1 To XMaxMapSize
+        For Y = 1 To YMaxMapSize
+            MapData(X, Y).CharIndex = 0
 
-            If MapData(x, y).ObjGrh.GrhIndex = GrhFogata Then
-                MapData(x, y).Graphic(3).GrhIndex = 0
-                Call Light_Destroy_ToMap(x, y)
+            If MapData(X, Y).ObjGrh.GrhIndex = GrhFogata Then
+                MapData(X, Y).Graphic(3).GrhIndex = 0
+                Call Light_Destroy_ToMap(X, Y)
 
             End If
 
-            MapData(x, y).ObjGrh.GrhIndex = 0
-        Next y
-    Next x
+            MapData(X, Y).ObjGrh.GrhIndex = 0
+        Next Y
+    Next X
 
     On Local Error Resume Next
     frmMain.SendTxt.Visible = False
@@ -1979,9 +1985,9 @@ Sub ClosePj()
 
     'Delete all kind of dialogs
     Call CleanDialogs
-    If Dir(App.path & "\INIT\" & UserName & ".txt", vbArchive) <> "" Then
+    If Dir(App.path & "\INIT\" & UserName & ".rtf", vbArchive) <> "" Then
       
-        Kill (App.path & "\INIT\" & UserName & ".txt")
+        Kill (App.path & "\INIT\" & UserName & ".rtf")
     
     End If
     'Reset some char variables...
@@ -2311,27 +2317,27 @@ Public Sub Engine_Init_ParticleEngine()
  
 End Sub
  
-Function Engine_PixelPosX(ByVal x As Long) As Long
+Function Engine_PixelPosX(ByVal X As Long) As Long
     '*****************************************************************
     'Converts a tile position to a screen position
     'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosX]http://www.vbgore.com/GameClient.TileEn ... _PixelPosX[/url]
     '*****************************************************************
  
-    Engine_PixelPosX = (x - 1) * TilePixelWidth
+    Engine_PixelPosX = (X - 1) * TilePixelWidth
  
 End Function
  
-Function Engine_PixelPosY(ByVal y As Long) As Long
+Function Engine_PixelPosY(ByVal Y As Long) As Long
     '*****************************************************************
     'Converts a tile position to a screen position
     'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_PixelPosY]http://www.vbgore.com/GameClient.TileEn ... _PixelPosY[/url]
     '*****************************************************************
  
-    Engine_PixelPosY = (y - 1) * TilePixelHeight
+    Engine_PixelPosY = (Y - 1) * TilePixelHeight
  
 End Function
  
-Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
+Public Function Engine_TPtoSPX(ByVal X As Byte) As Long
  
     '************************************************************
     'Tile Position to Screen Position
@@ -2342,7 +2348,7 @@ Public Function Engine_TPtoSPX(ByVal x As Byte) As Long
  
 End Function
  
-Public Function Engine_TPtoSPY(ByVal y As Byte) As Long
+Public Function Engine_TPtoSPY(ByVal Y As Byte) As Long
  
     '************************************************************
     'Tile Position to Screen Position
@@ -2396,3 +2402,22 @@ Sub CargarAlaIndex(ByVal alaIndex As Byte)
 
 End Sub
 
+Sub AddtoRichTextBox(RichTextBox As RichTextBox, Text As String, Optional red As Integer = -1, Optional green As Integer, Optional blue As Integer, Optional bold As Boolean, Optional italic As Boolean, Optional bCrLf As Boolean)
+
+    
+    With RichTextBox
+        
+        .SelStart = Len(RichTextBox.Text)
+        .SelLength = 0
+
+        .SelBold = IIf(bold, True, False)
+        .SelItalic = IIf(italic, True, False)
+
+        If Not red = -1 Then .SelColor = RGB(red, green, blue)
+
+        .SelText = IIf(bCrLf, Text, Text & vbCrLf)
+
+        RichTextBox.Refresh
+    End With
+
+End Sub

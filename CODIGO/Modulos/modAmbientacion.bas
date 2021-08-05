@@ -262,19 +262,23 @@ Public Sub SetDayLight(Optional ByVal WithSound As Boolean = False)
 
     'Exit Sub
 If GoingHome = 1 Then
-IluRGB.R = 75
+    IluRGB.R = 75
     IluRGB.G = 75
     IluRGB.b = 75
-Else
-If Hora >= 25 Then
-Hora = 1
-End If
-    IluRGB.R = luz_dia(Hora).R
-    IluRGB.G = luz_dia(Hora).G
-    IluRGB.b = luz_dia(Hora).b
-End If
+    
     Iluminacion = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)
     ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
+Else
+   IluRGB.R = 255
+    IluRGB.G = 255
+    IluRGB.b = 255
+    
+    Iluminacion = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, 255)
+    ColorTecho = D3DColorRGBA(IluRGB.R, IluRGB.G, IluRGB.b, bAlpha)
+End If
+   
+
+ 
 
 End Sub
 

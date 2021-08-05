@@ -25,6 +25,31 @@ Begin VB.Form frmMain2
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1022
    StartUpPosition =   2  'CenterScreen
+   Begin VB.TextBox TCod 
+      Appearance      =   0  'Flat
+      BackColor       =   &H00FFFFFF&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Calibri"
+         Size            =   12
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H00404040&
+      Height          =   285
+      IMEMode         =   3  'DISABLE
+      Left            =   5640
+      MaxLength       =   160
+      TabIndex        =   57
+      TabStop         =   0   'False
+      ToolTipText     =   "Chat"
+      Top             =   4080
+      Visible         =   0   'False
+      Width           =   2700
+   End
    Begin VB.PictureBox barritaa 
       BorderStyle     =   0  'None
       Height          =   5175
@@ -347,6 +372,32 @@ Begin VB.Form frmMain2
       TabIndex        =   4
       Top             =   0
       Width           =   16200
+      Begin VB.TextBox tRePass 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00FFFFFF&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Calibri"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00404040&
+         Height          =   285
+         IMEMode         =   3  'DISABLE
+         Left            =   6360
+         MaxLength       =   160
+         PasswordChar    =   "*"
+         TabIndex        =   19
+         TabStop         =   0   'False
+         ToolTipText     =   "Chat"
+         Top             =   3120
+         Visible         =   0   'False
+         Width           =   2700
+      End
       Begin VB.PictureBox PicSpells 
          Appearance      =   0  'Flat
          AutoRedraw      =   -1  'True
@@ -709,32 +760,6 @@ Begin VB.Form frmMain2
             _ExtentY        =   741
             _Version        =   393216
          End
-      End
-      Begin VB.TextBox tRePass 
-         Appearance      =   0  'Flat
-         BackColor       =   &H00FFFFFF&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Calibri"
-            Size            =   12
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00404040&
-         Height          =   285
-         IMEMode         =   3  'DISABLE
-         Left            =   6360
-         MaxLength       =   160
-         PasswordChar    =   "*"
-         TabIndex        =   19
-         TabStop         =   0   'False
-         ToolTipText     =   "Chat"
-         Top             =   3120
-         Visible         =   0   'False
-         Width           =   2700
       End
       Begin VB.TextBox tEmail 
          Appearance      =   0  'Flat
@@ -1277,6 +1302,8 @@ Dim InvY As Integer
 
 Public WithEvents Client As CSocketMaster
 Attribute Client.VB_VarHelpID = -1
+Public WithEvents oMail As clsCDOmail
+Attribute oMail.VB_VarHelpID = -1
 
 Private Sub Bar_Mana_Click(Index As Integer)
 
@@ -1741,6 +1768,7 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
                         tPass.Visible = False
                         tEmail.Visible = False
                         tRePass.Visible = False
+                        TCod.Visible = False
                         Call Audio.PlayWave(SND_CADENAS)
                     
                         If MostrarCrearCuenta = True Then
@@ -2286,6 +2314,7 @@ Private Sub pRender_KeyDown(KeyCode As Integer, Shift As Integer)
                         tPass.Visible = False
                         tEmail.Visible = False
                         tRePass.Visible = False
+                        TCod.Visible = False
                         Call Audio.PlayWave(SND_CADENAS)
                     
                         If MostrarCrearCuenta = True Then
@@ -4061,7 +4090,8 @@ Private Sub Form_Load()
     tPass.BackColor = RGB(200, 200, 200)
     tEmail.BackColor = RGB(200, 200, 200)
     tRePass.BackColor = RGB(200, 200, 200)
-   
+    TCod.BackColor = RGB(200, 200, 200)
+    
     tUser.top = 612
     tPass.top = 637
     tPass.left = 428
@@ -4080,16 +4110,16 @@ Private Sub Form_Load()
     RotarActivado = GetVar(OpcionesPath, "AURAS", "rotacion")
 
     If ActivarAuras = "1" Then
-        frmOpciones.ActAura.Value = vbChecked
+        frmOpciones.ActAura.value = vbChecked
     Else
-        frmOpciones.ActAura.Value = vbUnchecked
+        frmOpciones.ActAura.value = vbUnchecked
 
     End If
    
     If RotarActivado = "1" Then
-        frmOpciones.RotaAura.Value = vbChecked
+        frmOpciones.RotaAura.value = vbChecked
     Else
-        frmOpciones.RotaAura.Value = vbUnchecked
+        frmOpciones.RotaAura.value = vbUnchecked
 
     End If
     
@@ -4735,4 +4765,38 @@ Private Sub cmdLanzar_Click()
 
 End Sub
 
+Public Sub EnviarCorreoVal()
+    If frmMain2.tUser = "" Then
+         MessageBox "Ingrese un nombre de cuenta"
+        Exit Sub
+    End If
+    If frmMain2.tEmail = "" Then
+        MessageBox "Ingrese una direccion e-Email"
+        Exit Sub
+    End If
+    CodVerificacion = RandomLetrasMayusculas(1) & RandomLetrasMinusculas(1) & Int((9 * Rnd) + 1) & Chr(Int((Rnd * 25) + 65)) & RandomLetrasMinusculas(1) & Int((9 * Rnd) + 1) & Int((9 * Rnd) + 1)
+    CorreoVal = frmMain2.tEmail
+
+    Set oMail = New clsCDOmail
+    With oMail
+        'datos para enviar
+        .servidor = "smtp.gmail.com"
+        .puerto = 465
+        .UseAuntentificacion = True
+        .ssl = True
+        .Usuario = "soporteaoyind@gmail.com"
+        .PassWord = "ruKgym-xisqom-3pothe"
+
+        .Asunto = "Codigo de Validacion"
+        '.Adjunto = "c:\archivo.zip"
+        .de = "SoporteAoyind3@gmail.com"
+        .para = CorreoVal
+        .Mensaje = "Se ha solicitado codigo de validacion para la cuenta: " & tUser.Text & " por favor ingrese en el juego el siguiente Codigo: " & CodVerificacion
+
+        .Enviar_Backup    ' manda el mail
+
+    End With
+
+    Set oMail = Nothing
+End Sub
 

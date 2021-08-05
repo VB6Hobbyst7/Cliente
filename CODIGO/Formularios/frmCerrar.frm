@@ -102,8 +102,8 @@ Private RealizoCambios As String
 Private Declare Function SetWindowPos _
                 Lib "user32" (ByVal hwnd As Long, _
                               ByVal hWndInsertAfter As Long, _
-                              ByVal x As Long, _
-                              ByVal y As Long, _
+                              ByVal X As Long, _
+                              ByVal Y As Long, _
                               ByVal cx As Long, _
                               ByVal cy As Long, _
                               ByVal wFlags As Long) As Long
@@ -213,7 +213,7 @@ Form_Load_Err:
     
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     
     On Error GoTo Form_MouseMove_Err
     
@@ -241,9 +241,9 @@ Private Sub Opcion_Click(Index As Integer)
     Select Case Index
 
     Case 0    ' Menu principal
-        If Dir(App.path & "\INIT\" & UserName & ".txt", vbArchive) <> "" Then
+        If Dir(App.path & "\INIT\" & UserName & ".rtf", vbArchive) <> "" Then
 
-            Kill (App.path & "\INIT\" & UserName & ".txt")
+            Kill (App.path & "\INIT\" & UserName & ".rtf")
 
         End If
         Call WriteQuit
@@ -251,9 +251,9 @@ Private Sub Opcion_Click(Index As Integer)
         Unload Me
 
     Case 1  'Cerrar juego
-        If Dir(App.path & "\INIT\" & UserName & ".txt", vbArchive) <> "" Then
+        If Dir(App.path & "\INIT\" & UserName & ".rtf", vbArchive) <> "" Then
 
-            Kill (App.path & "\INIT\" & UserName & ".txt")
+            Kill (App.path & "\INIT\" & UserName & ".rtf")
 
         End If
         Call CloseClient
@@ -276,8 +276,8 @@ End Sub
 Private Sub Opcion_MouseDown(Index As Integer, _
                              Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
     
     On Error GoTo Opcion_MouseDown_Err
 
@@ -328,8 +328,8 @@ End Sub
 Private Sub Opcion_MouseMove(Index As Integer, _
                              Button As Integer, _
                              Shift As Integer, _
-                             x As Single, _
-                             y As Single)
+                             X As Single, _
+                             Y As Single)
     
     On Error GoTo Opcion_MouseMove_Err
 

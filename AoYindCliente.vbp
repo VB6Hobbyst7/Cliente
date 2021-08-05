@@ -115,6 +115,7 @@ Form=CODIGO\Formularios\FrmRanking2.frm
 Class=CBalloonToolTip; CODIGO\CBalloonToolTip.cls
 Form=CODIGO\Formularios\FrmMensajes.frm
 Object={3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0; RICHTX32.OCX
+Class=clsCDOmail; CODIGO\ModulosDeClase\clsCDOmail.cls
 IconForm="frmMain2"
 Startup="Sub Main"
 HelpFile=""

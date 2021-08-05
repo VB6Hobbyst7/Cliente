@@ -5,34 +5,27 @@ Begin VB.Form FrmMensajes
    BorderStyle     =   0  'None
    Caption         =   "Form1"
    ClientHeight    =   4515
-   ClientLeft      =   7470
-   ClientTop       =   2820
+   ClientLeft      =   4545
+   ClientTop       =   7440
    ClientWidth     =   9060
    LinkTopic       =   "Form1"
-   Picture         =   "FrmMensajes.frx":0000
    ScaleHeight     =   4515
    ScaleWidth      =   9060
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin VB.Timer Timer1 
-      Interval        =   2000
-      Left            =   840
-      Top             =   1680
-   End
    Begin RichTextLib.RichTextBox mensajes 
-      Height          =   3015
-      Left            =   720
+      Height          =   3975
+      Left            =   240
       TabIndex        =   0
-      Top             =   720
-      Width           =   7575
-      _ExtentX        =   13361
-      _ExtentY        =   5318
+      Top             =   240
+      Width           =   8535
+      _ExtentX        =   15055
+      _ExtentY        =   7011
       _Version        =   393217
       BackColor       =   -2147483641
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ScrollBars      =   2
-      TextRTF         =   $"FrmMensajes.frx":19DDF
+      TextRTF         =   $"FrmMensajes.frx":0000
    End
 End
 Attribute VB_Name = "FrmMensajes"
@@ -54,14 +47,20 @@ Const LW_KEY = &H1
 Const G_E = (-20)
 Const W_E = &H80000
 Private Sub Form_Load()
-    mensajes.LoadFile App.path & "/INIT/" & UserName & ".txt", rtfText
+    On Error GoTo err
+    Me.Picture = LoadPictureEX("mensages" & RandomNumber(1, 3) & ".jpg")
+
+    Skin Me, vbMagenta
+    Call SetWindowLong(mensajes.hwnd, GWL_EXSTYLE, WS_EX_TRANSPARENT)
+    mensajes.LoadFile (App.path & "/INIT/" & UserName & ".rtf")
     mensajes.Locked = True
 
     mensajes.SelLength = Len(mensajes)
-    mensajes.SelColor = RGB(255, 255, 255)
+    'mensajes.SelColor = RGB(255, 255, 255)
+    'mensajes.SelBold = True
 
     mensajes.SelLength = 0
-    Skin Me, vbMagenta
+err:
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -82,6 +81,7 @@ End Sub
 
 
 Sub Skin(Frm As Form, Color As Long)
+
 Frm.BackColor = Color
 Dim ret As Long
 ret = GetWindowLong(Frm.hwnd, G_E)
@@ -91,7 +91,7 @@ SetLayeredWindowAttributes Frm.hwnd, Color, 0, LW_KEY
 End Sub
 
 Private Sub Timer1_Timer()
-mensajes.LoadFile App.path & "/INIT/" & UserName & ".txt", rtfText
-mensajes.SelStart = Len(mensajes.Text)
+'mensajes.LoadFile App.path & "/INIT/" & UserName & ".txt", rtfText
+'mensajes.SelStart = Len(mensajes.Text)
 'mensajes.Refresh
 End Sub
