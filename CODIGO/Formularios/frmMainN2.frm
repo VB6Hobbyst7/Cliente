@@ -1667,7 +1667,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    picture1.Visible = True
+    Picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -2184,7 +2184,7 @@ Private Sub Lblmagia_Click()
         'picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        picture1.Visible = False
+        Picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -2196,7 +2196,7 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         'picHechiz.Visible = True
-        picture1.Visible = True
+        Picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         picInv.Visible = False
@@ -2862,7 +2862,7 @@ Private Sub pRender_Click()
 
 
 
-    If MouseX > 21 And MouseX < 46 And MouseY > 737 And MouseY < 765 Then    'Seguro Resu
+    If MouseX > 21 And MouseX < 46 And MouseY > 737 And MouseY < 765 Then    'mensajes
 
         Call Audio.PlayWave(SND_CLICK)
         If FrmMensajes.Visible = True Then
@@ -3430,7 +3430,9 @@ Private Sub pRender_MouseDown(Button As Integer, _
         If Resolucion = False Then
             If Not Conectar Then
                 Call ReleaseCapture
+                
                 Call SendMessage(Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&)
+                 
             End If
         End If
     End If
@@ -3907,6 +3909,8 @@ Private Sub pRender_MouseUp(Button As Integer, Shift As Integer, X As Single, Y 
     If Conectar Then Call MouseAction(X, Y, 1)
 
 End Sub
+
+
 
 Private Sub SendTxt_KeyUp(KeyCode As Integer, Shift As Integer)
 

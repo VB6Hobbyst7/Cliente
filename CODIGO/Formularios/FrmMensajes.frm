@@ -12,7 +12,7 @@ Begin VB.Form FrmMensajes
    ScaleHeight     =   4515
    ScaleWidth      =   9060
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   2  'CenterScreen
+   StartUpPosition =   1  'CenterOwner
    Begin RichTextLib.RichTextBox mensajes 
       Height          =   3975
       Left            =   240
@@ -24,7 +24,6 @@ Begin VB.Form FrmMensajes
       _Version        =   393217
       BackColor       =   -2147483641
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ScrollBars      =   2
       TextRTF         =   $"FrmMensajes.frx":0000
    End
