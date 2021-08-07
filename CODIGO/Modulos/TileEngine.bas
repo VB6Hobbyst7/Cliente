@@ -3090,6 +3090,12 @@ Sub RenderScreen(ByVal TileX As Integer, _
             End If
             Call Engine_Render_Rectangle(20, 738, 27, 28, 0, 0, 27, 28, , , 0, Consolacom)
         End If
+        
+        
+        If frmMain.macrotrabajo Then
+         
+        Call DrawFont("¡¡Trabajando...!!", 895, 745, D3DColorRGBA(0, 255, 0, 160), True)
+        End If
     #Else
 
         If FPSFLAG Then Call DrawFont("     " & FPS, 484, 34, D3DColorRGBA(101, 209, 238, 160))
@@ -3977,6 +3983,7 @@ Public Sub CharRender(ByRef rChar As Char, _
                             Pos = Pos - 1
 
                         End If
+                        
 
                         Call RenderTextCentered(PixelOffSetX + TilePixelWidth \ 2, PixelOffSetY + 30, line, Color)
 

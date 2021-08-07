@@ -1562,17 +1562,17 @@ Private Sub HandleUpdateMana()
     
     If UserMaxMAN > 0 Then
         frmMain.Bar_Mana(0).max = UserMaxMAN
-        frmMain.Bar_Mana(0).Value = UserMinMAN
+        frmMain.Bar_Mana(0).value = UserMinMAN
         frmMain.Bar_Mana(0).TextAfterCaption = " / " & UserMaxMAN
         frmMain.Bar_Mana(1).max = UserMaxMAN
-        frmMain.Bar_Mana(1).Value = UserMinMAN
+        frmMain.Bar_Mana(1).value = UserMinMAN
         frmMain.Bar_Mana(1).TextAfterCaption = " / " & UserMaxMAN
     Else
         frmMain.Bar_Mana(0).max = 1
-        frmMain.Bar_Mana(0).Value = 0
+        frmMain.Bar_Mana(0).value = 0
         frmMain.Bar_Mana(0).TextAfterCaption = " / 0"
         frmMain.Bar_Mana(1).max = 1
-        frmMain.Bar_Mana(1).Value = 0
+        frmMain.Bar_Mana(1).value = 0
         frmMain.Bar_Mana(1).TextAfterCaption = " / 0"
 
     End If
@@ -1938,9 +1938,9 @@ Private Sub HandleUpdateHP()
     UserMinHP = incomingData.ReadInteger()
     
     frmMain.bar_salud(0).max = UserMaxHP
-    frmMain.bar_salud(0).Value = UserMinHP
+    frmMain.bar_salud(0).value = UserMinHP
     frmMain.bar_salud(1).max = UserMaxHP
-    frmMain.bar_salud(1).Value = UserMinHP
+    frmMain.bar_salud(1).value = UserMinHP
     
     frmMain.bar_salud(0).TextAfterCaption = " / " & UserMaxHP
     frmMain.bar_salud(1).TextAfterCaption = " / " & UserMaxHP
@@ -3758,9 +3758,9 @@ Private Sub HandleUpdateUserStats()
        
         'Form1.BarraCir.Value = UserExp
         frmMain.bar_salud(0).max = UserMaxHP
-        frmMain.bar_salud(0).Value = UserMinHP
+        frmMain.bar_salud(0).value = UserMinHP
         frmMain.bar_salud(1).max = UserMaxHP
-        frmMain.bar_salud(1).Value = UserMinHP
+        frmMain.bar_salud(1).value = UserMinHP
     
         frmMain.bar_salud(0).TextAfterCaption = " / " & UserMaxHP
         frmMain.bar_salud(1).TextAfterCaption = " / " & UserMaxHP
@@ -3769,26 +3769,26 @@ Private Sub HandleUpdateUserStats()
         'Helios Barras
         If UserMaxMAN > 0 Then
             frmMain.Bar_Mana(0).max = UserMaxMAN
-            frmMain.Bar_Mana(0).Value = UserMinMAN
+            frmMain.Bar_Mana(0).value = UserMinMAN
             frmMain.Bar_Mana(0).TextAfterCaption = " / " & UserMaxMAN
             frmMain.Bar_Mana(1).max = UserMaxMAN
-            frmMain.Bar_Mana(1).Value = UserMinMAN
+            frmMain.Bar_Mana(1).value = UserMinMAN
             frmMain.Bar_Mana(1).TextAfterCaption = " / " & UserMaxMAN
         Else
             frmMain.Bar_Mana(0).max = 1
-            frmMain.Bar_Mana(0).Value = 0
+            frmMain.Bar_Mana(0).value = 0
             frmMain.Bar_Mana(0).TextAfterCaption = " / 0"
             frmMain.Bar_Mana(1).max = 1
-            frmMain.Bar_Mana(1).Value = 0
+            frmMain.Bar_Mana(1).value = 0
             frmMain.Bar_Mana(1).TextAfterCaption = " / 0"
 
         End If
 
     #Else
         
-        frmMain.Experiencia.Value = UserExp
+        frmMain.Experiencia.value = UserExp
         frmMain.bar_salud.max = UserMaxHP
-        frmMain.bar_salud.Value = UserMinHP
+        frmMain.bar_salud.value = UserMinHP
     
         frmMain.bar_salud.TextAfterCaption = " / " & UserMaxHP
 
@@ -3796,11 +3796,11 @@ Private Sub HandleUpdateUserStats()
     
         If UserMaxMAN > 0 Then
             frmMain.Bar_Mana.max = UserMaxMAN
-            frmMain.Bar_Mana.Value = UserMinMAN
+            frmMain.Bar_Mana.value = UserMinMAN
             frmMain.Bar_Mana.TextAfterCaption = " / " & UserMaxMAN
         Else
             frmMain.Bar_Mana.max = 1
-            frmMain.Bar_Mana.Value = 0
+            frmMain.Bar_Mana.value = 0
             frmMain.Bar_Mana.TextAfterCaption = " / 0"
 
         End If
@@ -3813,7 +3813,7 @@ Private Sub HandleUpdateUserStats()
     '        frmMain.MANShp.Width = 0
     '    End If
     frmMain.bar_sta.max = UserMaxSTA
-    frmMain.bar_sta.Value = UserMinSTA
+    frmMain.bar_sta.value = UserMinSTA
     frmMain.bar_sta.TextAfterCaption = " / " & UserMaxSTA
     
     ' frmMain.STAShp.Width = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 100)
@@ -3892,19 +3892,19 @@ Private Sub HandleWorkRequestTarget()
 
             'frmMain.tMouse.Enabled = True
         Case Pesca
-            Call AddtoRichPicture(MENSAJE_TRABAJO_PESCA, 100, 100, 120, 0, 0)
+            'Call AddtoRichPicture(MENSAJE_TRABAJO_PESCA, 100, 100, 120, 0, 0)
 
         Case Robar
             Call AddtoRichPicture(MENSAJE_TRABAJO_ROBAR, 100, 100, 120, 0, 0)
 
         Case Talar
-            Call AddtoRichPicture(MENSAJE_TRABAJO_TALAR, 100, 100, 120, 0, 0)
+            'Call AddtoRichPicture(MENSAJE_TRABAJO_TALAR, 100, 100, 120, 0, 0)
 
         Case Mineria
-            Call AddtoRichPicture(MENSAJE_TRABAJO_MINERIA, 100, 100, 120, 0, 0)
+           'Call AddtoRichPicture(MENSAJE_TRABAJO_MINERIA, 100, 100, 120, 0, 0)
 
         Case FundirMetal
-            Call AddtoRichPicture(MENSAJE_TRABAJO_FUNDIRMETAL, 100, 100, 120, 0, 0)
+            'Call AddtoRichPicture(MENSAJE_TRABAJO_FUNDIRMETAL, 100, 100, 120, 0, 0)
 
         Case Proyectiles
             frmMain.MousePointer = 99
@@ -4031,7 +4031,7 @@ Private Sub HandleChangeInventorySlot()
 
     Dim MaxDef        As Integer
 
-    Dim Value         As Single
+    Dim value         As Single
 
     Dim PuedeUsarItem As Byte
     
@@ -4046,7 +4046,7 @@ Private Sub HandleChangeInventorySlot()
     MinHit = buffer.ReadInteger()
     MinDef = buffer.ReadInteger()
     MaxDef = buffer.ReadInteger()
-    Value = buffer.ReadSingle()
+    value = buffer.ReadSingle()
     PuedeUsarItem = buffer.ReadByte()
     
     If Equipped Then
@@ -4099,7 +4099,7 @@ Private Sub HandleChangeInventorySlot()
 
     End If
     
-    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, ObjType, MaxHit, MinHit, MinDef, MaxDef, Value, Name, PuedeUsarItem)
+    Call Inventario.SetItem(slot, OBJIndex, Amount, Equipped, GrhIndex, ObjType, MaxHit, MinHit, MinDef, MaxDef, value, Name, PuedeUsarItem)
     
     'If we got here then packet is complete, copy data back to original queue
     Call incomingData.CopyBuffer(buffer)
@@ -4879,10 +4879,10 @@ Private Sub HandleUpdateHungerAndThirst()
     '    frmMain.imgHambre.Height = 33 - (((UserMinHAM / 100) / (UserMaxHAM / 100)) * 33)
     
     frmMain.Bar_Agua.max = UserMaxAGU
-    frmMain.Bar_Agua.Value = UserMinAGU
+    frmMain.Bar_Agua.value = UserMinAGU
     frmMain.Bar_Agua.TextAfterCaption = " / " & UserMaxAGU
     frmMain.bar_comida.max = UserMaxHAM
-    frmMain.bar_comida.Value = UserMinHAM
+    frmMain.bar_comida.value = UserMinHAM
     frmMain.bar_comida.TextAfterCaption = " / " & UserMaxHAM
     
     '    frmMain.lblHambreN.Caption = UserMinHAM
@@ -12690,9 +12690,9 @@ Private Sub HandleQuestDetails()
     FrmQuestInfo.ListView1.ListItems.Clear
     
     FrmQuests.Image.BackColor = RGB(11, 11, 11)
-    FrmQuests.picture1.BackColor = RGB(19, 14, 11)
+    FrmQuests.Picture1.BackColor = RGB(19, 14, 11)
     FrmQuests.Image.Refresh
-    FrmQuests.picture1.Refresh
+    FrmQuests.Picture1.Refresh
     FrmQuests.npclbl.Caption = ""
     FrmQuests.objetolbl.Caption = ""
     
@@ -13715,7 +13715,7 @@ Public Sub HandleRecibirRanking()
 
     For I = 0 To 9
         Arrai2(I) = Arrai(I)
-        Ranking.Value(I) = Arrai(I)
+        Ranking.value(I) = Arrai(I)
     Next I
 
     For I = 0 To 9
@@ -13723,9 +13723,9 @@ Public Sub HandleRecibirRanking()
             FrmRanking2.Label1(I).Caption = "<Vacante>"
         Else
             If RankingOro = "$" Then
-                FrmRanking2.Label1(I).Caption = Ranking.nombre(I) & " : $" & Ranking.Value(I)
+                FrmRanking2.Label1(I).Caption = Ranking.nombre(I) & " : $" & Ranking.value(I)
             Else
-                FrmRanking2.Label1(I).Caption = Ranking.nombre(I) & " : " & Ranking.Value(I)
+                FrmRanking2.Label1(I).Caption = Ranking.nombre(I) & " : " & Ranking.value(I)
             End If
         End If
         'Call ShowConsoleMsg(Ranking.Nombre(i) & "-" & Ranking.value(i))

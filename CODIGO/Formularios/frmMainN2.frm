@@ -4243,7 +4243,7 @@ Private Sub picInv_DblClick()
 
         Case eObjType.otescudo
             Call EquiparItem
-        
+
         Case eObjType.otAlas
             Call EquiparItem
 
@@ -4266,6 +4266,22 @@ Private Sub picInv_DblClick()
                     Call EquiparItem
 
                 End If
+            ElseIf InStr(Inventario.ItemName(Inventario.SelectedItem), "Caña") > 0 _
+                   Or InStr(Inventario.ItemName(Inventario.SelectedItem), "Leñador") > 0 _
+                   Or InStr(Inventario.ItemName(Inventario.SelectedItem), "Serrucho") > 0 _
+                   Or InStr(Inventario.ItemName(Inventario.SelectedItem), "Herrero") > 0 _
+                   Or InStr(Inventario.ItemName(Inventario.SelectedItem), "Minero") > 0 _
+                   Or InStr(Inventario.ItemName(Inventario.SelectedItem), "Red") > 0 Then
+                   
+
+                If Inventario.Equipped(Inventario.SelectedItem) Then
+                    Call UsarItem
+                    ActivarMacroTrabajo
+                Else
+                    Call EquiparItem
+
+                End If
+
 
             Else
                 Call EquiparItem
@@ -4276,7 +4292,12 @@ Private Sub picInv_DblClick()
             Call EquiparItem
 
         Case eObjType.otFlechas
+
+
             Call EquiparItem
+
+
+
 
         Case Else
             Call UsarItem

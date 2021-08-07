@@ -831,6 +831,11 @@ Sub AddtoRichPicture(ByVal Text As String, _
 'lo pongo aca, para q no tengan q andar cambiando todo
 'osea, si tienen consola de arriba, el richtextbox, no agan esto
     Dim TextosConsola As String
+    If frmMain.macrotrabajo Then
+    If Text = "Yacimiento de Hierro - 1" Or Text = "Yacimiento de Plata - 1" Then
+    Exit Sub
+    End If
+    End If
     TextosConsola = Date & " " & CStr(Time) & ": " & Text
 
 
@@ -1372,11 +1377,11 @@ End Sub
 Sub WriteVar(ByVal File As String, _
              ByVal Main As String, _
              ByVal Var As String, _
-             ByVal Value As String)
+             ByVal value As String)
     '*****************************************************************
     'Writes a var to a text file
     '*****************************************************************
-    writeprivateprofilestring Main, Var, Value, File
+    writeprivateprofilestring Main, Var, value, File
 
 End Sub
 
