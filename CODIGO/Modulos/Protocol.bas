@@ -1561,19 +1561,19 @@ Private Sub HandleUpdateMana()
     UserMinMAN = incomingData.ReadInteger()
     
     If UserMaxMAN > 0 Then
-        frmMain.Bar_Mana(0).max = UserMaxMAN
-        frmMain.Bar_Mana(0).value = UserMinMAN
-        frmMain.Bar_Mana(0).TextAfterCaption = " / " & UserMaxMAN
-        frmMain.Bar_Mana(1).max = UserMaxMAN
-        frmMain.Bar_Mana(1).value = UserMinMAN
-        frmMain.Bar_Mana(1).TextAfterCaption = " / " & UserMaxMAN
+'        frmMain.Bar_Mana(0).max = UserMaxMAN
+'        frmMain.Bar_Mana(0).value = UserMinMAN
+'        frmMain.Bar_Mana(0).TextAfterCaption = " / " & UserMaxMAN
+'        frmMain.Bar_Mana(1).max = UserMaxMAN
+'        frmMain.Bar_Mana(1).value = UserMinMAN
+'        frmMain.Bar_Mana(1).TextAfterCaption = " / " & UserMaxMAN
     Else
-        frmMain.Bar_Mana(0).max = 1
-        frmMain.Bar_Mana(0).value = 0
-        frmMain.Bar_Mana(0).TextAfterCaption = " / 0"
-        frmMain.Bar_Mana(1).max = 1
-        frmMain.Bar_Mana(1).value = 0
-        frmMain.Bar_Mana(1).TextAfterCaption = " / 0"
+'        frmMain.Bar_Mana(0).max = 1
+'        frmMain.Bar_Mana(0).value = 0
+'        frmMain.Bar_Mana(0).TextAfterCaption = " / 0"
+'        frmMain.Bar_Mana(1).max = 1
+'        frmMain.Bar_Mana(1).value = 0
+'        frmMain.Bar_Mana(1).TextAfterCaption = " / 0"
 
     End If
 
@@ -1936,14 +1936,14 @@ Private Sub HandleUpdateHP()
     
     'Get data and update form
     UserMinHP = incomingData.ReadInteger()
-    
-    frmMain.bar_salud(0).max = UserMaxHP
-    frmMain.bar_salud(0).value = UserMinHP
-    frmMain.bar_salud(1).max = UserMaxHP
-    frmMain.bar_salud(1).value = UserMinHP
-    
-    frmMain.bar_salud(0).TextAfterCaption = " / " & UserMaxHP
-    frmMain.bar_salud(1).TextAfterCaption = " / " & UserMaxHP
+'
+'    frmMain.bar_salud(0).max = UserMaxHP
+'    frmMain.bar_salud(0).value = UserMinHP
+'    frmMain.bar_salud(1).max = UserMaxHP
+'    frmMain.bar_salud(1).value = UserMinHP
+'
+'    frmMain.bar_salud(0).TextAfterCaption = " / " & UserMaxHP
+'    frmMain.bar_salud(1).TextAfterCaption = " / " & UserMaxHP
     
     ' frmMain.HpshpV.Value = (((UserMinHP / 100) / (UserMaxHP / 100)) * 100)
     
@@ -3757,51 +3757,51 @@ Private Sub HandleUpdateUserStats()
     #If RenderFull = 0 Then
        
         'Form1.BarraCir.Value = UserExp
-        frmMain.bar_salud(0).max = UserMaxHP
-        frmMain.bar_salud(0).value = UserMinHP
-        frmMain.bar_salud(1).max = UserMaxHP
-        frmMain.bar_salud(1).value = UserMinHP
-    
-        frmMain.bar_salud(0).TextAfterCaption = " / " & UserMaxHP
-        frmMain.bar_salud(1).TextAfterCaption = " / " & UserMaxHP
+'        frmMain.bar_salud(0).max = UserMaxHP
+'        frmMain.bar_salud(0).value = UserMinHP
+'        frmMain.bar_salud(1).max = UserMaxHP
+'        frmMain.bar_salud(1).value = UserMinHP
+'
+'        frmMain.bar_salud(0).TextAfterCaption = " / " & UserMaxHP
+'        frmMain.bar_salud(1).TextAfterCaption = " / " & UserMaxHP
 
         'frmMain.HpshpV.Value = (((UserMinHP / 100) / (UserMaxHP / 100)) * 100)
         'Helios Barras
         If UserMaxMAN > 0 Then
-            frmMain.Bar_Mana(0).max = UserMaxMAN
-            frmMain.Bar_Mana(0).value = UserMinMAN
-            frmMain.Bar_Mana(0).TextAfterCaption = " / " & UserMaxMAN
-            frmMain.Bar_Mana(1).max = UserMaxMAN
-            frmMain.Bar_Mana(1).value = UserMinMAN
-            frmMain.Bar_Mana(1).TextAfterCaption = " / " & UserMaxMAN
+'            frmMain.Bar_Mana(0).max = UserMaxMAN
+'            frmMain.Bar_Mana(0).value = UserMinMAN
+'            frmMain.Bar_Mana(0).TextAfterCaption = " / " & UserMaxMAN
+'            frmMain.Bar_Mana(1).max = UserMaxMAN
+'            frmMain.Bar_Mana(1).value = UserMinMAN
+'            frmMain.Bar_Mana(1).TextAfterCaption = " / " & UserMaxMAN
         Else
-            frmMain.Bar_Mana(0).max = 1
-            frmMain.Bar_Mana(0).value = 0
-            frmMain.Bar_Mana(0).TextAfterCaption = " / 0"
-            frmMain.Bar_Mana(1).max = 1
-            frmMain.Bar_Mana(1).value = 0
-            frmMain.Bar_Mana(1).TextAfterCaption = " / 0"
+'            frmMain.Bar_Mana(0).max = 1
+'            frmMain.Bar_Mana(0).value = 0
+'            frmMain.Bar_Mana(0).TextAfterCaption = " / 0"
+'            frmMain.Bar_Mana(1).max = 1
+'            frmMain.Bar_Mana(1).value = 0
+'            frmMain.Bar_Mana(1).TextAfterCaption = " / 0"
 
         End If
 
     #Else
         
         frmMain.Experiencia.value = UserExp
-        frmMain.bar_salud.max = UserMaxHP
-        frmMain.bar_salud.value = UserMinHP
+'        frmMain.bar_salud.max = UserMaxHP
+'        frmMain.bar_salud.value = UserMinHP
     
-        frmMain.bar_salud.TextAfterCaption = " / " & UserMaxHP
+'        frmMain.bar_salud.TextAfterCaption = " / " & UserMaxHP
 
         'frmMain.HpshpV.Value = (((UserMinHP / 100) / (UserMaxHP / 100)) * 100)
     
         If UserMaxMAN > 0 Then
-            frmMain.Bar_Mana.max = UserMaxMAN
-            frmMain.Bar_Mana.value = UserMinMAN
-            frmMain.Bar_Mana.TextAfterCaption = " / " & UserMaxMAN
+'            frmMain.Bar_Mana.max = UserMaxMAN
+'            frmMain.Bar_Mana.value = UserMinMAN
+'            frmMain.Bar_Mana.TextAfterCaption = " / " & UserMaxMAN
         Else
-            frmMain.Bar_Mana.max = 1
-            frmMain.Bar_Mana.value = 0
-            frmMain.Bar_Mana.TextAfterCaption = " / 0"
+'            frmMain.Bar_Mana.max = 1
+'            frmMain.Bar_Mana.value = 0
+'            frmMain.Bar_Mana.TextAfterCaption = " / 0"
 
         End If
     
@@ -3812,9 +3812,9 @@ Private Sub HandleUpdateUserStats()
     '    Else
     '        frmMain.MANShp.Width = 0
     '    End If
-    frmMain.bar_sta.max = UserMaxSTA
-    frmMain.bar_sta.value = UserMinSTA
-    frmMain.bar_sta.TextAfterCaption = " / " & UserMaxSTA
+'    frmMain.bar_sta.max = UserMaxSTA
+'    frmMain.bar_sta.value = UserMinSTA
+'    frmMain.bar_sta.TextAfterCaption = " / " & UserMaxSTA
     
     ' frmMain.STAShp.Width = (((UserMinSTA / 100) / (UserMaxSTA / 100)) * 100)
     
@@ -4878,12 +4878,12 @@ Private Sub HandleUpdateHungerAndThirst()
     '    frmMain.imgSed.Height = 33 - (((UserMinAGU / 100) / (UserMaxAGU / 100)) * 33)
     '    frmMain.imgHambre.Height = 33 - (((UserMinHAM / 100) / (UserMaxHAM / 100)) * 33)
     
-    frmMain.Bar_Agua.max = UserMaxAGU
-    frmMain.Bar_Agua.value = UserMinAGU
-    frmMain.Bar_Agua.TextAfterCaption = " / " & UserMaxAGU
-    frmMain.bar_comida.max = UserMaxHAM
-    frmMain.bar_comida.value = UserMinHAM
-    frmMain.bar_comida.TextAfterCaption = " / " & UserMaxHAM
+'    frmMain.Bar_Agua.max = UserMaxAGU
+'    frmMain.Bar_Agua.value = UserMinAGU
+'    frmMain.Bar_Agua.TextAfterCaption = " / " & UserMaxAGU
+'    frmMain.bar_comida.max = UserMaxHAM
+'    frmMain.bar_comida.value = UserMinHAM
+'    frmMain.bar_comida.TextAfterCaption = " / " & UserMaxHAM
     
     '    frmMain.lblHambreN.Caption = UserMinHAM
     '    frmMain.lblHambre.Caption = frmMain.lblHambreN.Caption
@@ -12690,9 +12690,9 @@ Private Sub HandleQuestDetails()
     FrmQuestInfo.ListView1.ListItems.Clear
     
     FrmQuests.Image.BackColor = RGB(11, 11, 11)
-    FrmQuests.Picture1.BackColor = RGB(19, 14, 11)
+    FrmQuests.picture1.BackColor = RGB(19, 14, 11)
     FrmQuests.Image.Refresh
-    FrmQuests.Picture1.Refresh
+    FrmQuests.picture1.Refresh
     FrmQuests.npclbl.Caption = ""
     FrmQuests.objetolbl.Caption = ""
     
