@@ -1061,7 +1061,8 @@ Sub Main()
     WAIT_ACTION = 0
 
     AlphaSalir = 255
-
+MostrarMenuInventario = True
+MmenuBarras = True
     Set curGeneral = New clsAniCursor
     Set curGeneralCrimi = New clsAniCursor
     Set curGeneralCiuda = New clsAniCursor

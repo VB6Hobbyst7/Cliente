@@ -3402,33 +3402,33 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
 
         'Set the motion blur if needed
         'If UseMotionBlur Then
-         '   If BlurIntensity > 0 And BlurIntensity < 255 Or ZoomLevel > 0 Then
-          '      FrameUseMotionBlur = True
-           '     D3DDevice.SetRenderTarget BlurSurf, Nothing, ByVal 0
-           ' Else
-            '    FrameUseMotionBlur = False
+        '   If BlurIntensity > 0 And BlurIntensity < 255 Or ZoomLevel > 0 Then
+        '      FrameUseMotionBlur = True
+        '     D3DDevice.SetRenderTarget BlurSurf, Nothing, ByVal 0
+        ' Else
+        '    FrameUseMotionBlur = False
 
-            'End If
+        'End If
 
-      '  End If
+        '  End If
 
-       ' If UseMotionBlur Then
+        ' If UseMotionBlur Then
         '    If BlurIntensity < 255 Then
-         '       BlurIntensity = BlurIntensity + (timerElapsedTime * 0.01)
+        '       BlurIntensity = BlurIntensity + (timerElapsedTime * 0.01)
 
-          '      If BlurIntensity > 255 Then BlurIntensity = 255
+        '      If BlurIntensity > 255 Then BlurIntensity = 255
 
-           ' End If
+        ' End If
 
- '       End If
+        '       End If
 
-      D3DDevice.BeginScene
+        D3DDevice.BeginScene
 
         'Clear the screen with a solid color (to prevent artifacts)
-   '     If Not FrameUseMotionBlur Then
-            D3DDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0
+        '     If Not FrameUseMotionBlur Then
+        D3DDevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, 0, 1#, 0
 
-    '    End If
+        '    End If
 
         '****** Update screen ******
         #If RenderFull = 0 Then
@@ -3443,16 +3443,16 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 frmMain.picture1.Visible = False
                 'frmMain.Menu.Visible = False
                 'Helios Barras
-'                frmMain.bar_salud(0).Visible = False
-'                frmMain.bar_salud(1).Visible = False
-'                frmMain.Bar_Mana(0).Visible = False
-'                frmMain.Bar_Mana(1).Visible = False
-'                frmMain.bar_sta.Visible = False
-'                frmMain.bar_comida.Visible = False
-                MostrarMenuInventario = False
+                '                frmMain.bar_salud(0).Visible = False
+                '                frmMain.bar_salud(1).Visible = False
+                '                frmMain.Bar_Mana(0).Visible = False
+                '                frmMain.Bar_Mana(1).Visible = False
+                '                frmMain.bar_sta.Visible = False
+                '                frmMain.bar_comida.Visible = False
+                'MostrarMenuInventario = False
                 'Fin Helios Barras
                 'frmMain.picfondoinve.Visible = False Helios elije Menuinventario
-'                frmMain.Bar_Agua.Visible = False    'Helios Barras
+                '                frmMain.Bar_Agua.Visible = False    'Helios Barras
                 'Helios Barra exp
                 frmMain.picInv.Visible = False
                 frmMain.PicSpells.Visible = False
@@ -3463,6 +3463,15 @@ Sub ShowNextFrame(ByVal DisplayFormTop As Integer, _
                 'ElseIf UserCiego Then
                 '    Call CleanViewPort
             Else
+                If MostrarMenuInventario = True Then
+                ContarClip = 1
+                    frmMain.picInv.Visible = True
+                    frmMain.PicSpells.Visible = True
+                    frmMain.barritaa.Visible = True
+                End If
+                
+               
+
                 'frmMain.picInv.Visible = True
                 ' frmMain.imgMiniMapa.Visible = True
 

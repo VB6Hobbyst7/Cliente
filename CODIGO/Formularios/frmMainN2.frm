@@ -1465,7 +1465,7 @@ Private Sub btnInventario_Click()
     'btnHechizos.Picture = LoadPictureEX("btnHechizos.jpg")
     BarraHechiz.Visible = False
     cmdinfo.Visible = True
-    picture1.Visible = True
+    Picture1.Visible = True
     lblItemInfo.Visible = True
     
 End Sub
@@ -1982,7 +1982,7 @@ Private Sub Lblmagia_Click()
         'picHechiz.Visible = False
         'CmdLanzar.Visible = False
         BarraHechiz.Visible = False
-        picture1.Visible = False
+        Picture1.Visible = False
         cmdinfo.Visible = False
         'picfondoinve.Visible = True
         LanzarImg.Visible = False
@@ -1994,7 +1994,7 @@ Private Sub Lblmagia_Click()
         'CmdLanzar.Visible = True
         BarraHechiz.Visible = True
         'picHechiz.Visible = True
-        picture1.Visible = True
+        Picture1.Visible = True
         cmdinfo.Visible = True
         LanzarImg.Visible = False
         picInv.Visible = False
@@ -2007,7 +2007,7 @@ End Sub
 
 
 
-Private Sub PicSpells_DblClick()
+Private Sub PicSpells_Click()
 s_Index = invSpells.SelectedItem
  
 'No hay
@@ -2841,21 +2841,19 @@ Private Sub pRender_Click()
 
     'helios esconder Barras 07/06/2021
     If MouseX > 882 And MouseX < 903 And MouseY > 5 And MouseY < 25 Then
-        PulsarEsconder = PulsarEsconder + 1
+        'PulsarEsconder = PulsarEsconder + 1
         Call Audio.PlayWave(SND_CLICKNEW)
 
-        If PulsarEsconder = 1 Then
-            MmenuBarras = True
-
-
+        If MmenuBarras = True Then
+          MmenuBarras = False
+            Exit Sub
         Else
-            MmenuBarras = False
-
-            PulsarEsconder = 0
-
+           MmenuBarras = True
+           Exit Sub
         End If
 
-        Exit Sub
+
+
 
     End If
 
