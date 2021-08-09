@@ -2008,20 +2008,36 @@ End Sub
 
 
 Private Sub PicSpells_Click()
-s_Index = invSpells.SelectedItem
- 
-'No hay
-If (s_Index = 0) Then Exit Sub
- 
-hlst.ListIndex = s_Index - 1
+  s_Index = invSpells.SelectedItem
 
-Call cmdLanzar_Click
+        'No hay
+        If (s_Index = 0) Then Exit Sub
+
+        hlst.ListIndex = s_Index - 1
+
+        Call cmdLanzar_Click
+End Sub
+
+Private Sub PicSpells_DblClick()
+
+
+       
+If invSpells.SelectedItem = 0 Then Exit Sub
+    
+        Call WriteSpellInfo(invSpells.SelectedItem)
 End Sub
 
 Private Sub PicSpells_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
+
+
+
+    If InvX >= Inventario.OffSetX And InvY >= Inventario.OffSetY Then
         Call Audio.PlayWave(SND_CLICK)
-        End If
+    End If
+
+   
+    
+    
 End Sub
 
 Private Sub PicSpells_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)

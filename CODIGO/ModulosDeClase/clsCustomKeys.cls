@@ -405,7 +405,7 @@ Public Sub LoadDefaults()
     mappedKeys(eKeyType.mKeySalir) = KeyCodeConstants.vbKeyEscape
     
     'GMS
-    mappedKeys(eKeyType.mKeyPanelGM) = KeyCodeConstants.vbKeyF10
+    'mappedKeys(eKeyType.mKeyPanelGM) = KeyCodeConstants.vbKeyF10
     
 End Sub
 
@@ -444,7 +444,7 @@ Public Sub LoadAWSD()
     mappedKeys(eKeyType.mKeyAnclar) = KeyCodeConstants.vbKeyB
     
     'GMS
-    mappedKeys(eKeyType.mKeyPanelGM) = KeyCodeConstants.vbKeyF10
+    'mappedKeys(eKeyType.mKeyPanelGM) = KeyCodeConstants.vbKeyF10
 
 End Sub
 

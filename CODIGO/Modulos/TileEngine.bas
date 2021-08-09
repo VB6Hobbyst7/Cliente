@@ -293,7 +293,7 @@ Public Type MapBlock
     'particulas ore
     PasosIndex As Byte
 
-    Graphic(1 To 4) As Grh
+    Graphic(1 To 5) As Grh
     CharIndex As Integer
     ObjGrh As Grh
 
@@ -900,7 +900,7 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     Dim nY     As Integer
 
     Dim tmpInt As Integer
-    
+   ' On Error GoTo err
     With charlist(CharIndex)
         X = .Pos.X
         Y = .Pos.Y
@@ -994,6 +994,7 @@ Sub MoveCharbyHead(ByVal CharIndex As Integer, ByVal nHeading As E_Heading)
     '        Call EraseChar(CharIndex)
     '    End If
     'End If
+'err:
 End Sub
 
 Public Function InvertHeading(ByVal nHeading As E_Heading) As E_Heading
@@ -2257,11 +2258,11 @@ Sub RenderScreen(ByVal TileX As Integer, _
     'vida abajo del pj
     If Vidarender = True Then
         Dim CantVidax As Integer
-
+If UserMaxHP > 0 Then
         CantVidax = (((UserMinHP / 33) / (UserMaxHP / 33)) * 33)
 
         Call Engine_Render_Rectangle(496, 375, 16, CantVidax, 0, 0, 16, CantVidax, , , 0, 14810)
-
+End If
     End If
     ' vida abajo del pj
     'mana abajo del pj
@@ -2279,8 +2280,12 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
 
     'sangre
+    
+    
+                     Engine_Render_Blood
+           
 
-    Engine_Render_Blood
+   
 
     'sangre
     'Draw Transparent Layers
@@ -2944,6 +2949,7 @@ Sub RenderScreen(ByVal TileX As Integer, _
             Dim CantAgilidad As Integer
             Dim CantFuerza As Integer
             'experiencia
+            If UserExp <> 0 And UserPasarNivel <> 0 Then
             CantExp = 67 * Round(CDbl(UserExp) / CDbl(UserPasarNivel / 2), 2)
 
             'Call Engine_Render_Rectangle(309, 275, 91, 89, 0, 0, 91, 89, , , 0, 14801)
@@ -2954,11 +2960,15 @@ Sub RenderScreen(ByVal TileX As Integer, _
 
 
             End If
-
+End If
             Call Engine_Render_Rectangle(96, 87, -33, -CantExp2, 0, 0, -33, -CantExp2, , , 0, 14948)
             Call Engine_Render_Rectangle(31, 20, 33, CantExp, 0, 0, 33, CantExp, , , 0, 14948)
-
+ If UserExp <> 0 And UserPasarNivel <> 0 Then
             Call DrawFont(Round((UserExp / UserPasarNivel) * 100) & "%", 68, 60, D3DColorRGBA(255, 255, 255, 200), True)
+           Else
+            Call DrawFont("0%", 68, 60, D3DColorRGBA(255, 255, 255, 200), True)
+           
+           End If
             Call D3DX.DrawText(FontRender, D3DColorRGBA(255, 255, 255, 200), CStr(UserLvl), DDRect(0, 30, 130, 0), DT_CENTER)
 
             'experiencia
